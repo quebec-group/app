@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.VideoView;
 
-public class VideoUploadActivity extends AppCompatActivity {
+public class VideoUploadActivity extends AuthActivity {
 
     static final int REQUEST_VIDEO_CAPTURE = 1;
 

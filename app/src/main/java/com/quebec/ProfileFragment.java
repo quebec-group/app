@@ -13,30 +13,19 @@ import com.amazonaws.mobile.AWSMobileClient;
 import com.amazonaws.mobile.user.IdentityManager;
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ProfileFragment.ProfileInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Fragment for the Profile view.
  */
 public class ProfileFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private ProfileInteractionListener mListener;
 
     private IdentityManager identityManager;
 
-    /** This fragment's view. */
     private View mFragmentView;
 
+    /**
+     * TextViews on the interface
+     */
     private TextView userIdTextView;
     private TextView userNameTextView;
 
@@ -45,29 +34,20 @@ public class ProfileFragment extends Fragment {
     }
 
     // TODO: Rename and change types and number of parameters
-    public static ProfileFragment newInstance(String param1, String param2) {
+    public static ProfileFragment newInstance() {
         ProfileFragment fragment = new ProfileFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
-
-
     }
 
+    /**
+     * Gets the UserIdentity from Amazpn and updates the TextViews.
+     *
+     */
     private void fetchUserIdentity() {
          // Pre-fetched to avoid race condition where fragment is no longer active.
         final String unknownUserIdentityText =
@@ -80,13 +60,12 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void handleIdentityID(String identityId) {
 
-
+                        /* Set the user ID to be the identity ID from the user pool. */
                         userIdTextView.setText(identityId);
 
+                        /* If the user is logged in, update the username shown on screen. */
                         if (identityManager.isUserSignedIn()) {
-
                             userNameTextView.setText(identityManager.getUserName());
-
                         }
                     }
 
@@ -96,9 +75,6 @@ public class ProfileFragment extends Fragment {
                         // We failed to retrieve the user's identity. Set unknown user identifier
                         // in text view.
                         userIdTextView.setText(unknownUserIdentityText);
-
-                        final Context context = getActivity();
-
 
                     }
                 });
@@ -116,8 +92,7 @@ public class ProfileFragment extends Fragment {
         userIdTextView = (TextView) mFragmentView.findViewById(R.id.profileFragment_id);
         userNameTextView = (TextView) mFragmentView.findViewById(R.id.profileFragment_name);
 
-        identityManager = AWSMobileClient.defaultMobileClient()
-                .getIdentityManager();
+        identityManager = AWSMobileClient.defaultMobileClient().getIdentityManager();
 
         fetchUserIdentity();
 

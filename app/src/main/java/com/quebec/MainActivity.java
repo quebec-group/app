@@ -23,7 +23,7 @@ import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener,
+public class MainActivity extends AuthActivity implements View.OnClickListener,
                                                                EventsFeedFragment.EventsFeedInteractionListener,
                                                                EventDetailFragment.OnEventDetailInteractionListener,
                                                                ProfileFragment.ProfileInteractionListener {
@@ -31,22 +31,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /** Class name for log messages. */
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
-    /** The identity manager used to keep track of the current user account. */
-    private IdentityManager identityManager;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Obtain a reference to the mobile client. It is created in the Application class,
-        // but in case a custom Application class is not used, we initialize it here if necessary.
-        AWSMobileClient.initializeMobileClientIfNecessary(this);
-
-        // Obtain a reference to the mobile client. It is created in the Application class.
-        final AWSMobileClient awsMobileClient = AWSMobileClient.defaultMobileClient();
-
-        // Obtain a reference to the identity manager.
-        identityManager = awsMobileClient.getIdentityManager();
 
         setContentView(R.layout.activity_main);
 
@@ -58,6 +46,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
 
+        setupBottomBar();
+
+
+
+    }
+
+    /**
+     * Setups the bottom navigation with appropriate event handling for each tab icon.
+     */
+    protected void setupBottomBar() {
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
 
@@ -87,27 +85,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
-
     }
 
-    public void showVideoUploadActivity() {
+    protected void showVideoUploadActivity() {
         Intent intent = new Intent(this, VideoUploadActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Handles the resuming of the application from a paused state. Checks
+     */
     @Override
     protected void onResume() {
         super.onResume();
-
-        if (!AWSMobileClient.defaultMobileClient().getIdentityManager().isUserSignedIn()) {
-            // In the case that the activity is restarted by the OS after the application
-            // is killed we must redirect to the splash activity to handle the sign-in flow.
-            Intent intent = new Intent(this, SplashActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            return;
-        }
-
     }
 
 
@@ -127,8 +117,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(final View view) {
 
-        // ... add any other button handling code here ...
-
     }
 
     @Override
@@ -141,6 +129,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onBackPressed();
     }
 
+
+    /*
+
+    Fragment implementations
+    ----
+     */
+
+
+    /**
+     * From the EventsFeedFragment, an event has been selected and we should now
+     * transition to the EventsDetailFragment.
+     */
     @Override
     public void onEventSelected() {
 
@@ -153,7 +153,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-
+    /**
+     * From the EventsDetailFragment, the back button has been selected and we should now
+     * transition back to the EventsFeedFragment.
+     */
     @Override
     public void onBackToEvents() {
 

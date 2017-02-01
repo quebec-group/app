@@ -23,20 +23,14 @@ public class EventDetailFragment extends Fragment {
 
 
     // TODO: Rename and change types and number of parameters
-    public static EventDetailFragment newInstance(String param1, String param2) {
+    public static EventDetailFragment newInstance() {
         EventDetailFragment fragment = new EventDetailFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            eventID = getArguments().getString(ARG_PARAM1);
-        }
     }
 
     @Override
