@@ -3,30 +3,48 @@ package com.quebec;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Toast;
 
 
+public class EventsFeedFragment extends Fragment implements AdapterView.OnItemClickListener {
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
 
-public class EventsFeedFragment extends Fragment implements View.OnClickListener {
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
 
     private EventsFeedInteractionListener mListener;
+
+    ListView listView;
+
 
     public EventsFeedFragment() {
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
     public static EventsFeedFragment newInstance() {
         EventsFeedFragment fragment = new EventsFeedFragment();
+        Bundle args = new Bundle();
+
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
     }
 
     @Override
@@ -35,10 +53,17 @@ public class EventsFeedFragment extends Fragment implements View.OnClickListener
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_events_feed, container, false);
 
-        /* Setup the onClick event for the event button. */
+        listView = (ListView) v.findViewById(R.id.eventsFeedList);
 
-        Button b = (Button) v.findViewById(R.id.event1button);
-        b.setOnClickListener(this);
+        // TODO: Replace stubs with actual Events
+        Event[] values = new Event[] {
+                new Event("Event 1"),
+                new Event("2")
+        };
+
+        EventListAdapterItem adapter = new EventListAdapterItem(this.getContext(), R.layout.event_list_item, values);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(this);
         return v;
     }
 
@@ -61,27 +86,33 @@ public class EventsFeedFragment extends Fragment implements View.OnClickListener
         mListener = null;
     }
 
+
     /**
-     * React to an onClick event on the fragment.
+     * Click event for the list elements.
+     * @param parent
      * @param view
+     * @param position
+     * @param id
      */
     @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
+    public void onItemClick(AdapterView<?> parent, View view, int position,
+                            long id) {
 
-            /* If the event button was clicked, call the onEventSelected method in the activity in order
-               to load in the EventDetailFragment.
-             */
-            case R.id.event1button:
-                mListener.onEventSelected();
-                break;
-        }
+        listView.setItemChecked(position, true);
+        Event e = (Event) listView.getItemAtPosition(position);
+
+        // Call the interaction listener with the Event object.
+        mListener.onEventSelected(e);
+
     }
 
-
+    /**
+     * InteractionListener which is implemented by the parent Activity
+     */
     public interface EventsFeedInteractionListener {
-        void onEventSelected();
+        void onEventSelected(Event e);
     }
+
 
 
 }

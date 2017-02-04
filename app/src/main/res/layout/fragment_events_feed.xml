@@ -5,40 +5,18 @@
     tools:context=".EventsFeedFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <ListView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:layout_height="574dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/eventsFeedList" />
 
-            <Button
-                android:text="Event 1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/event1button"
-                android:onClick="showEventDetail" />
-
-            <Button
-                android:text="Event 2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/event2button" />
-
-            <Button
-                android:text="Event 3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/event3button" />
-        </LinearLayout>
-
-    </ScrollView>
+    </RelativeLayout>
 
 </FrameLayout>

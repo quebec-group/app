@@ -42,19 +42,19 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile fileTree(include: ['*.jar'], dir: 'app/libs')
-    compile 'com.android.support:appcompat-v7:25.0.0'
-    compile 'com.android.support:support-v4:25.0.0'
 
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.android.support:support-v4:25.1.0'
     compile 'com.amazonaws:aws-android-sdk-core:2.3.8'
-    compile('com.amazonaws:aws-android-sdk-cognito:2.3.8')
-    compile('com.amazonaws:aws-android-sdk-s3:2.3.8')
-    compile ('com.amazonaws:aws-android-sdk-cognitoidentityprovider:2.3.8')
+    compile 'com.amazonaws:aws-android-sdk-cognito:2.3.8'
+    compile 'com.amazonaws:aws-android-sdk-s3:2.3.8'
+    compile 'com.amazonaws:aws-android-sdk-cognitoidentityprovider:2.3.8'
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.roughike:bottom-bar:2.1.1'
 }
 
-repositories{
-    flatDir{
+repositories {
+    flatDir {
         dirs 'libs'
     }
 }

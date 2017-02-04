@@ -36,8 +36,6 @@ public class SignInActivity extends Activity {
          */
         @Override
         public void onSuccess(final IdentityProvider provider) {
-            Log.d(LOG_TAG, String.format("User sign-in with %s succeeded",
-                provider.getDisplayName()));
 
             // The sign-in manager is no longer needed once signed in.
             SignInManager.dispose();
@@ -53,7 +51,7 @@ public class SignInActivity extends Activity {
                     Log.d(LOG_TAG, "Launching Main Activity...");
                     startActivity(new Intent(SignInActivity.this, MainActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                    // finish should always be called on the main thread.
+
                     finish();
                 }
             });

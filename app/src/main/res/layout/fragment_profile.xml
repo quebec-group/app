@@ -22,6 +22,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/profileFragment_id" />
+
+        <Button
+            android:text="Logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/profile_logout" />
     </LinearLayout>
 
 </FrameLayout>
