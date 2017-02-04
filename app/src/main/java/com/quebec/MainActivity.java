@@ -27,7 +27,8 @@ import com.roughike.bottombar.OnTabSelectListener;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
                                                                EventsFeedFragment.EventsFeedInteractionListener,
                                                                EventDetailFragment.OnEventDetailInteractionListener,
-                                                               ProfileFragment.ProfileInteractionListener {
+                                                               ProfileFragment.ProfileInteractionListener,
+                                                               FriendsListFragment.FriendsListInteractionHandler{
 
     /** Class name for log messages. */
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -168,6 +169,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
         transaction.replace(R.id.fragment_container, eventDetail).addToBackStack("fragment");
+        transaction.commit();
+    }
+
+    /* Profile page interactions. */
+
+    @Override
+    public void onFriendSelected(User u) {
+        // TODO: Complete this method.
+        Log.e("FRIND", "FRIEND");
+
+    }
+
+    @Override
+    public void openFriendsList() {
+        FriendsListFragment friendsList = FriendsListFragment.newInstance();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
+        transaction.replace(R.id.fragment_container, friendsList).addToBackStack("fragment");
         transaction.commit();
     }
 }

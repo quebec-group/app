@@ -122,5 +122,6 @@
 
 
     <string name="hello_blank_fragment">The events feed fragment</string>
+    <string name="button_friends_link">Friends List</string>
 
 </resources>

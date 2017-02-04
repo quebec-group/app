@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 
@@ -104,6 +106,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         userIdTextView = (TextView) mFragmentView.findViewById(R.id.profileFragment_id);
         userNameTextView = (TextView) mFragmentView.findViewById(R.id.profileFragment_name);
 
+        /* Declare the onclick event handlers. */
+        Button b1 = (Button) mFragmentView.findViewById(R.id.button_friends_list);
+        Button b2 = (Button) mFragmentView.findViewById(R.id.profile_logout);
+
+        b1.setOnClickListener(this);
+        b2.setOnClickListener(this);
+        
         identityManager = AWSMobileClient.defaultMobileClient()
                 .getIdentityManager();
 
@@ -114,9 +123,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+        Log.e("1", Integer.toString(view.getId()));
         switch (view.getId()) {
             case R.id.profile_logout:
                 logoutAccount();
+                break;
+            case R.id.button_friends_list:
+                Log.e("1", "2");
+                mListener.openFriendsList();
                 break;
         }
     }
@@ -150,7 +164,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     public interface ProfileInteractionListener {
-
-
+        void openFriendsList();
     }
 }

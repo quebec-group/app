@@ -12,14 +12,15 @@ import android.widget.TextView;
  * Created by Andrew on 03/02/2017.
  */
 
-public class EventListAdapterItem extends ArrayAdapter<Event> {
+
+public class FriendListAdapterItem extends ArrayAdapter<User> {
 
     int layoutResourceID;
-    Event data[] = null;
+    User data[] = null;
     Context mContext;
 
 
-    public EventListAdapterItem(Context mContext, int layoutResourceID, Event[] objects) {
+    public FriendListAdapterItem(Context mContext, int layoutResourceID, User[] objects) {
         super(mContext, layoutResourceID, objects);
 
         this.layoutResourceID = layoutResourceID;
@@ -28,6 +29,13 @@ public class EventListAdapterItem extends ArrayAdapter<Event> {
 
     }
 
+    /**
+     * Populates the item in the list.
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -36,10 +44,10 @@ public class EventListAdapterItem extends ArrayAdapter<Event> {
             convertView = inflater.inflate(layoutResourceID, parent, false);
         }
 
-        Event event = data[position];
+        User user = data[position];
 
-        TextView textViewItem = (TextView) convertView.findViewById(R.id.eventItemName);
-        textViewItem.setText(event.getName());
+        TextView textViewItem = (TextView) convertView.findViewById(R.id.friendItemName);
+        textViewItem.setText(user.getName());
 
         return convertView;
     }

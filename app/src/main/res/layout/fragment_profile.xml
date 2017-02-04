@@ -28,6 +28,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/profile_logout" />
+
+        <Button
+            android:text="@string/button_friends_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_friends_list" />
     </LinearLayout>
 
 </FrameLayout>
