@@ -14,3 +14,4 @@
 ## Libraries Used
 
 - [BottomBar](https://github.com/roughike/BottomBar) - Used for the bottom navigation bar. Favoured over built in BottomNavigationView, due to dependence on Android 7.0 and lack of customizability.
+- [Calligraphy](https://github.com/chrisjenx/Calligraphy) - Used for custom fonts throughout the application. Will be used to give the application a consistant design.
