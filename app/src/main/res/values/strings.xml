@@ -1,0 +1,130 @@
+<resources>
+
+    <!-- CUSTOMIZE THESE FOR YOUR APP -->
+
+    <string name="app_name">Whos at my party?</string>
+    <!-- Suffix after '-' must be the app package name as specified in the build.gradle file. This
+       is used by the com.amazonaws.mobile.downloader.query.DownloadQueueProvider class. -->
+    <string name="download_queue_provider_authority">com.amazonaws.mobile.downloader-com.amazon.mysampleapp</string>
+    <!-- This can be anything, but it should be unique to the app. -->
+    <string name="content_file_provider_authority">com.mysampleapp.fileprovider</string>
+
+    <!-- REQUIRED FOR GENERAL APP FUNCTIONALITY - YOU MAY WANT TO KEEP THESE -->
+
+    <string name="main_nav_menu_item_home">Home</string>
+    <string name="title_activity_item_detail">Item Detail</string>
+    <string name="title_activity_item_list">Item List</string>
+    <string name="title_activity_main">@string/app_name</string>
+    <string name="title_activity_sign_in">Sign-in</string>
+    <string name="button_text_sign_in">SIGN IN</string>
+    <string name="button_text_sign_out">SIGN OUT</string>
+    <string name="sign_in_email">Email</string>
+    <string name="sign_in_username">Username/Phone Number (+15551234567)</string>
+    <string name="sign_in_password">Password</string>
+    <string name="sign_in_new_account">Create New Account</string>
+    <string name="sign_in_forgot_password">Forgot Your Password?</string>
+    <string name="sign_in_or">or sign in with</string>
+    <string name="main_nav_menu_default_user_text">\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020</string>
+    <string name="content_helper_error_title">No Content Viewer</string>
+    <string name="content_helper_error_no_app">No Viewing App exists for content type \'%s\'.</string>
+    <string name="title_activity_sign_up">Sign Up</string>
+    <string name="title_activity_forgot_password">Forgot Password</string>
+    <string name="title_activity_mfa">MFA Code</string>
+    <string name="title_activity_sign_up_confirm">Confirm Account</string>
+    <string name="forgot_password_header">Forgot your password?</string>
+    <string name="forgot_password_body">Set your new password with the verification code that was sent to you.</string>
+    <string name="forgot_password_input_code_hint">Verification code</string>
+    <string name="forgot_password_button_hint">Set password</string>
+    <string name="mfa_header">MFA verification is required to authenticate.</string>
+    <string name="mfa_code_sent_message">Code sent.</string>
+    <string name="verify_button_text">Verify</string>
+    <string name="username_text">Username</string>
+    <string name="given_name_text">Given name</string>
+    <string name="email_address_text">Email address</string>
+    <string name="phone_number_text">Phone number (+15551234567)</string>
+    <string name="sign_up_header">Enter the following information to sign up.</string>
+    <string name="sign_up_confirm_code">Confirmation code</string>
+    <string name="sign_up_confirm_text">Confirm</string>
+    <string name="sign_up_confirm_code_sent">A confirmation code was sent.</string>
+    <string name="sign_up_confirm_enter_code">Please enter the code below to confirm your account.</string>
+    <string name="sign_up_confirm_title">Confirm your account</string>
+    <string name="password_change_success">Password change succeeded.</string>
+    <string name="password_change_failed">Password change failed.</string>
+    <string name="sign_up_success">Sign up succeeded.</string>
+    <string name="sign_up_failed">Sign up failed.</string>
+    <string name="login_success">Login succeeded.</string>
+    <string name="login_failed">Login failed.</string>
+    <string name="sign_up_confirm_success">Sign up confirmation succeeded.</string>
+    <string name="sign_up_confirm_failed">Sign up confirmation failed.</string>
+
+    <!-- USED BY DEMO FEATURES ONLY - YOU CAN DISCARD THESE WITH THE DEMO FOLDER -->
+
+    <string name="fragment_demo_instruction_overview_header">Overview</string>
+    <string name="fragment_demo_instruction_description_header">Sample App Features</string>
+    <string name="feature_sign_in_title">User Sign-in</string>
+    <string name="feature_sign_in_subtitle">Let your users sign in with public identity providers or your own identity system.</string>
+    <string name="feature_sign_in_overview">Whether your users sign in or not, the User sign-in feature configures Amazon Cognito to uniquely identify the user and provide your app the appropriate credentials to access your AWS resources.</string>
+    <string name="feature_sign_in_description">The Sample App demonstrates assignment of a unique identifier for the user, the Amazon Cognito User ID. If optional or mandatory User Sign-in has been enabled in your project, then the Sample App also includes a sign-in screen, with a button for each configured sign-in provider.</string>
+    <string name="feature_sign_in_powered_by">Powered by Amazon Cognito</string>
+    <string name="feature_sign_in_demo_button">Demo User Identity</string>
+    <string name="feature_app_content_delivery_title">App Content Delivery</string>
+    <string name="feature_app_content_delivery_subtitle">Store and distribute media assets and other files.</string>
+    <string name="feature_app_content_delivery_overview">Store app assets like resource files in the cloud. Download and cache files in your app.</string>
+    <string name="feature_app_content_delivery_description">The Sample App demonstrates file download and caching by providing a remote file explorer. You can download files from Amazon S3 (and optionally Amazon CloudFront) and pin them to the cache on device by clicking on each file entry. From the menu, you can download all recent files, set the cache size limit, or clear the cache.</string>
+    <string name="feature_app_content_delivery_powered_by">Powered by Amazon S3 and Amazon CloudFront</string>
+    <string name="feature_app_content_delivery_demo_button">Demo Content Delivery</string>
+
+    <string name="main_fragment_title_user_identity">User Identity</string>
+    <string name="main_fragment_subtitle_user_identity">Keep track of users</string>
+    <string name="identity_demo_text_view_description">Displays the user identity.</string>
+    <string name="unknown_user">Guest User</string>
+    <string name="user_id">USER IDENTIFIER</string>
+    <string name="identity_demo_textview_username_description">User\'s name</string>
+    <string name="identity_demo_textview_userid_description">User\'s unique identifier</string>
+    <string name="identity_demo_unknown_identity_text">&lt;UNKNOWN IDENTITY&gt;</string>
+    <string name="identity_demo_dialog_dismiss_text">DISMISS</string>
+    <string name="identity_demo_error_dialog_title">Failed Identity Retrieval</string>
+    <string name="identity_demo_error_message_failed_get_identity">Could not retrieve the user identity:\u0020</string>
+    <string name="main_fragment_title_content_delivery">Content Delivery</string>
+    <string name="main_fragment_subtitle_content_delivery">Store app assets like resource files in the cloud. Download and cache files in your app.</string>
+    <string name="content_dialog_ok">OK</string>
+    <string name="content_cache_summary_text">Cache Summary</string>
+    <string name="content_cache_limit_text">Limit</string>
+    <string name="content_cache_use_text">In Use</string>
+    <string name="content_cache_available_text">Available</string>
+    <string name="content_cache_pinned_text">Pinned</string>
+    <string name="content_refresh_text">Refresh</string>
+    <string name="content_download_recent_text">Download Recent</string>
+    <string name="content_set_cache_size_text">Set Cache Size</string>
+    <string name="content_clear_cache_text">Clear Cache</string>
+    <string name="content_path_prefix_text">Path:\u0020</string>
+    <string name="content_folder_text">This is a folder.</string>
+    <string name="content_context_menu_open">Open</string>
+    <string name="content_context_menu_open_remote">Open Remote URL</string>
+    <string name="content_context_menu_download">Download</string>
+    <string name="content_context_menu_download_latest">Download Latest Version</string>
+    <string name="content_context_menu_pin">Pin</string>
+    <string name="content_context_menu_download_pin">Download &amp; Pin</string>
+    <string name="content_context_menu_unpin">Unpin</string>
+    <string name="content_context_menu_delete_local">Delete Local Copy</string>
+    <string name="content_progress_dialog_title_wait">Please wait &#8230;</string>
+    <string name="content_progress_dialog_message_load_local_content">Loading local content</string>
+    <string name="content_progress_dialog_message_load_content">Loading S3 objects list</string>
+    <string name="content_list_failure_text">Failure Listing Content</string>
+    <string name="content_transfer_failure_text">Transfer Failure</string>
+    <string name="content_removal_error_text">Content Removal Error</string>
+    <string name="content_permission_failure_title_text">Permission Failure</string>
+    <string name="content_permission_failure_text">Denial of Read External Storage Permission has disabled the ability to upload user files.</string>
+
+    <string name="menu_eventsfeed">Events</string>
+    <string name="menu_uploadvideo">Upload</string>
+    <string name="menu_profile">Profile</string>
+
+
+    <string name="hello_blank_fragment">The events feed fragment</string>
+    <string name="button_friends_link">Friends List</string>
+    <string name="profile_train_photo_upload">In order to be recognised in uploaded events, you must upload a photograph.</string>
+    <string name="profile_train_photo_upload_button">Upload photo</string>
+    <string name="profile_train_photo_take_button">Take photo</string>
+
+</resources>

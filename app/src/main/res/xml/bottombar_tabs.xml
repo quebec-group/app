@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<tabs>
+    <tab
+        id="@+id/menu_eventsfeed"
+        icon="@android:drawable/ic_menu_rotate"
+        title="@string/menu_eventsfeed" />
+    <tab
+        id="@+id/menu_uploadvideo"
+        icon="@android:drawable/ic_menu_rotate"
+        title="@string/menu_uploadvideo" />
+    <tab
+        id="@+id/menu_profile"
+        icon="@android:drawable/ic_menu_rotate"
+        title="@string/menu_profile" />
+</tabs>
+
