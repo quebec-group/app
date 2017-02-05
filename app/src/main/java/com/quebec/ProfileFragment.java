@@ -112,7 +112,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         b1.setOnClickListener(this);
         b2.setOnClickListener(this);
-        
+
         identityManager = AWSMobileClient.defaultMobileClient()
                 .getIdentityManager();
 
@@ -161,6 +161,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 .getIdentityManager()
                 .signOut();
 
+        Intent intent = new Intent(this.getContext(), SplashActivity.class);
+        startActivity(intent);
     }
 
     public interface ProfileInteractionListener {

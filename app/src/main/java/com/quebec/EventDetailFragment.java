@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.VideoView;
+
 
 
 public class EventDetailFragment extends Fragment {
@@ -18,6 +20,7 @@ public class EventDetailFragment extends Fragment {
     private Event mEvent;
 
     private TextView eventNameTextView;
+    private VideoView eventVideoview;
 
     private View mFragmentView;
 
@@ -67,11 +70,17 @@ public class EventDetailFragment extends Fragment {
 
         mFragmentView = inflater.inflate(R.layout.fragment_event_detail, container, false);
         eventNameTextView = (TextView) mFragmentView.findViewById(R.id.eventDetailName);
+        eventVideoview = (VideoView) mFragmentView.findViewById(R.id.eventVideoView);
 
         /* If the event has been initialised, then insert the Event information onto the
            the page */
         if (mEvent != null) {
             eventNameTextView.setText(mEvent.getName());
+
+            Uri u = Uri.parse("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4");
+            eventVideoview.setVideoURI(u);
+
+            eventVideoview.start();
         }
 
         return mFragmentView;

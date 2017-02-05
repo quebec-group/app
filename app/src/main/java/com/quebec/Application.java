@@ -13,6 +13,8 @@ import android.util.Log;
 
 import com.amazonaws.mobile.AWSMobileClient;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+
 /**
  * Application class responsible for initializing singletons and other common components.
  */
@@ -25,6 +27,12 @@ public class Application extends MultiDexApplication {
         super.onCreate();
         initializeApplication();
         Log.d(LOG_TAG, "Application.onCreate - Application initialized OK");
+
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("Roboto-Bold.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
     }
 
     private void initializeApplication() {
@@ -32,4 +40,5 @@ public class Application extends MultiDexApplication {
 
         // ...Put any application-specific initialization logic here...
     }
+
 }

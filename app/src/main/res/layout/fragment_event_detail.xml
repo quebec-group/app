@@ -14,7 +14,7 @@
         <VideoView
             android:layout_width="match_parent"
             android:layout_height="198dp"
-            android:id="@+id/videoView" />
+            android:id="@+id/eventVideoView" />
 
         <TextView
             android:text="TextView"

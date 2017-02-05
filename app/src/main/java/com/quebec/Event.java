@@ -15,6 +15,7 @@ public class Event implements Parcelable {
 
     public Event(String name) {
         this.name = name;
+        this.videoURL = "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4";
     }
 
     protected Event(Parcel in) {
@@ -36,6 +37,10 @@ public class Event implements Parcelable {
 
     public String getName() {
         return name;
+    }
+
+    public String getVideoURL() {
+        return videoURL;
     }
 
     @Override

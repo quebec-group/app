@@ -17,4 +17,8 @@
     <!-- Backward-compatible version of ?android:attr/buttonBarButtonStyle -->
     <style name="ButtonBarButton" />
 
+    <style name="TextAppearance.FontPath" parent="android:TextAppearance">
+        <item name="fontPath">Roboto-Bold.ttf</item>
+    </style>
+
 </resources>

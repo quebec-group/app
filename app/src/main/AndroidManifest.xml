@@ -19,13 +19,13 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-        android:name="com.quebec.Application"
+        android:name=".Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.quebec.SplashActivity"
+            android:name=".SplashActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:label="@string/app_name">
             <intent-filter>
@@ -35,29 +35,29 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.quebec.SignInActivity"
+            android:name=".SignInActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_sign_in"></activity>
+            android:label="@string/title_activity_sign_in" />
         <activity
-            android:name="com.quebec.demo.userpools.ForgotPasswordActivity"
+            android:name=".demo.userpools.ForgotPasswordActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_forgot_password"></activity>
+            android:label="@string/title_activity_forgot_password" />
         <activity
-            android:name="com.quebec.demo.userpools.SignUpActivity"
+            android:name=".demo.userpools.SignUpActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_sign_up"></activity>
+            android:label="@string/title_activity_sign_up" />
         <activity
-            android:name="com.quebec.demo.userpools.MFAActivity"
+            android:name=".demo.userpools.MFAActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_mfa"></activity>
+            android:label="@string/title_activity_mfa" />
         <activity
-            android:name="com.quebec.demo.userpools.SignUpConfirmActivity"
+            android:name=".demo.userpools.SignUpConfirmActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_sign_up_confirm"></activity>
+            android:label="@string/title_activity_sign_up_confirm" />
         <activity
-            android:name="com.quebec.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:launchMode="singleInstance"></activity>
+            android:launchMode="singleInstance" />
 
         <!-- BEGIN - APP CONTENT DELIVERY AND USER DATA STORAGE -->
 
@@ -88,7 +88,7 @@
             android:name="com.amazonaws.mobile.downloader.query.DownloadQueueProvider"
             android:authorities="@string/download_queue_provider_authority"
             android:enabled="true"
-            android:exported="false"></provider>
+            android:exported="false" />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="@string/content_file_provider_authority"
@@ -101,7 +101,8 @@
 
         <!-- END - APP CONTENT DELIVERY AND USER DATA STORAGE -->
 
-        <activity android:name="com.quebec.VideoUploadActivity"></activity>
+        <activity android:name=".VideoUploadActivity" />
+        <activity android:name=".SignUpPhotoActivity"></activity>
     </application>
 
 </manifest>
