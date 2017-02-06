@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -23,6 +25,9 @@ public class EventDetailFragment extends Fragment {
     private VideoView eventVideoview;
 
     private View mFragmentView;
+    private GridView gridView;
+
+
 
     private OnEventDetailInteractionListener mListener;
 
@@ -82,6 +87,32 @@ public class EventDetailFragment extends Fragment {
 
             eventVideoview.start();
         }
+
+        gridView = (GridView) mFragmentView.findViewById(R.id.eventUsers);
+
+        User[] values = new User[] {
+                new User("hello"),
+                new User("hello2"),
+                new User("hello"),
+                new User("hello2"),
+                new User("hello"),
+                new User("hello2"),
+                new User("hello"),
+                new User("hello2"),
+                new User("hello"),
+                new User("hello2"),
+                new User("hello"),
+                new User("hello2"),
+                new User("hello"),
+                new User("hello2"),
+                new User("hello"),
+                new User("hello2"),
+                new User("hello"),
+                new User("hello2")
+        };
+
+        EventUsersAdapterItem adapter = new EventUsersAdapterItem(this.getContext(), R.layout.adapter_grid_event_user, values);
+        gridView.setAdapter(adapter);
 
         return mFragmentView;
     }

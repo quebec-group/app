@@ -10,14 +10,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <SearchView
+        <EditText
+
             android:layout_width="match_parent"
-            android:layout_height="58dp" />
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:text="Name"
+            android:ems="10"
+            android:id="@+id/friendsListSearchBox" />
 
         <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/friendsList" />
+
     </LinearLayout>
 
 </FrameLayout>

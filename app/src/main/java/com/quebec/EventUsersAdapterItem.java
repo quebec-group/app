@@ -9,18 +9,16 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 /**
- * Created by Andrew on 03/02/2017.
+ * Created by Andrew on 06/02/2017.
  */
 
-
-public class FriendListAdapterItem extends ArrayAdapter<User> {
-
+public class EventUsersAdapterItem extends ArrayAdapter {
     int layoutResourceID;
     User data[] = null;
     Context mContext;
 
 
-    public FriendListAdapterItem(Context mContext, int layoutResourceID, User[] objects) {
+    public EventUsersAdapterItem(Context mContext, int layoutResourceID, User[] objects) {
         super(mContext, layoutResourceID, objects);
 
         this.layoutResourceID = layoutResourceID;
@@ -45,10 +43,6 @@ public class FriendListAdapterItem extends ArrayAdapter<User> {
         }
 
         User user = data[position];
-
-        TextView textViewItem = (TextView) convertView.findViewById(R.id.friendItemName);
-        textViewItem.setText(user.getName());
-
 
         return convertView;
     }

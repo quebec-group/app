@@ -126,5 +126,6 @@
     <string name="profile_train_photo_upload">In order to be recognised in uploaded events, you must upload a photograph.</string>
     <string name="profile_train_photo_upload_button">Upload photo</string>
     <string name="profile_train_photo_take_button">Take photo</string>
+    <string name="eventsFeedTitle">Events Feed</string>
 
 </resources>
