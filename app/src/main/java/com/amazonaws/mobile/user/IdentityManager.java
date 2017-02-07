@@ -20,6 +20,7 @@ import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.mobile.AWSConfiguration;
 import com.amazonaws.mobile.util.ThreadUtils;
+import com.amazonaws.mobileconnectors.cognito.CognitoSyncManager;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 
@@ -98,6 +99,9 @@ public class IdentityManager {
     /** Executor service for obtaining credentials in a background thread. */
     private final ExecutorService executorService = Executors.newFixedThreadPool(2);
 
+    /** Cognito Sync Manager. */
+    private CognitoSyncManager syncManager;
+
     /** Current provider being used to obtain a Cognito access token. */
     private IdentityProvider currentIdentityProvider = null;
 
@@ -156,6 +160,12 @@ public class IdentityManager {
     private void setCredentialsProvider(final Context context,
                                         final CognitoCachingCredentialsProvider cachingCredentialsProvider) {
         credentialsProviderHolder.setUnderlyingProvider(cachingCredentialsProvider);
+
+        // If this is being called after initial setup, then it is because the credentials provider
+        // has been replaced, so the CognitoSyncManager must also be replaced with one that
+        // uses the new provider.
+        this.syncManager = new CognitoSyncManager(context, AWSConfiguration.AMAZON_COGNITO_REGION,
+            cachingCredentialsProvider, clientConfiguration);
     }
 
     private void initializeCognito(final Context context, final ClientConfiguration clientConfiguration) {
@@ -202,6 +212,19 @@ public class IdentityManager {
 
     public CognitoCachingCredentialsProvider getUnderlyingProvider() {
         return this.credentialsProviderHolder.getUnderlyingProvider();
+    }
+
+    /**
+     * Gets the Amazon Cognito Sync Manager, which is responsible for saving and
+     * loading user profile data, such as game state or user settings.
+     *
+     * Note: This method is also available from the AWSMobileClient, but is present
+     * here, since the IdentityManager owns the CognitoSyncManager in order to
+     * recreate it when the credentials provider changes.
+     * @return sync manager
+     */
+    public CognitoSyncManager getSyncManager() {
+        return syncManager;
     }
 
     /**

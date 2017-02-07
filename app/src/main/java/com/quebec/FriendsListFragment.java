@@ -50,6 +50,7 @@ public class FriendsListFragment extends Fragment implements AdapterView.OnItemC
 
         listView = (ListView) v.findViewById(R.id.friendsList);
 
+        // TODO: Load information from sources
         values = new User[] {
                 new User("hello"),
                 new User("hello2")
