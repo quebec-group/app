@@ -1,9 +1,10 @@
 package com.quebec;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,9 +15,8 @@ import com.amazonaws.mobile.user.signin.SignInManager;
 import com.amazonaws.mobile.user.IdentityManager;
 import com.amazonaws.mobile.user.IdentityProvider;
 
+import com.amazonaws.mobile.user.signin.FacebookSignInProvider;
 import com.amazonaws.mobile.user.signin.CognitoUserPoolsSignInProvider;
-
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class SignInActivity extends Activity {
     private static final String LOG_TAG = SignInActivity.class.getSimpleName();
@@ -39,6 +39,8 @@ public class SignInActivity extends Activity {
          */
         @Override
         public void onSuccess(final IdentityProvider provider) {
+            Log.d(LOG_TAG, String.format("User sign-in with %s succeeded",
+                provider.getDisplayName()));
 
             // The sign-in manager is no longer needed once signed in.
             SignInManager.dispose();
@@ -54,7 +56,7 @@ public class SignInActivity extends Activity {
                     Log.d(LOG_TAG, "Launching Main Activity...");
                     startActivity(new Intent(SignInActivity.this, MainActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-
+                    // finish should always be called on the main thread.
                     finish();
                 }
             });
@@ -90,13 +92,6 @@ public class SignInActivity extends Activity {
             errorDialogBuilder.setNeutralButton("Ok", null);
             errorDialogBuilder.show();
         }
-
-
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @Override
@@ -109,6 +104,9 @@ public class SignInActivity extends Activity {
         signInManager.setResultsHandler(this, new SignInResultsHandler());
 
         // Initialize sign-in buttons.
+        signInManager.initializeSignInButton(FacebookSignInProvider.class,
+            this.findViewById(R.id.fb_login_button));
+
         signInManager.initializeSignInButton(CognitoUserPoolsSignInProvider.class,
                 this.findViewById(R.id.signIn_imageButton_login));
     }

@@ -13,8 +13,15 @@ import android.util.Log;
 
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.mobile.user.IdentityManager;
+import com.amazonaws.regions.Region;
+import com.amazonaws.mobile.api.CloudLogicAPI;
+import com.amazonaws.mobile.api.CloudLogicAPIConfiguration;
+import com.amazonaws.mobile.api.CloudLogicAPIFactory;
+import com.amazonaws.mobile.push.PushManager;
+import com.amazonaws.mobile.push.GCMTokenHelper;
+import com.amazonaws.mobileconnectors.cognito.CognitoSyncManager;
 import com.amazonaws.regions.Regions;
-import com.amazonaws.mobile.content.ContentManager;
+import com.amazonaws.mobile.content.UserFileManager;
 
 /**
  * The AWS Mobile Client bootstraps the application to make calls to AWS 
@@ -31,6 +38,8 @@ public class AWSMobileClient {
 
     private ClientConfiguration clientConfiguration;
     private IdentityManager identityManager;
+    private GCMTokenHelper gcmTokenHelper;
+    private PushManager pushManager;
 
     /**
      * Build class used to create the AWS mobile client.
@@ -115,6 +124,18 @@ public class AWSMobileClient {
         this.identityManager = identityManager;
         this.clientConfiguration = clientConfiguration;
 
+        this.gcmTokenHelper = new GCMTokenHelper(context, AWSConfiguration.GOOGLE_CLOUD_MESSAGING_SENDER_ID);
+        this.pushManager =
+            new PushManager(context,
+                            gcmTokenHelper,
+                            identityManager.getCredentialsProvider(),
+                            AWSConfiguration.AMAZON_SNS_PLATFORM_APPLICATION_ARN,
+                            clientConfiguration,
+                            AWSConfiguration.AMAZON_SNS_DEFAULT_TOPIC_ARN,
+                            AWSConfiguration.AMAZON_SNS_TOPIC_ARNS,
+                            AWSConfiguration.AMAZON_SNS_REGION);
+        gcmTokenHelper.init();
+
     }
 
     /**
@@ -139,6 +160,23 @@ public class AWSMobileClient {
      */
     public IdentityManager getIdentityManager() {
         return this.identityManager;
+    }
+
+    /**
+     * Gets the push notifications manager.
+     * @return push manager
+     */
+    public PushManager getPushManager() {
+        return this.pushManager;
+    }
+
+    /**
+     * Gets the Amazon Cognito Sync Manager, which is responsible for saving and
+     * loading user profile data, such as game state or user settings.
+     * @return sync manager
+     */
+    public CognitoSyncManager getSyncManager() {
+        return identityManager.getSyncManager();
     }
 
     /**
@@ -167,21 +205,43 @@ public class AWSMobileClient {
     }
 
     /**
-     * Creates the default Content Manager, which allows files to be downloaded from
-     * the Amazon S3 (Simple Storage Service) bucket associated with the App Content
-     * Delivery feature (optionally through Amazon CloudFront if Multi-Region CDN option
-     * was selected).
-     * @param resultHandler handles the resulting ContentManager instance
+     * Creates a User File Manager instance, which facilitates file transfers
+     * between the device and the specified Amazon S3 (Simple Storage Service) bucket.
+     *
+     * @param s3Bucket Amazon S3 bucket
+     * @param s3FolderPrefix Folder pre-fix for files affected by this user file
+     *                       manager instance
+     * @param resultHandler handles the resulting UserFileManager instance
      */
-    public void createDefaultContentManager(final ContentManager.BuilderResultHandler resultHandler) {
-        new ContentManager.Builder()
-            .withContext(context)
-            .withIdentityManager(identityManager)
-            .withS3Bucket(AWSConfiguration.AMAZON_CONTENT_DELIVERY_S3_BUCKET)
+    public void createUserFileManager(final String s3Bucket,
+                                      final String s3FolderPrefix,
+                                      final Regions region,
+                                      final UserFileManager.BuilderResultHandler resultHandler) {
+
+        new UserFileManager.Builder().withContext(context)
+            .withIdentityManager(getIdentityManager())
+            .withS3Bucket(s3Bucket)
+            .withS3ObjectDirPrefix(s3FolderPrefix)
             .withLocalBasePath(context.getFilesDir().getAbsolutePath())
-            .withRegion(AWSConfiguration.AMAZON_CONTENT_DELIVERY_S3_REGION)
             .withClientConfiguration(clientConfiguration)
+            .withRegion(region)
             .build(resultHandler);
+    }
+
+    /**
+     * Creates and bootstraps Amazon API Gateway client with the current credentials
+     * provider.
+     * @param clientClass Amazon API Gateway client class
+     * @return client instance
+     */
+    public CloudLogicAPI createAPIClient(final Class<?> clientClass) {
+        for (final CloudLogicAPIConfiguration config : CloudLogicAPIFactory.getAPIs()) {
+            if (config.getClientClass().equals(clientClass)) {
+                return config.getClient();
+            }
+        }
+
+        throw new IllegalArgumentException("Unable to find API client for class: " + clientClass.getName());
     }
 
 }

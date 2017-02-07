@@ -45,6 +45,10 @@ public class SignInManager {
         this.context = context.getApplicationContext();
         AWSMobileClient.initializeMobileClientIfNecessary(context);
 
+        // Initialize Facebook SDK.
+        final FacebookSignInProvider facebookSignInProvider = new FacebookSignInProvider(context);
+        addSignInProvider(facebookSignInProvider);
+
         // Initialize Cognito User Pools SDK.
         final CognitoUserPoolsSignInProvider cognitoUserPoolsSignInProvider =
                 new CognitoUserPoolsSignInProvider(context);

@@ -18,20 +18,36 @@ import com.amazonaws.regions.Regions;
 public class AWSConfiguration {
     // AWS MobileHub user agent string
     public static final String AWS_MOBILEHUB_USER_AGENT =
-        "MobileHub 741daa04-7e74-4c50-a37c-b9f6734bdee1 aws-my-sample-app-android-v0.14";
+        "MobileHub 9b66f884-0113-411e-832d-099a30574cb7 aws-my-sample-app-android-v0.14";
     // AMAZON COGNITO
     public static final Regions AMAZON_COGNITO_REGION =
-      Regions.fromName("us-east-1");
+      Regions.fromName("eu-west-1");
     public static final String  AMAZON_COGNITO_IDENTITY_POOL_ID =
-        "us-east-1:898f9bab-0624-45d6-9a25-146caa29a6c0";
-    public static final String AMAZON_CONTENT_DELIVERY_S3_BUCKET =
-        "whosatmyparty-contentdelivery-mobilehub-206667507";
-    public static final Regions AMAZON_CONTENT_DELIVERY_S3_REGION =
-       Regions.fromName("us-east-1");
+        "eu-west-1:5a3fcc9f-86e9-4926-bdb1-fb0548043123";
+    // GOOGLE CLOUD MESSAGING SENDER ID
+    public static final String GOOGLE_CLOUD_MESSAGING_SENDER_ID =
+        "846303706743";
+    // SNS PLATFORM APPLICATION ARN
+    public static final String AMAZON_SNS_PLATFORM_APPLICATION_ARN =
+        "arn:aws:sns:eu-west-1:926867918335:app/GCM/quebec_MOBILEHUB_1062763500";
+    public static final Regions AMAZON_SNS_REGION =
+         Regions.fromName("eu-west-1");
+    // SNS DEFAULT TOPIC ARN
+    public static final String AMAZON_SNS_DEFAULT_TOPIC_ARN =
+        "arn:aws:sns:eu-west-1:926867918335:quebec_alldevices_MOBILEHUB_1062763500";
+    // SNS PLATFORM TOPIC ARNS
+    public static final String[] AMAZON_SNS_TOPIC_ARNS =
+        {};
+    // S3 BUCKET
+    public static final String AMAZON_S3_USER_FILES_BUCKET =
+        "quebec-userfiles-mobilehub-1062763500";
+    // S3 BUCKET REGION
+    public static final Regions AMAZON_S3_USER_FILES_BUCKET_REGION =
+        Regions.fromName("eu-west-1");
     public static final String AMAZON_COGNITO_USER_POOL_ID =
-        "us-east-1_ABadiKgo8";
+        "eu-west-1_uSMoln18o";
     public static final String AMAZON_COGNITO_USER_POOL_CLIENT_ID =
-        "3suq0elmas17348n81dv24ei7";
+        "40m97iuli7kvspgl7tqvo0gk1f";
     public static final String AMAZON_COGNITO_USER_POOL_CLIENT_SECRET =
-        "shd4p86jr0gn0gv278p1d01uvde49fegv2r0qlqkt3mt6mffhkc";
+        "n19us4ut97rf8v85topa9hqbrbpjn1r30k5fcnd4em6vmv4q2ol";
 }
