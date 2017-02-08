@@ -7,7 +7,7 @@
        is used by the com.amazonaws.mobile.downloader.query.DownloadQueueProvider class. -->
     <string name="download_queue_provider_authority">com.amazonaws.mobile.downloader-com.amazon.mysampleapp</string>
     <!-- This can be anything, but it should be unique to the app. -->
-    <string name="content_file_provider_authority">com.mysampleapp.fileprovider</string>
+    <string name="content_file_provider_authority">com.quebec.android.fileprovider</string>
 
     <!-- REQUIRED FOR GENERAL APP FUNCTIONALITY - YOU MAY WANT TO KEEP THESE -->
 
@@ -127,5 +127,14 @@
     <string name="profile_train_photo_upload_button">Upload photo</string>
     <string name="profile_train_photo_take_button">Take photo</string>
     <string name="eventsFeedTitle">Events Feed</string>
+    <string name="facebook_login">Login with Facebook</string>
+    <string name="signup_signin_email">Login/Signup with Email</string>
+    <string name="login_button">Login</string>
+    <string name="facebook_app_id">1338822089498098</string>
+    <string name="signin_title">Hey, sign in to get started!</string>
+    <string name="signup_title">Enter your details below</string>
+    <string name="confirm_account_title">Confirm your account</string>
 
+    <string name="signup_photo_error_permissions">Unable to create image file. Check you have set the required permissions.</string>
+    <string name="signup_photo_error_cropping">Unable to crop the image. Please try again.</string>
 </resources>

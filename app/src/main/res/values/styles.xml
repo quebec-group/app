@@ -25,4 +25,18 @@
         <item name="fontPath">Lato-Regular.ttf</item>
     </style>
 
+    <style name="Widget.AppCompat.Button.Style">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="SmallHeaderText" parent="android:Widget.TextView">
+        <item name="android:layout_marginRight">50sp</item>
+        <item name="android:layout_marginBottom">@dimen/activity_separation_small</item>
+        <item name="android:gravity">left</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
 </resources>

@@ -61,6 +61,14 @@
                     android:id="@+id/profile_logout"
                     android:layout_above="@+id/button_friends_list"
                     android:layout_alignParentStart="true" />
+
+                <Button
+                    android:text="Update details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/profile_update_details"
+                    android:layout_above="@+id/profile_logout"
+                    android:layout_alignParentStart="true" />
             </RelativeLayout>
         </LinearLayout>
 

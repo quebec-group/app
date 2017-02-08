@@ -3,6 +3,7 @@ package com.quebec;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+
 /**
  * Created by Andrew on 03/02/2017.
  */

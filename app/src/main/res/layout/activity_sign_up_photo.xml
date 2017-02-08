@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_sign_up_photo"
     android:layout_width="match_parent"
@@ -10,39 +11,53 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.quebec.SignUpPhotoActivity">
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
 
         <TextView
-            android:text="@string/profile_train_photo_upload"
-            android:layout_width="wrap_content"
+            android:text="@string/signup_title"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
-            android:id="@+id/textView2" />
+            android:id="@+id/signup_title"
+            android:textAppearance="@style/TextAppearance.FontPath"
+            style="@style/SmallHeaderText" />
 
         <Button
             android:text="@string/profile_train_photo_upload_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="55dp"
+            android:layout_marginTop="15dp"
             android:id="@+id/signup_upload_photo_button"
-            android:layout_below="@+id/textView2"
-            android:layout_alignParentStart="true"
-            android:onClick="choosePhoto" />
+            android:onClick="choosePhoto"
+            android:layout_below="@+id/signup_title"
+            android:layout_alignParentStart="true" />
 
         <Button
             android:text="@string/profile_train_photo_take_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="17dp"
             android:id="@+id/signup_take_photo_button"
+            android:onClick="takePhoto"
             android:layout_below="@+id/signup_upload_photo_button"
-            android:layout_alignParentStart="true"
-            android:onClick="takePhoto" />
-    </RelativeLayout>
+            android:layout_alignParentStart="true" />
+
+        <ImageView
+            android:layout_width="345dp"
+            android:layout_height="212dp"
+            app:srcCompat="@color/bb_darkBackgroundColor"
+            android:id="@+id/signup_image_preview"
+            android:layout_alignParentBottom="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/signup_image_error" />
+    </LinearLayout>
+
 </RelativeLayout>

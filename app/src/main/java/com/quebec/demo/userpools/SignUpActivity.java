@@ -13,22 +13,57 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.amazonaws.mobile.user.signin.CognitoUserPoolsSignInProvider;
+import com.mobsandgeeks.saripaar.annotation.Email;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.mobsandgeeks.saripaar.annotation.Password;
 import com.quebec.R;
 import com.quebec.util.ViewHelper;
+
+import com.mobsandgeeks.saripaar.*;
+
+import java.util.List;
 
 /**
  * Activity to prompt for account sign up information.
  */
-public class SignUpActivity extends Activity {
+public class SignUpActivity extends Activity implements Validator.ValidationListener {
     /** Log tag. */
     private static final String LOG_TAG = SignUpActivity.class.getSimpleName();
+
+    private Validator val;
+
+    @NotEmpty
+    private EditText username;
+
+    @NotEmpty
+    @Password(min = 8, scheme = Password.Scheme.ALPHA_NUMERIC_MIXED_CASE_SYMBOLS)
+    private EditText password;
+
+    @NotEmpty
+    private EditText name;
+
+    @NotEmpty
+    @Email
+    private EditText email;
+
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
+        val = new Validator(this);
+        val.setValidationListener(this);
+
+        username = (EditText) this.findViewById(R.id.signup_username);
+        password = (EditText) this.findViewById(R.id.signup_password);
+        name = (EditText) this.findViewById(R.id.signup_given_name);
+        email = (EditText) this.findViewById(R.id.signup_email);
+
     }
 
     /**
@@ -36,26 +71,49 @@ public class SignUpActivity extends Activity {
      * @param view the Android View
      */
     public void signUp(final View view) {
+        val.validate();
+    }
+
+
+    /**
+     * When the validation checks have succeeded, send the intent to the Amazon login handler.
+     */
+    @Override
+    public void onValidationSucceeded() {
+        Toast.makeText(this, "Yay! we got it right!", Toast.LENGTH_SHORT).show();
+
         final String username = ViewHelper.getStringValue(this, R.id.signup_username);
         final String password = ViewHelper.getStringValue(this, R.id.signup_password);
         final String givenName = ViewHelper.getStringValue(this, R.id.signup_given_name);
         final String email = ViewHelper.getStringValue(this, R.id.signup_email);
-        final String phone = ViewHelper.getStringValue(this, R.id.signup_phone);
-
-        Log.d(LOG_TAG, "username = " + username);
-        Log.d(LOG_TAG, "given_name = " + givenName);
-        Log.d(LOG_TAG, "email = " + email);
-        Log.d(LOG_TAG, "phone = " + phone);
 
         final Intent intent = new Intent();
         intent.putExtra(CognitoUserPoolsSignInProvider.AttributeKeys.USERNAME, username);
         intent.putExtra(CognitoUserPoolsSignInProvider.AttributeKeys.PASSWORD, password);
         intent.putExtra(CognitoUserPoolsSignInProvider.AttributeKeys.GIVEN_NAME, givenName);
         intent.putExtra(CognitoUserPoolsSignInProvider.AttributeKeys.EMAIL_ADDRESS, email);
-        intent.putExtra(CognitoUserPoolsSignInProvider.AttributeKeys.PHONE_NUMBER, phone);
 
         setResult(RESULT_OK, intent);
 
         finish();
+    }
+
+    /**
+     * If the validation checks failed, then show the error messages on the page.
+     * @param errors given from the validation checker.
+     */
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors) {
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(this);
+
+            // Display error messages ;)
+            if (view instanceof EditText) {
+                ((EditText) view).setError(message);
+            } else {
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }

@@ -8,6 +8,8 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amazonaws.mobile.AWSMobileClient;
@@ -17,6 +19,11 @@ import com.amazonaws.mobile.user.IdentityProvider;
 
 import com.amazonaws.mobile.user.signin.FacebookSignInProvider;
 import com.amazonaws.mobile.user.signin.CognitoUserPoolsSignInProvider;
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+
+import java.util.List;
 
 public class SignInActivity extends Activity {
     private static final String LOG_TAG = SignInActivity.class.getSimpleName();
@@ -27,6 +34,11 @@ public class SignInActivity extends Activity {
 
     /** The Google OnClick listener, since we must override it to get permissions on Marshmallow and above. */
     private View.OnClickListener googleOnClickListener;
+
+    private TextView errorField;
+
+    private EditText usernameField;
+    private EditText passwordField;
 
     /**
      * SignInResultsHandler handles the final result from sign in. Making it static is a best
@@ -85,12 +97,8 @@ public class SignInActivity extends Activity {
             Log.e(LOG_TAG, String.format("User Sign-in failed for %s : %s",
                 provider.getDisplayName(), ex.getMessage()), ex);
 
-            final AlertDialog.Builder errorDialogBuilder = new AlertDialog.Builder(SignInActivity.this);
-            errorDialogBuilder.setTitle("Sign-In Error");
-            errorDialogBuilder.setMessage(
-                String.format("Sign-in with %s failed.\n%s", provider.getDisplayName(), ex.getMessage()));
-            errorDialogBuilder.setNeutralButton("Ok", null);
-            errorDialogBuilder.show();
+            errorField.setText(String.format("Sign-in failed. Please try again."));
+
         }
     }
 
@@ -100,7 +108,6 @@ public class SignInActivity extends Activity {
         setContentView(R.layout.activity_sign_in);
 
         signInManager = SignInManager.getInstance(this);
-
         signInManager.setResultsHandler(this, new SignInResultsHandler());
 
         // Initialize sign-in buttons.
@@ -109,6 +116,11 @@ public class SignInActivity extends Activity {
 
         signInManager.initializeSignInButton(CognitoUserPoolsSignInProvider.class,
                 this.findViewById(R.id.signIn_imageButton_login));
+
+        usernameField = (EditText) this.findViewById(R.id.signIn_editText_email);
+        passwordField = (EditText) this.findViewById(R.id.signIn_editText_password);
+
+        errorField = (TextView) this.findViewById(R.id.signin_error);
     }
 
     @Override

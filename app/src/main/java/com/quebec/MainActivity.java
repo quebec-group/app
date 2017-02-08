@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void showVideoUploadActivity() {
-        Intent intent = new Intent(this, VideoUploadActivity.class);
+        Intent intent = new Intent(this, SignUpPhotoActivity.class);
         startActivity(intent);
     }
 
@@ -191,11 +191,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void openFriendsList() {
+        Log.e("HELLO", "friends list");
         FriendsListFragment friendsList = FriendsListFragment.newInstance();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
         transaction.replace(R.id.fragment_container, friendsList).addToBackStack("fragment");
         transaction.commit();
+    }
+
+    @Override
+    public void openUpdateAccountDetails() {
+        // TODO: Update this to be a seperate activity for updating account information.
+        Intent intent = new Intent(this, SignUpPhotoActivity.class);
+        startActivity(intent);
     }
 }

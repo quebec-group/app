@@ -129,8 +129,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 logoutAccount();
                 break;
             case R.id.button_friends_list:
-                Log.e("1", "2");
                 mListener.openFriendsList();
+                break;
+            case R.id.profile_update_details:
+                mListener.openUpdateAccountDetails();
                 break;
         }
     }
@@ -167,5 +169,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     public interface ProfileInteractionListener {
         void openFriendsList();
+        void openUpdateAccountDetails();
     }
 }
