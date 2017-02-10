@@ -411,8 +411,7 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
                 username = ViewHelper.getStringValue(activity, EDIT_TEXT_USERNAME_ID);
                 if (null == username || username.length() < 1) {
                     Log.w(LOG_TAG, "Missing username.");
-                    ViewHelper.showDialog(activity, activity.getString(title_activity_sign_in),
-                            "Missing username.");
+                    // ViewHelper.showDialog(activity, activity.getString(title_activity_sign_in), "Missing username.");
                 } else {
 
                     final CognitoUser cognitoUser = cognitoUserPool.getUser(username);

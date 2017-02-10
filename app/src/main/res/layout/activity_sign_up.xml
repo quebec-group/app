@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:id="@+id/signup_title"
+            android:id="@+id/signup_photo_upload_title"
             android:textAppearance="@style/TextAppearance.FontPath"
             style="@style/SmallHeaderText" />
 
@@ -37,7 +37,7 @@
             android:id="@+id/signup_username"
             android:layout_width="match_parent"
             android:layout_height="@dimen/activity_text_height"
-            android:layout_below="@id/signup_title"
+            android:layout_below="@id/signup_photo_upload_title"
             android:layout_centerHorizontal="true"
             android:hint="@string/username_text"
             android:inputType="textPersonName" />
@@ -108,6 +108,12 @@
             android:layout_alignParentStart="true"
             style="@style/Widget.AppCompat.Button.Style"
             android:elevation="0dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/signup_error"
+            style="@style/ErrorMessage" />
 
     </LinearLayout>
 

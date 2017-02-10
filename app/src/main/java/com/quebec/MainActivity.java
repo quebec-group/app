@@ -22,6 +22,7 @@ import android.view.View;
 import com.amazonaws.mobile.AWSMobileClient;
 import com.amazonaws.mobile.user.IdentityManager;
 import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.OnTabReselectListener;
 import com.roughike.bottombar.OnTabSelectListener;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -39,6 +40,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /** The identity manager used to keep track of the current user account. */
     private IdentityManager identityManager;
     private Fragment mFragment;
+    private String currentFragmentName;
+
+    private void setFragment(Fragment frag, int transition) {
+
+        if (!frag.getClass().getName().equals(currentFragmentName)) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+            if (transition == 0) {
+                transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
+            }
+            else {
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
+            }
+            transaction.remove(mFragment);
+            transaction.replace(R.id.fragment_container, frag);
+            transaction.commit();
+            currentFragmentName = frag.getClass().getName();
+        }
+
+
+    }
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -77,35 +99,49 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 switch (tabId) {
                     case R.id.menu_eventsfeed:
-                        frag = new EventsFeedFragment();
-                        transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
+                        setFragment(new EventsFeedFragment(), 0);
                         break;
                     case R.id.menu_uploadvideo:
                         showVideoUploadActivity();
                         break;
                     case R.id.menu_profile:
-                        frag = new ProfileFragment();
-                        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
+                        setFragment(new ProfileFragment(), 1);
+                        break;
+                }
+            }
+
+        });
+
+        bottomBar.setOnTabReselectListener(new OnTabReselectListener() {
+
+            private Fragment frag;
+
+            @Override
+            public void onTabReSelected(@IdRes int tabId) {
+
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+
+                switch (tabId) {
+                    case R.id.menu_eventsfeed:
+                        setFragment(new EventsFeedFragment(), 0);
+                        break;
+                    case R.id.menu_uploadvideo:
+                        showVideoUploadActivity();
+                        break;
+                    case R.id.menu_profile:
+                        setFragment(new ProfileFragment(), 0);
                         break;
                 }
 
-                if (frag != null) {
-                    Log.e("id", Integer.toString(frag.getId()));
 
-                    transaction.remove(mFragment);
-                    transaction.replace(R.id.fragment_container, frag);
-                    transaction.commit();
-
-                    mFragment = frag;
-                }
             }
         });
 
     }
 
     public void showVideoUploadActivity() {
-        Intent intent = new Intent(this, SignUpPhotoActivity.class);
-        startActivity(intent);
+
     }
 
     @Override
@@ -172,12 +208,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onEventSelected(Event e) {
-        EventDetailFragment eventDetail = EventDetailFragment.newInstance(e);
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
-        transaction.replace(R.id.fragment_container, eventDetail).addToBackStack("fragment");
-        transaction.commit();
+        setFragment(EventDetailFragment.newInstance(e), 1);
     }
 
     /* Profile page interactions. */
@@ -191,19 +222,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void openFriendsList() {
-        Log.e("HELLO", "friends list");
-        FriendsListFragment friendsList = FriendsListFragment.newInstance();
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
-        transaction.replace(R.id.fragment_container, friendsList).addToBackStack("fragment");
-        transaction.commit();
+        setFragment(FriendsListFragment.newInstance(), 1);
     }
 
     @Override
     public void openUpdateAccountDetails() {
         // TODO: Update this to be a seperate activity for updating account information.
-        Intent intent = new Intent(this, SignUpPhotoActivity.class);
+        Intent intent = new Intent(this, ProfilePictureSignUpActivity.class);
         startActivity(intent);
     }
 }

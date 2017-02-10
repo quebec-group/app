@@ -2,18 +2,28 @@ package com.quebec;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 
 import com.amazonaws.mobile.AWSMobileClient;
+import com.amazonaws.mobile.content.ContentItem;
+import com.amazonaws.mobile.content.ContentProgressListener;
 import com.amazonaws.mobile.user.IdentityManager;
+import com.makeramen.roundedimageview.RoundedImageView;
+
+import java.io.File;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,7 +33,7 @@ import com.amazonaws.mobile.user.IdentityManager;
  * Use the {@link ProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfileFragment extends Fragment implements View.OnClickListener {
+public class ProfileFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener  {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -42,6 +52,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private TextView userIdTextView;
     private TextView userNameTextView;
+    private ListView profileEventsFeed;
+    private RoundedImageView profile_picture_view;
+
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -56,6 +69,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         fragment.setArguments(args);
         return fragment;
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,9 +88,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
                     @Override
                     public void handleIdentityID(String identityId) {
-
-                        userIdTextView.setText(identityId);
-
                         if (identityManager.isUserSignedIn()) {
                             userNameTextView.setText(identityManager.getUserName());
                         }
@@ -86,12 +98,34 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
                         // We failed to retrieve the user's identity. Set unknown user identifier
                         // in text view.
-                        userIdTextView.setText(unknownUserIdentityText);
+
                         final Context context = getActivity();
 
                     }
 
                 });
+
+
+        ProfilePictureHandler handler = new ProfilePictureHandler();
+        handler.getImage(new ContentProgressListener() {
+            @Override
+            public void onSuccess(ContentItem contentItem) {
+                File file = contentItem.getFile();
+                Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
+                profile_picture_view.setImageBitmap(bitmap);
+            }
+
+            @Override
+            public void onProgressUpdate(String filePath, boolean isWaiting, long bytesCurrent, long bytesTotal) {
+                Log.e("error downloading", filePath + " : " + bytesCurrent);
+            }
+
+            @Override
+            public void onError(String filePath, Exception ex) {
+                Log.e("error downloading", filePath + " : " + ex.getMessage());
+            }
+        });
+
     }
 
 
@@ -103,8 +137,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         mFragmentView = inflater.inflate(R.layout.fragment_profile, container, false);
 
 
-        userIdTextView = (TextView) mFragmentView.findViewById(R.id.profileFragment_id);
         userNameTextView = (TextView) mFragmentView.findViewById(R.id.profileFragment_name);
+        profile_picture_view = (RoundedImageView) mFragmentView.findViewById(R.id.profile_picture_view);
 
         /* Declare the onclick event handlers. */
         Button b1 = (Button) mFragmentView.findViewById(R.id.button_friends_list);
@@ -116,10 +150,24 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         identityManager = AWSMobileClient.defaultMobileClient()
                 .getIdentityManager();
 
+
+        profileEventsFeed = (ListView) mFragmentView.findViewById(R.id.profileEventsFeedList);
+
+        // TODO: Replace stubs with actual Events
+        Event[] values = new Event[] {
+                new Event("Andrew's Networking Event", "An evening of networking and getting to know each other over lots of drinks and good food."),
+                new Event("Group Project Dinner", "A group project evening of eating food while discussing the elements of the group project.")
+        };
+
+        EventListAdapterItem adapter = new EventListAdapterItem(this.getContext(), R.layout.event_list_item, values);
+        profileEventsFeed.setAdapter(adapter);
+        profileEventsFeed.setOnItemClickListener(this);
+
         fetchUserIdentity();
 
         return mFragmentView;
     }
+
 
     @Override
     public void onClick(View view) {
@@ -167,8 +215,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         startActivity(intent);
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
     public interface ProfileInteractionListener {
         void openFriendsList();
         void openUpdateAccountDetails();
+
     }
 }

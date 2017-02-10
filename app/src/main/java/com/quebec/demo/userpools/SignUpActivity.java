@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amazonaws.mobile.user.signin.CognitoUserPoolsSignInProvider;
@@ -50,6 +51,7 @@ public class SignUpActivity extends Activity implements Validator.ValidationList
     @Email
     private EditText email;
 
+    private TextView error;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -64,6 +66,7 @@ public class SignUpActivity extends Activity implements Validator.ValidationList
         name = (EditText) this.findViewById(R.id.signup_given_name);
         email = (EditText) this.findViewById(R.id.signup_email);
 
+        error = (TextView) this.findViewById(R.id.signup_error);
     }
 
     /**

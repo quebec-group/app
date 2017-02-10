@@ -19,16 +19,6 @@
         android:layout_marginTop="100dp"
         android:gravity="center"/>
 
-    <Button
-        android:text="@string/facebook_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/fb_login_button"
-        style="@style/com_facebook_button"
-        android:layout_marginBottom="61dp"
-        android:layout_above="@+id/linearLayout"
-        android:layout_centerHorizontal="true" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,9 +28,9 @@
         android:id="@+id/linearLayout"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="88dp"
+        android:layout_marginBottom="87dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true">
+        android:layout_centerHorizontal="true">
 
         <EditText
             android:id="@+id/signIn_editText_email"
@@ -68,13 +58,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/signIn_imageButton_login"
-            android:textAppearance="@style/TextAppearance.FontPath" />
+            android:textAppearance="@style/TextAppearance.FontPath"
+            style="@style/Widget.AppCompat.Button.Style" />
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center_horizontal"
+
             android:layout_marginTop="10dp">
 
             <TextView
@@ -128,16 +118,26 @@
 
         </LinearLayout>
 
-        <TextView
-            android:text="Error message "
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/signin_error"
-            android:layout_weight="1"
-            android:textAppearance="@style/TextAppearance.FontPath"
-            android:textColor="@android:color/holo_red_light"
-            android:textAlignment="textStart" />
-
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/signin_error"
+        android:layout_weight="1"
+        style="@style/ErrorMessage"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/linearLayout"
+        android:layout_marginBottom="52dp" />
+
+    <Button
+        android:text="@string/facebook_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fb_login_button"
+        style="@style/com_facebook_button"
+        android:layout_below="@+id/textView4"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="54dp" />
 
 </RelativeLayout>

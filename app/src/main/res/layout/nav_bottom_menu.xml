@@ -3,7 +3,7 @@
     <item
         android:id="@+id/menu_eventsfeed"
         android:title="@string/menu_eventsfeed"
-        android:icon="@android:drawable/ic_menu_rotate"
+        android:icon="@android:drawable/ic_menu_camera"
         />
 
     <item

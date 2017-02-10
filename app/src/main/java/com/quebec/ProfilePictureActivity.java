@@ -9,17 +9,12 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.amazonaws.mobile.content.ContentItem;
+import com.amazonaws.mobile.content.ContentProgressListener;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -31,62 +26,36 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class SignUpPhotoActivity extends AppCompatActivity {
+/**
+ * Created by Andrew on 09/02/2017.
+ */
+
+public class ProfilePictureActivity extends AppCompatActivity {
+
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_TAKE_PHOTO = 1;
     private static final int RESULT_GALLERY = 2;
 
     private ImageView signup_image_preview;
-    private TextView error_text;
+    private TextView errorText;
 
     private Uri mCropImageUri;
 
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up_photo);
-
-        signup_image_preview = (ImageView) findViewById(R.id.signup_image_preview);
-        error_text = (TextView) findViewById(R.id.signup_image_error);
+    public ProfilePictureActivity() {
+        super();
     }
 
 
-    /**
-     * Launches the standard Android video interface for taking videos.
-     * https://developer.android.com/training/camera/photobasics.html
-     *
-     * @param view is the view from which the action was called.
-     */
-    public void takePhoto(View view) {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
-
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-                error_text.setText(R.string.signup_photo_error_permissions);
-            }
-
-            // If the File was created, launch the Camera activity.
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this, "com.quebec.android.fileprovider", photoFile);
-
-                mCropImageUri = photoURI;
-
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
-            }
-        }
-
+    public ProfilePictureActivity(ImageView signup_image_preview, TextView errorText) {
+        this.signup_image_preview = signup_image_preview;
+        this.errorText = errorText;
     }
 
+    public void setupElements(ImageView signup_image_preview, TextView errorText) {
+        this.signup_image_preview = signup_image_preview;
+        this.errorText = errorText;
+    }
 
     /**
      * Copy the image from a given Uri to a File destination.
@@ -108,6 +77,33 @@ public class SignUpPhotoActivity extends AppCompatActivity {
         out.close();
     }
 
+    public void launchCamera() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                errorText.setText(R.string.signup_photo_error_permissions);
+            }
+
+            // If the File was created, launch the Camera activity.
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this, "com.quebec.android.fileprovider", photoFile);
+
+                mCropImageUri = photoURI;
+
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+            }
+        }
+    }
+
+
     /**
      * Creates a temporary image file for use with the image cropper.
      * https://developer.android.com/training/camera/photobasics.html
@@ -120,15 +116,14 @@ public class SignUpPhotoActivity extends AppCompatActivity {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
 
         return image;
 
     }
+
+
+
 
     /**
      * Launches the Android gallery in order to select a video from the gallery
@@ -152,7 +147,7 @@ public class SignUpPhotoActivity extends AppCompatActivity {
         try {
             photoFile = createImageFile();
         } catch (IOException ex) {
-            error_text.setText(R.string.signup_photo_error_permissions);
+            errorText.setText(R.string.signup_photo_error_permissions);
         }
         // Continue only if the File was successfully created
         if (photoFile != null) {
@@ -177,6 +172,8 @@ public class SignUpPhotoActivity extends AppCompatActivity {
     public void launchCroppingTool() {
         CropImage.activity(mCropImageUri)
                 .setGuidelines(CropImageView.Guidelines.ON)
+                .setCropShape(CropImageView.CropShape.RECTANGLE)
+                .setFixAspectRatio(true)
                 .start(this);
     }
 
@@ -201,10 +198,29 @@ public class SignUpPhotoActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Uri resultUri = result.getUri();
 
+                ProfilePictureHandler up = new ProfilePictureHandler();
+                up.uploadProfilePicture(resultUri.getPath(), new ContentProgressListener() {
+                    @Override
+                    public void onSuccess(ContentItem contentItem) {
+
+                    }
+
+                    @Override
+                    public void onProgressUpdate(String filePath, boolean isWaiting, long bytesCurrent, long bytesTotal) {
+
+                    }
+
+                    @Override
+                    public void onError(String filePath, Exception ex) {
+
+                    }
+                });
+
+
                 signup_image_preview.setImageURI(resultUri);
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                error_text.setText(R.string.signup_photo_error_cropping);
+                errorText.setText(R.string.signup_photo_error_cropping);
             }
 
         }

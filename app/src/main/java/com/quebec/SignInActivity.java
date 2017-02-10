@@ -1,10 +1,7 @@
 package com.quebec;
 
-import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,17 +10,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amazonaws.mobile.AWSMobileClient;
+import com.amazonaws.mobile.user.signin.CognitoUserPoolsSignInProvider;
 import com.amazonaws.mobile.user.signin.SignInManager;
 import com.amazonaws.mobile.user.IdentityManager;
 import com.amazonaws.mobile.user.IdentityProvider;
 
 import com.amazonaws.mobile.user.signin.FacebookSignInProvider;
-import com.amazonaws.mobile.user.signin.CognitoUserPoolsSignInProvider;
-import com.mobsandgeeks.saripaar.ValidationError;
-import com.mobsandgeeks.saripaar.Validator;
-import com.mobsandgeeks.saripaar.annotation.NotEmpty;
-
-import java.util.List;
 
 public class SignInActivity extends Activity {
     private static final String LOG_TAG = SignInActivity.class.getSimpleName();
