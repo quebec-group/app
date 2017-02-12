@@ -9,38 +9,60 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:weightSum="1">
 
         <VideoView
             android:layout_width="wrap_content"
             android:layout_height="147dp"
             android:id="@+id/eventVideoView"
-            android:layout_margin="20dp"/>
+            android:layout_weight="0.39"
+            android:elevation="20dp" />
 
-        <RelativeLayout
-            android:layout_width="342dp"
-            android:layout_height="84dp"
-            android:layout_margin="20dp">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.39">
 
-            <TextView
-                android:text="TextView"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/eventDetailName"
-                android:textAppearance="@style/TextAppearance.FontPath"
-                android:textSize="30sp" />
-        </RelativeLayout>
+                android:layout_margin="20dp">
 
-        <GridView
-            android:layout_width="match_parent"
-            android:layout_height="263dp"
-            android:id="@+id/eventUsers"
-            android:columnWidth="90dp"
-            android:numColumns="auto_fit"
-            android:verticalSpacing="10dp"
-            android:horizontalSpacing="10dp"
-            android:stretchMode="columnWidth"
-            android:gravity="center"/>
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/eventDetailName"
+                    android:textAppearance="@style/TextAppearance.FontPath"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/eventDetailName"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="19dp"
+                    android:id="@+id/eventDetailDescription" />
+
+                <GridView
+                    android:layout_width="match_parent"
+                    android:layout_height="263dp"
+                    android:id="@+id/eventUsers"
+                    android:columnWidth="90dp"
+                    android:numColumns="2"
+                    android:verticalSpacing="10dp"
+                    android:horizontalSpacing="10dp"
+                    android:stretchMode="columnWidth"
+                    android:gravity="center"
+                    android:layout_below="@+id/eventDetailName"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="66dp" />
+
+            </RelativeLayout>
+        </ScrollView>
+
     </LinearLayout>
 
 </FrameLayout>

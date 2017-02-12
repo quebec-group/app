@@ -3,6 +3,7 @@ package com.quebec;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+
 /**
  * Created by Andrew on 03/02/2017.
  */
@@ -10,16 +11,19 @@ import android.os.Parcelable;
 public class Event implements Parcelable {
 
     private String name;
+    private String description;
     private String videoURL;
 
 
-    public Event(String name) {
+    public Event(String name, String description) {
         this.name = name;
+        this.description = description;
         this.videoURL = "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4";
     }
 
     protected Event(Parcel in) {
         name = in.readString();
+        description = in.readString();
         videoURL = in.readString();
     }
 
@@ -43,6 +47,8 @@ public class Event implements Parcelable {
         return videoURL;
     }
 
+    public String getDescription() { return description; }
+
     @Override
     public int describeContents() {
         return 0;
@@ -51,6 +57,7 @@ public class Event implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
+        dest.writeString(description);
         dest.writeString(videoURL);
     }
 }

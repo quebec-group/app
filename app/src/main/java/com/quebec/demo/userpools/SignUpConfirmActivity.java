@@ -41,9 +41,6 @@ public class SignUpConfirmActivity extends Activity {
         final String verificationCode =
                 ViewHelper.getStringValue(this, R.id.confirm_account_confirmation_code);
 
-        Log.d(LOG_TAG, "username = " + username);
-        Log.d(LOG_TAG, "verificationCode = " + verificationCode);
-
         final Intent intent = new Intent();
         intent.putExtra(CognitoUserPoolsSignInProvider.AttributeKeys.USERNAME, username);
         intent.putExtra(CognitoUserPoolsSignInProvider.AttributeKeys.VERIFICATION_CODE, verificationCode);

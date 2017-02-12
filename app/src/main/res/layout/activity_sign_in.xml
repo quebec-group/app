@@ -4,15 +4,34 @@
 
     tools:context="com.quebec.SignInActivity">
 
+    <TextView
+        android:text="@string/signin_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:id="@+id/textView4"
+        android:textAppearance="@style/TextAppearance.FontPath"
+        android:textSize="36sp"
+        android:textAlignment="center"
+        android:textStyle="normal|bold"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="100dp"
+        android:gravity="center"/>
+
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true"
         android:textAppearance="@style/TextAppearance.FontPath"
-        android:id="@+id/linearLayout">
+        android:id="@+id/linearLayout"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="87dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+
         <EditText
             android:id="@+id/signIn_editText_email"
             android:layout_width="fill_parent"
@@ -23,28 +42,29 @@
             android:textAppearance="@style/TextAppearance.FontPath"
             android:hint="@string/sign_in_email"
             />
+
         <EditText
             android:id="@+id/signIn_editText_password"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/sign_in_text_margin"
             android:layout_marginRight="@dimen/sign_in_text_margin"
             android:inputType="textPassword"
             android:hint="@string/sign_in_password"
-            />
+            style="@style/TextAppearance.FontPath" />
 
         <Button
-            android:text="Button"
+            android:text="@string/login_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/signIn_imageButton_login"
-            android:textAppearance="@style/TextAppearance.FontPath" />
+            android:textAppearance="@style/TextAppearance.FontPath"
+            style="@style/Widget.AppCompat.Button.Style" />
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center_horizontal"
+
             android:layout_marginTop="10dp">
 
             <TextView
@@ -87,16 +107,6 @@
                 android:gravity="center_vertical"
                 />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.FontPath"
-                android:text="@string/sign_in_or"
-                android:padding="20dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                />
-
             <View
                 android:layout_width="100dp"
                 android:layout_height="@dimen/sign_in_separator_height"
@@ -107,13 +117,27 @@
                 />
 
         </LinearLayout>
+
     </LinearLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/signin_error"
+        android:layout_weight="1"
+        style="@style/ErrorMessage"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/linearLayout"
+        android:layout_marginBottom="52dp" />
+
     <Button
-        android:text="Button"
+        android:text="@string/facebook_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/linearLayout"
+        android:id="@+id/fb_login_button"
+        style="@style/com_facebook_button"
+        android:layout_below="@+id/textView4"
         android:layout_centerHorizontal="true"
-        android:id="@+id/fb_login_button" />
+        android:layout_marginTop="54dp" />
+
 </RelativeLayout>

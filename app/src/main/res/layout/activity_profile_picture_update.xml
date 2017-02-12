@@ -18,24 +18,20 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
 
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
         <TextView
-            android:text="@string/signup_photo_upload_title"
+            android:text="@string/profile_update_profile_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:id="@+id/signup_photo_upload_title"
+            android:id="@+id/profile_update_profile_text"
             android:textAppearance="@style/TextAppearance.FontPath"
             style="@style/SmallHeaderText" />
-
-        <Button
-            android:text="@string/profile_train_photo_upload_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:id="@+id/signup_upload_photo_button"
-            android:onClick="choosePhoto"
-            android:layout_below="@+id/signup_photo_upload_title"
-            android:layout_alignParentStart="true" />
 
         <Button
             android:text="@string/profile_train_photo_take_button"
@@ -47,17 +43,28 @@
             android:layout_below="@+id/signup_upload_photo_button"
             android:layout_alignParentStart="true" />
 
-        <ImageView
-            android:layout_width="345dp"
-            android:layout_height="212dp"
-            app:srcCompat="@color/bb_darkBackgroundColor"
-            android:id="@+id/signup_image_preview"
-            android:layout_alignParentBottom="true" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/signup_image_error" />
-    </LinearLayout>
+
+        <Button
+            android:text="@string/profile_train_photo_upload_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="38dp"
+            android:id="@+id/signup_upload_photo_button"
+            android:onClick="choosePhoto"
+            android:layout_below="@+id/profile_update_profile_text"
+            android:layout_alignParentStart="true" />
+
+        <ImageView
+            app:srcCompat="@color/bb_darkBackgroundColor"
+            android:id="@+id/signup_image_preview"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_width="200dp"
+            android:layout_height="200dp" />
+    </RelativeLayout>
 
 </RelativeLayout>
