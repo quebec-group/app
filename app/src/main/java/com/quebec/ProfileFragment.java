@@ -143,9 +143,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
         /* Declare the onclick event handlers. */
         Button b1 = (Button) mFragmentView.findViewById(R.id.button_friends_list);
         Button b2 = (Button) mFragmentView.findViewById(R.id.profile_logout);
+        Button b3 = (Button) mFragmentView.findViewById(R.id.profile_update_details_button);
 
         b1.setOnClickListener(this);
         b2.setOnClickListener(this);
+        b3.setOnClickListener(this);
 
         identityManager = AWSMobileClient.defaultMobileClient()
                 .getIdentityManager();
@@ -179,8 +181,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
             case R.id.button_friends_list:
                 mListener.openFriendsList();
                 break;
-            case R.id.profile_update_details:
-                mListener.openUpdateAccountDetails();
+            case R.id.profile_update_details_button:
+                mListener.updateProfilePictureActivity();
                 break;
         }
     }
@@ -222,7 +224,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
 
     public interface ProfileInteractionListener {
         void openFriendsList();
-        void openUpdateAccountDetails();
-
+        void updateProfilePictureActivity();
     }
 }

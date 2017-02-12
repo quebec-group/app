@@ -13,16 +13,21 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="68dp"
-            android:layout_margin="20dp">
+            android:layout_height="99dp">
 
             <TextView
                 android:text="@string/eventsFeedTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:id="@+id/textView3"
-                android:textAppearance="@style/TextAppearance.FontPath"
-                android:textSize="40sp" />
+                android:textAppearance="@style/TextAppearance.FontPathHeading"
+                android:textSize="20sp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@color/colorWhite"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_width="150dp" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -32,11 +37,9 @@
             <ListView
                 android:layout_width="match_parent"
                 android:layout_height="574dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:id="@+id/eventsFeedList" />
+                android:id="@+id/eventsFeedList"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
 
         </RelativeLayout>
     </LinearLayout>

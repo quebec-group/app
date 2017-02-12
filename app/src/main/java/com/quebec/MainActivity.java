@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             transaction.remove(mFragment);
             transaction.replace(R.id.fragment_container, frag);
+            transaction.addToBackStack(frag.getClass().getName());
             transaction.commit();
             currentFragmentName = frag.getClass().getName();
         }
@@ -216,8 +217,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onFriendSelected(User u) {
         // TODO: Complete this method.
-        Log.e("FRIND", "FRIEND");
-
     }
 
     @Override
@@ -226,8 +225,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void openUpdateAccountDetails() {
-        // TODO: Update this to be a seperate activity for updating account information.
+    public void updateProfilePictureActivity() {
         Intent intent = new Intent(this, ProfilePictureSignUpActivity.class);
         startActivity(intent);
     }

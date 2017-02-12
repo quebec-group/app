@@ -90,10 +90,12 @@ public class FriendsListFragment extends Fragment implements AdapterView.OnItemC
         return v;
     }
 
+    // TODO: Function incomplete
     public void performSearch() {
+
+        /*
         String request = friendsListSearchBox.getText().toString();
 
-        Log.e("JIJJ", "msg");
         // TODO Make request to the server for search
 
         User[] newValues = new User[] {
@@ -104,7 +106,7 @@ public class FriendsListFragment extends Fragment implements AdapterView.OnItemC
         adapter.clear();
         adapter.addAll(newValues);
         adapter.notifyDataSetChanged();
-
+        */
     }
 
     @Override

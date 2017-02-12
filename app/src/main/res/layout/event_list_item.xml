@@ -5,22 +5,37 @@
     android:padding="10dp"
     android:layout_marginBottom="30dp">
 
-    <TextView
-        android:id="@+id/eventItemName"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:text="Item name here..."
-        android:textAppearance="@style/TextAppearance.FontPath"
-        android:textSize="30sp" />
+        android:layout_height="match_parent"
+        android:layout_margin="20dp">
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:id="@+id/eventItemDescription"
-        android:layout_below="@+id/eventItemName"
-        android:layout_alignParentStart="true" />
+        <TextView
+            android:id="@+id/eventItemName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="Item name here..."
+            android:textAppearance="@style/TextAppearance.FontPath"
+            android:textSize="30sp" />
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:id="@+id/eventItemDescription"
+            android:layout_below="@+id/eventItemName"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:text="25 guests"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="19dp"
+            android:id="@+id/textView2"
+            android:layout_below="@+id/eventItemDescription"
+            android:layout_alignParentStart="true" />
+    </RelativeLayout>
 
 </RelativeLayout>
