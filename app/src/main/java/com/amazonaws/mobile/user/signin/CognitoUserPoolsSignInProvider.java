@@ -32,29 +32,30 @@ import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.Authentic
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.ForgotPasswordHandler;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.GenericHandler;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.SignUpHandler;
-import com.quebec.R;
-import com.quebec.demo.userpools.ForgotPasswordActivity;
-import com.quebec.demo.userpools.MFAActivity;
-import com.quebec.demo.userpools.SignUpActivity;
-import com.quebec.demo.userpools.SignUpConfirmActivity;
-import com.quebec.util.ViewHelper;
+import com.quebec.app.R;
+import com.quebec.app.demo.userpools.ForgotPasswordActivity;
+import com.quebec.app.demo.userpools.MFAActivity;
+import com.quebec.app.demo.userpools.SignUpActivity;
+import com.quebec.app.demo.userpools.SignUpConfirmActivity;
+import com.quebec.app.util.ViewHelper;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 
-import static com.quebec.R.string.login_failed;
-import static com.quebec.R.string.login_success;
-import static com.quebec.R.string.password_change_failed;
-import static com.quebec.R.string.password_change_success;
-import static com.quebec.R.string.sign_up_confirm_failed;
-import static com.quebec.R.string.sign_up_confirm_success;
-import static com.quebec.R.string.sign_up_failed;
-import static com.quebec.R.string.sign_up_success;
-import static com.quebec.R.string.title_activity_forgot_password;
-import static com.quebec.R.string.title_activity_sign_in;
-import static com.quebec.R.string.title_activity_sign_up;
-import static com.quebec.R.string.title_activity_sign_up_confirm;
+import static com.quebec.app.R.string.login_failed;
+import static com.quebec.app.R.string.login_success;
+import static com.quebec.app.R.string.password_change_failed;
+import static com.quebec.app.R.string.password_change_success;
+import static com.quebec.app.R.string.sign_up_confirm_failed;
+import static com.quebec.app.R.string.sign_up_confirm_success;
+import static com.quebec.app.R.string.sign_up_failed;
+import static com.quebec.app.R.string.sign_up_success;
+import static com.quebec.app.R.string.title_activity_forgot_password;
+import static com.quebec.app.R.string.title_activity_sign_in;
+import static com.quebec.app.R.string.title_activity_sign_up;
+import static com.quebec.app.R.string.title_activity_sign_up_confirm;
+import static com.quebec.app.R.string.sign_up_confirm_success;
 
 /**
  * Manages sign-in using Cognito User Pools.

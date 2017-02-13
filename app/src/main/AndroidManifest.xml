@@ -11,7 +11,7 @@
      http://tools.android.com/tech-docs/new-build-system/applicationid-vs-packagename
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.quebec">
+    package="com.quebec.app">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
