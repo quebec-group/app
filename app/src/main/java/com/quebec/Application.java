@@ -29,7 +29,7 @@ public class Application extends MultiDexApplication {
         Log.d(LOG_TAG, "Application.onCreate - Application initialized OK");
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("Lato-Regular.ttf")
+                .setDefaultFontPath("Lato-Black.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );

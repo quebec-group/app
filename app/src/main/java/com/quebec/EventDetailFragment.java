@@ -22,6 +22,8 @@ public class EventDetailFragment extends Fragment {
     private Event mEvent;
 
     private TextView eventNameTextView;
+    private TextView eventDetailDescription;
+
     private VideoView eventVideoview;
 
     private View mFragmentView;
@@ -75,12 +77,15 @@ public class EventDetailFragment extends Fragment {
 
         mFragmentView = inflater.inflate(R.layout.fragment_event_detail, container, false);
         eventNameTextView = (TextView) mFragmentView.findViewById(R.id.eventDetailName);
+        eventDetailDescription = (TextView) mFragmentView.findViewById(R.id.eventDetailDescription);
         eventVideoview = (VideoView) mFragmentView.findViewById(R.id.eventVideoView);
+
 
         /* If the event has been initialised, then insert the Event information onto the
            the page */
         if (mEvent != null) {
             eventNameTextView.setText(mEvent.getName());
+            eventDetailDescription.setText(mEvent.getDescription());
 
             Uri u = Uri.parse("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4");
             eventVideoview.setVideoURI(u);
@@ -91,24 +96,11 @@ public class EventDetailFragment extends Fragment {
         gridView = (GridView) mFragmentView.findViewById(R.id.eventUsers);
 
         User[] values = new User[] {
-                new User("hello"),
-                new User("hello2"),
-                new User("hello"),
-                new User("hello2"),
-                new User("hello"),
-                new User("hello2"),
-                new User("hello"),
-                new User("hello2"),
-                new User("hello"),
-                new User("hello2"),
-                new User("hello"),
-                new User("hello2"),
-                new User("hello"),
-                new User("hello2"),
-                new User("hello"),
-                new User("hello2"),
-                new User("hello"),
-                new User("hello2")
+                new User("Andrew Deniszczyc"),
+                new User("John Smith"),
+                new User("Pete Testing"),
+                new User("Evian Water"),
+                new User("Nokia Phone")
         };
 
         EventUsersAdapterItem adapter = new EventUsersAdapterItem(this.getContext(), R.layout.adapter_grid_event_user, values);

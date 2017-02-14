@@ -18,13 +18,13 @@
     tools:context="com.quebec.demo.userpools.SignUpConfirmActivity">
 
     <TextView
+        android:text="@string/confirm_account_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/sign_up_confirm_title"
-        android:id="@+id/confirm_account_title"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/confirm_account_title"
+        android:textAppearance="@style/TextAppearance.FontPath"
+        style="@style/SmallHeaderText" />
 
     <Space
         android:layout_width="match_parent"
