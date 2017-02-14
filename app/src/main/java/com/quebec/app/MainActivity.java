@@ -20,7 +20,7 @@ import android.view.View;
 
 import com.amazonaws.mobile.AWSMobileClient;
 import com.amazonaws.mobile.user.IdentityManager;
-import com.quebec.app.R;
+import com.quebec.app.auth.SplashActivity;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabReselectListener;
 import com.roughike.bottombar.OnTabSelectListener;

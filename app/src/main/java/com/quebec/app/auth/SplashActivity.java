@@ -6,7 +6,7 @@
 //
 // Source code generated from template: aws-my-sample-app-android v0.14
 //
-package com.quebec.app;
+package com.quebec.app.auth;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -19,6 +19,8 @@ import com.amazonaws.mobile.user.signin.SignInManager;
 import com.amazonaws.mobile.user.signin.SignInProvider;
 import com.amazonaws.mobile.user.IdentityManager;
 import com.amazonaws.mobile.user.IdentityProvider;
+import com.quebec.app.MainActivity;
+import com.quebec.app.R;
 
 import java.util.concurrent.CountDownLatch;
 

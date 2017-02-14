@@ -21,6 +21,7 @@ import com.amazonaws.mobile.content.ContentItem;
 import com.amazonaws.mobile.content.ContentProgressListener;
 import com.amazonaws.mobile.user.IdentityManager;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.quebec.app.auth.SplashActivity;
 
 import java.io.File;
 

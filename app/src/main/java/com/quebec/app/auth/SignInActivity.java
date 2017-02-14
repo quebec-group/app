@@ -1,4 +1,4 @@
-package com.quebec.app;
+package com.quebec.app.auth;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,6 +16,8 @@ import com.amazonaws.mobile.user.IdentityManager;
 import com.amazonaws.mobile.user.IdentityProvider;
 
 import com.amazonaws.mobile.user.signin.FacebookSignInProvider;
+import com.quebec.app.MainActivity;
+import com.quebec.app.R;
 
 public class SignInActivity extends Activity {
     private static final String LOG_TAG = SignInActivity.class.getSimpleName();
