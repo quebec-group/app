@@ -1,15 +1,20 @@
 package com.quebec.app;
 
 
+import android.Manifest;
 import android.content.Intent;
 
+import android.content.pm.PackageManager;
 import android.net.Uri;
 
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,25 +41,30 @@ public class ProfilePictureActivity extends AppCompatActivity {
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_TAKE_PHOTO = 1;
     private static final int RESULT_GALLERY = 2;
+    private static final int MY_PERMISSIONS_REQUEST_CAMERA = 3;
 
     private ImageView signup_image_preview;
     private TextView errorText;
+    private Button confirmButton;
 
     private Uri mCropImageUri;
+    private Uri croppedImageUri;
 
     public ProfilePictureActivity() {
         super();
     }
 
 
-    public ProfilePictureActivity(ImageView signup_image_preview, TextView errorText) {
+    public ProfilePictureActivity(ImageView signup_image_preview, TextView errorText, Button confirmButton) {
         this.signup_image_preview = signup_image_preview;
         this.errorText = errorText;
+        this.confirmButton = confirmButton;
     }
 
-    public void setupElements(ImageView signup_image_preview, TextView errorText) {
+    public void setupElements(ImageView signup_image_preview, TextView errorText, Button confirmButton) {
         this.signup_image_preview = signup_image_preview;
         this.errorText = errorText;
+        this.confirmButton = confirmButton;
     }
 
     /**
@@ -80,6 +90,11 @@ public class ProfilePictureActivity extends AppCompatActivity {
     public void launchCamera() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)  {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CAMERA);
+            return;
+        }
 
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
 
@@ -123,8 +138,6 @@ public class ProfilePictureActivity extends AppCompatActivity {
     }
 
 
-
-
     /**
      * Launches the Android gallery in order to select a video from the gallery
      *
@@ -133,7 +146,6 @@ public class ProfilePictureActivity extends AppCompatActivity {
     public void choosePhoto(View view) {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent, RESULT_GALLERY);
-
     }
 
     /**
@@ -178,6 +190,28 @@ public class ProfilePictureActivity extends AppCompatActivity {
     }
 
     /**
+     * Return when the permissions have been accepted.
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_CAMERA: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    launchCamera();
+                } else {
+                    // TODO: Handle permissions not provided, by showing an error message or similar.
+                }
+                return;
+            }
+        }
+    }
+
+    /**
      * Callback from the video selection from taking a video or choosing a video.
      *
      * @param requestCode
@@ -192,32 +226,14 @@ public class ProfilePictureActivity extends AppCompatActivity {
             handleImageSelectionGallery(data.getData());
         } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
 
-            // Image has been successfully cropepd, now we need to handle it by uploading the photo to the server.
+            // Image has been successfully cropped, now we need to handle it by uploading the photo to the server.
             // TODO image completed
+
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
-                Uri resultUri = result.getUri();
-
-                ProfilePictureHandler up = new ProfilePictureHandler();
-                up.uploadProfilePicture(resultUri.getPath(), new ContentProgressListener() {
-                    @Override
-                    public void onSuccess(ContentItem contentItem) {
-
-                    }
-
-                    @Override
-                    public void onProgressUpdate(String filePath, boolean isWaiting, long bytesCurrent, long bytesTotal) {
-
-                    }
-
-                    @Override
-                    public void onError(String filePath, Exception ex) {
-
-                    }
-                });
-
-
-                signup_image_preview.setImageURI(resultUri);
+                croppedImageUri = result.getUri();
+                signup_image_preview.setImageURI(croppedImageUri);
+                confirmButton.setEnabled(true);
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 errorText.setText(R.string.signup_photo_error_cropping);
@@ -228,5 +244,29 @@ public class ProfilePictureActivity extends AppCompatActivity {
 
     }
 
+    public void showMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 
+    public void confirmPhoto() {
+        ProfilePictureHandler up = new ProfilePictureHandler();
+
+        up.uploadProfilePicture(croppedImageUri.getPath(), new ContentProgressListener() {
+            @Override
+            public void onSuccess(ContentItem contentItem) {
+                showMainActivity();
+            }
+
+            @Override
+            public void onProgressUpdate(String filePath, boolean isWaiting, long bytesCurrent, long bytesTotal) {
+                // TODO
+            }
+
+            @Override
+            public void onError(String filePath, Exception ex) {
+                // TODO
+            }
+        });
+    }
 }

@@ -36,7 +36,6 @@ public class ProfilePictureHandler {
 
     public void getImage(ContentProgressListener callback) {
         String path = dataset.get(PROFILE_KEY);
-        Log.e("key", path);
         uploader.getFile(path, callback);
     }
 }
