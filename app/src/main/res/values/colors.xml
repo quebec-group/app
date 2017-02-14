@@ -3,12 +3,12 @@
 
 <resources>
 
-    <color name="colorPrimary">#f58535</color>
+    <color name="colorPrimary">#a9a9a9</color>
     <color name="colorWhite">#000000</color>
     <color name="colorPrimaryDark">#00000000</color>
 
-    <color name="top_bar_background">#F58535</color>
-    <color name="splash_text">#F58535</color>
+    <color name="top_bar_background">#969696</color>
+    <color name="splash_text">#a4a4a4</color>
     <color name="splash_background">#FFFFFF</color>
     <color name="main_background">#FFFFFF</color>
 

@@ -33,10 +33,10 @@ import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.ForgotPas
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.GenericHandler;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.SignUpHandler;
 import com.quebec.app.R;
-import com.quebec.app.demo.userpools.ForgotPasswordActivity;
-import com.quebec.app.demo.userpools.MFAActivity;
-import com.quebec.app.demo.userpools.SignUpActivity;
-import com.quebec.app.demo.userpools.SignUpConfirmActivity;
+import com.quebec.app.ForgotPasswordActivity;
+import com.quebec.app.MFAActivity;
+import com.quebec.app.SignUpActivity;
+import com.quebec.app.SignUpConfirmActivity;
 import com.quebec.app.util.ViewHelper;
 
 import java.util.HashSet;

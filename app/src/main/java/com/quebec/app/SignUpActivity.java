@@ -6,7 +6,7 @@
 //
 // Source code generated from template: aws-my-sample-app-android v0.14
 //
-package com.quebec.app.demo.userpools;
+package com.quebec.app;
 
 import android.app.Activity;
 import android.content.Intent;
