@@ -15,7 +15,7 @@
     android:layout_marginRight="@dimen/activity_horizontal_margin"
     android:layout_marginTop="@dimen/activity_vertical_margin"
 
-    tools:context="com.quebec.demo.userpools.SignUpActivity">
+    tools:context="com.quebec.app.demo.userpools.SignUpActivity">
 
     <LinearLayout
         android:orientation="vertical"
@@ -106,7 +106,7 @@
             android:textSize="@dimen/activity_button_text_size"
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
-            style="@style/Widget.AppCompat.Button.Style"
+            style="@style/Widget.AppCompat.Button"
             android:elevation="0dp" />
 
         <TextView

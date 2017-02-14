@@ -15,7 +15,7 @@
     android:layout_marginRight="@dimen/activity_horizontal_margin"
     android:layout_marginTop="@dimen/activity_vertical_margin"
 
-    tools:context="com.quebec.demo.userpools.SignUpConfirmActivity">
+    tools:context="com.quebec.app.demo.userpools.SignUpConfirmActivity">
 
     <TextView
         android:text="@string/confirm_account_title"

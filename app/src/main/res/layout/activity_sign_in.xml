@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context="com.quebec.SignInActivity">
+    tools:context="com.quebec.app.auth.SignInActivity">
 
     <TextView
         android:text="@string/signin_title"
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/signIn_imageButton_login"
             android:textAppearance="@style/TextAppearance.FontPath"
-            style="@style/Widget.AppCompat.Button.Style" />
+            style="@style/Widget.AppCompat.Button" />
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -128,7 +128,9 @@
         style="@style/ErrorMessage"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/linearLayout"
-        android:layout_marginBottom="52dp" />
+        android:layout_marginBottom="52dp"
+        android:textAlignment="textStart"
+        android:gravity="center_horizontal" />
 
     <Button
         android:text="@string/facebook_login"

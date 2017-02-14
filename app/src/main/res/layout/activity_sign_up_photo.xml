@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.quebec.ProfilePictureSignUpActivity">
+    tools:context="com.quebec.app.ProfilePictureSignUpActivity">
 
     <LinearLayout
         android:orientation="vertical"
@@ -27,37 +27,67 @@
             android:textAppearance="@style/TextAppearance.FontPath"
             style="@style/SmallHeaderText" />
 
-        <Button
-            android:text="@string/profile_train_photo_upload_button"
+        <TextView
+            android:text="@string/signup_photo_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:id="@+id/signup_upload_photo_button"
-            android:onClick="choosePhoto"
-            android:layout_below="@+id/signup_photo_upload_title"
-            android:layout_alignParentStart="true" />
+            android:id="@+id/signup_photo_description" />
 
-        <Button
-            android:text="@string/profile_train_photo_take_button"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="17dp"
-            android:id="@+id/signup_take_photo_button"
-            android:onClick="takePhoto"
-            android:layout_below="@+id/signup_upload_photo_button"
-            android:layout_alignParentStart="true" />
+            android:layout_height="wrap_content">
+
+            <Button
+                android:text="@string/profile_train_photo_upload_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:id="@+id/signup_upload_photo_button"
+                android:onClick="choosePhoto"
+                android:layout_below="@+id/signup_photo_upload_title"
+                android:layout_alignParentStart="true"
+                android:layout_weight="1" />
+
+            <Button
+                android:text="@string/profile_train_photo_take_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:id="@+id/signup_take_photo_button"
+                android:onClick="takePhoto"
+                android:layout_below="@+id/signup_upload_photo_button"
+                android:layout_alignParentStart="true"
+                android:layout_weight="1" />
+        </LinearLayout>
 
         <ImageView
-            android:layout_width="345dp"
-            android:layout_height="212dp"
             app:srcCompat="@color/bb_darkBackgroundColor"
             android:id="@+id/signup_image_preview"
-            android:layout_alignParentBottom="true" />
+            android:layout_alignParentBottom="true"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:text="@string/signup_photo_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/signup_photo_confirm"
+            android:onClick="confirmPhoto"
+            android:enabled="false" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/signup_image_error" />
     </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"></LinearLayout>
 
 </RelativeLayout>
