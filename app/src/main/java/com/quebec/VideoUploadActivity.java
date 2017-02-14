@@ -11,11 +11,14 @@ import android.widget.VideoView;
 public class VideoUploadActivity extends AppCompatActivity {
 
     static final int REQUEST_VIDEO_CAPTURE = 1;
+    private VideoView mVideoView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_upload);
+
+
     }
 
 
@@ -27,6 +30,23 @@ public class VideoUploadActivity extends AppCompatActivity {
         Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         if (takeVideoIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);
+        }
+    }
+
+    /**
+     * Retrieves the video that has been recorded and displays it in a VideoView
+     * @param requestCode
+     * @param resultCode
+     * @param intent
+     */
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
+            Uri videoUri = intent.getData();
+            mVideoView = (VideoView)findViewById(R.id.videoView);
+            mVideoView.setVideoURI(videoUri);
+            mVideoView.start();
         }
     }
 
@@ -48,15 +68,15 @@ public class VideoUploadActivity extends AppCompatActivity {
      * @param resultCode
      * @param intent
      */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+   // @Override
+    /*protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
             Uri videoUri = intent.getData();
 
             VideoView videoView = (VideoView) findViewById(R.id.videoPreview);
             videoView.setVideoURI(videoUri);
         }
-    }
+    }*/
 
 
 }

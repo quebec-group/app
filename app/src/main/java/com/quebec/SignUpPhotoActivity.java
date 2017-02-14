@@ -52,7 +52,7 @@ public class SignUpPhotoActivity extends AppCompatActivity {
         if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
             Uri videoUri = intent.getData();
 
-            VideoView videoView = (VideoView) findViewById(R.id.videoPreview);
+            VideoView videoView = (VideoView) findViewById(R.id.videoView);
             videoView.setVideoURI(videoUri);
         }
     }
