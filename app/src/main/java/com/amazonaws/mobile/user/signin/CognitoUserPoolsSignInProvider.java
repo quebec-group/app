@@ -44,11 +44,11 @@ import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 
 /**
- * Manages sign-in using Cognito User Pools.
+ * Manages sign-in using Cognito UserDTO Pools.
  */
 public class CognitoUserPoolsSignInProvider implements SignInProvider {
     /**
-     * Cognito User Pools attributes.
+     * Cognito UserDTO Pools attributes.
      */
     public final class AttributeKeys {
         /** Username attribute. */
@@ -85,7 +85,7 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
     /** Resource ID of the Create Account button. */
     private static final int TEXT_VIEW_CREATE_ACCOUNT_ID = R.id.signIn_textView_CreateNewAccount;
 
-    /** Start of Intent request codes owned by the Cognito User Pools app. */
+    /** Start of Intent request codes owned by the Cognito UserDTO Pools app. */
     private static final int REQUEST_CODE_START = 0x2970;
 
     /** Request code for password reset Intent. */
@@ -100,7 +100,7 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
     /** Request code for account verification Intent. */
     private static final int VERIFICATION_REQUEST_CODE = REQUEST_CODE_START + 45;
 
-    /** Request codes that the Cognito User Pools can handle. */
+    /** Request codes that the Cognito UserDTO Pools can handle. */
     private static final Set<Integer> REQUEST_CODES = new HashSet<Integer>() {{
         add(FORGOT_PASSWORD_REQUEST_CODE);
         add(SIGN_UP_REQUEST_CODE);
@@ -111,10 +111,10 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
     /** The sign-in results adapter from the SignInManager. */
     private IdentityManager.SignInResultsHandler resultsHandler;
 
-    /** Forgot Password processing provided by the Cognito User Pools SDK. */
+    /** Forgot Password processing provided by the Cognito UserDTO Pools SDK. */
     private ForgotPasswordContinuation forgotPasswordContinuation;
 
-    /** MFA processing provided by the Cognito User Pools SDK. */
+    /** MFA processing provided by the Cognito UserDTO Pools SDK. */
     private MultiFactorAuthenticationContinuation multiFactorAuthenticationContinuation;
 
     /** Android context. */
@@ -132,13 +132,13 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
     /** Sign-in verification code. */
     private String verificationCode;
 
-    /** Active Cognito User Pool. */
+    /** Active Cognito UserDTO Pool. */
     private CognitoUserPool cognitoUserPool;
 
-    /** Active Cognito User Pools session. */
+    /** Active Cognito UserDTO Pools session. */
     private CognitoUserSession cognitoUserSession;
 
-    /** Latch to ensure Cognito User Pools SDK is initialized before attempting to read the authorization token. */
+    /** Latch to ensure Cognito UserDTO Pools SDK is initialized before attempting to read the authorization token. */
     private final CountDownLatch initializedLatch = new CountDownLatch(1);
 
     /**
@@ -176,7 +176,7 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
         public void onSuccess(final CognitoUser user, final boolean signUpConfirmationState,
                               final CognitoUserCodeDeliveryDetails cognitoUserCodeDeliveryDetails) {
             if (signUpConfirmationState) {
-//                Log.d(LOG_TAG, "Signed up. User ID = " + user.getUserId());
+//                Log.d(LOG_TAG, "Signed up. UserDTO ID = " + user.getUserId());
 //                ViewHelper.showDialog(activity, activity.getString(title_activity_sign_up),
 //                        activity.getString(sign_up_success) + " " + user.getUserId());
             } else {
@@ -280,7 +280,7 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
     };
 
     /**
-     * Constructor. Initializes the Cognito User Pool.
+     * Constructor. Initializes the Cognito UserDTO Pool.
      * @param context Android context.
      */
     public CognitoUserPoolsSignInProvider(final Context context) {
@@ -378,7 +378,7 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
         this.activity = signInActivity;
         this.resultsHandler = resultsHandler;
 
-        // User Pools requires sign in with the username or verified channel.
+        // UserDTO Pools requires sign in with the username or verified channel.
         // Mobile Hub does not set up email verification because it requires SES verification.
         // Hence, prompt customers to login using the username or phone number.
         final EditText emailField = (EditText) activity.findViewById(EDIT_TEXT_USERNAME_ID);
@@ -427,7 +427,7 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
     /** {@inheritDoc} */
     @Override
     public String getDisplayName() {
-        return "Amazon Cognito Your User Pools";
+        return "Amazon Cognito Your UserDTO Pools";
     }
 
     /** {@inheritDoc} */
@@ -461,7 +461,7 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
     /** {@inheritDoc} */
     @Override
     public String refreshToken() {
-        // Cognito User Pools SDK handles token refresh.
+        // Cognito UserDTO Pools SDK handles token refresh.
         return getToken();
     }
 
@@ -498,7 +498,7 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
     /** {@inheritDoc} */
     @Override
     public void reloadUserInfo() {
-        // Cognito User Pools SDK handles user details refresh when token is refreshed.
+        // Cognito UserDTO Pools SDK handles user details refresh when token is refreshed.
         getToken();
     }
 }

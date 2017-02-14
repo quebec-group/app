@@ -15,12 +15,15 @@ import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.amazonaws.mobile.AWSMobileClient;
 import com.amazonaws.mobile.user.IdentityManager;
 import com.quebec.app.auth.SplashActivity;
+import com.quebec.services.APIManager;
+import com.quebec.services.APIResponse;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabReselectListener;
 import com.roughike.bottombar.OnTabSelectListener;
@@ -128,6 +131,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         setFragment(new EventsFeedFragment(), 0);
                         break;
                     case R.id.menu_uploadvideo:
+                        APIResponse<String> eventAPIResponse = new APIResponse<String>() {
+                            @Override
+                            public void onSuccess(String responseBody) {
+                                Log.d(LOG_TAG, responseBody);
+                            }
+
+                            @Override
+                            public void onFailure(String message) {
+
+                            }
+                        };
+                        APIManager api = new APIManager(eventAPIResponse);
+                        api.createEvent("Andy's Event", "a", "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4");
+
                         showVideoUploadActivity();
                         break;
                     case R.id.menu_profile:

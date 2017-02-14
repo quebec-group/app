@@ -95,9 +95,9 @@ public class FriendsListFragment extends Fragment implements AdapterView.OnItemC
 
         // TODO Make request to the server for search
 
-        User[] newValues = new User[] {
-                new User("change 1"),
-                new User("change 2")
+        UserDTO[] newValues = new UserDTO[] {
+                new UserDTO("change 1"),
+                new UserDTO("change 2")
         };
 
         adapter.clear();

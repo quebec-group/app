@@ -1,6 +1,5 @@
 package com.quebec.services;
 
-import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import com.amazonaws.http.HttpMethodName;
@@ -15,29 +14,44 @@ import com.amazonaws.util.IOUtils;
 import com.amazonaws.util.StringUtils;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by callum on 14/02/2017.
+ * Created by Andy on 14/02/2017.
  */
 
-public class ServiceDemo {
-    private static String LOG_TAG = ServiceDemo.class.getSimpleName();
+public class Service {
+
+    private APIRequest apiRequest;
+    private ArrayList<String> responseBody = new ArrayList<>();
+
+
+    public String getResponseBody() {
+        return (responseBody.size() > 0) ? responseBody.get(0) : "";
+    }
+
+    public Service(APIRequest apiRequest) {
+        this.apiRequest = apiRequest;
+        apiConfiguration = CloudLogicAPIFactory.getAPIs()[0];
+    }
+    private static String LOG_TAG = Service.class.getSimpleName();
 
     private CloudLogicAPIConfiguration apiConfiguration;
 
-    public ServiceDemo() {
-        apiConfiguration = CloudLogicAPIFactory.getAPIs()[0];
-    }
+
 
     public void test() {
+
         Log.d(LOG_TAG, "Invoke");
 
-        final String method = "POST";
-        final String path = "/api/createUser";
+        final String method = apiRequest.getApiEndpoint().getMethod();
+        final String path = apiRequest.getApiEndpoint().getPath();
+
         final String body = "{\n" +
-                "  \"name\" : \"someName\"\n" +
+                "  \"name\" : \"andy\"\n" +
+                "  \"email\" : \"email\"\n" +
                 "}";
 
         String queryStringText = "";
@@ -75,9 +89,11 @@ public class ServiceDemo {
         new Thread(new Runnable() {
             Exception exception = null;
 
+
             @Override
             public void run() {
                 try {
+                    Log.d(LOG_TAG, path);
                     Log.d(LOG_TAG, "Invoking API w/ Request : " + request.getHttpMethod() + ":" + request.getPath());
 
                     long startTime = System.currentTimeMillis();
@@ -91,7 +107,10 @@ public class ServiceDemo {
                     if (responseContentStream != null) {
                         final String responseData = IOUtils.toString(responseContentStream);
                         Log.d(LOG_TAG, "Response : " + responseData);
+                        responseBody.add(responseData);
                     }
+
+
 
 //                    ThreadUtils.runOnUiThread(new Runnable() {
 //                        @Override
@@ -115,5 +134,6 @@ public class ServiceDemo {
                 }
             }
         }).start();
+
     }
 }

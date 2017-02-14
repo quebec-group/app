@@ -205,7 +205,7 @@ public class AWSMobileClient {
     }
 
     /**
-     * Creates a User File Manager instance, which facilitates file transfers
+     * Creates a UserDTO File Manager instance, which facilitates file transfers
      * between the device and the specified Amazon S3 (Simple Storage Service) bucket.
      *
      * @param s3Bucket Amazon S3 bucket

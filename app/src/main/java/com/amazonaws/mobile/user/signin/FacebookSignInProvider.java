@@ -48,10 +48,10 @@ public class FacebookSignInProvider implements SignInProvider {
     /** Facebook's callback manager. */
     private CallbackManager facebookCallbackManager;
 
-    /** User's name. */
+    /** UserDTO's name. */
     private String userName;
 
-    /** User's image Url. */
+    /** UserDTO's image Url. */
     private String userImageUrl;
 
     /** Timeout for refreshing the Facebook Token. */
