@@ -3,6 +3,7 @@ package com.quebec.app;
 import android.os.Bundle;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,8 +13,10 @@ public class ProfilePictureSignUpActivity extends ProfilePictureActivity {
         super();
     }
 
-    public ProfilePictureSignUpActivity(ImageView signup_image_preview, TextView errorText) {
-        super(signup_image_preview, errorText);
+    public ProfilePictureSignUpActivity(ImageView signup_image_preview,
+                                        TextView errorText,
+                                        Button confirmButton) {
+        super(signup_image_preview, errorText, confirmButton);
     }
 
 
@@ -28,8 +31,9 @@ public class ProfilePictureSignUpActivity extends ProfilePictureActivity {
 
         ImageView signup_image_preview = (ImageView) findViewById(R.id.signup_image_preview);
         TextView errorText = (TextView) findViewById(R.id.signup_image_error);
+        Button confirmButton = (Button) findViewById(R.id.signup_photo_confirm);
 
-        super.setupElements(signup_image_preview, errorText);
+        super.setupElements(signup_image_preview, errorText, confirmButton);
 
     }
 
@@ -47,6 +51,10 @@ public class ProfilePictureSignUpActivity extends ProfilePictureActivity {
      */
     public void takePhoto(View view) {
         super.launchCamera();
+    }
+
+    public void confirmPhoto(View view) {
+        super.confirmPhoto();
     }
 
 

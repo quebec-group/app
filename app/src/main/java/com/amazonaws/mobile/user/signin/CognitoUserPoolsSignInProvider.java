@@ -161,9 +161,9 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
     private ForgotPasswordHandler forgotPasswordHandler = new ForgotPasswordHandler() {
         @Override
         public void onSuccess() {
-            Log.d(LOG_TAG, "Password change succeeded.");
-            ViewHelper.showDialog(activity, activity.getString(title_activity_forgot_password),
-                    activity.getString(password_change_success));
+//            Log.d(LOG_TAG, "Password change succeeded.");
+//            ViewHelper.showDialog(activity, activity.getString(title_activity_forgot_password),
+//                    activity.getString(password_change_success));
         }
 
         @Override
@@ -176,9 +176,9 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
 
         @Override
         public void onFailure(final Exception exception) {
-            Log.e(LOG_TAG, "Password change failed.", exception);
-            ViewHelper.showDialog(activity, activity.getString(title_activity_forgot_password),
-                    activity.getString(password_change_failed) + " " + exception);
+//            Log.e(LOG_TAG, "Password change failed.", exception);
+//            ViewHelper.showDialog(activity, activity.getString(title_activity_forgot_password),
+//                    activity.getString(password_change_failed) + " " + exception);
         }
     };
 
@@ -190,11 +190,11 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
         public void onSuccess(final CognitoUser user, final boolean signUpConfirmationState,
                               final CognitoUserCodeDeliveryDetails cognitoUserCodeDeliveryDetails) {
             if (signUpConfirmationState) {
-                Log.d(LOG_TAG, "Signed up. User ID = " + user.getUserId());
-                ViewHelper.showDialog(activity, activity.getString(title_activity_sign_up),
-                        activity.getString(sign_up_success) + " " + user.getUserId());
+//                Log.d(LOG_TAG, "Signed up. User ID = " + user.getUserId());
+//                ViewHelper.showDialog(activity, activity.getString(title_activity_sign_up),
+//                        activity.getString(sign_up_success) + " " + user.getUserId());
             } else {
-                Log.w(LOG_TAG, "Additional confirmation for sign up.");
+//                Log.w(LOG_TAG, "Additional confirmation for sign up.");
 
                 final Intent intent = new Intent(context, SignUpConfirmActivity.class);
                 activity.startActivityForResult(intent, VERIFICATION_REQUEST_CODE);
@@ -203,9 +203,9 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
 
         @Override
         public void onFailure(final Exception exception) {
-            Log.e(LOG_TAG, "Sign up failed.", exception);
-            ViewHelper.showDialog(activity, activity.getString(title_activity_sign_up),
-                    activity.getString(sign_up_failed));
+//            Log.e(LOG_TAG, "Sign up failed.", exception);
+//            ViewHelper.showDialog(activity, activity.getString(title_activity_sign_up),
+//                    activity.getString(sign_up_failed));
         }
     };
 
@@ -215,16 +215,16 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
     private GenericHandler signUpConfirmationHandler = new GenericHandler() {
         @Override
         public void onSuccess() {
-            Log.i(LOG_TAG, "Confirmed.");
-            ViewHelper.showDialog(activity, activity.getString(title_activity_sign_up_confirm),
-                    activity.getString(sign_up_confirm_success));
+//            Log.i(LOG_TAG, "Confirmed.");
+//            ViewHelper.showDialog(activity, activity.getString(title_activity_sign_up_confirm),
+//                    activity.getString(sign_up_confirm_success));
         }
 
         @Override
         public void onFailure(Exception exception) {
-            Log.e(LOG_TAG, "Failed to confirm user.", exception);
-            ViewHelper.showDialog(activity, activity.getString(title_activity_sign_up_confirm),
-                    activity.getString(sign_up_confirm_failed) + " " + exception);
+//            Log.e(LOG_TAG, "Failed to confirm user.", exception);
+//            ViewHelper.showDialog(activity, activity.getString(title_activity_sign_up_confirm),
+//                    activity.getString(sign_up_confirm_failed) + " " + exception);
         }
     };
 
@@ -239,8 +239,8 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
             cognitoUserSession = userSession;
 
             if (null != resultsHandler) {
-                ViewHelper.showDialog(activity, activity.getString(title_activity_sign_in),
-                        activity.getString(login_success) + " " + userSession.getIdToken());
+//                ViewHelper.showDialog(activity, activity.getString(title_activity_sign_in),
+//                        activity.getString(login_success) + " " + userSession.getIdToken());
 
                 resultsHandler.onSuccess(CognitoUserPoolsSignInProvider.this);
             }
@@ -280,11 +280,11 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
 
         @Override
         public void onFailure(final Exception exception) {
-            Log.e(LOG_TAG, "Failed to login.", exception);
+           // Log.e(LOG_TAG, "Failed to login.", exception);
 
             if (null != resultsHandler) {
-                ViewHelper.showDialog(activity, activity.getString(R.string.title_activity_sign_in),
-                        activity.getString(login_failed) + " " + exception);
+            //  ViewHelper.showDialog(activity, activity.getString(R.string.title_activity_sign_in),
+            //  activity.getString(login_failed) + " " + exception);
 
                 resultsHandler.onError(CognitoUserPoolsSignInProvider.this, exception);
             }
@@ -411,7 +411,7 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
             public void onClick(View v) {
                 username = ViewHelper.getStringValue(activity, EDIT_TEXT_USERNAME_ID);
                 if (null == username || username.length() < 1) {
-                    Log.w(LOG_TAG, "Missing username.");
+                    // Log.w(LOG_TAG, "Missing username.");
                     // ViewHelper.showDialog(activity, activity.getString(title_activity_sign_in), "Missing username.");
                 } else {
 

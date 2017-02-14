@@ -106,7 +106,7 @@
             android:textSize="@dimen/activity_button_text_size"
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
-            style="@style/Widget.AppCompat.Button.Style"
+            style="@style/Widget.AppCompat.Button"
             android:elevation="0dp" />
 
         <TextView
