@@ -128,7 +128,9 @@
         style="@style/ErrorMessage"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/linearLayout"
-        android:layout_marginBottom="52dp" />
+        android:layout_marginBottom="52dp"
+        android:textAlignment="textStart"
+        android:gravity="center_horizontal" />
 
     <Button
         android:text="@string/facebook_login"

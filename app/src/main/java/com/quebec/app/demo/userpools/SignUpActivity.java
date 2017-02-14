@@ -82,8 +82,6 @@ public class SignUpActivity extends Activity implements Validator.ValidationList
      */
     @Override
     public void onValidationSucceeded() {
-        Toast.makeText(this, "Yay! we got it right!", Toast.LENGTH_SHORT).show();
-
         final String username = ViewHelper.getStringValue(this, R.id.signup_username);
         final String password = ViewHelper.getStringValue(this, R.id.signup_password);
         final String givenName = ViewHelper.getStringValue(this, R.id.signup_given_name);
