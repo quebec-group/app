@@ -4,16 +4,11 @@ package com.quebec.services;
  * Created by Andy on 14/02/2017.
  */
 
-import android.os.Handler;
 import android.util.Log;
-
-import com.amazonaws.mobile.util.ThreadUtils;
-import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * APIManger: the interface between the UI and services layer
@@ -31,11 +26,9 @@ public class APIManager implements API {
     private APIRequest request;
     private Service service;
 
-
-
     private static String LOG_TAG = APIManager.class.getSimpleName();
 
-    public void createEvent(final String eventName, String eventDescription, String eventVideoURL, final APICallback<SuccessResponse> response) {
+    public void createEvent(String eventName, String eventDescription, String eventVideoURL, final APICallback response) {
         endpoint = new APIEndpoint("createEvent");
         request = new APIRequest(endpoint);
 
@@ -52,14 +45,23 @@ public class APIManager implements API {
         // perform the HTTP request and wait for callback
         service = new Service(request, new Service.ServiceCallBack() {
             @Override
-            public void onResponseReceived(JSONObject responseBody) {
-                JSONObject json = new JSONObject();
-                json = responseBody;
-                // ocnstruct API repsonse bla bla
-                final APIResponse<SuccessResponse> successResponseAPIResponse = new APIResponse<>();
-                SuccessResponse successResponse = new SuccessResponse(json);
-                successResponseAPIResponse.setResponseBody(successResponse);
-                response.onSuccess(successResponseAPIResponse);
+            /**
+             * onResponseReceived takes the DAO from inside the response, sets the status
+             */
+            public void onResponseReceived(APIResponse<BaseDAO> apiResponse) {
+                // TODO: take the response body and do stuff
+
+
+                EventDAO eventDAO = (EventDAO) apiResponse.getResponseBody();
+                final APIResponse eventResponse = new APIResponse(apiResponse.getStatus());
+                eventResponse.setResponseBody(eventDAO);
+
+                if (apiResponse.getStatus() == "success") {
+                    response.onSuccess(eventDAO);
+                } else {
+                    response.onFailure("Failed to create the event!");
+                }
+
             }
         });
 
@@ -67,6 +69,8 @@ public class APIManager implements API {
         service.execute();
 
     }
+
+
 
     @Override
     public APIResponse createUser(String userName, String userEmail) {

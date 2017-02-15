@@ -8,7 +8,7 @@ import com.amazonaws.mobileconnectors.apigateway.ApiResponse;
 
 public interface APICallback<T> {
 
-    public abstract void onSuccess(APIResponse<T> responseBody);
+    public abstract void onSuccess(T responseBody);
 
     public abstract void onFailure(String message);
 

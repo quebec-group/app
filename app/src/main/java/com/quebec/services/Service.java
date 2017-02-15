@@ -14,6 +14,7 @@ import com.amazonaws.mobileconnectors.apigateway.ApiResponse;
 import com.amazonaws.util.IOUtils;
 import com.amazonaws.util.StringUtils;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
@@ -26,7 +27,7 @@ import java.util.Map;
  * Created by Andy on 14/02/2017.
  */
 
-public class Service extends AsyncTask<Void, Integer, JSONObject> {
+public class Service extends AsyncTask<Void, Integer, APIResponse> {
 
     private APIRequest apiRequest;
     private ServiceCallBack callBack;
@@ -48,8 +49,10 @@ public class Service extends AsyncTask<Void, Integer, JSONObject> {
 
 
     @Override
-    protected JSONObject doInBackground(Void... params) {
-        JSONObject responseBody = new JSONObject();
+    protected APIResponse doInBackground(Void... params) {
+        JSONObject jsonObject = new JSONObject();
+        BaseDAO baseDAO = new BaseDAO(jsonObject);
+        APIResponse apiResponse = null;
         Log.d(LOG_TAG, "Invoke");
 
         final String method = apiRequest.getApiEndpoint().getMethod();
@@ -106,11 +109,26 @@ public class Service extends AsyncTask<Void, Integer, JSONObject> {
                     final InputStream responseContentStream = response.getContent();
 
                     if (responseContentStream != null) {
-
                         final String responseData = IOUtils.toString(responseContentStream);
-                        JSONObject json = new JSONObject(responseData);
-                        responseBody = json;
-                        Log.d(LOG_TAG, "Response : " + responseBody.toString());
+
+                        JSONObject responseJSON = new JSONObject(responseData);
+                        baseDAO.set_DAO_BODY(responseJSON);
+                        JSONObject json = baseDAO.get_DAO_BODY();
+                        String status = "failure";
+
+                        try {
+                            status = json.getString("status");
+                            Log.d(LOG_TAG, json.getString("status"));
+                        } catch (JSONException e) {
+                            Log.e(LOG_TAG, e.getMessage());
+                        }
+
+                        apiResponse = new APIResponse(status);
+                        apiResponse.setResponseBody(baseDAO);
+                        Log.d(LOG_TAG, "Response : " + baseDAO.get_DAO_BODY().toString());
+
+                    } else {
+
                     }
 
 
@@ -135,20 +153,20 @@ public class Service extends AsyncTask<Void, Integer, JSONObject> {
                         }
                     });
                 }
-            return responseBody;
+            return apiResponse;
     }
 
 
     /**
-     * this runs in UI thread after do in background
-     * @param responseBody
+     * run post-execution of the request
+     * @param apiResponse
      */
     @Override
-    public void onPostExecute(JSONObject responseBody) {
-        callBack.onResponseReceived(responseBody);
+    public void onPostExecute(APIResponse apiResponse) {
+        callBack.onResponseReceived(apiResponse);
     }
 
     public static interface ServiceCallBack {
-        public void onResponseReceived(JSONObject responseBody);
+        public void onResponseReceived(APIResponse<BaseDAO> apiResponse);
     }
 }

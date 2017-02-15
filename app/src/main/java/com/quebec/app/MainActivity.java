@@ -26,6 +26,8 @@ import com.quebec.app.auth.SplashActivity;
 import com.quebec.services.APICallback;
 import com.quebec.services.APIManager;
 import com.quebec.services.APIResponse;
+import com.quebec.services.BaseDAO;
+import com.quebec.services.EventDAO;
 import com.quebec.services.Service;
 import com.quebec.services.SuccessResponse;
 import com.roughike.bottombar.BottomBar;
@@ -139,13 +141,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         setFragment(new EventsFeedFragment(), 0);
                         break;
                     case R.id.menu_uploadvideo:
-                        APICallback<SuccessResponse> eventAPIResponse = new APICallback<SuccessResponse>() {
-
-
+                        APICallback<EventDAO> eventAPIResponse = new APICallback<EventDAO>() {
 
                             @Override
-                            public void onSuccess(APIResponse<SuccessResponse> responseBody) {
-                                Log.d(LOG_TAG, responseBody.getResponseBody().getResponseBody().toString());
+                            public void onSuccess(EventDAO responseBody) {
+                                EventDAO eventDAO = (EventDAO) responseBody;
                             }
 
                             @Override
