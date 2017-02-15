@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onTabReSelected(@IdRes int tabId) {
-                
+
             }
         });
 

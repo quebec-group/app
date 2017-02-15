@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.makeramen.roundedimageview.RoundedImageView;
+
 /**
  * Created by Andrew on 06/02/2017.
  */
@@ -46,6 +48,8 @@ public class EventUsersAdapterItem extends ArrayAdapter {
 
         TextView textViewUserName = (TextView) convertView.findViewById(R.id.event_user_name);
         textViewUserName.setText(user.getName());
+
+        RoundedImageView imageView = (RoundedImageView) convertView.findViewById(R.id.event_user_image);
 
         return convertView;
     }

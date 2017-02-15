@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -151,7 +150,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                 new Event("Group Project Dinner", "A group project evening of eating food while discussing the elements of the group project.")
         };
 
-        EventListAdapterItem adapter = new EventListAdapterItem(this.getContext(), R.layout.event_list_item, values);
+        EventListAdapterItem adapter = new EventListAdapterItem(this.getContext(), R.layout.adapter_event_item, values);
         profileEventsFeed.setAdapter(adapter);
         profileEventsFeed.setOnItemClickListener(this);
 

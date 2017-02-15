@@ -2,10 +2,15 @@ package com.quebec.app;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 /**
@@ -43,6 +48,26 @@ public class EventListAdapterItem extends ArrayAdapter<Event> {
 
         textViewItem.setText(event.getName());
         textViewDescriptionItem.setText(event.getDescription());
+
+
+        User[] values = new User[] {
+                new User("hello"),
+                new User("hello2"),
+                new User("hello"),
+                new User("hello2"),
+                new User("hello"),
+                new User("hello2"),
+                new User("hello")
+        };
+
+        EventUsersTickerAdapterItem adapter = new EventUsersTickerAdapterItem(values);
+
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this.mContext ,LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView eventItemTicker = (RecyclerView) convertView.findViewById(R.id.eventItemTicker);
+        eventItemTicker.setLayoutManager(layoutManager);
+        eventItemTicker.setAdapter(adapter);
+
         return convertView;
     }
 }

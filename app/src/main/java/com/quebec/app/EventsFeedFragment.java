@@ -47,7 +47,7 @@ public class EventsFeedFragment extends Fragment implements AdapterView.OnItemCl
                 new Event("Group Project Dinner", "A group project evening of eating food while discussing the elements of the group project.")
         };
 
-        EventListAdapterItem adapter = new EventListAdapterItem(this.getContext(), R.layout.event_list_item, values);
+        EventListAdapterItem adapter = new EventListAdapterItem(this.getContext(), R.layout.adapter_event_item, values);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
         return v;
