@@ -1,5 +1,6 @@
 package com.quebec.services;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.amazonaws.http.HttpMethodName;
@@ -13,7 +14,10 @@ import com.amazonaws.mobileconnectors.apigateway.ApiResponse;
 import com.amazonaws.util.IOUtils;
 import com.amazonaws.util.StringUtils;
 
+import org.json.JSONObject;
+
 import java.io.InputStream;
+import java.io.UTFDataFormatException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,18 +26,17 @@ import java.util.Map;
  * Created by Andy on 14/02/2017.
  */
 
-public class Service {
+public class Service extends AsyncTask<Void, Integer, JSONObject> {
 
     private APIRequest apiRequest;
-    private ArrayList<String> responseBody = new ArrayList<>();
+    private ServiceCallBack callBack;
 
 
-    public String getResponseBody() {
-        return (responseBody.size() > 0) ? responseBody.get(0) : "";
-    }
 
-    public Service(APIRequest apiRequest) {
+
+    public Service(APIRequest apiRequest, ServiceCallBack serviceCallBack) {
         this.apiRequest = apiRequest;
+        this.callBack = serviceCallBack;
         apiConfiguration = CloudLogicAPIFactory.getAPIs()[0];
     }
     private static String LOG_TAG = Service.class.getSimpleName();
@@ -42,17 +45,17 @@ public class Service {
 
 
 
-    public void test() {
 
+
+    @Override
+    protected JSONObject doInBackground(Void... params) {
+        JSONObject responseBody = new JSONObject();
         Log.d(LOG_TAG, "Invoke");
 
         final String method = apiRequest.getApiEndpoint().getMethod();
         final String path = apiRequest.getApiEndpoint().getPath();
 
-        final String body = "{\n" +
-                "  \"name\" : \"andy\"\n" +
-                "  \"email\" : \"email\"\n" +
-                "}";
+        final String body = apiRequest.getBody();
 
         String queryStringText = "";
 
@@ -86,12 +89,10 @@ public class Service {
 
 
         // Make network call on background thread
-        new Thread(new Runnable() {
-            Exception exception = null;
 
 
-            @Override
-            public void run() {
+
+
                 try {
                     Log.d(LOG_TAG, path);
                     Log.d(LOG_TAG, "Invoking API w/ Request : " + request.getHttpMethod() + ":" + request.getPath());
@@ -105,9 +106,11 @@ public class Service {
                     final InputStream responseContentStream = response.getContent();
 
                     if (responseContentStream != null) {
+
                         final String responseData = IOUtils.toString(responseContentStream);
-                        Log.d(LOG_TAG, "Response : " + responseData);
-                        responseBody.add(responseData);
+                        JSONObject json = new JSONObject(responseData);
+                        responseBody = json;
+                        Log.d(LOG_TAG, "Response : " + responseBody.toString());
                     }
 
 
@@ -132,8 +135,20 @@ public class Service {
                         }
                     });
                 }
-            }
-        }).start();
+            return responseBody;
+    }
 
+
+    /**
+     * this runs in UI thread after do in background
+     * @param responseBody
+     */
+    @Override
+    public void onPostExecute(JSONObject responseBody) {
+        callBack.onResponseReceived(responseBody);
+    }
+
+    public static interface ServiceCallBack {
+        public void onResponseReceived(JSONObject responseBody);
     }
 }
