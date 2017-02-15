@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class ProfilePictureSignUpActivity extends ProfilePictureActivity {
@@ -32,8 +33,9 @@ public class ProfilePictureSignUpActivity extends ProfilePictureActivity {
         ImageView signup_image_preview = (ImageView) findViewById(R.id.signup_image_preview);
         TextView errorText = (TextView) findViewById(R.id.signup_image_error);
         Button confirmButton = (Button) findViewById(R.id.signup_photo_confirm);
+        LinearLayout resultView = (LinearLayout) findViewById(R.id.signup_image_result);
 
-        super.setupElements(signup_image_preview, errorText, confirmButton);
+        super.setupElements(signup_image_preview, errorText, confirmButton, resultView);
 
     }
 
@@ -42,7 +44,7 @@ public class ProfilePictureSignUpActivity extends ProfilePictureActivity {
      * @param view
      */
     public void choosePhoto(View view) {
-        super.choosePhoto(view);
+        super.choosePhoto();
     }
 
     /**

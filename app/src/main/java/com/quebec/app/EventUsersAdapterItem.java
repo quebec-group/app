@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 /**
  * Created by Andrew on 06/02/2017.
@@ -42,6 +43,9 @@ public class EventUsersAdapterItem extends ArrayAdapter {
         }
 
         User user = data[position];
+
+        TextView textViewUserName = (TextView) convertView.findViewById(R.id.event_user_name);
+        textViewUserName.setText(user.getName());
 
         return convertView;
     }

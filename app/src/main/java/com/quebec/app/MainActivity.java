@@ -40,11 +40,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /** The identity manager used to keep track of the current user account. */
     private IdentityManager identityManager;
     private Fragment mFragment;
-    private String currentFragmentName;
+    private int currentFragmentName;
 
     private void setFragment(Fragment frag, int transition) {
 
-        if (!frag.getClass().getName().equals(currentFragmentName)) {
+        // if (!frag.getClass().getName().equals(currentFragmentName)) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
             if (transition == 0) {
@@ -53,15 +53,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             else {
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
             }
-            transaction.remove(mFragment);
+
             transaction.replace(R.id.fragment_container, frag);
-            transaction.addToBackStack(frag.getClass().getName());
+            transaction.addToBackStack(null);
             transaction.commit();
-            currentFragmentName = frag.getClass().getName();
         }
 
 
-    }
+    // }
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -88,6 +87,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mFragment = eventsFeed;
         }
 
+        ProfilePictureHandler profilePictureHandler = new ProfilePictureHandler();
+        if (!profilePictureHandler.profilePictureExists()) {
+            Intent intent = new Intent(this, ProfilePictureSignUpActivity.class);
+            startActivity(intent);
+        }
+
+
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
 
@@ -98,14 +104,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
+                if (tabId == currentFragmentName) {
+                    return;
+                }
+
                 switch (tabId) {
                     case R.id.menu_eventsfeed:
+                        currentFragmentName = R.id.menu_eventsfeed;
                         setFragment(new EventsFeedFragment(), 0);
                         break;
                     case R.id.menu_uploadvideo:
+                        currentFragmentName = R.id.menu_uploadvideo;
                         showVideoUploadActivity();
                         break;
                     case R.id.menu_profile:
+                        currentFragmentName = R.id.menu_profile;
                         setFragment(new ProfileFragment(), 1);
                         break;
                 }
@@ -115,27 +128,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         bottomBar.setOnTabReselectListener(new OnTabReselectListener() {
 
-            private Fragment frag;
 
             @Override
             public void onTabReSelected(@IdRes int tabId) {
-
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-
-                switch (tabId) {
-                    case R.id.menu_eventsfeed:
-                        setFragment(new EventsFeedFragment(), 0);
-                        break;
-                    case R.id.menu_uploadvideo:
-                        showVideoUploadActivity();
-                        break;
-                    case R.id.menu_profile:
-                        setFragment(new ProfileFragment(), 0);
-                        break;
-                }
-
-
+                
             }
         });
 
@@ -147,6 +143,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onResume() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.detach(mFragment).attach(mFragment).commit();
+
         super.onResume();
 
         if (!AWSMobileClient.defaultMobileClient().getIdentityManager().isUserSignedIn()) {
@@ -202,10 +201,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    @Override
-    public void onBackToEvents() {
 
-    }
 
     @Override
     public void onEventSelected(Event e) {
@@ -221,12 +217,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void openFriendsList() {
-        setFragment(FriendsListFragment.newInstance(), 1);
+        setFragment(FriendsListFragment.newInstance(), 2);
     }
 
     @Override
     public void updateProfilePictureActivity() {
         Intent intent = new Intent(this, ProfilePictureSignUpActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onProfileEventSelected(Event e) {
+        setFragment(EventDetailFragment.newInstance(e), 3);
     }
 }

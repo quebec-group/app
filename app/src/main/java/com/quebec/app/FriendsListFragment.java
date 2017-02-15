@@ -128,7 +128,7 @@ public class FriendsListFragment extends Fragment implements AdapterView.OnItemC
      * @param adapterView
      * @param view
      * @param position
-     * @param l
+     * @param id
      */
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {

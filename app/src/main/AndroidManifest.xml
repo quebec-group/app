@@ -20,6 +20,17 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true"/>
+
+    <permission
+        android:name="com.example.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature"/>
+    <uses-permission android:name="com.example.permission.MAPS_RECEIVE"/>
+
+
     <uses-feature android:name="android.hardware.camera2" />
     <uses-feature
         android:name="android.hardware.camera.any"
@@ -41,20 +52,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".auth.SignInActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_sign_in" />
         <activity
-            android:name=".demo.userpools.ForgotPasswordActivity"
+            android:name=".auth.ForgotPasswordActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_forgot_password" />
         <activity
-            android:name=".demo.userpools.SignUpActivity"
+            android:name=".auth.SignUpActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_sign_up" />
         <activity
-            android:name=".demo.userpools.SignUpConfirmActivity"
+            android:name=".auth.SignUpConfirmActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_sign_up_confirm" />
         <activity
@@ -146,7 +158,17 @@
             android:enabled="true"
             android:exported="false"></provider>
 
-        <activity android:name=".ProfilePictureUpdateActivity"></activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDoPJTYfr8pOhNan01moxI-WYG9XE8wW5s"/>
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyDoPJTYfr8pOhNan01moxI-WYG9XE8wW5s"/>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>

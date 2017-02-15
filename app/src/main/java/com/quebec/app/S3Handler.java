@@ -39,11 +39,16 @@ public class S3Handler {
     }
 
 
+    public String createPathProtected(File f, String pathPrefix) {
+        return  folderPath + pathPrefix + f.getName();
+    }
+
     private void initialiseBucket(final String bucket, final String prefix, final Regions region) {
 
         final String identityId = AWSMobileClient.defaultMobileClient()
                 .getIdentityManager()
                 .getCachedUserID();
+
         folderPath = identityId + "/";
 
         AWSMobileClient.defaultMobileClient().createUserFileManager(bucket, prefix, region, new UserFileManager.BuilderResultHandler() {
@@ -60,7 +65,7 @@ public class S3Handler {
      * Uploads a file to the S3 storage bucket.
      * @param path
      */
-    public void uploadFile(final File file, final String filePrefix, final ContentProgressListener callback) {
+    public void uploadFile(final File file, final String filePath, final ContentProgressListener callback) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -71,9 +76,10 @@ public class S3Handler {
                     throw new RuntimeException(ex);
                 }
 
-                userFileManager.uploadContent(file, folderPath + filePrefix + file.getName(), callback);
+                userFileManager.uploadContent(file, folderPath + filePath + file.getName(), callback);
             }
         }).start();
+
     }
 
     /**

@@ -1,7 +1,9 @@
 package com.quebec.app.auth;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -68,6 +70,7 @@ public class SignInActivity extends Activity {
             });
         }
 
+
         /**
          * Receives the sign-in result indicating the user canceled and shows a toast.
          * @param provider the identity provider with which the user attempted sign-in.
@@ -115,6 +118,22 @@ public class SignInActivity extends Activity {
         passwordField = (EditText) this.findViewById(R.id.signIn_editText_password);
 
         errorField = (TextView) this.findViewById(R.id.signin_error);
+
+        if (!isNetworkAvailable(this.getApplicationContext())) {
+            String internetError = getString(R.string.sign_in_no_internet);
+            errorField.setText(internetError);
+        }
+    }
+
+    /**
+     * Check if the network is available, and show appropriate error message if
+     * it is not.
+     * @param applicationContext
+     * @return
+     */
+    private boolean isNetworkAvailable(Context applicationContext) {
+        final ConnectivityManager connectivityManager = ((ConnectivityManager) applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 
     @Override

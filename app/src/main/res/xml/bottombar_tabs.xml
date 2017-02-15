@@ -3,15 +3,17 @@
 <tabs>
     <tab
         id="@+id/menu_eventsfeed"
-        icon="@android:drawable/ic_menu_rotate"
+        icon="@drawable/ic_events_icon"
         title="@string/menu_eventsfeed" />
     <tab
         id="@+id/menu_uploadvideo"
-        icon="@android:drawable/ic_menu_rotate"
+        icon="@drawable/ic_camera_icon"
         title="@string/menu_uploadvideo" />
     <tab
         id="@+id/menu_profile"
-        icon="@android:drawable/ic_menu_rotate"
+        icon="@drawable/ic_profile_icon"
         title="@string/menu_profile" />
 </tabs>
+
+
 
