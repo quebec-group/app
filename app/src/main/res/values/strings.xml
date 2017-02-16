@@ -142,4 +142,5 @@
     <string name="signup_photo_confirm">Set photo as profile picture</string>
     <string name="signup_photo_description">Upload a profile picture. This will also be used for facial recognition training so use a clear photo,</string>
     <string name="sign_in_no_internet">No internet connection detected.</string>
+    <string name="signup_password_hint">Password must contain a special character, capital letter and number.</string>
 </resources>

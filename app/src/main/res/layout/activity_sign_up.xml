@@ -96,6 +96,12 @@
             android:layout_below="@+id/signup_given_name"
             android:layout_alignParentStart="true" />
 
+        <TextView
+            android:text="@string/signup_password_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView5" />
+
         <Button
             android:id="@+id/signup_button"
             android:layout_width="match_parent"
