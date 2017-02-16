@@ -15,28 +15,18 @@ import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.amazonaws.mobile.AWSMobileClient;
 import com.amazonaws.mobile.user.IdentityManager;
-import com.amazonaws.mobileconnectors.apigateway.ApiResponse;
 import com.quebec.app.auth.SplashActivity;
 import com.quebec.services.APICallback;
 import com.quebec.services.APIManager;
-import com.quebec.services.APIResponse;
-import com.quebec.services.BaseDAO;
 import com.quebec.services.EventDAO;
-import com.quebec.services.Service;
-import com.quebec.services.SuccessResponse;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabReselectListener;
 import com.roughike.bottombar.OnTabSelectListener;
-
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 

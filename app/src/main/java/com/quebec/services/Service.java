@@ -31,8 +31,8 @@ public class Service extends AsyncTask<Void, Integer, APIResponse> {
 
     private APIRequest apiRequest;
     private ServiceCallBack callBack;
-
-
+    private static String LOG_TAG = Service.class.getSimpleName();
+    private CloudLogicAPIConfiguration apiConfiguration;
 
 
     public Service(APIRequest apiRequest, ServiceCallBack serviceCallBack) {
@@ -40,27 +40,16 @@ public class Service extends AsyncTask<Void, Integer, APIResponse> {
         this.callBack = serviceCallBack;
         apiConfiguration = CloudLogicAPIFactory.getAPIs()[0];
     }
-    private static String LOG_TAG = Service.class.getSimpleName();
-
-    private CloudLogicAPIConfiguration apiConfiguration;
-
-
-
 
 
     @Override
     protected APIResponse doInBackground(Void... params) {
-        JSONObject jsonObject = new JSONObject();
-        BaseDAO baseDAO = new BaseDAO(jsonObject);
         APIResponse apiResponse = null;
         Log.d(LOG_TAG, "Invoke");
 
         final String method = apiRequest.getApiEndpoint().getMethod();
         final String path = apiRequest.getApiEndpoint().getPath();
-
         final String body = apiRequest.getBody();
-
-        String queryStringText = "";
 
         final Map<String, String> parameters = new HashMap<>();
 
@@ -90,35 +79,29 @@ public class Service extends AsyncTask<Void, Integer, APIResponse> {
             request = tmpRequest;
         }
 
-
-        // Make network call on background thread
-
-
-
-
                 try {
                     Log.d(LOG_TAG, path);
                     Log.d(LOG_TAG, "Invoking API w/ Request : " + request.getHttpMethod() + ":" + request.getPath());
 
-                    long startTime = System.currentTimeMillis();
 
                     final ApiResponse response = client.execute(request);
 
-                    final long latency = System.currentTimeMillis() - startTime;
-
                     final InputStream responseContentStream = response.getContent();
+                    String status = "failure";
 
+                    // Given valid server response
                     if (responseContentStream != null) {
+
                         final String responseData = IOUtils.toString(responseContentStream);
 
                         JSONObject responseJSON = new JSONObject(responseData);
-                        baseDAO.set_DAO_BODY(responseJSON);
-                        JSONObject json = baseDAO.get_DAO_BODY();
-                        String status = "failure";
+                        BaseDAO baseDAO = new BaseDAO(responseJSON);
+
+
 
                         try {
-                            status = json.getString("status");
-                            Log.d(LOG_TAG, json.getString("status"));
+                            status = baseDAO.get_DAO_BODY().getString("status");
+                            Log.d(LOG_TAG, baseDAO.get_DAO_BODY().getString("status"));
                         } catch (JSONException e) {
                             Log.e(LOG_TAG, e.getMessage());
                         }
@@ -127,21 +110,13 @@ public class Service extends AsyncTask<Void, Integer, APIResponse> {
                         apiResponse.setResponseBody(baseDAO);
                         Log.d(LOG_TAG, "Response : " + baseDAO.get_DAO_BODY().toString());
 
-                    } else {
+                    } else { // failed to receive response from server
+
+                        apiResponse = new APIResponse(status);
 
                     }
 
 
-
-//                    ThreadUtils.runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            if (!isDetached()) {
-//                                statusView.setText(response.getStatusCode() + " " + response.getStatusText());
-//                                latencyView.setText(String.format("%4.3f sec", latency / 1000.0f));
-//                            }
-//                        }
-//                    });
                 } catch (final Exception exception) {
                     Log.e(LOG_TAG, exception.getMessage(), exception);
                     exception.printStackTrace();

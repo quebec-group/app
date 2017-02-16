@@ -1,6 +1,5 @@
 package com.quebec.services;
 
-import com.amazonaws.mobileconnectors.apigateway.ApiResponse;
 
 /**
  * Created by Andy on 14/02/2017.
@@ -8,9 +7,9 @@ import com.amazonaws.mobileconnectors.apigateway.ApiResponse;
 
 public interface APICallback<T> {
 
-    public abstract void onSuccess(T responseBody);
+    public void onSuccess(T responseBody);
 
-    public abstract void onFailure(String message);
+    public void onFailure(String message);
 
 
 }
