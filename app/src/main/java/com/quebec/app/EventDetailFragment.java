@@ -83,7 +83,7 @@ public class EventDetailFragment extends Fragment {
         /* If the event has been initialised, then insert the Event information onto the
            the page */
         if (mEvent != null) {
-            eventNameTextView.setText(mEvent.getName());
+            eventNameTextView.setText(mEvent.getEventName());
             eventDetailDescription.setText(mEvent.getDescription());
 
             Uri u = Uri.parse("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4");

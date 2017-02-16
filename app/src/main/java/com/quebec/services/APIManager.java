@@ -6,6 +6,9 @@ package com.quebec.services;
 
 import android.util.Log;
 
+import com.quebec.app.Event;
+import com.quebec.app.User;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.HashMap;
@@ -48,8 +51,7 @@ public class APIManager implements API {
             /**
              * onResponseReceived takes the DAO from inside the response, sets the status
              */
-            public void onResponseReceived(APIResponse<BaseDAO> apiResponse) {
-                // TODO: take the response body and do stuff
+            public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
 
 
                 EventDAO eventDAO = (EventDAO) apiResponse.getResponseBody();
@@ -57,7 +59,11 @@ public class APIManager implements API {
                 eventResponse.setResponseBody(eventDAO);
 
                 if (apiResponse.getStatus() == "success") {
-                    response.onSuccess(eventDAO);
+                    EventFactory eventFactory = new EventFactory();
+                    eventFactory.setEventDAO(eventDAO);
+                    Event event = eventFactory.eventFactory();
+                    // pass created event back to the user
+                    response.onSuccess(event);
                 } else {
                     response.onFailure("Failed to create the event!");
                 }

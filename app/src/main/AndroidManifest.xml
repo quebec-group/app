@@ -46,15 +46,11 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_sign_in" />
         <activity
-            android:name=".demo.userpools.ForgotPasswordActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_forgot_password" />
-        <activity
-            android:name=".demo.userpools.SignUpActivity"
+            android:name=".auth.SignUpActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_sign_up" />
         <activity
-            android:name=".demo.userpools.SignUpConfirmActivity"
+            android:name=".auth.SignUpConfirmActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_sign_up_confirm" />
         <activity

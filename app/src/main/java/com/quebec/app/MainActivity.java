@@ -131,11 +131,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         setFragment(new EventsFeedFragment(), 0);
                         break;
                     case R.id.menu_uploadvideo:
-                        APICallback<EventDAO> eventAPIResponse = new APICallback<EventDAO>() {
+                        APICallback<Event> eventAPIResponse = new APICallback<Event>() {
 
                             @Override
-                            public void onSuccess(EventDAO responseBody) {
-                                EventDAO eventDAO = (EventDAO) responseBody;
+                            public void onSuccess(Event event) {
+
                             }
 
                             @Override

@@ -142,6 +142,6 @@ public class Service extends AsyncTask<Void, Integer, APIResponse> {
     }
 
     public static interface ServiceCallBack {
-        public void onResponseReceived(APIResponse<BaseDAO> apiResponse);
+        public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException;
     }
 }
