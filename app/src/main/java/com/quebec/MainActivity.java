@@ -142,7 +142,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void showVideoUploadActivity() {
-
+        Intent intent = new Intent(this, VideoUploadActivity.class);
+        startActivity(intent);
     }
 
     @Override

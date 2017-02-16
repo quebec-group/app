@@ -34,23 +34,6 @@ public class VideoUploadActivity extends AppCompatActivity {
     }
 
     /**
-     * Retrieves the video that has been recorded and displays it in a VideoView
-     * @param requestCode
-     * @param resultCode
-     * @param intent
-     */
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
-            Uri videoUri = intent.getData();
-            mVideoView = (VideoView)findViewById(R.id.videoView);
-            mVideoView.setVideoURI(videoUri);
-            mVideoView.start();
-        }
-    }
-
-    /**
      * Launches the Android gallery in order to select a video from the gallery
      * @param view
      */
@@ -68,15 +51,16 @@ public class VideoUploadActivity extends AppCompatActivity {
      * @param resultCode
      * @param intent
      */
-   // @Override
-    /*protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+   @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
             Uri videoUri = intent.getData();
-
-            VideoView videoView = (VideoView) findViewById(R.id.videoPreview);
-            videoView.setVideoURI(videoUri);
+            Intent intent1 = new Intent(this, VideoPreview.class);
+            intent1.putExtra("videoUri", videoUri.toString());
+            startActivity(intent1);
         }
-    }*/
+
+    }
 
 
 }
