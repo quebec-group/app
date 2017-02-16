@@ -139,4 +139,6 @@
     <string name="signup_photo_error_cropping">Unable to crop the image. Please try again.</string>
     <string name="profile_update_profile_text">Update your profile picture</string>
     <string name="signup_photo_upload_title">Upload a profile picture</string>
+    <string name="upload_video_title">Review your video</string>
+    <string name="upload_video_upload_text" >Upload your video</string>
 </resources>

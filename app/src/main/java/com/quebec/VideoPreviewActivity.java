@@ -8,8 +8,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.VideoView;
 
-public class VideoPreview extends AppCompatActivity {
+public class VideoPreviewActivity extends AppCompatActivity {
 
+    static final String VIDEO_URI = "videoUri";
     static final int REQUEST_VIDEO_CAPTURE = 1;
     private VideoView mVideoView;
 
@@ -17,6 +18,14 @@ public class VideoPreview extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_preview);
+
+        Intent intent = getIntent();
+        Uri videoURI = Uri.parse(intent.getStringExtra(VIDEO_URI));
+
+        mVideoView = (VideoView)findViewById(R.id.videoView);
+        mVideoView.setVideoURI(videoURI);
+        mVideoView.start();
+
     }
 
     /**
@@ -39,12 +48,7 @@ public class VideoPreview extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
-            Uri videoURI = Uri.parse(intent.getStringExtra("videoUri"));
-            mVideoView = (VideoView)findViewById(R.id.videoView);
-            mVideoView.setVideoURI(videoURI);
-            mVideoView.start();
-        }
+
     }
 
     /**
@@ -63,7 +67,7 @@ public class VideoPreview extends AppCompatActivity {
     }
 
     public void uploadVideo(View view){
-        Intent intent = new Intent(this, EventDetailsAdding.class);
+        Intent intent = new Intent(this, EventAddDetailsActivity.class);
         startActivity(intent);
     }
 

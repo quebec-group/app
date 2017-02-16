@@ -11,44 +11,63 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.quebec.VideoUploadActivity">
 
-    <EditText
-        android:id="@+id/editText4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Review your video!"
-        android:ems="10"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/upload"
-        android:text="Upload"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="42dp"
-        android:onClick="uploadVideo"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        <TextView
+            android:text="@string/upload_video_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"
+            android:textAppearance="@style/TextAppearance.FontPathHeading"
+            android:textSize="24sp" />
 
-    <Button
-        android:id="@+id/takeVideo"
-        android:text="Retake Video"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:onClick="chooseVideo"
-        android:layout_marginEnd="39dp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="437dp">
 
-    <VideoView
-        android:id="@+id/videoView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editText4"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/upload" />
+            <VideoView
+                android:id="@+id/videoView"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="@dimen/activity_separator_small"
+                android:layout_marginBottom="@dimen/activity_separator_small" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/upload"
+                android:text="Upload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="42dp"
+                android:onClick="uploadVideo"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/takeVideo"
+                android:text="Retake Video"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:onClick="chooseVideo"
+                android:layout_marginEnd="39dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>
 

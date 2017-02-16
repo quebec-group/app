@@ -148,8 +148,8 @@
             android:exported="false" />
 
         <activity android:name=".ProfilePictureUpdateActivity" />
-        <activity android:name=".EventDetailsAdding" />
-        <activity android:name=".VideoPreview"></activity>
+        <activity android:name=".EventAddDetailsActivity" />
+        <activity android:name=".VideoPreviewActivity"></activity>
     </application>
 
 </manifest>

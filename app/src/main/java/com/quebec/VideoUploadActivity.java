@@ -55,7 +55,7 @@ public class VideoUploadActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
             Uri videoUri = intent.getData();
-            Intent intent1 = new Intent(this, VideoPreview.class);
+            Intent intent1 = new Intent(this, VideoPreviewActivity.class);
             intent1.putExtra("videoUri", videoUri.toString());
             startActivity(intent1);
         }
