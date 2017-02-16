@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,14 +33,7 @@ import java.io.File;
  * create an instance of this fragment.
  */
 public class ProfileFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener  {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private ProfileInteractionListener mListener;
 
@@ -61,11 +53,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
     }
 
     // TODO: Rename and change types and number of parameters
-    public static ProfileFragment newInstance(String param1, String param2) {
+    public static ProfileFragment newInstance() {
         ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -105,27 +95,26 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
 
                 });
 
-
+        /* Get the profile picture. */
         ProfilePictureHandler handler = new ProfilePictureHandler();
         handler.getImage(new ContentProgressListener() {
             @Override
             public void onSuccess(ContentItem contentItem) {
-                File file = contentItem.getFile();
-                Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
+                File f = contentItem.getFile();
+                Bitmap bitmap = BitmapFactory.decodeFile(f.getPath());
                 profile_picture_view.setImageBitmap(bitmap);
             }
 
             @Override
             public void onProgressUpdate(String filePath, boolean isWaiting, long bytesCurrent, long bytesTotal) {
-                Log.e("error downloading", filePath + " : " + bytesCurrent);
+
             }
 
             @Override
             public void onError(String filePath, Exception ex) {
-                Log.e("error downloading", filePath + " : " + ex.getMessage());
+
             }
         });
-
     }
 
 
@@ -161,7 +150,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                 new Event("Group Project Dinner", "A group project evening of eating food while discussing the elements of the group project.")
         };
 
-        EventListAdapterItem adapter = new EventListAdapterItem(this.getContext(), R.layout.event_list_item, values);
+        EventListAdapterItem adapter = new EventListAdapterItem(this.getContext(), R.layout.adapter_event_item, values);
         profileEventsFeed.setAdapter(adapter);
         profileEventsFeed.setOnItemClickListener(this);
 
@@ -173,7 +162,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
 
     @Override
     public void onClick(View view) {
-        Log.e("1", Integer.toString(view.getId()));
         switch (view.getId()) {
             case R.id.profile_logout:
                 logoutAccount();
@@ -219,11 +207,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        profileEventsFeed.setItemChecked(position, true);
+        Event e = (Event) profileEventsFeed.getItemAtPosition(position);
 
+        // Call the interaction listener with the Event object.
+        mListener.onProfileEventSelected(e);
     }
 
     public interface ProfileInteractionListener {
         void openFriendsList();
         void updateProfilePictureActivity();
+        void onProfileEventSelected(Event e);
     }
 }

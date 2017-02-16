@@ -11,9 +11,18 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 
-public class EventDetailFragment extends Fragment {
+public class EventDetailFragment extends Fragment implements OnMapReadyCallback {
 
     public static final String EVENT_KEY = "event_key";
 
@@ -24,6 +33,7 @@ public class EventDetailFragment extends Fragment {
     private TextView eventDetailDescription;
 
     private VideoView eventVideoview;
+    private MapView eventMapView;
 
     private View mFragmentView;
     private GridView gridView;
@@ -71,14 +81,16 @@ public class EventDetailFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+
+    {
         // Inflate the layout for this fragment
 
         mFragmentView = inflater.inflate(R.layout.fragment_event_detail, container, false);
         eventNameTextView = (TextView) mFragmentView.findViewById(R.id.eventDetailName);
         eventDetailDescription = (TextView) mFragmentView.findViewById(R.id.eventDetailDescription);
         eventVideoview = (VideoView) mFragmentView.findViewById(R.id.eventVideoView);
-
+        eventMapView = (MapView) mFragmentView.findViewById(R.id.eventMapView);
 
         /* If the event has been initialised, then insert the Event information onto the
            the page */
@@ -86,8 +98,11 @@ public class EventDetailFragment extends Fragment {
             eventNameTextView.setText(mEvent.getName());
             eventDetailDescription.setText(mEvent.getDescription());
 
-            Uri u = Uri.parse("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4");
+            // TODO remove the example video.
+            Uri u = Uri.parse("https://fpdl.vimeocdn.com/vimeo-prod-skyfire-std-us/01/2237/7/186188011/615251856.mp4?token=58a59462_0xfcfbe3fc4abfdb9334a7e9e231f0686e6d779cb2");
             eventVideoview.setVideoURI(u);
+
+            eventMapView.getMapAsync(this);
 
             eventVideoview.start();
         }
@@ -95,17 +110,32 @@ public class EventDetailFragment extends Fragment {
         gridView = (GridView) mFragmentView.findViewById(R.id.eventUsers);
 
         User[] values = new User[] {
-                new User("Andrew Deniszczyc"),
-                new User("John Smith"),
-                new User("Pete Testing"),
-                new User("Evian Water"),
-                new User("Nokia Phone")
+                new User("Brad Pitt"),
+                new User("Julia Roberts"),
+                new User("Tom Cruise"),
+                new User("Emma Watson"),
+                new User("Matt Damon")
         };
 
         EventUsersAdapterItem adapter = new EventUsersAdapterItem(this.getContext(), R.layout.adapter_grid_event_user, values);
         gridView.setAdapter(adapter);
 
         return mFragmentView;
+    }
+
+    /**
+     * Handles the map loading from the event.
+     * @param map
+     */
+    @Override
+    public void onMapReady(GoogleMap map) {
+        // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
+        MapsInitializer.initialize(this.getActivity());
+
+        // Updates the location and zoom of the MapView
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(43.1, -87.9), 10);
+        map.animateCamera(cameraUpdate);
+
     }
 
     @Override
@@ -130,6 +160,6 @@ public class EventDetailFragment extends Fragment {
      * The interface which must be implemented by the related activity.
      */
     public interface OnEventDetailInteractionListener {
-        void onBackToEvents();
+
     }
 }

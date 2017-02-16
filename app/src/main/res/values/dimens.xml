@@ -27,4 +27,5 @@
     <dimen name="activity_button_height">45dp</dimen>
     <dimen name="activity_intra_group_separation">10dp</dimen>
     <dimen name="activity_separation_small">30dp</dimen>
+    <dimen name="layout_margin">20dp</dimen>
 </resources>
