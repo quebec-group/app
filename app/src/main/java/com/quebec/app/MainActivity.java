@@ -21,6 +21,9 @@ import android.view.View;
 import com.amazonaws.mobile.AWSMobileClient;
 import com.amazonaws.mobile.user.IdentityManager;
 import com.quebec.app.auth.SplashActivity;
+import com.quebec.services.APICallback;
+import com.quebec.services.APIManager;
+import com.quebec.services.EventDAO;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabReselectListener;
 import com.roughike.bottombar.OnTabSelectListener;
@@ -125,17 +128,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         });
-
-        bottomBar.setOnTabReselectListener(new OnTabReselectListener() {
-
-
-            @Override
-            public void onTabReSelected(@IdRes int tabId) {
-
-            }
-        });
-
-    }
 
     public void showVideoUploadActivity() {
 

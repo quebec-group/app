@@ -39,11 +39,11 @@ public class Event implements Parcelable {
         }
     };
 
-    public String getName() {
+    public String getEventName() {
         return name;
     }
 
-    public String getVideoURL() {
+    public String getEventVideoURL() {
         return videoURL;
     }
 

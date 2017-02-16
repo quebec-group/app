@@ -47,7 +47,7 @@ public class SignInActivity extends Activity {
          */
         @Override
         public void onSuccess(final IdentityProvider provider) {
-            Log.d(LOG_TAG, String.format("User sign-in with %s succeeded",
+            Log.d(LOG_TAG, String.format("UserDTO sign-in with %s succeeded",
                 provider.getDisplayName()));
 
             // The sign-in manager is no longer needed once signed in.
@@ -77,7 +77,7 @@ public class SignInActivity extends Activity {
          */
         @Override
         public void onCancel(final IdentityProvider provider) {
-            Log.d(LOG_TAG, String.format("User sign-in with %s canceled.",
+            Log.d(LOG_TAG, String.format("UserDTO sign-in with %s canceled.",
                 provider.getDisplayName()));
 
             Toast.makeText(SignInActivity.this, String.format("Sign-in with %s canceled.",
@@ -91,7 +91,7 @@ public class SignInActivity extends Activity {
          */
         @Override
         public void onError(final IdentityProvider provider, final Exception ex) {
-            Log.e(LOG_TAG, String.format("User Sign-in failed for %s : %s",
+            Log.e(LOG_TAG, String.format("UserDTO Sign-in failed for %s : %s",
                 provider.getDisplayName(), ex.getMessage()), ex);
 
             errorField.setText(String.format("Sign-in failed. Please try again."));

@@ -45,7 +45,7 @@ public class SplashActivity extends Activity {
          */
         @Override
         public void onSuccess(final IdentityProvider provider) {
-            Log.d(LOG_TAG, String.format("User sign-in with previous %s provider succeeded",
+            Log.d(LOG_TAG, String.format("UserDTO sign-in with previous %s provider succeeded",
                 provider.getDisplayName()));
 
             // The sign-in manager is no longer needed once signed in.

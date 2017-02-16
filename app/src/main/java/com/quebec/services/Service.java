@@ -1,6 +1,6 @@
 package com.quebec.services;
 
-import android.support.v4.app.Fragment;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.amazonaws.http.HttpMethodName;
@@ -14,33 +14,42 @@ import com.amazonaws.mobileconnectors.apigateway.ApiResponse;
 import com.amazonaws.util.IOUtils;
 import com.amazonaws.util.StringUtils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.InputStream;
+import java.io.UTFDataFormatException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by callum on 14/02/2017.
+ * Created by Andy on 14/02/2017.
  */
 
-public class ServiceDemo {
-    private static String LOG_TAG = ServiceDemo.class.getSimpleName();
+public class Service extends AsyncTask<Void, Integer, APIResponse> {
 
+    private APIRequest apiRequest;
+    private ServiceCallBack callBack;
+    private static String LOG_TAG = Service.class.getSimpleName();
     private CloudLogicAPIConfiguration apiConfiguration;
 
-    public ServiceDemo() {
+
+    public Service(APIRequest apiRequest, ServiceCallBack serviceCallBack) {
+        this.apiRequest = apiRequest;
+        this.callBack = serviceCallBack;
         apiConfiguration = CloudLogicAPIFactory.getAPIs()[0];
     }
 
-    public void test() {
+
+    @Override
+    protected APIResponse doInBackground(Void... params) {
+        APIResponse apiResponse = null;
         Log.d(LOG_TAG, "Invoke");
 
-        final String method = "POST";
-        final String path = "/api/createUser";
-        final String body = "{\n" +
-                "  \"name\" : \"someName\"\n" +
-                "}";
-
-        String queryStringText = "";
+        final String method = apiRequest.getApiEndpoint().getMethod();
+        final String path = apiRequest.getApiEndpoint().getPath();
+        final String body = apiRequest.getBody();
 
         final Map<String, String> parameters = new HashMap<>();
 
@@ -70,38 +79,44 @@ public class ServiceDemo {
             request = tmpRequest;
         }
 
-
-        // Make network call on background thread
-        new Thread(new Runnable() {
-            Exception exception = null;
-
-            @Override
-            public void run() {
                 try {
+                    Log.d(LOG_TAG, path);
                     Log.d(LOG_TAG, "Invoking API w/ Request : " + request.getHttpMethod() + ":" + request.getPath());
 
-                    long startTime = System.currentTimeMillis();
 
                     final ApiResponse response = client.execute(request);
 
-                    final long latency = System.currentTimeMillis() - startTime;
-
                     final InputStream responseContentStream = response.getContent();
+                    String status = "failure";
 
+                    // Given valid server response
                     if (responseContentStream != null) {
+
                         final String responseData = IOUtils.toString(responseContentStream);
-                        Log.d(LOG_TAG, "Response : " + responseData);
+
+                        JSONObject responseJSON = new JSONObject(responseData);
+                        BaseDAO baseDAO = new BaseDAO(responseJSON);
+
+
+
+                        try {
+                            status = baseDAO.get_DAO_BODY().getString("status");
+                            Log.d(LOG_TAG, baseDAO.get_DAO_BODY().getString("status"));
+                        } catch (JSONException e) {
+                            Log.e(LOG_TAG, e.getMessage());
+                        }
+
+                        apiResponse = new APIResponse(status);
+                        apiResponse.setResponseBody(baseDAO);
+                        Log.d(LOG_TAG, "Response : " + baseDAO.get_DAO_BODY().toString());
+
+                    } else { // failed to receive response from server
+
+                        apiResponse = new APIResponse(status);
+
                     }
 
-//                    ThreadUtils.runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            if (!isDetached()) {
-//                                statusView.setText(response.getStatusCode() + " " + response.getStatusText());
-//                                latencyView.setText(String.format("%4.3f sec", latency / 1000.0f));
-//                            }
-//                        }
-//                    });
+
                 } catch (final Exception exception) {
                     Log.e(LOG_TAG, exception.getMessage(), exception);
                     exception.printStackTrace();
@@ -113,7 +128,20 @@ public class ServiceDemo {
                         }
                     });
                 }
-            }
-        }).start();
+            return apiResponse;
+    }
+
+
+    /**
+     * run post-execution of the request
+     * @param apiResponse
+     */
+    @Override
+    public void onPostExecute(APIResponse apiResponse) {
+        callBack.onResponseReceived(apiResponse);
+    }
+
+    public static interface ServiceCallBack {
+        public void onResponseReceived(APIResponse<BaseDAO> apiResponse);
     }
 }
