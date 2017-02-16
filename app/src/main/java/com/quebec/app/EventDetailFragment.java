@@ -99,7 +99,7 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback 
             eventDetailDescription.setText(mEvent.getDescription());
 
             // TODO remove the example video.
-            Uri u = Uri.parse("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4");
+            Uri u = Uri.parse("https://fpdl.vimeocdn.com/vimeo-prod-skyfire-std-us/01/2237/7/186188011/615251856.mp4?token=58a59462_0xfcfbe3fc4abfdb9334a7e9e231f0686e6d779cb2");
             eventVideoview.setVideoURI(u);
 
             eventMapView.getMapAsync(this);
@@ -110,11 +110,11 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback 
         gridView = (GridView) mFragmentView.findViewById(R.id.eventUsers);
 
         User[] values = new User[] {
-                new User("Andrew Deniszczyc"),
-                new User("John Smith"),
-                new User("Pete Testing"),
-                new User("Evian Water"),
-                new User("Nokia Phone")
+                new User("Brad Pitt"),
+                new User("Julia Roberts"),
+                new User("Tom Cruise"),
+                new User("Emma Watson"),
+                new User("Matt Damon")
         };
 
         EventUsersAdapterItem adapter = new EventUsersAdapterItem(this.getContext(), R.layout.adapter_grid_event_user, values);
