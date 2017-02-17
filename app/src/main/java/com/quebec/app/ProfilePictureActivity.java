@@ -266,6 +266,8 @@ public class ProfilePictureActivity extends AppCompatActivity {
 
     public void showMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
+
+        // TODO add the event to return to the profile view and refresh te
         startActivity(intent);
     }
 
