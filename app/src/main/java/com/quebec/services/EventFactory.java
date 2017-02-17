@@ -5,6 +5,8 @@ import com.quebec.app.User;
 
 import org.json.JSONException;
 
+import java.util.ArrayList;
+
 /**
  * Created by Andy on 16/02/2017.
  */
@@ -23,7 +25,8 @@ public class EventFactory {
         final String location = eventDAO.get_DAO_BODY().getString("location");
         final String time = eventDAO.get_DAO_BODY().getString("time");
         final String videoID = eventDAO.get_DAO_BODY().getString("videoID");
-        Event event = new Event(title, description, eventID, location, time, videoID);
+        final ArrayList<User> attendees = new ArrayList<>();
+        Event event = new Event(title, description, eventID, location, time, videoID, attendees);
         return event;
     }
 }
