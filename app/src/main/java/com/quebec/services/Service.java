@@ -138,7 +138,11 @@ public class Service extends AsyncTask<Void, Integer, APIResponse> {
      */
     @Override
     public void onPostExecute(APIResponse apiResponse) {
-        callBack.onResponseReceived(apiResponse);
+        try {
+            callBack.onResponseReceived(apiResponse);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public static interface ServiceCallBack {
