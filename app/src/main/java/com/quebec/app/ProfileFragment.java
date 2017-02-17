@@ -64,6 +64,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Intent intent = getActivity().getIntent();
+
+        // TODO
+        // String message = intent.getStringExtra(.EXTRA_MESSAGE);
+
         super.onCreate(savedInstanceState);
     }
 
