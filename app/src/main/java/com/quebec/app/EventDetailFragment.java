@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -57,6 +58,7 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback 
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,12 +100,16 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback 
             eventNameTextView.setText(mEvent.getEventName());
             eventDetailDescription.setText(mEvent.getDescription());
 
-            // TODO remove the example video.
-            Uri u = Uri.parse("https://fpdl.vimeocdn.com/vimeo-prod-skyfire-std-us/01/2237/7/186188011/615251856.mp4?token=58a59462_0xfcfbe3fc4abfdb9334a7e9e231f0686e6d779cb2");
-            eventVideoview.setVideoURI(u);
-
             eventMapView.getMapAsync(this);
 
+            // TODO remove the example video.
+            Uri u = Uri.parse("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4");
+            eventVideoview.setVideoURI(u);
+
+            /* Add scrubbing controls to the video view. */
+            MediaController ctrl = new MediaController(this.getContext());
+
+            eventVideoview.setMediaController(ctrl);
             eventVideoview.start();
         }
 

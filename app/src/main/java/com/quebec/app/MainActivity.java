@@ -21,9 +21,6 @@ import android.view.View;
 import com.amazonaws.mobile.AWSMobileClient;
 import com.amazonaws.mobile.user.IdentityManager;
 import com.quebec.app.auth.SplashActivity;
-import com.quebec.services.APICallback;
-import com.quebec.services.APIManager;
-import com.quebec.services.EventDAO;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabReselectListener;
 import com.roughike.bottombar.OnTabSelectListener;
@@ -43,13 +40,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /** The identity manager used to keep track of the current user account. */
     private IdentityManager identityManager;
     private Fragment mFragment;
-    private int currentFragmentName;
+    private int currentFragmentTab;
 
     private void setFragment(Fragment frag, int transition) {
 
-        // if (!frag.getClass().getName().equals(currentFragmentName)) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        // if (!frag.getClass().getName().equals(currentFragmentTab)) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
+        boolean fragmentPopped = getSupportFragmentManager().popBackStackImmediate(frag.getClass().getName(), 0);
+
+        if (!fragmentPopped) {
             if (transition == 0) {
                 transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
             }
@@ -58,9 +58,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             transaction.replace(R.id.fragment_container, frag);
-            transaction.addToBackStack(null);
+            transaction.addToBackStack(frag.getClass().getName());
             transaction.commit();
         }
+
+    }
 
 
     // }
@@ -98,6 +100,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
+
+        /* Handle the reselection of a bottom bar tab. */
+        bottomBar.setOnTabReselectListener(new OnTabReselectListener() {
+            @Override
+            public void onTabReSelected(@IdRes int tabId) {
+                if (tabId == mFragment.getId()) {
+                    return;
+                }
+
+                switch (tabId) {
+                    case R.id.menu_eventsfeed:
+                        currentFragmentTab = R.id.menu_eventsfeed;
+                        setFragment(new EventsFeedFragment(), 0);
+                        break;
+                    case R.id.menu_uploadvideo:
+                        currentFragmentTab = R.id.menu_uploadvideo;
+                        showVideoUploadActivity();
+                        break;
+                    case R.id.menu_profile:
+                        currentFragmentTab = R.id.menu_profile;
+                        setFragment(new ProfileFragment(), 1);
+                        break;
+                }
+            }
+        });
+
+        /* Handle the single selection of a bottom bar tab. */
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
 
             private Fragment frag;
@@ -105,23 +134,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onTabSelected(@IdRes int tabId) {
 
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-                if (tabId == currentFragmentName) {
+                if (tabId == currentFragmentTab) {
                     return;
                 }
 
                 switch (tabId) {
                     case R.id.menu_eventsfeed:
-                        currentFragmentName = R.id.menu_eventsfeed;
+                        currentFragmentTab = R.id.menu_eventsfeed;
                         setFragment(new EventsFeedFragment(), 0);
                         break;
                     case R.id.menu_uploadvideo:
-                        currentFragmentName = R.id.menu_uploadvideo;
+                        currentFragmentTab = R.id.menu_uploadvideo;
                         showVideoUploadActivity();
                         break;
                     case R.id.menu_profile:
-                        currentFragmentName = R.id.menu_profile;
+                        currentFragmentTab = R.id.menu_profile;
                         setFragment(new ProfileFragment(), 1);
                         break;
                 }
@@ -130,12 +157,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    /**
+     * Handles opening the video upload panel.
+     */
     public void showVideoUploadActivity() {
 
     }
 
     @Override
     protected void onResume() {
+
+        /* Refresh the fragment view. */
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.detach(mFragment).attach(mFragment).commit();
 
