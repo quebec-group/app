@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.quebec.EventDetailFragment">
+    tools:context="com.quebec.app.EventDetailFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -12,12 +12,19 @@
         android:layout_height="match_parent"
         android:weightSum="1">
 
-        <VideoView
-            android:layout_width="wrap_content"
-            android:layout_height="147dp"
-            android:id="@+id/eventVideoView"
-            android:layout_weight="0.39"
-            android:elevation="20dp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="158dp"
+            android:background="@color/bb_darkBackgroundColor">
+
+            <VideoView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/eventVideoView"
+                android:layout_weight="0.39"
+                android:elevation="20dp"
+                android:foregroundGravity="center_horizontal" />
+        </RelativeLayout>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -28,14 +35,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp">
-
-                <TextView
-                    android:text="TextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/eventDetailName"
-                    android:textAppearance="@style/TextAppearance.FontPath"
-                    android:textSize="30sp" />
 
                 <TextView
                     android:text="TextView"
@@ -59,6 +58,24 @@
                     android:layout_below="@+id/eventDetailName"
                     android:layout_alignParentStart="true"
                     android:layout_marginTop="66dp" />
+
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/eventDetailName"
+                    android:textAppearance="@style/TextAppearance.FontPath"
+                    android:textSize="30sp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true" />
+
+                <com.google.android.gms.maps.MapView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:id="@+id/eventMapView"
+                    android:background="@android:color/transparent"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true" />
 
             </RelativeLayout>
         </ScrollView>

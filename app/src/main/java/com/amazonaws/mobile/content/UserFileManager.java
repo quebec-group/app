@@ -26,16 +26,16 @@ import java.io.InputStream;
 /**
  * UserFileManager inherits from ContentManager and adds upload capabilities.
  *
- * The User File Manager uploads and downloads files from Amazon S3. It caches
+ * The UserDTO File Manager uploads and downloads files from Amazon S3. It caches
  * downloaded files locally on the device in a size-limited cache. Downloaded
  * files may be pinned to the cache, so that they are not automatically removed
- * when the cache size limit is exceeded. The User File Manager provides access
+ * when the cache size limit is exceeded. The UserDTO File Manager provides access
  * to two folders in the Amazon S3 bucket, one called "public/" for public files,
  * which are accessible to any user of the app, and one called "private/" which
  * contains a sub-folder for each Amazon Cognito identified user. Files in the
- * user's private folder can only be accessed by that user. The User File Manager
+ * user's private folder can only be accessed by that user. The UserDTO File Manager
  * serves as the application's interface into the file-related functionality
- * of the User Data Storage feature.
+ * of the UserDTO Data Storage feature.
  */
 public class UserFileManager extends ContentManager {
     final String LOG_TAG = UserFileManager.class.getSimpleName();

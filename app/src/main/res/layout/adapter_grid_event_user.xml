@@ -5,10 +5,31 @@
     android:layout_height="match_parent"
     android:weightSum="1">
 
-    <ImageView
-        android:layout_width="76dp"
-        android:layout_height="54dp"
-        app:srcCompat="@mipmap/icon_check_dated"
-        android:id="@+id/imageView"
-        android:layout_weight="0.03" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/event_user_image"
+            android:src="@drawable/com_facebook_profile_picture_blank_square"
+            android:scaleType="fitXY"
+            app:riv_corner_radius="50dp"
+            app:riv_mutate_background="true"
+            app:riv_oval="false"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/event_user_name"
+            android:layout_weight="1"
+            android:layout_margin="10dp" />
+    </LinearLayout>
+
 </LinearLayout>
