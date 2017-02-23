@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 
 public class ProfileFriendFragment extends Fragment {
@@ -15,6 +17,8 @@ public class ProfileFriendFragment extends Fragment {
 
     private static final String USER_KEY = "user_key";
     private OnFragmentInteractionListener mListener;
+
+    private View mFragmentView;
 
     public ProfileFriendFragment() {
         // Required empty public constructor
@@ -43,7 +47,13 @@ public class ProfileFriendFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_profile_friend, container, false);
+        mFragmentView = inflater.inflate(R.layout.fragment_profile_friend, container, false);
+
+        // Get the User's information and display on the page
+        TextView nameField = (TextView) mFragmentView.findViewById(R.id.profile_friend_name);
+        nameField.setText(user.getName());
+
+        return mFragmentView;
     }
 
 
@@ -65,7 +75,6 @@ public class ProfileFriendFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+
     }
 }

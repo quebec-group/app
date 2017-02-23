@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -124,6 +125,7 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback,
 
         EventUsersAdapterItem adapter = new EventUsersAdapterItem(this.getContext(), R.layout.adapter_grid_event_user, values);
         gridView.setAdapter(adapter);
+        gridView.setOnItemClickListener(this);
 
         return mFragmentView;
     }
@@ -172,6 +174,7 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback,
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
 
+        Log.e("message", "On this page");
         gridView.setItemChecked(position, true);
         User u = (User) gridView.getItemAtPosition(position);
 

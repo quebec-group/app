@@ -145,4 +145,5 @@
     <string name="signup_password_hint">Password must contain a special character, capital letter and number.</string>
     <string name="password_confirm_text" />
     <string name="sign_up_confirm_password">Confirm Password</string>
+    <string name="fragment_friend_profile_add_friend">Follow</string>
 </resources>

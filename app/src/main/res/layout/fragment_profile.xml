@@ -57,7 +57,8 @@
                         android:textAppearance="@style/TextAppearance.FontPath"
                         android:textSize="36sp"
                         android:ellipsize="marquee"
-                        android:singleLine="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
                         android:layout_weight="1" />
                 </RelativeLayout>
 

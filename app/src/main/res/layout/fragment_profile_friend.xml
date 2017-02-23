@@ -72,7 +72,7 @@
                     android:layout_marginTop="@dimen/activity_separator_small">
 
                     <Button
-                        android:text="Update "
+                        android:text="@string/fragment_friend_profile_add_friend"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/profile_friend_follow"

@@ -33,7 +33,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                                                EventsFeedFragment.EventsFeedInteractionListener,
                                                                EventDetailFragment.OnEventDetailInteractionListener,
                                                                ProfileFragment.ProfileInteractionListener,
-                                                               FriendsListFragment.FriendsListInteractionHandler{
+                                                               FriendsListFragment.FriendsListInteractionHandler,
+                                                               ProfileFriendFragment.OnFragmentInteractionListener {
 
     /** The identity manager used to keep track of the current user account. */
     private IdentityManager identityManager;

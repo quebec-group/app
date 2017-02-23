@@ -77,6 +77,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                         if (identityManager.isUserSignedIn()) {
                             // TODO: handle overflow of a username - could be done with a scrolling textview
                             userNameTextView.setText(identityManager.getUserName());
+                            userNameTextView.setSelected(true);
                         }
                     }
 
