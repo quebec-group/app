@@ -143,4 +143,16 @@
     <string name="signup_photo_description">Upload a profile picture. This will also be used for facial recognition training so use a clear photo,</string>
     <string name="sign_in_no_internet">No internet connection detected.</string>
     <string name="signup_password_hint">Password must contain a special character, capital letter and number.</string>
+
+    <string name="upload_video_title">Review your video</string>
+    <string name="upload_video_upload">Upload your video here!</string>
+    <string name="upload_video_upload_text">Upload your video here!</string>
+    <string name="video_upload_button">Upload</string>
+    <string name="retake_video_button">Retake Video</string>
+    <string name="take_video_button">Take Video</string>
+    <string name="choose_video_button">Choose Video</string>
+    <string name="video_uploading_text">Your video is uploading!</string>
+    <string name="enter_event_name">Please enter event name below...</string>
+    <string name="video_uploading_progress">Video uploading progress</string>
+    <string name="save_details_button">Save</string>
 </resources>

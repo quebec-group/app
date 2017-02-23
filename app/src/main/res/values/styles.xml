@@ -57,4 +57,16 @@
         <item name="android:textSize">30sp</item>
     </style>
 
+    <!--<style name="Background" parent="AppTheme" >
+        <item name="android:textColorPrimary">@color/com_facebook_button_background_color</item>
+        <item name="android:colorBackground">@color/Colour1</item>
+    </style>-->
+
+    <style name="Background_dark" parent="AppTheme" >
+        <item name="android:colorBackground">@color/bb_darkBackgroundColor</item>
+        <item name="android:textColorPrimary">?attr/colorAccent</item>
+        <item name="android:textColorSecondaryInverse">@android:color/secondary_text_light_nodisable</item>
+        <item name="android:textColorPrimaryInverse">@color/common_google_signin_btn_text_dark_disabled</item>
+    </style>
+
 </resources>
