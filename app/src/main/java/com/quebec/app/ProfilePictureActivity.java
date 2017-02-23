@@ -45,6 +45,7 @@ public class ProfilePictureActivity extends AppCompatActivity {
     private static final int RESULT_GALLERY = 2;
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 3;
     private static final int MY_PERMISSIONS_EXTERNAL_STORAGE = 4;
+    private static final String FRAGMENT_REFRESH = "fragment_refresh";
 
     private ImageView signup_image_preview;
     private TextView errorText;
@@ -263,7 +264,7 @@ public class ProfilePictureActivity extends AppCompatActivity {
 
     public void showMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("refresh", true);
+        intent.putExtra(FRAGMENT_REFRESH, true);
 
         // TODO add the event to return to the profile view and refresh te
         startActivity(intent);

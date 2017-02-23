@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.MediaController;
 import android.widget.TextView;
@@ -23,7 +24,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
-public class EventDetailFragment extends Fragment implements OnMapReadyCallback {
+public class EventDetailFragment extends Fragment implements OnMapReadyCallback, AdapterView.OnItemClickListener {
 
     public static final String EVENT_KEY = "event_key";
 
@@ -160,11 +161,30 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback 
         mListener = null;
     }
 
+    /**
+     * Click event for the list elements.
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position,
+                            long id) {
+
+        gridView.setItemChecked(position, true);
+        User u = (User) gridView.getItemAtPosition(position);
+
+        // Call the interaction listener with the Event object.
+        mListener.onEventSelected(u);
+
+    }
+
 
     /**
      * The interface which must be implemented by the related activity.
      */
     public interface OnEventDetailInteractionListener {
-
+        void onEventSelected(User u);
     }
 }
