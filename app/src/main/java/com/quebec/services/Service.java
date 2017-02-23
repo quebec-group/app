@@ -87,7 +87,7 @@ public class Service extends AsyncTask<Void, Integer, APIResponse> {
                     final ApiResponse response = client.execute(request);
 
                     final InputStream responseContentStream = response.getContent();
-                    final String errorCode = response.getStatusText();
+                    final int responseCode = response.getStatusCode();
 
 
                     // Given valid server response
@@ -99,13 +99,13 @@ public class Service extends AsyncTask<Void, Integer, APIResponse> {
                         BaseDAO baseDAO = new BaseDAO(responseJSON);
 
 
-                        apiResponse = new APIResponse(errorCode);
+                        apiResponse = new APIResponse(responseCode + "");
                         apiResponse.setResponseBody(baseDAO);
-                        Log.d(LOG_TAG, "Response : " + baseDAO.get_DAO_BODY().toString());
+                        Log.d(LOG_TAG, "APIResponse code : " + apiResponse.getStatus());
 
                     } else { // failed to receive response from server
 
-                        apiResponse = new APIResponse(errorCode);
+                        apiResponse = new APIResponse(responseCode + "");
 
                     }
 
@@ -121,6 +121,7 @@ public class Service extends AsyncTask<Void, Integer, APIResponse> {
                         }
                     });
                 }
+
             return apiResponse;
     }
 

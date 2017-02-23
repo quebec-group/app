@@ -42,6 +42,8 @@ public class APIManager implements API {
         try {
             JSONObject requestBody = new JSONObject();
             requestBody.put("title", eventName);
+            requestBody.put("location", eventDescription);
+            requestBody.put("time", eventName);
             request.setBody(requestBody.toString());
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage());
@@ -54,20 +56,12 @@ public class APIManager implements API {
              * onResponseReceived takes the DAO from inside the response, sets the status
              */
             public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
-
-
-                EventDAO eventDAO = (EventDAO) apiResponse.getResponseBody();
-                final APIResponse eventResponse = new APIResponse(apiResponse.getStatus());
-                eventResponse.setResponseBody(eventDAO);
-
-                if (apiResponse.getStatus() == "success") {
-                    EventFactory eventFactory = new EventFactory();
-                    eventFactory.setEventDAO(eventDAO);
-                    Event event = eventFactory.eventFactory();
+                Log.d(LOG_TAG, "here");
+                if (apiResponse.getStatus().equals("200")) {
                     // pass created event back to the user
-                    response.onSuccess(event);
+                    response.onSuccess("Succesfully created the event!");
                 } else {
-                    response.onFailure("Failed to create the event!");
+                    response.onFailure(apiResponse.getResponseBody().get_DAO_BODY().toString());
                 }
 
             }
@@ -105,18 +99,18 @@ public class APIManager implements API {
             public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
 
 
-                UserDAO userDAO = (UserDAO) apiResponse.getResponseBody();
+                UserDAO userDAO = new UserDAO(apiResponse.getResponseBody().get_DAO_BODY());
                 final APIResponse userResponse = new APIResponse(apiResponse.getStatus());
                 userResponse.setResponseBody(userDAO);
 
-                if (apiResponse.getStatus() == "success") {
+                if (apiResponse.getStatus().equals("200")) {
                     UserFactory userFactory = new UserFactory();
                     userFactory.setUserDAO(userDAO);
                     User user = userFactory.userFactory();
                     // pass created event back to the user
                     response.onSuccess(user);
                 } else {
-                    response.onFailure("Failed to create the user!");
+                    response.onFailure(apiResponse.getResponseBody().get_DAO_BODY().toString());
                 }
 
             }
@@ -131,10 +125,6 @@ public class APIManager implements API {
         endpoint = new APIEndpoint("getFriends");
         request = new APIRequest(endpoint);
 
-
-        // create the request body
-        request.setBody(new String());
-
         // perform the HTTP request and wait for callback
         service = new Service(request, new Service.ServiceCallBack() {
             @Override
@@ -146,9 +136,10 @@ public class APIManager implements API {
 
                 BaseDAO baseDAO = apiResponse.getResponseBody();
                 final APIResponse userResponse = new APIResponse(apiResponse.getStatus());
+                final String responseBody = apiResponse.getResponseBody().get_DAO_BODY().toString();
                 userResponse.setResponseBody(baseDAO);
 
-                if (apiResponse.getStatus() == "success") {
+                if (apiResponse.getStatus().equals("200")) {
 
                     FriendListFactory friendListFactory = new FriendListFactory();
                     friendListFactory.setFriendListDAO(baseDAO);
@@ -159,7 +150,7 @@ public class APIManager implements API {
                         e.printStackTrace();
                     }
                 } else {
-                    response.onFailure("Failed to create the user!");
+                    response.onFailure(responseBody);
                 }
 
             }
@@ -171,48 +162,95 @@ public class APIManager implements API {
     }
 
     @Override
-    public APIResponse setPictureID(String S3ID) {
-        return null;
+    public void setPictureID(String S3ID, final APICallback response) {
+
     }
 
     @Override
-    public APIResponse setVideoID(String S3ID) {
-        return null;
+    public void setVideoID(String S3ID, final APICallback response) {
+
     }
 
     @Override
-    public APIResponse addFriend(String userID) {
-        return null;
+    public void addFriend(final String userID, final APICallback response) {
+        endpoint =  new APIEndpoint("addFriend");
+        request = new APIRequest(endpoint);
+
+        // create the request body
+        try {
+            JSONObject requestBody = new JSONObject();
+            requestBody.put("friendID", userID);
+            request.setBody(requestBody.toString());
+        } catch (JSONException e) {
+            Log.e(LOG_TAG, e.getMessage());
+        }
+
+        service = new Service(request, new Service.ServiceCallBack() {
+            @Override
+            public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
+                Log.d(LOG_TAG, apiResponse.getStatus());
+                if (apiResponse.getStatus().equals("200")) {
+                    response.onSuccess(new String("Successfully added: " + userID + " as a friend."));
+                }
+            }
+        });
+
+        service.execute();
+
     }
 
     @Override
-    public APIResponse removeFriend(String userID) {
-        return null;
+    public void removeFriend(String userID,final APICallback response) {
+
     }
 
     @Override
-    public APIResponse addFriendRequest(String userID) {
-        return null;
+    public void addFriendRequest(String userID,final APICallback response) {
     }
 
     @Override
-    public APIResponse getPendingFriendRequests() {
-        return null;
+    public void getPendingFriendRequests(final APICallback response) {
+
     }
 
     @Override
-    public APIResponse getSentFriendRequests() {
-        return null;
+    public void getSentFriendRequests(final APICallback response) {
+
     }
 
     @Override
-    public APIResponse addUserToEvent(String eventName, String userID) {
-        return null;
+    public void addUserToEvent(String eventID, String userID, final APICallback response) {
+        endpoint =  new APIEndpoint("addUserToEvent");
+        request = new APIRequest(endpoint);
+        try {
+            JSONObject requestBody = new JSONObject();
+            requestBody.put("friendID", userID);
+            requestBody.put("eventID", eventID);
+            request.setBody(requestBody.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        service = new Service(request, new Service.ServiceCallBack() {
+            @Override
+            public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
+                Log.d(LOG_TAG, apiResponse.getStatus());
+                final String responseBody = apiResponse.getResponseBody().get_DAO_BODY().toString();
+                if (apiResponse.getStatus().equals("200")) {
+                    response.onSuccess(responseBody);
+                } else {
+                    response.onFailure(responseBody);
+                }
+            }
+        });
+
+        service.execute();
     }
 
     @Override
-    public APIResponse removeUserFromEvent(String eventName, String userID) {
-        return null;
+    public void removeUserFromEvent(String eventName, String userID,final APICallback response) {
+
     }
 
 
