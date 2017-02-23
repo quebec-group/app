@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Background" parent="AppTheme">
+        <item name="android:colorPrimary">@color/Colour1</item>
+        <item name="android:colorPrimaryDark">@color/Colour1</item>
+        <item name="android:textColorPrimary">@color/com_facebook_button_background_color</item>
+        <item name="android:colorAccent">@color/Colour1</item>
+        <item name="android:colorBackground">@color/Colour1</item>
+    </style>
+
+    <style name="Background_dark" parent="Background">
+        <item name="android:colorPrimary">@color/bb_darkBackgroundColor</item>
+        <item name="android:colorPrimaryDark">@color/bb_darkBackgroundColor</item>
+        <item name="android:colorBackground">@color/bb_darkBackgroundColor</item>
+        <item name="android:colorAccent">@color/bb_tabletRightBorderDark</item>
+        <item name="android:textColorPrimary">?attr/colorAccent</item>
+        <item name="android:textColorSecondaryInverse">@android:color/secondary_text_light_nodisable</item>
+        <item name="android:textColorPrimaryInverse">@color/common_google_signin_btn_text_dark_disabled</item>
+    </style>
+</resources>

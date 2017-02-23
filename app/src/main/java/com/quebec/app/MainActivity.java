@@ -10,7 +10,6 @@ package com.quebec.app;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
@@ -22,65 +21,81 @@ import android.view.View;
 
 import com.amazonaws.mobile.AWSMobileClient;
 import com.amazonaws.mobile.user.IdentityManager;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.quebec.app.auth.SplashActivity;
-import com.quebec.services.APICallback;
-import com.quebec.services.APIManager;
-import com.quebec.services.EventDAO;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabReselectListener;
 import com.roughike.bottombar.OnTabSelectListener;
-
-import java.util.ArrayList;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
-        EventsFeedFragment.EventsFeedInteractionListener,
-        EventDetailFragment.OnEventDetailInteractionListener,
-        ProfileFragment.ProfileInteractionListener,
-        FriendsListFragment.FriendsListInteractionHandler {
+                                                               EventsFeedFragment.EventsFeedInteractionListener,
+                                                               EventDetailFragment.OnEventDetailInteractionListener,
+                                                               ProfileFragment.ProfileInteractionListener,
+                                                               FriendsListFragment.FriendsListInteractionHandler,
+                                                               ProfileFriendFragment.OnFragmentInteractionListener {
 
-    /**
-     * Class name for log messages.
-     */
-    private static final String LOG_TAG = MainActivity.class.getSimpleName();
-
-    /**
-     * The identity manager used to keep track of the current user account.
-     */
+    /** The identity manager used to keep track of the current user account. */
     private IdentityManager identityManager;
     private Fragment mFragment;
-    private String currentFragmentName;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
+    private String currentFragmentTab;
 
+    /**
+     * Change the current fragment in the main activity view.
+     * @param frag
+     * @param transition
+     */
     private void setFragment(Fragment frag, int transition) {
 
-        if (!frag.getClass().getName().equals(currentFragmentName)) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        currentFragmentTab = frag.getClass().getName();
 
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        boolean fragmentPopped = getSupportFragmentManager().popBackStackImmediate(frag.getClass().getName(), 0);
+
+        if (!fragmentPopped) {
             if (transition == 0) {
                 transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
-            } else {
+            }
+            else {
                 transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
             }
-            transaction.remove(mFragment);
+
             transaction.replace(R.id.fragment_container, frag);
             transaction.addToBackStack(frag.getClass().getName());
             transaction.commit();
-            currentFragmentName = frag.getClass().getName();
+            currentBottomBarItem = -1;
+            
+            mFragment = frag;
         }
 
-
     }
+
+    private int currentBottomBarItem;
+
+    private void setBottomBarFragment(int tabId) {
+
+        if (currentBottomBarItem == tabId) {
+            return;
+        }
+
+        switch (tabId) {
+            case R.id.menu_eventsfeed:
+                setFragment(new EventsFeedFragment(), 0);
+                break;
+            case R.id.menu_uploadvideo:
+                showVideoUploadActivity();
+                break;
+            case R.id.menu_profile:
+                setFragment(new ProfileFragment(), 1);
+                break;
+        }
+
+        currentBottomBarItem = tabId;
+    }
+
+    // }
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -107,163 +122,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mFragment = eventsFeed;
         }
 
-        BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
-        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
+        ProfilePictureHandler profilePictureHandler = new ProfilePictureHandler();
+        if (!profilePictureHandler.profilePictureExists()) {
+            Intent intent = new Intent(this, ProfilePictureSignUpActivity.class);
+            startActivity(intent);
+        }
 
-            private Fragment frag;
+
+        BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
+
+        /* Handle the reselection of a bottom bar tab. */
+        bottomBar.setOnTabReselectListener(new OnTabReselectListener() {
+            @Override
+            public void onTabReSelected(@IdRes int tabId) {
+                setBottomBarFragment(tabId);
+            }
+        });
+
+        /* Handle the single selection of a bottom bar tab. */
+        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
 
             @Override
             public void onTabSelected(@IdRes int tabId) {
-
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-                switch (tabId) {
-                    case R.id.menu_eventsfeed:
-                        setFragment(new EventsFeedFragment(), 0);
-                        break;
-                    case R.id.menu_uploadvideo:
-                        showVideoUploadActivity();
-                        break;
-                    case R.id.menu_profile:
-                        setFragment(new ProfileFragment(), 1);
-                        break;
-                }
+                setBottomBarFragment(tabId);
             }
 
         });
-
-        bottomBar.setOnTabReselectListener(new OnTabReselectListener() {
-
-            private Fragment frag;
-
-            @Override
-            public void onTabReSelected(@IdRes int tabId) {
-
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-
-                switch (tabId) {
-                    case R.id.menu_eventsfeed:
-                        setFragment(new EventsFeedFragment(), 0);
-                        break;
-                    case R.id.menu_uploadvideo:
-                        APICallback<ArrayList<User>> friendList = new APICallback<ArrayList<User>>() {
-
-                            @Override
-                            public void onSuccess(ArrayList<User> friends) {
-                                Log.d(LOG_TAG, "email: " + friends.get(0).getEmail());
-                                Log.d(LOG_TAG, "name: " + friends.get(0).getName());
-                                Log.d(LOG_TAG, "profileID: " + friends.get(0).getProfileID());
-                                Log.d(LOG_TAG, "userID: " + friends.get(0).getUserID());
-                            }
-
-                            @Override
-                            public void onFailure(String message) {
-                                Log.d(LOG_TAG, message);
-
-                            }
-                        };
-
-                        APIManager api = new APIManager();
-
-                        api.getFriends(friendList);
-                        showVideoUploadActivity();
-
-//                        APICallback<User> userAPICallback = new APICallback<User>() {
-//                            @Override
-//                            public void onSuccess(User responseBody) {
-//                                Log.d(LOG_TAG, "success");
-//                            }
-//
-//                            @Override
-//                            public void onFailure(String message) {
-//
-//                            }
-//                        };
-//
-//                        APIManager apiManager = new APIManager();
-//                        apiManager.createUser("John Lennon", "hello@gmail.com", userAPICallback);
-//                        APICallback<String> test1 = new APICallback<String>() {
-//                            @Override
-//                            public void onSuccess(String responseBody) {
-//                                Log.d(LOG_TAG, responseBody);
-//                            }
-//
-//                            @Override
-//                            public void onFailure(String message) {
-//
-//                            }
-//                        };
-//
-//                        apiManager.addFriend("7", test1);
-//
-//                        APICallback<String> test2 = new APICallback<String>() {
-//                            @Override
-//                            public void onSuccess(String responseBody) {
-//                                Log.d(LOG_TAG, responseBody);
-//                            }
-//
-//                            @Override
-//                            public void onFailure(String message) {
-//
-//                            }
-//                        };
-//
-//                        apiManager.addFriend("9", test2);
-
-                        APIManager apiManager = new APIManager();
-//                        APICallback<String> test2 = new APICallback<String>() {
-//                            @Override
-//                            public void onSuccess(String responseBody) {
-//                                Log.d(LOG_TAG, responseBody);
-//                            }
-//
-//                            @Override
-//                            public void onFailure(String message) {
-//                                Log.d(LOG_TAG, message);
-//                            }
-//                        };
-//
-//                        apiManager.createEvent("Group project formal", "Pembroke formal 8th March", "asdsss", test2);
-
-
-//                        APICallback<String> test3 = new APICallback<String>() {
-//                            @Override
-//                            public void onSuccess(String responseBody) {
-//                                Log.d(LOG_TAG, responseBody);
-//                            }
-//
-//                            @Override
-//                            public void onFailure(String message) {
-//                                Log.d(LOG_TAG, message);
-//                            }
-//                        };
-//
-//                        apiManager.addUserToEvent("3", "8", test3);
-
-
-                        break;
-                    case R.id.menu_profile:
-                        setFragment(new ProfileFragment(), 0);
-
-                        break;
-                }
-
-
-            }
-        });
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
+    /**
+     * Handles opening the video upload panel.
+     */
     public void showVideoUploadActivity() {
-
+        Intent intent = new Intent(this, VideoUploadActivity.class);
+        startActivity(intent);
     }
 
     @Override
     protected void onResume() {
+
+        Log.e("REFRESH", "re");
+        /* Refresh the fragment view. */
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.detach(mFragment).attach(mFragment).commit();
+
         super.onResume();
 
         if (!AWSMobileClient.defaultMobileClient().getIdentityManager().isUserSignedIn()) {
@@ -312,16 +214,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onBackPressed() {
         if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
-        } else {
+        }
+        else {
             super.onBackPressed();
         }
     }
 
 
-    @Override
-    public void onBackToEvents() {
 
-    }
 
     @Override
     public void onEventSelected(Event e) {
@@ -333,11 +233,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onFriendSelected(User u) {
         // TODO: Complete this method.
+
     }
 
     @Override
     public void openFriendsList() {
-        setFragment(FriendsListFragment.newInstance(), 1);
+        setFragment(FriendsListFragment.newInstance(), 2);
     }
 
     @Override
@@ -346,39 +247,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    public Action getIndexApiAction() {
-        Thing object = new Thing.Builder()
-                .setName("Main Page") // TODO: Define a title for the content shown.
-                // TODO: Make sure this auto-generated URL is correct.
-                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
-                .build();
-        return new Action.Builder(Action.TYPE_VIEW)
-                .setObject(object)
-                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
-                .build();
+    @Override
+    public void onProfileEventSelected(Event e) {
+        setFragment(EventDetailFragment.newInstance(e), 3);
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        AppIndex.AppIndexApi.start(client, getIndexApiAction());
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        AppIndex.AppIndexApi.end(client, getIndexApiAction());
-        client.disconnect();
+    public void onEventSelected(User u) {
+        setFragment(ProfileFriendFragment.newInstance(u), 3);
     }
 }

@@ -4,31 +4,41 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 
-public class EventDetailFragment extends Fragment {
+public class EventDetailFragment extends Fragment implements OnMapReadyCallback, AdapterView.OnItemClickListener {
 
     public static final String EVENT_KEY = "event_key";
 
-    private String eventID;
     private Event mEvent;
 
     private TextView eventNameTextView;
     private TextView eventDetailDescription;
 
     private VideoView eventVideoview;
+    private MapView eventMapView;
 
     private View mFragmentView;
     private GridView gridView;
-
-
 
     private OnEventDetailInteractionListener mListener;
 
@@ -46,6 +56,7 @@ public class EventDetailFragment extends Fragment {
 
         return fragment;
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,14 +82,16 @@ public class EventDetailFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+
+    {
         // Inflate the layout for this fragment
 
         mFragmentView = inflater.inflate(R.layout.fragment_event_detail, container, false);
         eventNameTextView = (TextView) mFragmentView.findViewById(R.id.eventDetailName);
         eventDetailDescription = (TextView) mFragmentView.findViewById(R.id.eventDetailDescription);
         eventVideoview = (VideoView) mFragmentView.findViewById(R.id.eventVideoView);
-
+        eventMapView = (MapView) mFragmentView.findViewById(R.id.eventMapView);
 
         /* If the event has been initialised, then insert the Event information onto the
            the page */
@@ -86,26 +99,51 @@ public class EventDetailFragment extends Fragment {
             eventNameTextView.setText(mEvent.getEventName());
             eventDetailDescription.setText(mEvent.getDescription());
 
+            eventMapView.getMapAsync(this);
+
+            // TODO remove the example video.
             Uri u = Uri.parse("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4");
             eventVideoview.setVideoURI(u);
 
+            /* Add scrubbing controls to the video view. */
+            MediaController ctrl = new MediaController(this.getContext());
+
+            eventVideoview.setMediaController(ctrl);
             eventVideoview.start();
         }
 
         gridView = (GridView) mFragmentView.findViewById(R.id.eventUsers);
 
+        // TODO: replace with actual users
         User[] values = new User[] {
-                new User("Andrew Deniszczyc", "123"),
-                new User("John Smith", "123"),
-                new User("Pete Testing", "123"),
-                new User("Evian Water", "123"),
-                new User("Nokia Phone", "123")
+                new User("Brad Pitt"),
+                new User("Julia Roberts"),
+                new User("Tom Cruise"),
+                new User("Emma Watson"),
+                new User("Matt Damon")
         };
 
         EventUsersAdapterItem adapter = new EventUsersAdapterItem(this.getContext(), R.layout.adapter_grid_event_user, values);
         gridView.setAdapter(adapter);
+        gridView.setOnItemClickListener(this);
 
         return mFragmentView;
+    }
+
+    /**
+     * Handles the map loading from the event.
+     * // TODO complete the implementation of the map view.
+     * @param map
+     */
+    @Override
+    public void onMapReady(GoogleMap map) {
+        // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
+        MapsInitializer.initialize(this.getActivity());
+
+        // Updates the location and zoom of the MapView
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(43.1, -87.9), 10);
+        map.animateCamera(cameraUpdate);
+
     }
 
     @Override
@@ -125,11 +163,31 @@ public class EventDetailFragment extends Fragment {
         mListener = null;
     }
 
+    /**
+     * Click event for the list elements.
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position,
+                            long id) {
+
+        Log.e("message", "On this page");
+        gridView.setItemChecked(position, true);
+        User u = (User) gridView.getItemAtPosition(position);
+
+        // Call the interaction listener with the Event object.
+        mListener.onEventSelected(u);
+
+    }
+
 
     /**
      * The interface which must be implemented by the related activity.
      */
     public interface OnEventDetailInteractionListener {
-        void onBackToEvents();
+        void onEventSelected(User u);
     }
 }

@@ -13,9 +13,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.amazonaws.mobile.content.ContentItem;
@@ -42,10 +44,13 @@ public class ProfilePictureActivity extends AppCompatActivity {
     private static final int REQUEST_TAKE_PHOTO = 1;
     private static final int RESULT_GALLERY = 2;
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 3;
+    private static final int MY_PERMISSIONS_EXTERNAL_STORAGE = 4;
+    private static final String FRAGMENT_REFRESH = "fragment_refresh";
 
     private ImageView signup_image_preview;
     private TextView errorText;
     private Button confirmButton;
+    private LinearLayout resultView;
 
     private Uri mCropImageUri;
     private Uri croppedImageUri;
@@ -61,10 +66,11 @@ public class ProfilePictureActivity extends AppCompatActivity {
         this.confirmButton = confirmButton;
     }
 
-    public void setupElements(ImageView signup_image_preview, TextView errorText, Button confirmButton) {
+    public void setupElements(ImageView signup_image_preview, TextView errorText, Button confirmButton, LinearLayout resultView) {
         this.signup_image_preview = signup_image_preview;
         this.errorText = errorText;
         this.confirmButton = confirmButton;
+        this.resultView = resultView;
     }
 
     /**
@@ -91,6 +97,7 @@ public class ProfilePictureActivity extends AppCompatActivity {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
 
+        /* Ensure the permissions have been enabled. If not, launch the view to allow permissions to the application. */
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)  {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CAMERA);
             return;
@@ -140,10 +147,15 @@ public class ProfilePictureActivity extends AppCompatActivity {
 
     /**
      * Launches the Android gallery in order to select a video from the gallery
-     *
-     * @param view
      */
-    public void choosePhoto(View view) {
+    public void choosePhoto() {
+
+        /* Ensure the permissions have been enabled. If not, launch the view to allow permissions to the application. */
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)  {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_EXTERNAL_STORAGE);
+            return;
+        }
+
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent, RESULT_GALLERY);
     }
@@ -208,6 +220,14 @@ public class ProfilePictureActivity extends AppCompatActivity {
                 }
                 return;
             }
+            case MY_PERMISSIONS_EXTERNAL_STORAGE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    choosePhoto();
+                } else {
+                    // TODO: Handle permissions not provided, by showing an error message or similar.
+                }
+            }
         }
     }
 
@@ -226,13 +246,11 @@ public class ProfilePictureActivity extends AppCompatActivity {
             handleImageSelectionGallery(data.getData());
         } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
 
-            // Image has been successfully cropped, now we need to handle it by uploading the photo to the server.
-            // TODO image completed
-
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 croppedImageUri = result.getUri();
                 signup_image_preview.setImageURI(croppedImageUri);
+                resultView.setVisibility(View.VISIBLE);
                 confirmButton.setEnabled(true);
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
@@ -246,6 +264,9 @@ public class ProfilePictureActivity extends AppCompatActivity {
 
     public void showMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(FRAGMENT_REFRESH, true);
+
+        // TODO add the event to return to the profile view and refresh te
         startActivity(intent);
     }
 
@@ -259,13 +280,12 @@ public class ProfilePictureActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onProgressUpdate(String filePath, boolean isWaiting, long bytesCurrent, long bytesTotal) {
-                // TODO
-            }
+            public void onProgressUpdate(String filePath, boolean isWaiting, long bytesCurrent, long bytesTotal) { }
 
             @Override
             public void onError(String filePath, Exception ex) {
-                // TODO
+                // TODO: The profile picture could not be uploaded - respond with an alert dialog indicating this.
+                Log.e("error", "an error occurred");
             }
         });
     }

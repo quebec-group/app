@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
-        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowFullscreen">false</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
@@ -55,6 +55,18 @@
         <item name="android:layout_marginBottom">@dimen/activity_separation_small</item>
         <item name="android:gravity">left</item>
         <item name="android:textSize">30sp</item>
+    </style>
+
+    <!--<style name="Background" parent="AppTheme" >
+        <item name="android:textColorPrimary">@color/com_facebook_button_background_color</item>
+        <item name="android:colorBackground">@color/Colour1</item>
+    </style>-->
+
+    <style name="Background_dark" parent="AppTheme" >
+        <item name="android:colorBackground">@color/bb_darkBackgroundColor</item>
+        <item name="android:textColorPrimary">?attr/colorAccent</item>
+        <item name="android:textColorSecondaryInverse">@android:color/secondary_text_light_nodisable</item>
+        <item name="android:textColorPrimaryInverse">@color/common_google_signin_btn_text_dark_disabled</item>
     </style>
 
 </resources>

@@ -3,12 +3,14 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:padding="10dp"
-    android:layout_marginBottom="30dp">
+    android:layout_marginBottom="30dp"
+    android:descendantFocusability="blocksDescendants">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="20dp">
+        android:layout_margin="20dp"
+        android:focusableInTouchMode="true">
 
         <TextView
             android:id="@+id/eventItemName"
@@ -28,14 +30,34 @@
             android:layout_below="@+id/eventItemName"
             android:layout_alignParentStart="true" />
 
-        <TextView
-            android:text="25 guests"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="19dp"
-            android:id="@+id/textView2"
+            android:layout_marginTop="27dp"
             android:layout_below="@+id/eventItemDescription"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true">
+
+            <android.support.v7.widget.RecyclerView
+                    android:id="@+id/eventItemTicker"
+                    android:layout_width="248dp"
+                    android:layout_height="25dp"
+                android:layout_below="@+id/textView2"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="13dp" />
+
+            <TextView
+                android:text="25 guests"
+                android:layout_width="85dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="19dp"
+                android:id="@+id/textView2"
+                android:layout_below="@+id/eventItemDescription"
+                android:layout_alignParentStart="true"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+
     </RelativeLayout>
 
 </RelativeLayout>

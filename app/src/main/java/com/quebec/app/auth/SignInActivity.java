@@ -1,7 +1,9 @@
 package com.quebec.app.auth;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -39,6 +41,7 @@ public class SignInActivity extends Activity {
      * practice since it may outlive the SplashActivity's life span.
      */
     private class SignInResultsHandler implements IdentityManager.SignInResultsHandler {
+
         /**
          * Receives the successful sign-in result and starts the main activity.
          * @param provider the identity provider used for sign-in.
@@ -67,6 +70,7 @@ public class SignInActivity extends Activity {
                 }
             });
         }
+
 
         /**
          * Receives the sign-in result indicating the user canceled and shows a toast.
@@ -115,6 +119,22 @@ public class SignInActivity extends Activity {
         passwordField = (EditText) this.findViewById(R.id.signIn_editText_password);
 
         errorField = (TextView) this.findViewById(R.id.signin_error);
+
+        if (!isNetworkAvailable(this.getApplicationContext())) {
+            String internetError = getString(R.string.sign_in_no_internet);
+            errorField.setText(internetError);
+        }
+    }
+
+    /**
+     * Check if the network is available, and show appropriate error message if
+     * it is not.
+     * @param applicationContext
+     * @return
+     */
+    private boolean isNetworkAvailable(Context applicationContext) {
+        final ConnectivityManager connectivityManager = ((ConnectivityManager) applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 
     @Override

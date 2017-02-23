@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amazonaws.mobile.user.signin.CognitoUserPoolsSignInProvider;
+import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
@@ -43,6 +44,9 @@ public class SignUpActivity extends Activity implements Validator.ValidationList
     @Password(min = 8, scheme = Password.Scheme.ALPHA_NUMERIC_MIXED_CASE_SYMBOLS)
     private EditText password;
 
+    @ConfirmPassword
+    private EditText confirmPassword;
+
     @NotEmpty
     private EditText name;
 
@@ -62,6 +66,7 @@ public class SignUpActivity extends Activity implements Validator.ValidationList
 
         username = (EditText) this.findViewById(R.id.signup_username);
         password = (EditText) this.findViewById(R.id.signup_password);
+        confirmPassword = (EditText) this.findViewById(R.id.signup_password_confirm);
         name = (EditText) this.findViewById(R.id.signup_given_name);
         email = (EditText) this.findViewById(R.id.signup_email);
 

@@ -1,4 +1,4 @@
-package com.quebec.app;
+package com.quebec;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -8,25 +8,23 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.VideoView;
 
-public class VideoUploadActivity extends AppCompatActivity {
+import com.quebec.app.R;
 
-    public static final int REQUEST_VIDEO_CAPTURE = 1;
-    private VideoView mVideoView;
+import static com.quebec.app.VideoUploadActivity.REQUEST_VIDEO_CAPTURE;
+
+public class SignUpPhotoActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_video_upload);
-
-
+        setContentView(R.layout.activity_sign_up_photo);
     }
-
 
     /**
      * Launches the standard Android video interface for taking videos.
      * @param view is the view from which the action was called.
      * */
-    public void takeVideo(View view) {
+    public void takePhoto(View view) {
         Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         if (takeVideoIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);
@@ -37,7 +35,7 @@ public class VideoUploadActivity extends AppCompatActivity {
      * Launches the Android gallery in order to select a video from the gallery
      * @param view
      */
-    public void chooseVideo(View view) {
+    public void choosePhoto(View view) {
         Intent intent = new Intent();
         intent.setType("video/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -51,16 +49,14 @@ public class VideoUploadActivity extends AppCompatActivity {
      * @param resultCode
      * @param intent
      */
-   @Override
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
             Uri videoUri = intent.getData();
-            Intent intent1 = new Intent(this, VideoPreviewActivity.class);
-            intent1.putExtra("videoUri", videoUri.toString());
-            startActivity(intent1);
+
+            VideoView videoView = (VideoView) findViewById(R.id.videoView);
+            videoView.setVideoURI(videoUri);
         }
-
     }
-
 
 }

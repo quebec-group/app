@@ -49,16 +49,19 @@ public class FriendsListFragment extends Fragment implements AdapterView.OnItemC
 
         // TODO: Load information from sources
         values = new User[] {
-                new User("hello", "!23"),
-                new User("hello2", "123")
+                new User("Brad Pitt"),
+                new User("Julia Roberts"),
+                new User("Tom Cruise"),
+                new User("Emma Watson"),
+                new User("Matt Damon")
         };
 
         adapter = new FriendListAdapterItem(this.getContext(), R.layout.adapter_friend_list_item, values);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
 
-
         // Setup the search field for the friends page.
+        // TODO: Fix the implementation of the search field.
         friendsListSearchBox = (EditText) v.findViewById(R.id.friendsListSearchBox);
 
         friendsListSearchBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -128,7 +131,7 @@ public class FriendsListFragment extends Fragment implements AdapterView.OnItemC
      * @param adapterView
      * @param view
      * @param position
-     * @param l
+     * @param id
      */
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {

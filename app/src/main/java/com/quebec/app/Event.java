@@ -56,7 +56,7 @@ public class Event implements Parcelable {
         return title;
     }
 
-    public String getVideoURL() {
+    public String getEventVideoURL() {
         return videoURL;
     }
 

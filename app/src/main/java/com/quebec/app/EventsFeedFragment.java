@@ -2,30 +2,30 @@ package com.quebec.app;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-
 
 public class EventsFeedFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private EventsFeedInteractionListener mListener;
 
+    Parcelable listViewState;
     ListView listView;
 
 
     public EventsFeedFragment() {
-        // Required empty public constructor
+
     }
 
     public static EventsFeedFragment newInstance() {
         EventsFeedFragment fragment = new EventsFeedFragment();
-        Bundle args = new Bundle();
         return fragment;
     }
 
@@ -43,13 +43,20 @@ public class EventsFeedFragment extends Fragment implements AdapterView.OnItemCl
 
         listView = (ListView) v.findViewById(R.id.eventsFeedList);
 
+        if (listViewState != null) {
+            listView.onRestoreInstanceState(listViewState);
+        }
+
         // TODO: Replace stubs with actual Events
         Event[] values = new Event[] {
-                new Event("Andrew's Networking Event", "An evening of networking and getting to know each other over lots of drinks and good food.", "123", "cambridge", "13:03", "asd", new ArrayList<User>()),
-                new Event("Andrew's Networking Event", "An evening of networking and getting to know each other over lots of drinks and good food.", "123", "cambridge", "13:03", "asd", new ArrayList<User>()),
+                new Event("Technology Networking Event", "An evening of networking between industry leaders, software and hardware developers. "),
+                new Event("Science Society Social", "Talks and discussions about all science related news."),
+                new Event("Technology Networking Event", "An evening of networking between industry leaders, software and hardware developers. "),
+                new Event("Science Society Social", "Talks and discussions about all science related news.")
+
         };
 
-        EventListAdapterItem adapter = new EventListAdapterItem(this.getContext(), R.layout.event_list_item, values);
+        EventListAdapterItem adapter = new EventListAdapterItem(this.getContext(), R.layout.adapter_event_item, values);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
         return v;
@@ -72,6 +79,17 @@ public class EventsFeedFragment extends Fragment implements AdapterView.OnItemCl
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onPause() {
+        listViewState = listView.onSaveInstanceState();
+        super.onPause();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
 
