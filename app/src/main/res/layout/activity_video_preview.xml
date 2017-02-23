@@ -14,7 +14,10 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
         <TextView
             android:text="@string/upload_video_title"
@@ -26,7 +29,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="437dp">
+            android:layout_height="386dp"
+            android:layout_weight="0.47">
 
             <VideoView
                 android:id="@+id/videoView"
@@ -43,7 +47,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <Button
                 android:id="@+id/upload"

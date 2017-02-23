@@ -23,10 +23,13 @@
 
     <style name="TextAppearance.FontPath" parent="android:TextAppearance">
         <item name="fontPath">Lato-Regular.ttf</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="TextAppearance.FontPathHeading" parent="android:TextAppearance">
         <item name="fontPath">Lato-Regular.ttf</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">25sp</item>
     </style>
 
     <style name="HeaderText">
@@ -63,8 +66,9 @@
     </style>-->
 
     <style name="Background_dark" parent="AppTheme" >
+        <item name="android:background">@drawable/background_dark_gradient</item>
         <item name="android:colorBackground">@color/bb_darkBackgroundColor</item>
-        <item name="android:textColorPrimary">?attr/colorAccent</item>
+        <item name="android:textColor">@android:color/white</item>
         <item name="android:textColorSecondaryInverse">@android:color/secondary_text_light_nodisable</item>
         <item name="android:textColorPrimaryInverse">@color/common_google_signin_btn_text_dark_disabled</item>
     </style>

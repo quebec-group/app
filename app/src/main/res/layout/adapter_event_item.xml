@@ -28,6 +28,7 @@
             android:layout_marginTop="12dp"
             android:id="@+id/eventItemDescription"
             android:layout_below="@+id/eventItemName"
+            android:textAppearance="@style/TextAppearance.FontPath"
             android:layout_alignParentStart="true" />
 
         <LinearLayout

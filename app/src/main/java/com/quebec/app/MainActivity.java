@@ -242,6 +242,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    public void openAboutPage() {
+        Intent intent = new Intent(this, AboutActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
     public void updateProfilePictureActivity() {
         Intent intent = new Intent(this, ProfilePictureSignUpActivity.class);
         startActivity(intent);

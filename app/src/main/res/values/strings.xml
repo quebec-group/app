@@ -158,5 +158,7 @@
     <string name="password_confirm_text" />
     <string name="sign_up_confirm_password">Confirm Password</string>
     <string name="fragment_friend_profile_add_friend">Follow</string>
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="about_heading">About the Project</string>
 
 </resources>

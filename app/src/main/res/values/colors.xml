@@ -19,7 +19,8 @@
     <color name="dark_content_text">#333333</color>
     <color name="sign_in_separator_color">#DDDDDD</color>
     <color name="instructions_list_border_color">#FFDDDDDD</color>
-    <color name="Colour1">#c800bcc8</color>
+
+    <color name="Colour1">#a9a9a9</color>
     <color name="Green_light">#ffffff</color>
     <color name="colour1">#99cc64</color>
 </resources>
