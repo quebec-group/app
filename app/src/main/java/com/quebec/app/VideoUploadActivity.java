@@ -10,7 +10,7 @@ import android.widget.VideoView;
 
 public class VideoUploadActivity extends AppCompatActivity {
 
-    static final int REQUEST_VIDEO_CAPTURE = 1;
+    public static final int REQUEST_VIDEO_CAPTURE = 1;
     private VideoView mVideoView;
 
     @Override

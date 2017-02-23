@@ -13,7 +13,7 @@
 
     <Button
         android:id="@+id/upload"
-        android:text="Choose Video"
+        android:text="@string/choose_video_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="42dp"
@@ -23,7 +23,7 @@
 
     <Button
         android:id="@+id/takeVideo"
-        android:text="Take Video"
+        android:text="@string/take_video_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

@@ -1,4 +1,4 @@
-package com.quebec;
+package com.quebec.app;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -6,6 +6,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.MediaController;
 import android.widget.VideoView;
 
 public class VideoPreviewActivity extends AppCompatActivity {
@@ -24,6 +25,9 @@ public class VideoPreviewActivity extends AppCompatActivity {
 
         mVideoView = (VideoView)findViewById(R.id.videoView);
         mVideoView.setVideoURI(videoURI);
+        /* Add scrubbing controls to the video view. */
+        MediaController ctrl = new MediaController(this);
+        mVideoView.setMediaController(ctrl);
         mVideoView.start();
 
     }

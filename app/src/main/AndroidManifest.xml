@@ -40,7 +40,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/Background_dark">
         <activity
             android:name=".auth.SplashActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
@@ -122,6 +122,8 @@
         <!-- END - APP CONTENT DELIVERY AND USER DATA STORAGE -->
 
         <activity android:name=".VideoUploadActivity" />
+        <activity android:name=".VideoPreviewActivity" />
+        <activity android:name=".EventAddDetailsActivity" />
         <activity android:name=".ProfilePictureSignUpActivity" />
         <activity
             android:name="com.facebook.FacebookActivity"

@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.VideoView;
 
-import static com.quebec.VideoUploadActivity.REQUEST_VIDEO_CAPTURE;
+import com.quebec.app.R;
+
+import static com.quebec.app.VideoUploadActivity.REQUEST_VIDEO_CAPTURE;
 
 public class SignUpPhotoActivity extends AppCompatActivity {
 
