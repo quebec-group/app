@@ -25,12 +25,7 @@ import com.quebec.app.auth.SplashActivity;
 import java.io.File;
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ProfileFragment.ProfileInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * ProfileFragment is the fragment for the profile view.
  */
 public class ProfileFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener  {
 
@@ -42,7 +37,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
     /** This fragment's view. */
     private View mFragmentView;
 
-    private TextView userIdTextView;
     private TextView userNameTextView;
     private ListView profileEventsFeed;
     private RoundedImageView profile_picture_view;
@@ -52,18 +46,20 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
+
     public static ProfileFragment newInstance() {
         ProfileFragment fragment = new ProfileFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
         return fragment;
     }
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Intent intent = getActivity().getIntent();
+
+        // TODO: complete the refresh of the view when the profile picture is updated.
+        // String message = intent.getStringExtra(.EXTRA_MESSAGE);
+
         super.onCreate(savedInstanceState);
     }
 
@@ -79,21 +75,19 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                     @Override
                     public void handleIdentityID(String identityId) {
                         if (identityManager.isUserSignedIn()) {
+                            // TODO: handle overflow of a username - could be done with a scrolling textview
                             userNameTextView.setText(identityManager.getUserName());
+                            userNameTextView.setSelected(true);
                         }
                     }
 
                     @Override
                     public void handleError(Exception exception) {
-
-                        // We failed to retrieve the user's identity. Set unknown user identifier
-                        // in text view.
-
-                        final Context context = getActivity();
-
+                        // TODO: user could not be found - do we retry or log the user out?
                     }
 
                 });
+
 
         /* Get the profile picture. */
         ProfilePictureHandler handler = new ProfilePictureHandler();
@@ -106,13 +100,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
             }
 
             @Override
-            public void onProgressUpdate(String filePath, boolean isWaiting, long bytesCurrent, long bytesTotal) {
-
-            }
+            public void onProgressUpdate(String filePath, boolean isWaiting, long bytesCurrent, long bytesTotal) {}
 
             @Override
             public void onError(String filePath, Exception ex) {
-
+                // TODO profile picture could not be loaded and hence show the placeholder image.
             }
         });
     }
@@ -129,7 +121,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
         userNameTextView = (TextView) mFragmentView.findViewById(R.id.profileFragment_name);
         profile_picture_view = (RoundedImageView) mFragmentView.findViewById(R.id.profile_picture_view);
 
-        /* Declare the onclick event handlers. */
+        /* Declare the onclick event handlers for the buttons. */
         Button b1 = (Button) mFragmentView.findViewById(R.id.button_friends_list);
         Button b2 = (Button) mFragmentView.findViewById(R.id.profile_logout);
         Button b3 = (Button) mFragmentView.findViewById(R.id.profile_update_details_button);
@@ -144,6 +136,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
 
         profileEventsFeed = (ListView) mFragmentView.findViewById(R.id.profileEventsFeedList);
 
+        /* Initiate the events feed on the profile, by loading the data into the adapter view. */
         // TODO: Replace stubs with actual Events
         Event[] values = new Event[] {
                 new Event("Andrew's Networking Event", "An evening of networking and getting to know each other over lots of drinks and good food."),
@@ -154,6 +147,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
         profileEventsFeed.setAdapter(adapter);
         profileEventsFeed.setOnItemClickListener(this);
 
+        /* Get the logged in user information and display this information on the page. */
         fetchUserIdentity();
 
         return mFragmentView;
@@ -194,7 +188,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
 
 
     /**
-     * Log out of the user account.
+     * Log out of the user account, then show the SplashActivity.
      */
     public void logoutAccount() {
         AWSMobileClient.defaultMobileClient()
@@ -205,6 +199,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
         startActivity(intent);
     }
 
+    /**
+     * Responds to item clicks on the events feed on the profile view.
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         profileEventsFeed.setItemChecked(position, true);

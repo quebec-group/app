@@ -45,6 +45,7 @@ public class ProfilePictureActivity extends AppCompatActivity {
     private static final int RESULT_GALLERY = 2;
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 3;
     private static final int MY_PERMISSIONS_EXTERNAL_STORAGE = 4;
+    private static final String FRAGMENT_REFRESH = "fragment_refresh";
 
     private ImageView signup_image_preview;
     private TextView errorText;
@@ -245,9 +246,6 @@ public class ProfilePictureActivity extends AppCompatActivity {
             handleImageSelectionGallery(data.getData());
         } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
 
-            // Image has been successfully cropped, now we need to handle it by uploading the photo to the server.
-            // TODO image completed
-
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 croppedImageUri = result.getUri();
@@ -266,6 +264,9 @@ public class ProfilePictureActivity extends AppCompatActivity {
 
     public void showMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(FRAGMENT_REFRESH, true);
+
+        // TODO add the event to return to the profile view and refresh te
         startActivity(intent);
     }
 
@@ -279,13 +280,11 @@ public class ProfilePictureActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onProgressUpdate(String filePath, boolean isWaiting, long bytesCurrent, long bytesTotal) {
-                // TODO
-            }
+            public void onProgressUpdate(String filePath, boolean isWaiting, long bytesCurrent, long bytesTotal) { }
 
             @Override
             public void onError(String filePath, Exception ex) {
-                // TODO
+                // TODO: The profile picture could not be uploaded - respond with an alert dialog indicating this.
                 Log.e("error", "an error occurred");
             }
         });

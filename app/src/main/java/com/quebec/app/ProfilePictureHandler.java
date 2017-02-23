@@ -22,11 +22,6 @@ public class ProfilePictureHandler {
     private S3Handler uploader;
     private Dataset dataset;
 
-    /* For use with the CacheHandler, which requires the Activity to
-       find the cacheFilesDir();
-     */
-    private Activity act;
-
     public ProfilePictureHandler() {
         uploader = new S3Handler();
 

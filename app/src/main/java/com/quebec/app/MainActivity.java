@@ -15,15 +15,13 @@ import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.amazonaws.mobile.AWSMobileClient;
 import com.amazonaws.mobile.user.IdentityManager;
 import com.quebec.app.auth.SplashActivity;
-import com.quebec.services.APICallback;
-import com.quebec.services.APIManager;
-import com.quebec.services.EventDAO;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabReselectListener;
 import com.roughike.bottombar.OnTabSelectListener;
@@ -35,21 +33,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                                                EventsFeedFragment.EventsFeedInteractionListener,
                                                                EventDetailFragment.OnEventDetailInteractionListener,
                                                                ProfileFragment.ProfileInteractionListener,
-                                                               FriendsListFragment.FriendsListInteractionHandler{
-
-    /** Class name for log messages. */
-    private static final String LOG_TAG = MainActivity.class.getSimpleName();
+                                                               FriendsListFragment.FriendsListInteractionHandler,
+                                                               ProfileFriendFragment.OnFragmentInteractionListener {
 
     /** The identity manager used to keep track of the current user account. */
     private IdentityManager identityManager;
     private Fragment mFragment;
-    private int currentFragmentName;
+    private String currentFragmentTab;
 
+    /**
+     * Change the current fragment in the main activity view.
+     * @param frag
+     * @param transition
+     */
     private void setFragment(Fragment frag, int transition) {
 
-        // if (!frag.getClass().getName().equals(currentFragmentName)) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        currentFragmentTab = frag.getClass().getName();
 
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        boolean fragmentPopped = getSupportFragmentManager().popBackStackImmediate(frag.getClass().getName(), 0);
+
+        if (!fragmentPopped) {
             if (transition == 0) {
                 transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
             }
@@ -58,10 +63,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             transaction.replace(R.id.fragment_container, frag);
-            transaction.addToBackStack(null);
+            transaction.addToBackStack(frag.getClass().getName());
             transaction.commit();
+            currentBottomBarItem = -1;
+            
+            mFragment = frag;
         }
 
+    }
+
+    private int currentBottomBarItem;
+
+    private void setBottomBarFragment(int tabId) {
+
+        if (currentBottomBarItem == tabId) {
+            return;
+        }
+
+        switch (tabId) {
+            case R.id.menu_eventsfeed:
+                setFragment(new EventsFeedFragment(), 0);
+                break;
+            case R.id.menu_uploadvideo:
+                showVideoUploadActivity();
+                break;
+            case R.id.menu_profile:
+                setFragment(new ProfileFragment(), 1);
+                break;
+        }
+
+        currentBottomBarItem = tabId;
+    }
 
     // }
 
@@ -98,38 +130,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
-        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
 
-            private Fragment frag;
+        /* Handle the reselection of a bottom bar tab. */
+        bottomBar.setOnTabReselectListener(new OnTabReselectListener() {
+            @Override
+            public void onTabReSelected(@IdRes int tabId) {
+                setBottomBarFragment(tabId);
+            }
+        });
+
+        /* Handle the single selection of a bottom bar tab. */
+        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
 
             @Override
             public void onTabSelected(@IdRes int tabId) {
-
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-                if (tabId == currentFragmentName) {
-                    return;
-                }
-
-                switch (tabId) {
-                    case R.id.menu_eventsfeed:
-                        currentFragmentName = R.id.menu_eventsfeed;
-                        setFragment(new EventsFeedFragment(), 0);
-                        break;
-                    case R.id.menu_uploadvideo:
-                        currentFragmentName = R.id.menu_uploadvideo;
-                        showVideoUploadActivity();
-                        break;
-                    case R.id.menu_profile:
-                        currentFragmentName = R.id.menu_profile;
-                        setFragment(new ProfileFragment(), 1);
-                        break;
-                }
+                setBottomBarFragment(tabId);
             }
 
         });
     }
 
+    /**
+     * Handles opening the video upload panel.
+     */
     public void showVideoUploadActivity() {
         Intent intent = new Intent(this, VideoUploadActivity.class);
         startActivity(intent);
@@ -137,6 +160,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onResume() {
+
+        Log.e("REFRESH", "re");
+        /* Refresh the fragment view. */
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.detach(mFragment).attach(mFragment).commit();
 
@@ -207,6 +233,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onFriendSelected(User u) {
         // TODO: Complete this method.
+
     }
 
     @Override
@@ -223,5 +250,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onProfileEventSelected(Event e) {
         setFragment(EventDetailFragment.newInstance(e), 3);
+    }
+
+    @Override
+    public void onEventSelected(User u) {
+        setFragment(ProfileFriendFragment.newInstance(u), 3);
     }
 }
