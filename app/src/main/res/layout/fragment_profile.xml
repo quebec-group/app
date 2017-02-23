@@ -48,7 +48,7 @@
                     android:layout_weight="1">
 
                     <TextView
-                        android:text="TextView"
+                        android:text="hello my name is andrew"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/profileFragment_name"
@@ -56,6 +56,8 @@
                         android:layout_alignParentStart="true"
                         android:textAppearance="@style/TextAppearance.FontPath"
                         android:textSize="36sp"
+                        android:ellipsize="marquee"
+                        android:singleLine="true"
                         android:layout_weight="1" />
                 </RelativeLayout>
 
