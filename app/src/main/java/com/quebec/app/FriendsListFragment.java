@@ -60,8 +60,8 @@ public class FriendsListFragment extends Fragment implements AdapterView.OnItemC
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
 
-
         // Setup the search field for the friends page.
+        // TODO: Fix the implementation of the search field.
         friendsListSearchBox = (EditText) v.findViewById(R.id.friendsListSearchBox);
 
         friendsListSearchBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {

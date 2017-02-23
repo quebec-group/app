@@ -27,7 +27,6 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback 
 
     public static final String EVENT_KEY = "event_key";
 
-    private String eventID;
     private Event mEvent;
 
     private TextView eventNameTextView;
@@ -38,8 +37,6 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback 
 
     private View mFragmentView;
     private GridView gridView;
-
-
 
     private OnEventDetailInteractionListener mListener;
 
@@ -115,6 +112,7 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback 
 
         gridView = (GridView) mFragmentView.findViewById(R.id.eventUsers);
 
+        // TODO: replace with actual users
         User[] values = new User[] {
                 new User("Brad Pitt"),
                 new User("Julia Roberts"),
@@ -131,6 +129,7 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback 
 
     /**
      * Handles the map loading from the event.
+     * // TODO complete the implementation of the map view.
      * @param map
      */
     @Override

@@ -34,17 +34,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                                                ProfileFragment.ProfileInteractionListener,
                                                                FriendsListFragment.FriendsListInteractionHandler{
 
-    /** Class name for log messages. */
-    private static final String LOG_TAG = MainActivity.class.getSimpleName();
-
     /** The identity manager used to keep track of the current user account. */
     private IdentityManager identityManager;
     private Fragment mFragment;
     private int currentFragmentTab;
 
+    /**
+     * Change the current fragment in the main activity view.
+     * @param frag
+     * @param transition
+     */
     private void setFragment(Fragment frag, int transition) {
 
-        // if (!frag.getClass().getName().equals(currentFragmentTab)) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         boolean fragmentPopped = getSupportFragmentManager().popBackStackImmediate(frag.getClass().getName(), 0);

@@ -50,6 +50,8 @@ public class EventListAdapterItem extends ArrayAdapter<Event> {
         textViewDescriptionItem.setText(event.getDescription());
 
 
+        /* Setup the event ticker, by adding the users associated with the event. */
+        // TODO implement actual user details.
         User[] values = new User[] {
                 new User("hello"),
                 new User("hello2"),
@@ -62,7 +64,7 @@ public class EventListAdapterItem extends ArrayAdapter<Event> {
 
         EventUsersTickerAdapterItem adapter = new EventUsersTickerAdapterItem(values);
 
-
+        /* Makes use of the RecyclerView for the horizontal scrolling field. */
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.mContext ,LinearLayoutManager.HORIZONTAL, false);
         RecyclerView eventItemTicker = (RecyclerView) convertView.findViewById(R.id.eventItemTicker);
         eventItemTicker.setLayoutManager(layoutManager);

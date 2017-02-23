@@ -21,12 +21,11 @@ public class EventsFeedFragment extends Fragment implements AdapterView.OnItemCl
 
 
     public EventsFeedFragment() {
-        // Required empty public constructor
+
     }
 
     public static EventsFeedFragment newInstance() {
         EventsFeedFragment fragment = new EventsFeedFragment();
-        Bundle args = new Bundle();
         return fragment;
     }
 
@@ -47,6 +46,7 @@ public class EventsFeedFragment extends Fragment implements AdapterView.OnItemCl
         if (listViewState != null) {
             listView.onRestoreInstanceState(listViewState);
         }
+
         // TODO: Replace stubs with actual Events
         Event[] values = new Event[] {
                 new Event("Technology Networking Event", "An evening of networking between industry leaders, software and hardware developers. "),

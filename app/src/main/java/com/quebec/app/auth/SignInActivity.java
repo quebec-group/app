@@ -41,6 +41,7 @@ public class SignInActivity extends Activity {
      * practice since it may outlive the SplashActivity's life span.
      */
     private class SignInResultsHandler implements IdentityManager.SignInResultsHandler {
+
         /**
          * Receives the successful sign-in result and starts the main activity.
          * @param provider the identity provider used for sign-in.
