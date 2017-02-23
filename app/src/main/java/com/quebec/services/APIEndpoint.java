@@ -7,7 +7,7 @@ package com.quebec.services;
 public class APIEndpoint {
 
     private static final String createUser = "createUser";
-    private static final String getFriends = "createFriends";
+    private static final String getFriends = "getFriends";
     private static final String setPictureID = "setPictureID";
     private static final String setVideoID = "setVideoID";
     private static final String addFriend = "addFriend";

@@ -15,6 +15,7 @@ import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -27,6 +28,8 @@ import com.quebec.services.EventDAO;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabReselectListener;
 import com.roughike.bottombar.OnTabSelectListener;
+
+import java.util.ArrayList;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -131,11 +134,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         setFragment(new EventsFeedFragment(), 0);
                         break;
                     case R.id.menu_uploadvideo:
-                        APICallback<Event> eventAPIResponse = new APICallback<Event>() {
+//                        APICallback<ArrayList<User>> friendList = new APICallback<ArrayList<User>>() {
+//
+//                            @Override
+//                            public void onSuccess(ArrayList<User> friends) {
+//                                Log.d(LOG_TAG, "email: " + friends.get(0).getEmail());
+//                                Log.d(LOG_TAG, "name: " + friends.get(0).getName());
+//                                Log.d(LOG_TAG, "profileID: " + friends.get(0).getProfileID());
+//                                Log.d(LOG_TAG, "userID: " + friends.get(0).getUserID());
+//                            }
+//
+//                            @Override
+//                            public void onFailure(String message) {
+//
+//                            }
+//                        };
+//
+//                        APIManager api = new APIManager();
+//
+//                        api.getFriends(friendList);
+//                        showVideoUploadActivity();
 
+                        APICallback<User> userAPICallback = new APICallback<User>() {
                             @Override
-                            public void onSuccess(Event event) {
-
+                            public void onSuccess(User responseBody) {
+                                Log.d(LOG_TAG, "success");
                             }
 
                             @Override
@@ -144,10 +167,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             }
                         };
 
-                        APIManager api = new APIManager();
-
-                        api.createEvent("Andy's Event", "a", "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4", eventAPIResponse);
-                        showVideoUploadActivity();
+                        APIManager apiManager = new APIManager();
+                        apiManager.createUser("Andy Wells", "andyjohnwells@gmail.com", userAPICallback);
                         break;
                     case R.id.menu_profile:
                         setFragment(new ProfileFragment(), 0);

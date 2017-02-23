@@ -49,8 +49,8 @@ public class FriendsListFragment extends Fragment implements AdapterView.OnItemC
 
         // TODO: Load information from sources
         values = new User[] {
-                new User("hello"),
-                new User("hello2")
+                new User("hello", "!23"),
+                new User("hello2", "123")
         };
 
         adapter = new FriendListAdapterItem(this.getContext(), R.layout.adapter_friend_list_item, values);

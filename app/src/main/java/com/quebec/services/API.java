@@ -7,8 +7,8 @@ package com.quebec.services;
 
 public interface API {
     public abstract void createEvent(String eventName, String eventDescription, String eventVideoURL, final APICallback response);
-    public abstract APIResponse createUser(String userName, String userEmail);
-    public abstract APIResponse getFriends();
+    public abstract void createUser(String userName, String userEmail, final APICallback response);
+    public abstract void getFriends(final APICallback response);
     public abstract APIResponse setPictureID(String S3ID);
     public abstract APIResponse setVideoID(String S3ID);
     public abstract APIResponse addFriend(String userID);

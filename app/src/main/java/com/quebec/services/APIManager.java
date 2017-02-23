@@ -11,6 +11,8 @@ import com.quebec.app.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -79,52 +81,93 @@ public class APIManager implements API {
 
 
     @Override
-    public APIResponse createUser(String userName, String userEmail) {
-//        endpoint = new APIEndpoint("createUser");
-//        request = new APIRequest(endpoint);
-//        service = new Service(request);
-//
-//        try {
-//            JSONObject requestBody = new JSONObject();
-//            requestBody.put("name", userName);
-//            requestBody.put("email", userEmail);
-//            request.setBody(requestBody.toString());
-//        } catch (JSONException e) {
-//            Log.e(LOG_TAG, e.getMessage());
-//        }
-//
-//        try {
-//            service.test();
-//            Log.d(LOG_TAG,service.getResponseBody().toString());
-//            this.response.setResponseBody(service.getResponseBody());
-//            this.response.onSuccess(service.getResponseBody().toString());
-//
-//        } catch (Exception e) {
-//            Log.e(LOG_TAG, e.getMessage());
-//
-//        }
+    public void createUser(String userName, String userEmail, final APICallback response) {
+        endpoint = new APIEndpoint("createUser");
+        request = new APIRequest(endpoint);
 
-        return null;
+
+        // create the request body
+        try {
+            JSONObject requestBody = new JSONObject();
+            requestBody.put("name", userName);
+            requestBody.put("email", userEmail);
+            request.setBody(requestBody.toString());
+        } catch (JSONException e) {
+            Log.e(LOG_TAG, e.getMessage());
+        }
+
+        // perform the HTTP request and wait for callback
+        service = new Service(request, new Service.ServiceCallBack() {
+            @Override
+            /**
+             * onResponseReceived takes the DAO from inside the response, sets the status
+             */
+            public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
+
+
+                UserDAO userDAO = (UserDAO) apiResponse.getResponseBody();
+                final APIResponse userResponse = new APIResponse(apiResponse.getStatus());
+                userResponse.setResponseBody(userDAO);
+
+                if (apiResponse.getStatus() == "success") {
+                    UserFactory userFactory = new UserFactory();
+                    userFactory.setUserDAO(userDAO);
+                    User user = userFactory.userFactory();
+                    // pass created event back to the user
+                    response.onSuccess(user);
+                } else {
+                    response.onFailure("Failed to create the user!");
+                }
+
+            }
+        });
+
+
+        service.execute();
     }
 
     @Override
-    public APIResponse getFriends() {
-//        endpoint = new APIEndpoint("createUser");
-//        request = new APIRequest(endpoint);
-//        service = new Service(request);
-//
-//        try {
-//            service.test();
-//            this.response.setResponseBody(service.getResponseBody());
-//            this.response.onSuccess(service.getResponseBody().toString());
-//
-//        } catch (Exception e) {
-//            Log.e(LOG_TAG, e.getMessage());
-//
-//        }
-//
-//        return this.response;
-        return null;
+    public void getFriends(final APICallback response)  {
+        endpoint = new APIEndpoint("getFriends");
+        request = new APIRequest(endpoint);
+
+
+        // create the request body
+        request.setBody(new String());
+
+        // perform the HTTP request and wait for callback
+        service = new Service(request, new Service.ServiceCallBack() {
+            @Override
+            /**
+             * onResponseReceived takes the DAO from inside the response, sets the status
+             */
+            public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
+
+
+                BaseDAO baseDAO = apiResponse.getResponseBody();
+                final APIResponse userResponse = new APIResponse(apiResponse.getStatus());
+                userResponse.setResponseBody(baseDAO);
+
+                if (apiResponse.getStatus() == "success") {
+
+                    FriendListFactory friendListFactory = new FriendListFactory();
+                    friendListFactory.setFriendListDAO(baseDAO);
+                    try {
+                        ArrayList<User> friends = friendListFactory.friendListFactory();
+                        response.onSuccess(friends);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    response.onFailure("Failed to create the user!");
+                }
+
+            }
+        });
+
+
+        service.execute();
+
     }
 
     @Override

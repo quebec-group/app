@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
 
 public class EventsFeedFragment extends Fragment implements AdapterView.OnItemClickListener {
 
@@ -43,8 +45,8 @@ public class EventsFeedFragment extends Fragment implements AdapterView.OnItemCl
 
         // TODO: Replace stubs with actual Events
         Event[] values = new Event[] {
-                new Event("Andrew's Networking Event", "An evening of networking and getting to know each other over lots of drinks and good food."),
-                new Event("Group Project Dinner", "A group project evening of eating food while discussing the elements of the group project.")
+                new Event("Andrew's Networking Event", "An evening of networking and getting to know each other over lots of drinks and good food.", "123", "cambridge", "13:03", "asd", new ArrayList<User>()),
+                new Event("Andrew's Networking Event", "An evening of networking and getting to know each other over lots of drinks and good food.", "123", "cambridge", "13:03", "asd", new ArrayList<User>()),
         };
 
         EventListAdapterItem adapter = new EventListAdapterItem(this.getContext(), R.layout.event_list_item, values);

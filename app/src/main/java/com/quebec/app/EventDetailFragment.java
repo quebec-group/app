@@ -95,11 +95,11 @@ public class EventDetailFragment extends Fragment {
         gridView = (GridView) mFragmentView.findViewById(R.id.eventUsers);
 
         User[] values = new User[] {
-                new User("Andrew Deniszczyc"),
-                new User("John Smith"),
-                new User("Pete Testing"),
-                new User("Evian Water"),
-                new User("Nokia Phone")
+                new User("Andrew Deniszczyc", "123"),
+                new User("John Smith", "123"),
+                new User("Pete Testing", "123"),
+                new User("Evian Water", "123"),
+                new User("Nokia Phone", "123")
         };
 
         EventUsersAdapterItem adapter = new EventUsersAdapterItem(this.getContext(), R.layout.adapter_grid_event_user, values);

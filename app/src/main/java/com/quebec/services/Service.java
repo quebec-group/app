@@ -87,7 +87,8 @@ public class Service extends AsyncTask<Void, Integer, APIResponse> {
                     final ApiResponse response = client.execute(request);
 
                     final InputStream responseContentStream = response.getContent();
-                    String status = "failure";
+                    final String errorCode = response.getStatusText();
+
 
                     // Given valid server response
                     if (responseContentStream != null) {
@@ -98,21 +99,13 @@ public class Service extends AsyncTask<Void, Integer, APIResponse> {
                         BaseDAO baseDAO = new BaseDAO(responseJSON);
 
 
-
-                        try {
-                            status = baseDAO.get_DAO_BODY().getString("status");
-                            Log.d(LOG_TAG, baseDAO.get_DAO_BODY().getString("status"));
-                        } catch (JSONException e) {
-                            Log.e(LOG_TAG, e.getMessage());
-                        }
-
-                        apiResponse = new APIResponse(status);
+                        apiResponse = new APIResponse(errorCode);
                         apiResponse.setResponseBody(baseDAO);
                         Log.d(LOG_TAG, "Response : " + baseDAO.get_DAO_BODY().toString());
 
                     } else { // failed to receive response from server
 
-                        apiResponse = new APIResponse(status);
+                        apiResponse = new APIResponse(errorCode);
 
                     }
 
