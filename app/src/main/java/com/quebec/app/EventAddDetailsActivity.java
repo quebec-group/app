@@ -1,8 +1,10 @@
-package com.quebec;
+package com.quebec.app;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.quebec.app.R;
 
 public class EventAddDetailsActivity extends AppCompatActivity {
 
