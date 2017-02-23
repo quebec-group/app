@@ -4,10 +4,13 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -22,11 +25,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
-public class EventDetailFragment extends Fragment implements OnMapReadyCallback {
+public class EventDetailFragment extends Fragment implements OnMapReadyCallback, AdapterView.OnItemClickListener {
 
     public static final String EVENT_KEY = "event_key";
 
-    private String eventID;
     private Event mEvent;
 
     private TextView eventNameTextView;
@@ -37,8 +39,6 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback 
 
     private View mFragmentView;
     private GridView gridView;
-
-
 
     private OnEventDetailInteractionListener mListener;
 
@@ -56,6 +56,7 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback 
 
         return fragment;
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -95,20 +96,25 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback 
         /* If the event has been initialised, then insert the Event information onto the
            the page */
         if (mEvent != null) {
-            eventNameTextView.setText(mEvent.getName());
+            eventNameTextView.setText(mEvent.getEventName());
             eventDetailDescription.setText(mEvent.getDescription());
-
-            // TODO remove the example video.
-            Uri u = Uri.parse("https://fpdl.vimeocdn.com/vimeo-prod-skyfire-std-us/01/2237/7/186188011/615251856.mp4?token=58a59462_0xfcfbe3fc4abfdb9334a7e9e231f0686e6d779cb2");
-            eventVideoview.setVideoURI(u);
 
             eventMapView.getMapAsync(this);
 
+            // TODO remove the example video.
+            Uri u = Uri.parse("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4");
+            eventVideoview.setVideoURI(u);
+
+            /* Add scrubbing controls to the video view. */
+            MediaController ctrl = new MediaController(this.getContext());
+
+            eventVideoview.setMediaController(ctrl);
             eventVideoview.start();
         }
 
         gridView = (GridView) mFragmentView.findViewById(R.id.eventUsers);
 
+        // TODO: replace with actual users
         User[] values = new User[] {
                 new User("Brad Pitt"),
                 new User("Julia Roberts"),
@@ -119,12 +125,14 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback 
 
         EventUsersAdapterItem adapter = new EventUsersAdapterItem(this.getContext(), R.layout.adapter_grid_event_user, values);
         gridView.setAdapter(adapter);
+        gridView.setOnItemClickListener(this);
 
         return mFragmentView;
     }
 
     /**
      * Handles the map loading from the event.
+     * // TODO complete the implementation of the map view.
      * @param map
      */
     @Override
@@ -155,11 +163,31 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback 
         mListener = null;
     }
 
+    /**
+     * Click event for the list elements.
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position,
+                            long id) {
+
+        Log.e("message", "On this page");
+        gridView.setItemChecked(position, true);
+        User u = (User) gridView.getItemAtPosition(position);
+
+        // Call the interaction listener with the Event object.
+        mListener.onEventSelected(u);
+
+    }
+
 
     /**
      * The interface which must be implemented by the related activity.
      */
     public interface OnEventDetailInteractionListener {
-
+        void onEventSelected(User u);
     }
 }

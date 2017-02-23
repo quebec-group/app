@@ -9,6 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * EventUsersTickerAdapterItem displays the users who were present at an event. This ticker is shown in
+ * event items on the feeds.
+ */
+
 public class EventUsersTickerAdapterItem extends RecyclerView.Adapter<EventUsersTickerAdapterItem.ViewHolder> {
     private User[] usersData;
 
@@ -23,8 +28,6 @@ public class EventUsersTickerAdapterItem extends RecyclerView.Adapter<EventUsers
         // create a new view
         View itemLayoutView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.adapter_profile_image_ticker, null);
-
-        // create ViewHolder
 
         ViewHolder viewHolder = new ViewHolder(itemLayoutView);
         return viewHolder;

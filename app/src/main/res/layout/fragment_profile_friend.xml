@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.quebec.app.ProfileFragment">
+    tools:context="com.quebec.app.ProfileFriendFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -30,7 +30,7 @@
                     android:layout_height="match_parent">
 
                     <com.makeramen.roundedimageview.RoundedImageView
-                        android:id="@+id/profile_picture_view"
+                        android:id="@+id/profile_friend_picture_view"
                         android:scaleType="fitXY"
                         app:riv_corner_radius="100dp"
                         app:riv_mutate_background="true"
@@ -48,18 +48,15 @@
                     android:layout_weight="1">
 
                     <TextView
-                        android:text="hello my name is andrew"
+                        android:text="TextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/profileFragment_name"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentStart="true"
+                        android:id="@+id/profile_friend_name"
                         android:textAppearance="@style/TextAppearance.FontPath"
                         android:textSize="36sp"
-                        android:ellipsize="marquee"
-                        android:marqueeRepeatLimit="marquee_forever"
-                        android:scrollHorizontally="true"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentStart="true" />
                 </RelativeLayout>
 
             </LinearLayout>
@@ -75,29 +72,11 @@
                     android:layout_marginTop="@dimen/activity_separator_small">
 
                     <Button
-                        android:text="@string/button_friends_link"
+                        android:text="@string/fragment_friend_profile_add_friend"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/button_friends_list"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_weight="1" />
-
-                    <Button
-                        android:text="Update "
-                        android:layout_width="127dp"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/profile_update_details_button"
+                        android:id="@+id/profile_friend_follow"
                         android:layout_above="@+id/profile_logout" />
-
-                    <Button
-                        android:text="Logout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/profile_logout"
-                        android:layout_above="@+id/button_friends_list"
-                        android:layout_alignParentStart="true"
-                        android:layout_weight="1" />
 
                 </LinearLayout>
 
@@ -107,7 +86,7 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/profileEventsFeedList" />
+            android:id="@+id/profileFriendEventsList" />
 
     </LinearLayout>
 

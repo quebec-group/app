@@ -13,24 +13,33 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:weightSum="1"
+        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
 
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="524dp"
+            android:layout_height="match_parent"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" >
+            android:layout_alignParentStart="true"
+            android:layout_weight="1">
 
         </FrameLayout>
 
-        <com.roughike.bottombar.BottomBar
-            android:id="@+id/bottomBar"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
-            app:bb_tabXmlResource="@xml/bottombar_tabs" />
+            android:layout_height="80dp">
+
+            <com.roughike.bottombar.BottomBar
+                android:id="@+id/bottomBar"
+                android:layout_width="match_parent"
+                android:layout_alignParentBottom="true"
+                app:bb_tabXmlResource="@xml/bottombar_tabs"
+                android:layout_height="match_parent" />
+        </FrameLayout>
 
     </LinearLayout>
 
