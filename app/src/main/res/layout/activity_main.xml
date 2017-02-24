@@ -37,8 +37,12 @@
                 android:id="@+id/bottomBar"
                 android:layout_width="match_parent"
                 android:layout_alignParentBottom="true"
+                android:background="@color/colorPrimaryDark"
                 app:bb_tabXmlResource="@xml/bottombar_tabs"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                app:bb_inActiveTabColor="#ffffff"
+                app:bb_activeTabColor="#ffffff"
+                app:bb_titleTextAppearance="@style/TextAppearance.FontPath"/>
         </FrameLayout>
 
     </LinearLayout>

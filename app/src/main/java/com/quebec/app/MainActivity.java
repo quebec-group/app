@@ -258,8 +258,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setFragment(EventDetailFragment.newInstance(e), 3);
     }
 
+    /** Events for the event detail page. **/
     @Override
-    public void onEventSelected(User u) {
+    public void onEventUserSelected(User u) {
         setFragment(ProfileFriendFragment.newInstance(u), 3);
+    }
+
+    @Override
+    public void openEventDetailLocation() {
+        Intent intent = new Intent(this, EventDetailMapActivity.class);
+        startActivity(intent);
     }
 }

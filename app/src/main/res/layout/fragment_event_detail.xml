@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     tools:context="com.quebec.app.EventDetailFragment">
 
-    <!-- TODO: Update blank fragment layout -->
 
     <LinearLayout
         android:orientation="vertical"
@@ -75,6 +74,15 @@
                     android:id="@+id/eventMapView"
                     android:background="@android:color/transparent"
                     android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true" />
+
+                <Button
+                    android:text="@string/event_detail_location_button_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/event_detail_location_button"
+                    android:layout_alignBaseline="@+id/eventDetailName"
+                    android:layout_alignBottom="@+id/eventDetailName"
                     android:layout_alignParentEnd="true" />
 
             </RelativeLayout>

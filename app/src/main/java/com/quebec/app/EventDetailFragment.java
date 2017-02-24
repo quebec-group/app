@@ -9,12 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -22,10 +22,10 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 
-public class EventDetailFragment extends Fragment implements OnMapReadyCallback, AdapterView.OnItemClickListener {
+public class EventDetailFragment extends Fragment implements AdapterView.OnItemClickListener,
+                                                             View.OnClickListener {
 
     public static final String EVENT_KEY = "event_key";
 
@@ -86,20 +86,24 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback,
 
     {
         // Inflate the layout for this fragment
-
         mFragmentView = inflater.inflate(R.layout.fragment_event_detail, container, false);
+
+
         eventNameTextView = (TextView) mFragmentView.findViewById(R.id.eventDetailName);
         eventDetailDescription = (TextView) mFragmentView.findViewById(R.id.eventDetailDescription);
         eventVideoview = (VideoView) mFragmentView.findViewById(R.id.eventVideoView);
         eventMapView = (MapView) mFragmentView.findViewById(R.id.eventMapView);
+
+        /* Add event handler for the buttons. */
+
+        Button eventLocationButton = (Button) mFragmentView.findViewById(R.id.event_detail_location_button);
+        eventLocationButton.setOnClickListener(this);
 
         /* If the event has been initialised, then insert the Event information onto the
            the page */
         if (mEvent != null) {
             eventNameTextView.setText(mEvent.getName());
             eventDetailDescription.setText(mEvent.getDescription());
-
-            eventMapView.getMapAsync(this);
 
             // TODO remove the example video.
             Uri u = Uri.parse("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4");
@@ -130,21 +134,6 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback,
         return mFragmentView;
     }
 
-    /**
-     * Handles the map loading from the event.
-     * // TODO complete the implementation of the map view.
-     * @param map
-     */
-    @Override
-    public void onMapReady(GoogleMap map) {
-        // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
-        MapsInitializer.initialize(this.getActivity());
-
-        // Updates the location and zoom of the MapView
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(43.1, -87.9), 10);
-        map.animateCamera(cameraUpdate);
-
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -179,8 +168,17 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback,
         User u = (User) gridView.getItemAtPosition(position);
 
         // Call the interaction listener with the Event object.
-        mListener.onEventSelected(u);
+        mListener.onEventUserSelected(u);
 
+    }
+
+    @Override
+    public void onClick(View view) {
+         switch (view.getId()) {
+             case R.id.event_detail_location_button:
+                 mListener.openEventDetailLocation();
+                 break;
+         }
     }
 
 
@@ -188,6 +186,7 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback,
      * The interface which must be implemented by the related activity.
      */
     public interface OnEventDetailInteractionListener {
-        void onEventSelected(User u);
+        void onEventUserSelected(User u);
+        void openEventDetailLocation();
     }
 }
