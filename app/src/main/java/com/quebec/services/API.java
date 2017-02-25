@@ -6,17 +6,27 @@ package com.quebec.services;
 
 
 public interface API {
-    public abstract void createEvent(String eventName, String eventDescription, String eventVideoURL, final APICallback response);
-    public abstract APIResponse createUser(String userName, String userEmail);
-    public abstract APIResponse getFriends();
-    public abstract APIResponse setPictureID(String S3ID);
-    public abstract APIResponse setVideoID(String S3ID);
-    public abstract APIResponse addFriend(String userID);
-    public abstract APIResponse removeFriend(String userID);
-    public abstract APIResponse addFriendRequest(String userID);
-    public abstract APIResponse getPendingFriendRequests();
-    public abstract APIResponse getSentFriendRequests();
-    public abstract APIResponse addUserToEvent(String eventName, String userID);
-    public abstract APIResponse removeUserFromEvent(String eventName, String userID);
+
+    // Profile interactions
+    public abstract void createUser(final String userName, final String userEmail, final APICallback response);
+    public abstract void setProfileVideo(final String friendID, final APICallback response);
+
+    // User interactions
+    public abstract void following(final APICallback response);
+    public abstract void followers(final APICallback response);
+    public abstract void follow(final String friendID, final APICallback response);
+    public abstract void unfollow(final String friendID, final APICallback response);
+
+
+
+    // Event interactions
+    public abstract void createEvent(final String eventName, final String eventDescription, final String eventVideoURL, final APICallback response);
+    public abstract void addUserToEvent(final String eventID, final String friendID, final APICallback response);
+    public abstract void removeFromEvent(final String eventID, final APICallback response);
+    public abstract void likeEvent(final String eventID,final APICallback response);
+    public abstract void unlikeEvent(final String eventID, final APICallback response);
+    public abstract void getEvents(final APICallback response);
+    public abstract void addVideoToEvent(final String S3ID, final String eventID, final APICallback response);
+
 
 }

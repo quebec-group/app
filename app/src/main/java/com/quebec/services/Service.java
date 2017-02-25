@@ -87,7 +87,8 @@ public class Service extends AsyncTask<Void, Integer, APIResponse> {
                     final ApiResponse response = client.execute(request);
 
                     final InputStream responseContentStream = response.getContent();
-                    String status = "failure";
+                    final int responseCode = response.getStatusCode();
+
 
                     // Given valid server response
                     if (responseContentStream != null) {
@@ -98,21 +99,13 @@ public class Service extends AsyncTask<Void, Integer, APIResponse> {
                         BaseDAO baseDAO = new BaseDAO(responseJSON);
 
 
-
-                        try {
-                            status = baseDAO.get_DAO_BODY().getString("status");
-                            Log.d(LOG_TAG, baseDAO.get_DAO_BODY().getString("status"));
-                        } catch (JSONException e) {
-                            Log.e(LOG_TAG, e.getMessage());
-                        }
-
-                        apiResponse = new APIResponse(status);
+                        apiResponse = new APIResponse(responseCode + "");
                         apiResponse.setResponseBody(baseDAO);
-                        Log.d(LOG_TAG, "Response : " + baseDAO.get_DAO_BODY().toString());
+                        Log.d(LOG_TAG, "APIResponse code : " + apiResponse.getStatus());
 
                     } else { // failed to receive response from server
 
-                        apiResponse = new APIResponse(status);
+                        apiResponse = new APIResponse(responseCode + "");
 
                     }
 
@@ -128,6 +121,7 @@ public class Service extends AsyncTask<Void, Integer, APIResponse> {
                         }
                     });
                 }
+
             return apiResponse;
     }
 
@@ -138,10 +132,14 @@ public class Service extends AsyncTask<Void, Integer, APIResponse> {
      */
     @Override
     public void onPostExecute(APIResponse apiResponse) {
-        callBack.onResponseReceived(apiResponse);
+        try {
+            callBack.onResponseReceived(apiResponse);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public static interface ServiceCallBack {
-        public void onResponseReceived(APIResponse<BaseDAO> apiResponse);
+        public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException;
     }
 }
