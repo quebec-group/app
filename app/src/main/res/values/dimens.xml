@@ -29,4 +29,6 @@
     <dimen name="activity_separation_small">30dp</dimen>
     <dimen name="layout_margin">20dp</dimen>
     <dimen name="event_detail_video_card_padding">20dp</dimen>
+    <dimen name="box_padding_leftright">10dp</dimen>
+    <dimen name="box_padding">20dp</dimen>
 </resources>

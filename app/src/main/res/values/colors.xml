@@ -4,8 +4,10 @@
 <resources>
 
     <color name="colorPrimary">#a9a9a9</color>
-    <color name="colorWhite">#000000</color>
+    <color name="colorWhite">#fff</color>
     <color name="colorPrimaryDark">#00000000</color>
+
+    <color name="colorDarkGrey">#404040</color>
 
     <color name="top_bar_background">#969696</color>
     <color name="splash_text">#a4a4a4</color>
