@@ -1,7 +1,6 @@
 package com.quebec.app;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -99,10 +98,8 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback,
 
             eventMapView.getMapAsync(this);
 
-            // TODO remove the example video.
 
-            Uri u = Uri.parse("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4");
-            eventVideoview.setVideoURI(u);
+            eventVideoview.setVideoURI(mEvent.getEventVideos().get(0).getURI());
 
             /* Add scrubbing controls to the video view. */
             MediaController ctrl = new MediaController(this.getContext());
@@ -113,16 +110,8 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback,
 
         gridView = (GridView) mFragmentView.findViewById(R.id.eventUsers);
 
-        // TODO: replace with actual users
-        User[] values = new User[] {
-                new User("Brad Pitt", "e"),
-                new User("Julia Roberts", "e"),
-                new User("Tom Cruise", "e"),
-                new User("Emma Watson", "e"),
-                new User("Matt Damon", "e")
-        };
 
-        EventUsersAdapterItem adapter = new EventUsersAdapterItem(this.getContext(), R.layout.adapter_grid_event_user, values);
+        EventUsersAdapterItem adapter = new EventUsersAdapterItem(this.getContext(), R.layout.adapter_grid_event_user, mEvent.getAttendees());
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(this);
 

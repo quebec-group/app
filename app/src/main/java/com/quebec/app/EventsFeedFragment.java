@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +14,11 @@ import android.widget.ListView;
 import com.quebec.services.APICallback;
 import com.quebec.services.APIManager;
 
-import java.util.ArrayList;
+import java.util.List;
 
 
 public class EventsFeedFragment extends Fragment implements AdapterView.OnItemClickListener {
-
+    private static String LOG_TAG = EventsFeedFragment.class.getSimpleName();
     private EventsFeedInteractionListener mListener;
 
     Parcelable listViewState;
@@ -51,28 +52,21 @@ public class EventsFeedFragment extends Fragment implements AdapterView.OnItemCl
         }
 
         // TODO: Replace stubs with actual Events
-        APIManager.getInstance().getEvents(new APICallback() {
+        APIManager.getInstance().getEvents(new APICallback<List<Event>>() {
             @Override
-            public void onSuccess(Object responseBody) {
-
+            public void onSuccess(List<Event> events) {
+                EventListAdapterItem adapter = new EventListAdapterItem(EventsFeedFragment.this.getContext(), R.layout.adapter_event_item, events);
+                listView.setAdapter(adapter);
+                listView.setOnItemClickListener(EventsFeedFragment.this);
             }
 
             @Override
             public void onFailure(String message) {
-
+                Log.d(LOG_TAG, message);
             }
         });
-        Event[] values = new Event[] {
-                new Event("Technology Networking Event", "An evening of networking between industry leaders, software and hardware developers. ","123", "cambridge", "13:03", "asd", new ArrayList<User>()),
-                new Event("Science Society Social", "Talks and discussions about all science related news.","123", "cambridge", "13:03", "asd", new ArrayList<User>()),
-                new Event("Technology Networking Event", "An evening of networking between industry leaders, software and hardware developers. ","123", "cambridge", "13:03", "asd", new ArrayList<User>()),
-                new Event("Science Society Social", "Talks and discussions about all science related news.","123", "cambridge", "13:03", "asd", new ArrayList<User>())
 
-        };
 
-        EventListAdapterItem adapter = new EventListAdapterItem(this.getContext(), R.layout.adapter_event_item, values);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(this);
         return v;
     }
 

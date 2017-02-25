@@ -60,6 +60,9 @@ public class Event implements Parcelable {
         return videos;
     }
 
+    public ArrayList<User> getAttendees() {
+        return attendees;
+    }
 
     @Override
     public int describeContents() {
