@@ -8,15 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.GridView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
-
-import com.quebec.services.APICallback;
-import com.quebec.services.APIManager;
-
-import java.util.ArrayList;
 
 /**
  * Created by Andrew on 03/02/2017.
@@ -52,7 +44,7 @@ public class EventListAdapterItem extends ArrayAdapter<Event> {
         TextView textViewDescriptionItem = (TextView) convertView.findViewById(R.id.eventItemDescription);
 
         textViewItem.setText(event.getEventName());
-        textViewDescriptionItem.setText(event.getDescription());
+//        textViewDescriptionItem.setText(event.getDescription());
 
 
         /* Setup the event ticker, by adding the users associated with the event. */

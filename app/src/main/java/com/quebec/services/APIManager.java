@@ -14,6 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * APIManger: the interface between the UI and services layer
@@ -28,6 +29,17 @@ public class APIManager implements API {
     
     private static String LOG_TAG = APIManager.class.getSimpleName();
 
+    private static APIManager instance;
+
+    private APIManager() {}
+
+    public static APIManager getInstance() {
+        if (instance == null) {
+            instance = new APIManager();
+        }
+
+        return instance;
+    }
 
     /**
      *
@@ -36,7 +48,7 @@ public class APIManager implements API {
      * @param eventVideoURL
      * @param response
      */
-    public void createEvent(String eventName, String eventDescription, String eventVideoURL, final APICallback response) {
+    public void createEvent(String eventName, String eventDescription, String eventVideoURL, final APICallback<String> response) {
         final APIEndpoint  endpoint = new APIEndpoint("createEvent");
         final APIRequest request = new APIRequest(endpoint);
 
@@ -83,7 +95,7 @@ public class APIManager implements API {
      * @param response
      */
     @Override
-    public void createUser(final String userName, final String userEmail, final APICallback response) {
+    public void createUser(final String userName, final String userEmail, final APICallback<String> response) {
         final APIEndpoint endpoint = new APIEndpoint("createUser");
         final APIRequest request = new APIRequest(endpoint);
 
@@ -116,11 +128,8 @@ public class APIManager implements API {
                         userResponse.setResponseBody(userDAO);
 
                         if (apiResponse.getStatus().equals("200")) {
-                            UserFactory userFactory = new UserFactory();
-                            userFactory.setUserDAO(userDAO);
-                            User user = userFactory.userFactory();
                             // pass created event back to the user
-                            response.onSuccess(user);
+                            response.onSuccess("User successfully created");
                         } else {
                             response.onFailure(apiResponse.getResponseBody().get_DAO_BODY().toString());
                         }
@@ -140,7 +149,7 @@ public class APIManager implements API {
      * @param response
      */
     @Override
-    public void setProfileVideo(final String S3ID, final APICallback response) {
+    public void setProfileVideo(final String S3ID, final APICallback<String> response) {
         final APIEndpoint endpoint = new APIEndpoint("setProfileVideo");
         final APIRequest request = new APIRequest(endpoint);
 
@@ -171,7 +180,7 @@ public class APIManager implements API {
      * @param response
      */
     @Override
-    public void following(final APICallback response) {
+    public void following(final APICallback<List<User>> response) {
         final APIEndpoint endpoint = new APIEndpoint("following");
         final APIRequest request = new APIRequest(endpoint);
 
@@ -216,7 +225,7 @@ public class APIManager implements API {
      * @param response
      */
     @Override
-    public void followers(final APICallback response)  {
+    public void followers(final APICallback<List<User>> response)  {
         final APIEndpoint endpoint = new APIEndpoint("followers");
         final APIRequest request = new APIRequest(endpoint);
 
@@ -264,7 +273,7 @@ public class APIManager implements API {
      * @param response
      */
     @Override
-    public void follow(final String userID, final APICallback response) {
+    public void follow(final String userID, final APICallback<String> response) {
         final APIEndpoint endpoint = new APIEndpoint("follow");
         final APIRequest request = new APIRequest(endpoint);
 
@@ -297,7 +306,7 @@ public class APIManager implements API {
      * @param response
      */
     @Override
-    public void unfollow(final String friendID, final APICallback response) {
+    public void unfollow(final String friendID, final APICallback<String> response) {
         final APIEndpoint endpoint = new APIEndpoint("unfollow");
         final APIRequest request = new APIRequest(endpoint);
 
@@ -331,7 +340,7 @@ public class APIManager implements API {
      * @param response
      */
     @Override
-    public void addUserToEvent(final String eventID, final String userID, final APICallback response) {
+    public void addUserToEvent(final String eventID, final String userID, final APICallback<String> response) {
         final APIEndpoint endpoint = new APIEndpoint("addUserToEvent");
         final APIRequest request = new APIRequest(endpoint);
         try {
@@ -366,7 +375,7 @@ public class APIManager implements API {
      * @param response
      */
     @Override
-    public void removeFromEvent(final String eventID, final APICallback response) {
+    public void removeFromEvent(final String eventID, final APICallback<String> response) {
         final APIEndpoint endpoint = new APIEndpoint("removeFromEvent");
         final APIRequest request = new APIRequest(endpoint);
         try {
@@ -400,7 +409,7 @@ public class APIManager implements API {
      * @param response
      */
     @Override
-    public void likeEvent(final String eventID, final APICallback response) {
+    public void likeEvent(final String eventID, final APICallback<String> response) {
         final APIEndpoint endpoint = new APIEndpoint("likeEvent");
         final APIRequest request = new APIRequest(endpoint);
 
@@ -432,7 +441,7 @@ public class APIManager implements API {
      * @param response
      */
     @Override
-    public void unlikeEvent(final String eventID, final APICallback response) {
+    public void unlikeEvent(final String eventID, final APICallback<String> response) {
         final APIEndpoint endpoint = new APIEndpoint("unlikeEvent");
         final APIRequest request = new APIRequest(endpoint);
 
@@ -463,7 +472,7 @@ public class APIManager implements API {
      * @param response
      */
     @Override
-    public void getEvents(final APICallback response) {
+    public void getEvents(final APICallback<List<Event>> response) {
         final APIEndpoint endpoint = new APIEndpoint("getEvents");
         final APIRequest request = new APIRequest(endpoint);
 
@@ -509,7 +518,7 @@ public class APIManager implements API {
      * @param response
      */
     @Override
-    public void addVideoToEvent(final String S3ID, final String eventID, final APICallback response) {
+    public void addVideoToEvent(final String S3ID, final String eventID, final APICallback<String> response) {
 
     }
 
