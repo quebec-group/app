@@ -1,7 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context="com.quebec.app.EventDetailFragment">
 
 
@@ -57,7 +57,8 @@
                     android:id="@+id/event_detail_location_button"
                     android:layout_alignBaseline="@+id/eventDetailName"
                     android:layout_alignBottom="@+id/eventDetailName"
-                    android:layout_alignParentEnd="true" />
+                    android:layout_alignParentEnd="true"
+                    android:layout_height="wrap_content" />
             </RelativeLayout>
 
         </LinearLayout>

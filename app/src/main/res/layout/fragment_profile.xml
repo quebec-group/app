@@ -79,7 +79,8 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/button_friends_list"
                         android:layout_alignParentBottom="true"
-                        android:layout_alignParentStart="true" />
+                        android:layout_alignParentStart="true"
+                        android:background="@drawable/button_background" />
 
                     <Button
                         android:text="More"

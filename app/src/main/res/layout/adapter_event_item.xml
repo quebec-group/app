@@ -55,7 +55,7 @@
                 android:id="@+id/textView2"
                 android:layout_below="@+id/eventItemDescription"
                 android:layout_alignParentStart="true"
-                android:textAlignment="center" />
+                android:textAppearance="@style/TextAppearance.FontPath" />
         </LinearLayout>
 
 

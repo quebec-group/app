@@ -91,33 +91,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal">
-
-            <View
-                android:layout_width="100dp"
-                android:layout_height="@dimen/sign_in_separator_height"
-                android:background="@color/sign_in_separator_color"
-                android:padding="5dp"
-                android:layout_gravity="left|center_vertical"
-                android:gravity="center_vertical"
-                />
-
-            <View
-                android:layout_width="100dp"
-                android:layout_height="@dimen/sign_in_separator_height"
-                android:background="@color/sign_in_separator_color"
-                android:padding="5dp"
-                android:layout_gravity="right|center_vertical"
-                android:gravity="center_vertical"
-                />
-
-        </LinearLayout>
-
     </LinearLayout>
 
     <TextView

@@ -1,18 +1,19 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowFullscreen">false</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
     </style>
 
     <!-- Backward-compatible version of ?android:attr/buttonBarStyle -->
     <style name="ButtonBar">
         <item name="android:paddingLeft">2dp</item>
-        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingTop">0dp</item>
         <item name="android:paddingRight">2dp</item>
         <item name="android:paddingBottom">0dp</item>
         <item name="android:background">@android:drawable/bottom_bar</item>
@@ -60,17 +61,17 @@
         <item name="android:textSize">30sp</item>
     </style>
 
-    <!--<style name="Background" parent="AppTheme" >
-        <item name="android:textColorPrimary">@color/com_facebook_button_background_color</item>
-        <item name="android:colorBackground">@color/Colour1</item>
-    </style>-->
-
-    <style name="Background_dark" parent="AppTheme" >
-        <item name="android:background">@drawable/background_dark_gradient</item>
+    <style name="Background_dark" parent="AppTheme">
         <item name="android:colorBackground">@color/bb_darkBackgroundColor</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textColorSecondaryInverse">@android:color/secondary_text_light_nodisable</item>
         <item name="android:textColorPrimaryInverse">@color/common_google_signin_btn_text_dark_disabled</item>
+
+        <item name="android:buttonStyle">@style/DarkButtonDefault</item>
+    </style>
+
+    <style name="DarkButtonDefault">
+        <item name="android:background">@drawable/button_background</item>
     </style>
 
 </resources>
