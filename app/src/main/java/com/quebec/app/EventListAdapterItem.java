@@ -13,6 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.quebec.services.APICallback;
+import com.quebec.services.APIManager;
+
+import java.util.ArrayList;
+
 /**
  * Created by Andrew on 03/02/2017.
  */
@@ -53,14 +58,16 @@ public class EventListAdapterItem extends ArrayAdapter<Event> {
         /* Setup the event ticker, by adding the users associated with the event. */
         // TODO implement actual user details.
         User[] values = new User[] {
-                new User("hello"),
-                new User("hello2"),
-                new User("hello"),
-                new User("hello2"),
-                new User("hello"),
-                new User("hello2"),
-                new User("hello")
+                new User("hello", "e"),
+                new User("hello2", "e"),
+                new User("hello", "e"),
+                new User("hello2", "e"),
+                new User("hello", "e"),
+                new User("hello2", "e"),
+                new User("hello", "e"),
         };
+
+
 
         EventUsersTickerAdapterItem adapter = new EventUsersTickerAdapterItem(values);
 

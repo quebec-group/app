@@ -3,6 +3,10 @@ package com.quebec.app;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.quebec.services.Video;
+
+import java.util.ArrayList;
+
 
 /**
  * Created by Andrew on 03/02/2017.
@@ -10,21 +14,30 @@ import android.os.Parcelable;
 
 public class Event implements Parcelable {
 
-    private String name;
-    private String description;
-    private String videoURL;
+    private String title;
+    private String eventID;
+    private String location;
+    private String time;
+    private ArrayList<Video> videos;
+    private String likes;
+    private String likesCount;
+    private ArrayList<User> attendees;
 
 
-    public Event(String name, String description) {
-        this.name = name;
-        this.description = description;
-        this.videoURL = "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4";
+
+    public Event(String title, String eventID, String location, String time, ArrayList<Video> videos, ArrayList<User> attendees, boolean likes, int likesCount) {
+        this.title = title;
+        this.eventID = eventID;
+        this.location = location;
+        this.time = time;
+        this.videos = videos;
+        this.attendees = attendees;
     }
 
+
     protected Event(Parcel in) {
-        name = in.readString();
-        description = in.readString();
-        videoURL = in.readString();
+        title = in.readString();
+        //videoURL = in.readString();
     }
 
     public static final Creator<Event> CREATOR = new Creator<Event>() {
@@ -39,15 +52,14 @@ public class Event implements Parcelable {
         }
     };
 
-    public String getName() {
-        return name;
+    public String getEventName() {
+        return title;
     }
 
-    public String getEventVideoURL() {
-        return videoURL;
+    public ArrayList<Video> getEventVideos() {
+        return videos;
     }
 
-    public String getDescription() { return description; }
 
     @Override
     public int describeContents() {
@@ -56,8 +68,6 @@ public class Event implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeString(description);
-        dest.writeString(videoURL);
+        dest.writeString(title);
     }
 }
