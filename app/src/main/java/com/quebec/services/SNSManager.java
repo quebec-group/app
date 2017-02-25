@@ -8,14 +8,9 @@ import com.amazonaws.mobile.push.PushManager;
  */
 
 public class SNSManager {
-    private final PushManager pushManager;
-
-    public SNSManager() {
-        pushManager = AWSMobileClient.defaultMobileClient()
+    public static String getArn() {
+        PushManager pushManager = AWSMobileClient.defaultMobileClient()
                 .getPushManager();
-    }
-
-    public String getArn() {
         pushManager.registerDevice();
         pushManager.setPushEnabled(true);
         pushManager.subscribeToTopic(pushManager.getDefaultTopic());
