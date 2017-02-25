@@ -6,12 +6,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.MediaController;
-import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.quebec.services.Video;
+
+import java.util.ArrayList;
 
 /**
  * EventUsersTickerAdapterItem displays the users who were present at an event. This ticker is shown in
@@ -19,11 +19,11 @@ import com.quebec.services.Video;
  */
 
 public class EventDetailVideoAdapterItem extends RecyclerView.Adapter<EventDetailVideoAdapterItem.ViewHolder> {
-    private Video[] videoData;
+    private ArrayList<Video> videoData;
     private Context mContext;
 
 
-    public EventDetailVideoAdapterItem(Context context, Video[] videoData) {
+    public EventDetailVideoAdapterItem(Context context, ArrayList<Video> videoData) {
         this.videoData = videoData;
         this.mContext = context;
     }
@@ -72,7 +72,7 @@ public class EventDetailVideoAdapterItem extends RecyclerView.Adapter<EventDetai
     // Return the size of your itemsData (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return videoData.length;
+        return videoData.size();
     }
 }
 

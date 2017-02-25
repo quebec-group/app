@@ -12,18 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.MediaController;
 import android.widget.TextView;
-import android.widget.VideoView;
-
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.quebec.services.Video;
 
 
 
@@ -105,7 +94,7 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
         }
 
 
-        eventVideoview.setVideoURI(mEvent.getEventVideos().get(0).getURI());
+        addVideosToView();
 
         gridView = (GridView) mFragmentView.findViewById(R.id.eventUsers);
 
@@ -124,18 +113,8 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
      */
     private void addVideosToView() {
 
-        // TODO: Relace this example data with actual videos from the event.
-        Video[] values = new Video[] {
-                new Video("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"),
-                new Video("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"),
-                new Video("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"),
-                new Video("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"),
-                new Video("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4")
-        };
-
-
         /* Add the videos to the view, through the use of the card view. */
-        EventDetailVideoAdapterItem adapter = new EventDetailVideoAdapterItem(this.getContext(), values);
+        EventDetailVideoAdapterItem adapter = new EventDetailVideoAdapterItem(this.getContext(), mEvent.getEventVideos());
 
         /* Makes use of the RecyclerView for the horizontal scrolling field. */
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getContext() ,LinearLayoutManager.HORIZONTAL, false);
@@ -148,16 +127,8 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
      * Add the users to the view.
      */
     private void addUsersToView() {
-        // TODO: replace with actual users
-        User[] values = new User[] {
-                new User("Brad Pitt"),
-                new User("Julia Roberts"),
-                new User("Tom Cruise"),
-                new User("Emma Watson"),
-                new User("Matt Damon")
-        };
 
-        EventUsersAdapterItem adapter = new EventUsersAdapterItem(this.getContext(), R.layout.adapter_grid_event_user, values);
+        EventUsersAdapterItem adapter = new EventUsersAdapterItem(this.getContext(), R.layout.adapter_grid_event_user, mEvent.getAttendees());
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(this);
 
