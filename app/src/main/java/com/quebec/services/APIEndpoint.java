@@ -60,7 +60,7 @@ public class APIEndpoint {
                 this.path += this.addUserToEvent;
                 break;
 
-            case "removeUserEvent":
+            case "removeFromEvent":
                 this.path += this.removeFromEvent;
                 break;
 
