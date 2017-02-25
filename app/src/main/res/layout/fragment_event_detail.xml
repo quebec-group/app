@@ -11,38 +11,65 @@
         android:layout_height="match_parent"
         android:weightSum="1">
 
-        <RelativeLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="158dp"
-            android:background="@color/bb_darkBackgroundColor">
+            android:layout_height="175dp">
 
-            <VideoView
+            <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/eventVideoView"
-                android:layout_weight="0.39"
-                android:elevation="20dp"
-                android:foregroundGravity="center_horizontal" />
-        </RelativeLayout>
+                android:layout_height="wrap_content"
+                android:id="@+id/events_detail_videos_view" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="78dp"
+            android:weightSum="1">
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/eventDetailName"
+                android:textAppearance="@style/TextAppearance.FontPath"
+                android:textSize="30sp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/eventDetailName"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="19dp"
+                android:id="@+id/eventDetailDescription" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+
+                <Button
+                    android:text="@string/event_detail_location_button_text"
+                    android:layout_width="match_parent"
+                    android:id="@+id/event_detail_location_button"
+                    android:layout_alignBaseline="@+id/eventDetailName"
+                    android:layout_alignBottom="@+id/eventDetailName"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
+
+        </LinearLayout>
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.39">
+            android:layout_height="224dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp">
-
-                <TextView
-                    android:text="TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/eventDetailName"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginTop="19dp"
-                    android:id="@+id/eventDetailDescription" />
 
                 <GridView
                     android:layout_width="match_parent"
@@ -54,36 +81,10 @@
                     android:horizontalSpacing="10dp"
                     android:stretchMode="columnWidth"
                     android:gravity="center"
-                    android:layout_below="@+id/eventDetailName"
+                    android:layout_below="@+id/eventMapView"
                     android:layout_alignParentStart="true"
-                    android:layout_marginTop="66dp" />
-
-                <TextView
-                    android:text="TextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/eventDetailName"
-                    android:textAppearance="@style/TextAppearance.FontPath"
-                    android:textSize="30sp"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentStart="true" />
-
-                <com.google.android.gms.maps.MapView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:id="@+id/eventMapView"
-                    android:background="@android:color/transparent"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true" />
-
-                <Button
-                    android:text="@string/event_detail_location_button_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/event_detail_location_button"
-                    android:layout_alignBaseline="@+id/eventDetailName"
-                    android:layout_alignBottom="@+id/eventDetailName"
-                    android:layout_alignParentEnd="true" />
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="11dp" />
 
             </RelativeLayout>
         </ScrollView>

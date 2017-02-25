@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,9 +35,6 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
 
     private TextView eventNameTextView;
     private TextView eventDetailDescription;
-
-    private VideoView eventVideoview;
-    private MapView eventMapView;
 
     private View mFragmentView;
     private GridView gridView;
@@ -91,8 +90,6 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
 
         eventNameTextView = (TextView) mFragmentView.findViewById(R.id.eventDetailName);
         eventDetailDescription = (TextView) mFragmentView.findViewById(R.id.eventDetailDescription);
-        eventVideoview = (VideoView) mFragmentView.findViewById(R.id.eventVideoView);
-        eventMapView = (MapView) mFragmentView.findViewById(R.id.eventMapView);
 
         /* Add event handler for the buttons. */
 
@@ -104,20 +101,48 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
         if (mEvent != null) {
             eventNameTextView.setText(mEvent.getName());
             eventDetailDescription.setText(mEvent.getDescription());
-
-            // TODO remove the example video.
-            Uri u = Uri.parse("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4");
-            eventVideoview.setVideoURI(u);
-
-            /* Add scrubbing controls to the video view. */
-            MediaController ctrl = new MediaController(this.getContext());
-
-            eventVideoview.setMediaController(ctrl);
-            eventVideoview.start();
         }
 
         gridView = (GridView) mFragmentView.findViewById(R.id.eventUsers);
 
+        /* Add the videos to the view. */
+        addVideosToView();
+
+       /* Add the users related to the event to the view. */
+        addUsersToView();
+
+        return mFragmentView;
+    }
+
+    /**
+     * Add the videos related to the event to the view.
+     */
+    private void addVideosToView() {
+
+        // TODO: Relace this example data with actual videos from the event.
+        Video[] values = new Video[] {
+                new Video("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"),
+                new Video("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"),
+                new Video("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"),
+                new Video("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"),
+                new Video("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4")
+        };
+
+
+        /* Add the videos to the view, through the use of the card view. */
+        EventDetailVideoAdapterItem adapter = new EventDetailVideoAdapterItem(this.getContext(), values);
+
+        /* Makes use of the RecyclerView for the horizontal scrolling field. */
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this.getContext() ,LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView eventItemTicker = (RecyclerView) mFragmentView.findViewById(R.id.events_detail_videos_view);
+        eventItemTicker.setLayoutManager(layoutManager);
+        eventItemTicker.setAdapter(adapter);
+    }
+
+    /**
+     * Add the users to the view.
+     */
+    private void addUsersToView() {
         // TODO: replace with actual users
         User[] values = new User[] {
                 new User("Brad Pitt"),
@@ -131,9 +156,7 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(this);
 
-        return mFragmentView;
     }
-
 
     @Override
     public void onAttach(Context context) {
