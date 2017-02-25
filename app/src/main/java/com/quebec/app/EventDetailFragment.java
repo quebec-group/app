@@ -14,7 +14,6 @@ import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -22,7 +21,6 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 
 public class EventDetailFragment extends Fragment implements OnMapReadyCallback, AdapterView.OnItemClickListener {
@@ -97,11 +95,12 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback,
            the page */
         if (mEvent != null) {
             eventNameTextView.setText(mEvent.getEventName());
-            //eventDetailDescription.setText(mEvent.getDescription());
+            eventDetailDescription.setText("");
 
             eventMapView.getMapAsync(this);
 
             // TODO remove the example video.
+
             Uri u = Uri.parse("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4");
             eventVideoview.setVideoURI(u);
 
