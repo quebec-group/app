@@ -29,14 +29,8 @@ public class APIManager implements API {
     private static String LOG_TAG = APIManager.class.getSimpleName();
 
 
-    /**
-     *
-     * @param eventName
-     * @param eventDescription
-     * @param eventVideoURL
-     * @param response
-     */
-    public void createEvent(String eventName, String eventDescription, String eventVideoURL, final APICallback response) {
+
+    public void createEvent(final String eventTitle, final String eventLocation, final String eventTime, final APICallback response) {
         final APIEndpoint  endpoint = new APIEndpoint("createEvent");
         final APIRequest request = new APIRequest(endpoint);
 
@@ -44,9 +38,9 @@ public class APIManager implements API {
         // create the request body
         try {
             JSONObject requestBody = new JSONObject();
-            requestBody.put("title", eventName);
-            requestBody.put("location", eventDescription);
-            requestBody.put("time", eventName);
+            requestBody.put("title", eventTitle);
+            requestBody.put("location", eventLocation);
+            requestBody.put("time", eventTime);
             request.setBody(requestBody.toString());
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage());
@@ -95,8 +89,8 @@ public class APIManager implements API {
                     JSONObject requestBody = new JSONObject();
                     requestBody.put("name", userName);
                     requestBody.put("email", userEmail);
-                    //final String arn = SNSManager.getArn();
-                    //requestBody.put("arn", arn);
+                    final String arn = SNSManager.getArn();
+                    requestBody.put("arn", arn);
                     request.setBody(requestBody.toString());
                 } catch (JSONException e) {
                     Log.e(LOG_TAG, e.getMessage());
@@ -110,17 +104,9 @@ public class APIManager implements API {
                      */
                     public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
 
-
-                        UserDAO userDAO = new UserDAO(apiResponse.getResponseBody().get_DAO_BODY());
-                        final APIResponse userResponse = new APIResponse(apiResponse.getStatus());
-                        userResponse.setResponseBody(userDAO);
-
                         if (apiResponse.getStatus().equals("200")) {
-                            UserFactory userFactory = new UserFactory();
-                            userFactory.setUserDAO(userDAO);
-                            User user = userFactory.userFactory();
                             // pass created event back to the user
-                            response.onSuccess(user);
+                            response.onSuccess("Succesfully created User");
                         } else {
                             response.onFailure(apiResponse.getResponseBody().get_DAO_BODY().toString());
                         }
@@ -271,7 +257,7 @@ public class APIManager implements API {
         // create the request body
         try {
             JSONObject requestBody = new JSONObject();
-            requestBody.put("friendID", userID);
+            requestBody.put("userID", userID);
             request.setBody(requestBody.toString());
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage());
@@ -293,18 +279,18 @@ public class APIManager implements API {
 
     /**
      *
-     * @param friendID
+     * @param userID
      * @param response
      */
     @Override
-    public void unfollow(final String friendID, final APICallback response) {
+    public void unfollow(final String userID, final APICallback response) {
         final APIEndpoint endpoint = new APIEndpoint("unfollow");
         final APIRequest request = new APIRequest(endpoint);
 
         // create the request body
         try {
             JSONObject requestBody = new JSONObject();
-            requestBody.put("friendID", friendID);
+            requestBody.put("userID", userID);
             request.setBody(requestBody.toString());
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage());
@@ -315,7 +301,7 @@ public class APIManager implements API {
             public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
                 Log.d(LOG_TAG, apiResponse.getStatus());
                 if (apiResponse.getStatus().equals("200")) {
-                    response.onSuccess(new String("Successfully unfollowed: " + friendID));
+                    response.onSuccess(new String("Successfully unfollowed: " + userID));
                 }
             }
         });
@@ -336,7 +322,7 @@ public class APIManager implements API {
         final APIRequest request = new APIRequest(endpoint);
         try {
             JSONObject requestBody = new JSONObject();
-            requestBody.put("friendID", userID);
+            requestBody.put("userID", userID);
             requestBody.put("eventID", eventID);
             request.setBody(requestBody.toString());
         } catch (JSONException e) {

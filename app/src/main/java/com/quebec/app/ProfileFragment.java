@@ -139,13 +139,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
 
         /* Initiate the events feed on the profile, by loading the data into the adapter view. */
         // TODO: Replace stubs with actual Events
-        Event[] values = new Event[] {
-                new Event("Andrew's Networking Event", "An evening of networking and getting to know each other over lots of drinks and good food.", "123", "cambridge", "13:03", "asd", new ArrayList<User>()),
-                new Event("Andrew's Networking Event", "An evening of networking and getting to know each other over lots of drinks and good food.", "123", "cambridge", "13:03", "asd", new ArrayList<User>()),
-        };
-
-        EventListAdapterItem adapter = new EventListAdapterItem(this.getContext(), R.layout.adapter_event_item, values);
-        profileEventsFeed.setAdapter(adapter);
+//        Event[] values = new Event[] {
+//                new Event("Andrew's Networking Event", "An evening of networking and getting to know each other over lots of drinks and good food.", "123", "cambridge", "13:03", "asd", new ArrayList<User>()),
+//                new Event("Andrew's Networking Event", "An evening of networking and getting to know each other over lots of drinks and good food.", "123", "cambridge", "13:03", "asd", new ArrayList<User>()),
+//        };
+//
+//        EventListAdapterItem adapter = new EventListAdapterItem(this.getContext(), R.layout.adapter_event_item, values);
+//        profileEventsFeed.setAdapter(adapter);
         profileEventsFeed.setOnItemClickListener(this);
 
         /* Get the logged in user information and display this information on the page. */

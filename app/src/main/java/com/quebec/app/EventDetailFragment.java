@@ -97,7 +97,7 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback,
            the page */
         if (mEvent != null) {
             eventNameTextView.setText(mEvent.getEventName());
-            eventDetailDescription.setText(mEvent.getDescription());
+            //eventDetailDescription.setText(mEvent.getDescription());
 
             eventMapView.getMapAsync(this);
 

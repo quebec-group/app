@@ -48,16 +48,10 @@ public class EventsFeedFragment extends Fragment implements AdapterView.OnItemCl
         }
 
         // TODO: Replace stubs with actual Events
-        Event[] values = new Event[] {
-                new Event("Technology Networking Event", "An evening of networking between industry leaders, software and hardware developers. ","123", "cambridge", "13:03", "asd", new ArrayList<User>()),
-                new Event("Science Society Social", "Talks and discussions about all science related news.","123", "cambridge", "13:03", "asd", new ArrayList<User>()),
-                new Event("Technology Networking Event", "An evening of networking between industry leaders, software and hardware developers. ","123", "cambridge", "13:03", "asd", new ArrayList<User>()),
-                new Event("Science Society Social", "Talks and discussions about all science related news.","123", "cambridge", "13:03", "asd", new ArrayList<User>())
+        // create Events
 
-        };
-
-        EventListAdapterItem adapter = new EventListAdapterItem(this.getContext(), R.layout.adapter_event_item, values);
-        listView.setAdapter(adapter);
+//        EventListAdapterItem adapter = new EventListAdapterItem(this.getContext(), R.layout.adapter_event_item, values);
+//        listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
         return v;
     }
