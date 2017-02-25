@@ -12,23 +12,15 @@ import java.util.ArrayList;
 
 /**
  * Created by Andy on 23/02/2017.
- * FriendListFactory: return an ArrayList<User> of friends
+ * UserListFactory: return an ArrayList<User> of friends
  */
 
-public class FriendListFactory {
-    private BaseDAO baseDAO;
-    private static String LOG_TAG =FriendListFactory.class.getSimpleName();
+public class UserListFactory {
 
-    public void setFriendListDAO (BaseDAO baseDAO) {
-        this.baseDAO = baseDAO;
-    }
-
-    public ArrayList<User> friendListFactory() throws JSONException {
-        JSONObject jsonObject = baseDAO.get_DAO_BODY();
+    private static String LOG_TAG =UserListFactory.class.getSimpleName();
 
 
-        String s = jsonObject.getString("friends");
-        JSONArray jsonArray = new JSONArray(s);
+    public ArrayList<User> userListFactory(JSONArray jsonArray) throws JSONException {
         User user;
         ArrayList<User> friends = new ArrayList<>();
 

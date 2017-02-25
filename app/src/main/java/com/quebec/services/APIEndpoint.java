@@ -7,17 +7,18 @@ package com.quebec.services;
 public class APIEndpoint {
 
     private static final String createUser = "createUser";
-    private static final String getFriends = "getFriends";
-    private static final String setPictureID = "setPictureID";
-    private static final String setVideoID = "setVideoID";
-    private static final String addFriend = "addFriend";
-    private static final String removeFriend = "removeFriend";
-    private static final String addFriendRequest = "addFriendRequest";
-    private static final String getPendingFriendRequests = "getPendingFriendRequests";
-    private static final String getSentFriendReqeusts = "getPendingFriendRequests";
+    private static final String following = "following";
+    private static final String followers = "followers";
+    private static final String setProfileVideo = "setProfileVideo";
+    private static final String addVideoToEvent = "addVideoToEvent";
+    private static final String follow = "follow";
+    private static final String unfollow = "unfollow";
     private static final String createEvent = "createEvent";
     private static final String addUserToEvent = "addUserToEvent";
-    private static final String removeUserFromEvent = "removeUserFromEvent";
+    private static final String removeFromEvent = "removeFromEvent";
+    private static final String getEvents = "getEvents";
+    private static final String likeEvent = "likeEvent";
+    private static final String unlikeEvent = "unlikeEvent";
 
     private static final String POST_METHOD = "POST";
 
@@ -31,28 +32,24 @@ public class APIEndpoint {
                 this.path += this.createUser;
                 break;
 
-            case "getFriends":
-                this.path += this.getFriends;
+            case "following":
+                this.path += this.following;
                 break;
 
-            case "setPictureID":
-                this.path += this.setPictureID;
+            case "setProfileVideo":
+                this.path += this.setProfileVideo;
                 break;
 
-            case "setVideoID":
-                this.path += this.setVideoID;
+            case "addVideoToEvent":
+                this.path += this.addVideoToEvent;
                 break;
 
-            case "removeFriend":
-                this.path += this.removeFriend;
+            case "unfollow":
+                this.path += this.unfollow;
                 break;
 
-            case "addFriendRequest":
-                this.path += this.addFriendRequest;
-                break;
-
-            case "getPendingFriendRequests":
-                this.path += this.getPendingFriendRequests;
+            case "follow":
+                this.path += this.follow;
                 break;
 
             case "createEvent":
@@ -63,16 +60,20 @@ public class APIEndpoint {
                 this.path += this.addUserToEvent;
                 break;
 
-            case "removeUserFromEvent":
-                this.path += this.removeUserFromEvent;
+            case "removeUserEvent":
+                this.path += this.removeFromEvent;
                 break;
 
-            case "getSentFriendReqeusts":
-                this.path += this.getSentFriendReqeusts;
+            case "getEvents":
+                this.path += this.getEvents;
                 break;
 
-            case "addFriend":
-                this.path += this.addFriend;
+            case "likeEvent":
+                this.path += this.likeEvent;
+                break;
+
+            case "unlikeEvent":
+                this.path += this.unlikeEvent;
                 break;
         }
         this.method = this.POST_METHOD;

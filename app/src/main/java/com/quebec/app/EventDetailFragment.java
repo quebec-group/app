@@ -116,11 +116,11 @@ public class EventDetailFragment extends Fragment implements OnMapReadyCallback,
 
         // TODO: replace with actual users
         User[] values = new User[] {
-                new User("Brad Pitt"),
-                new User("Julia Roberts"),
-                new User("Tom Cruise"),
-                new User("Emma Watson"),
-                new User("Matt Damon")
+                new User("Brad Pitt", "e"),
+                new User("Julia Roberts", "e"),
+                new User("Tom Cruise", "e"),
+                new User("Emma Watson", "e"),
+                new User("Matt Damon", "e")
         };
 
         EventUsersAdapterItem adapter = new EventUsersAdapterItem(this.getContext(), R.layout.adapter_grid_event_user, values);

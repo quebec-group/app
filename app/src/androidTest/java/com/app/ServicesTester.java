@@ -65,6 +65,6 @@ public class ServicesTester {
             }
         };
         APIManager apiManager = new APIManager();
-        apiManager.getFriends(test);
+        apiManager.getFollowers(test);
     }
 }
