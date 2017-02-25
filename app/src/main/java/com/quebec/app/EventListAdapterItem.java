@@ -13,6 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.quebec.services.APICallback;
+import com.quebec.services.APIManager;
+
+import java.util.ArrayList;
+
 /**
  * Created by Andrew on 03/02/2017.
  */
@@ -46,9 +51,7 @@ public class EventListAdapterItem extends ArrayAdapter<Event> {
         TextView textViewItem = (TextView) convertView.findViewById(R.id.eventItemName);
         TextView textViewDescriptionItem = (TextView) convertView.findViewById(R.id.eventItemDescription);
 
-        textViewItem.setText(event.getName());
-        textViewDescriptionItem.setText(event.getDescription());
-
+        textViewItem.setText(event.getEventName());
 
         /* Setup the event ticker, by adding the users associated with the event. */
         // TODO implement actual user details.
@@ -59,8 +62,10 @@ public class EventListAdapterItem extends ArrayAdapter<Event> {
                 new User("hello2"),
                 new User("hello"),
                 new User("hello2"),
-                new User("hello")
+                new User("hello"),
         };
+
+
 
         EventUsersTickerAdapterItem adapter = new EventUsersTickerAdapterItem(values);
 

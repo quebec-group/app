@@ -4,12 +4,15 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.quebec.services.Video;
+
+import java.util.ArrayList;
 
 
 public class EventsFeedFragment extends Fragment implements AdapterView.OnItemClickListener {
@@ -32,7 +35,6 @@ public class EventsFeedFragment extends Fragment implements AdapterView.OnItemCl
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -49,11 +51,10 @@ public class EventsFeedFragment extends Fragment implements AdapterView.OnItemCl
 
         // TODO: Replace stubs with actual Events
         Event[] values = new Event[] {
-                new Event("Technology Networking Event", "An evening of networking between industry leaders, software and hardware developers. "),
-                new Event("Science Society Social", "Talks and discussions about all science related news."),
-                new Event("Technology Networking Event", "An evening of networking between industry leaders, software and hardware developers. "),
-                new Event("Science Society Social", "Talks and discussions about all science related news.")
-
+                new Event("Technology Networking Event", "An evening of networking between industry leaders, software and hardware developers. ", "", "", new ArrayList<Video>(), new ArrayList<User>(), true, 0),
+                new Event("Technology Networking Event", "An evening of networking between industry leaders, software and hardware developers. ", "", "", new ArrayList<Video>(), new ArrayList<User>(), true, 0),
+                new Event("Technology Networking Event", "An evening of networking between industry leaders, software and hardware developers. ", "", "", new ArrayList<Video>(), new ArrayList<User>(), true, 0),
+                new Event("Technology Networking Event", "An evening of networking between industry leaders, software and hardware developers. ", "", "", new ArrayList<Video>(), new ArrayList<User>(), true, 0)
         };
 
         EventListAdapterItem adapter = new EventListAdapterItem(this.getContext(), R.layout.adapter_event_item, values);

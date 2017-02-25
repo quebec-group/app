@@ -11,6 +11,8 @@ import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.quebec.services.Video;
+
 /**
  * EventUsersTickerAdapterItem displays the users who were present at an event. This ticker is shown in
  * event items on the feeds.

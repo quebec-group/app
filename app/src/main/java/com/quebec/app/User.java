@@ -11,6 +11,7 @@ public class User implements Parcelable {
 
     private String name;
     private String email;
+    private String userID;
 
     public User(String name) {
         this.name = name;
@@ -46,5 +47,13 @@ public class User implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(name);
         parcel.writeString(email);
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 }

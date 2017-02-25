@@ -24,6 +24,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.quebec.services.Video;
 
 
 public class EventDetailFragment extends Fragment implements AdapterView.OnItemClickListener,
@@ -99,8 +100,7 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
         /* If the event has been initialised, then insert the Event information onto the
            the page */
         if (mEvent != null) {
-            eventNameTextView.setText(mEvent.getName());
-            eventDetailDescription.setText(mEvent.getDescription());
+            eventNameTextView.setText(mEvent.getEventName());
         }
 
         gridView = (GridView) mFragmentView.findViewById(R.id.eventUsers);
