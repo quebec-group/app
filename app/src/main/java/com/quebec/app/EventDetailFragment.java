@@ -103,6 +103,7 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
             eventNameTextView.setText(mEvent.getEventName());
         }
 
+
         gridView = (GridView) mFragmentView.findViewById(R.id.eventUsers);
 
         /* Add the videos to the view. */

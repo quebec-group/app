@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Background_dark." parent="Theme.Design">
+        <item name="android:colorBackground">@color/Background1</item>
+        <item name="android:textColorPrimary">@color/common_google_signin_btn_text_dark_focused</item>
+        <item name="android:textColorSecondaryInverse">?android:attr/colorForegroundInverse</item>
+        <item name="android:textColorPrimaryInverse">?android:attr/colorForegroundInverse</item>
+        <item name="android:windowBackground">@color/Colour1</item>
+        <item name="android:statusBarColor">?android:attr/colorPressedHighlight</item>
+        <item name="android:navigationBarColor">?android:attr/colorForeground</item>
+        <item name="colorPrimary">@color/Colour1</item>
+        <item name="android:colorForeground">@color/com_facebook_blue</item>
+        <item name="android:textColorSecondary">@color/bb_darkBackgroundColor</item>
+    </style>
+</resources>

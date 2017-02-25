@@ -22,4 +22,9 @@
     <color name="sign_in_separator_color">#DDDDDD</color>
     <color name="instructions_list_border_color">#FFDDDDDD</color>
 
+    <color name="Colour1">#c800bcc8</color>
+    <color name="Green_light">#ffffff</color>
+    <color name="colour1">#99cc64</color>
+    <color name="Background1">#6680cbbf</color>
+
 </resources>
