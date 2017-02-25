@@ -83,7 +83,7 @@ public class S3Handler {
     }
 
     /**
-     * Get
+     * Retrieve a file from the S3 storage bucket.
      */
     public void getFile(final String path, final ContentProgressListener callback) {
         new Thread(new Runnable() {

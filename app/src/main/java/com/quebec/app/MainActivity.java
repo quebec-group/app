@@ -11,6 +11,7 @@ package com.quebec.app;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -41,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Fragment mFragment;
     private String currentFragmentTab;
 
+
+    private BottomBar mBottomBar;
     /**
      * Change the current fragment in the main activity view.
      * @param frag
@@ -72,19 +75,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+
+    private int previousBottomBarItemIndex = 0;
     private int currentBottomBarItem;
 
     private void setBottomBarFragment(int tabId) {
 
-        if (currentBottomBarItem == tabId) {
-            return;
-        }
+        if (currentBottomBarItem == tabId) { return; }
 
         switch (tabId) {
             case R.id.menu_eventsfeed:
                 setFragment(new EventsFeedFragment(), 0);
                 break;
             case R.id.menu_uploadvideo:
+
+                /* A fix for the video upload tab. Requires a timer as a workaround. */
+                Handler handlerTimer = new Handler();
+                handlerTimer.postDelayed(new Runnable(){
+                    public void run() {
+                        mBottomBar.selectTabAtPosition(previousBottomBarItemIndex);
+                    }}, 500);
+
+
                 showVideoUploadActivity();
                 break;
             case R.id.menu_profile:
@@ -92,6 +104,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
 
+
+        previousBottomBarItemIndex = mBottomBar.getCurrentTabPosition();
         currentBottomBarItem = tabId;
     }
 
@@ -129,10 +143,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
 
-        BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
+        mBottomBar = (BottomBar) findViewById(R.id.bottomBar);
 
         /* Handle the reselection of a bottom bar tab. */
-        bottomBar.setOnTabReselectListener(new OnTabReselectListener() {
+        mBottomBar.setOnTabReselectListener(new OnTabReselectListener() {
             @Override
             public void onTabReSelected(@IdRes int tabId) {
                 setBottomBarFragment(tabId);
@@ -140,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         /* Handle the single selection of a bottom bar tab. */
-        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
+        mBottomBar.setOnTabSelectListener(new OnTabSelectListener() {
 
             @Override
             public void onTabSelected(@IdRes int tabId) {
@@ -161,7 +175,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
 
-        Log.e("REFRESH", "re");
         /* Refresh the fragment view. */
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.detach(mFragment).attach(mFragment).commit();
@@ -220,9 +233,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-
-
-
     @Override
     public void onEventSelected(Event e) {
         setFragment(EventDetailFragment.newInstance(e), 1);
@@ -242,6 +252,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    public void openAboutPage() {
+        Intent intent = new Intent(this, AboutActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
     public void updateProfilePictureActivity() {
         Intent intent = new Intent(this, ProfilePictureSignUpActivity.class);
         startActivity(intent);
@@ -252,8 +268,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setFragment(EventDetailFragment.newInstance(e), 3);
     }
 
+    /** Events for the event detail page. **/
     @Override
-    public void onEventSelected(User u) {
+    public void onEventUserSelected(User u) {
         setFragment(ProfileFriendFragment.newInstance(u), 3);
+    }
+
+    @Override
+    public void openEventDetailLocation() {
+        Intent intent = new Intent(this, EventDetailMapActivity.class);
+        startActivity(intent);
     }
 }

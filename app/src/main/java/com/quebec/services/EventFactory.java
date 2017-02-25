@@ -26,7 +26,10 @@ public class EventFactory {
         final String time = eventDAO.get_DAO_BODY().getString("time");
         final String videoID = eventDAO.get_DAO_BODY().getString("videoID");
         final ArrayList<User> attendees = new ArrayList<>();
-        Event event = new Event(title, description, eventID, location, time, videoID, attendees);
+        final ArrayList<Video> videos = new ArrayList<>();
+
+        // TODO fix this
+        Event event = new Event(title, eventID, location, time, videos, attendees, true, 0);
         return event;
     }
 }

@@ -76,7 +76,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/profile_friend_follow"
-                        android:layout_above="@+id/profile_logout" />
+                        android:layout_above="@+id/profile_dropdown_button" />
 
                 </LinearLayout>
 

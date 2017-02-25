@@ -49,11 +49,11 @@ public class FriendsListFragment extends Fragment implements AdapterView.OnItemC
 
         // TODO: Load information from sources
         values = new User[] {
-                new User("Brad Pitt", "e"),
-                new User("Julia Roberts", "e"),
-                new User("Tom Cruise", "e"),
-                new User("Emma Watson", "e"),
-                new User("Matt Damon", "e"),
+                new User("Brad Pitt"),
+                new User("Julia Roberts"),
+                new User("Tom Cruise"),
+                new User("Emma Watson"),
+                new User("Matt Damon")
         };
 
         adapter = new FriendListAdapterItem(this.getContext(), R.layout.adapter_friend_list_item, values);
