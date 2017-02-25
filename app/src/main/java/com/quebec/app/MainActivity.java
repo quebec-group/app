@@ -23,6 +23,8 @@ import android.view.View;
 import com.amazonaws.mobile.AWSMobileClient;
 import com.amazonaws.mobile.user.IdentityManager;
 import com.quebec.app.auth.SplashActivity;
+import com.quebec.services.APICallback;
+import com.quebec.services.APIManager;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabReselectListener;
 import com.roughike.bottombar.OnTabSelectListener;
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private IdentityManager identityManager;
     private Fragment mFragment;
     private String currentFragmentTab;
+    private static String LOG_TAG = MainActivity.class.getSimpleName();
 
 
     private BottomBar mBottomBar;
@@ -88,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 setFragment(new EventsFeedFragment(), 0);
                 break;
             case R.id.menu_uploadvideo:
+
 
                 /* A fix for the video upload tab. Requires a timer as a workaround. */
                 Handler handlerTimer = new Handler();

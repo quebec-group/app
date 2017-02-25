@@ -8,15 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.GridView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.quebec.services.APICallback;
-import com.quebec.services.APIManager;
-
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Andrew on 03/02/2017.
@@ -25,11 +19,11 @@ import java.util.ArrayList;
 public class EventListAdapterItem extends ArrayAdapter<Event> {
 
     int layoutResourceID;
-    Event data[] = null;
+    List<Event> data;
     Context mContext;
 
 
-    public EventListAdapterItem(Context mContext, int layoutResourceID, Event[] objects) {
+    public EventListAdapterItem(Context mContext, int layoutResourceID, List<Event> objects) {
         super(mContext, layoutResourceID, objects);
 
         this.layoutResourceID = layoutResourceID;
@@ -46,7 +40,7 @@ public class EventListAdapterItem extends ArrayAdapter<Event> {
             convertView = inflater.inflate(layoutResourceID, parent, false);
         }
 
-        Event event = data[position];
+        Event event = data.get(position);
 
         TextView textViewItem = (TextView) convertView.findViewById(R.id.eventItemName);
         TextView textViewDescriptionItem = (TextView) convertView.findViewById(R.id.eventItemDescription);
@@ -54,21 +48,14 @@ public class EventListAdapterItem extends ArrayAdapter<Event> {
 
         textViewItem.setText(event.getEventName());
 
+
+        textViewItem.setText(event.getEventName());
+
         /* Setup the event ticker, by adding the users associated with the event. */
         // TODO implement actual user details.
-        User[] values = new User[] {
-                new User("hello"),
-                new User("hello2"),
-                new User("hello"),
-                new User("hello2"),
-                new User("hello"),
-                new User("hello2"),
-                new User("hello"),
-        };
 
 
-
-        EventUsersTickerAdapterItem adapter = new EventUsersTickerAdapterItem(values);
+        EventUsersTickerAdapterItem adapter = new EventUsersTickerAdapterItem(event.getAttendees());
 
         /* Makes use of the RecyclerView for the horizontal scrolling field. */
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.mContext ,LinearLayoutManager.HORIZONTAL, false);

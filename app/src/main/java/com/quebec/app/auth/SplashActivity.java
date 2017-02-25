@@ -14,11 +14,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.Toast;
+
 import com.amazonaws.mobile.AWSMobileClient;
-import com.amazonaws.mobile.user.signin.SignInManager;
-import com.amazonaws.mobile.user.signin.SignInProvider;
 import com.amazonaws.mobile.user.IdentityManager;
 import com.amazonaws.mobile.user.IdentityProvider;
+import com.amazonaws.mobile.user.signin.SignInManager;
+import com.amazonaws.mobile.user.signin.SignInProvider;
 import com.quebec.app.MainActivity;
 import com.quebec.app.R;
 
@@ -48,6 +49,7 @@ public class SplashActivity extends Activity {
             Log.d(LOG_TAG, String.format("UserDTO sign-in with previous %s provider succeeded",
                 provider.getDisplayName()));
 
+
             // The sign-in manager is no longer needed once signed in.
             SignInManager.dispose();
 
@@ -62,6 +64,7 @@ public class SplashActivity extends Activity {
                         goMain();
                     }
                 });
+
         }
 
         /**

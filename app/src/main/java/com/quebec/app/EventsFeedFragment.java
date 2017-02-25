@@ -4,19 +4,27 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+
+import com.quebec.services.APICallback;
+import com.quebec.services.APIManager;
+
 import com.quebec.services.Video;
 
 import java.util.ArrayList;
 
 
-public class EventsFeedFragment extends Fragment implements AdapterView.OnItemClickListener {
+import java.util.List;
 
+
+public class EventsFeedFragment extends Fragment implements AdapterView.OnItemClickListener {
+    private static String LOG_TAG = EventsFeedFragment.class.getSimpleName();
     private EventsFeedInteractionListener mListener;
 
     Parcelable listViewState;
@@ -50,16 +58,22 @@ public class EventsFeedFragment extends Fragment implements AdapterView.OnItemCl
         }
 
         // TODO: Replace stubs with actual Events
-        Event[] values = new Event[] {
-                new Event("Technology Networking Event", "An evening of networking between industry leaders, software and hardware developers. ", "", "", new ArrayList<Video>(), new ArrayList<User>(), true, 0),
-                new Event("Technology Networking Event", "An evening of networking between industry leaders, software and hardware developers. ", "", "", new ArrayList<Video>(), new ArrayList<User>(), true, 0),
-                new Event("Technology Networking Event", "An evening of networking between industry leaders, software and hardware developers. ", "", "", new ArrayList<Video>(), new ArrayList<User>(), true, 0),
-                new Event("Technology Networking Event", "An evening of networking between industry leaders, software and hardware developers. ", "", "", new ArrayList<Video>(), new ArrayList<User>(), true, 0)
-        };
 
-        EventListAdapterItem adapter = new EventListAdapterItem(this.getContext(), R.layout.adapter_event_item, values);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(this);
+        APIManager.getInstance().getEvents(new APICallback<List<Event>>() {
+            @Override
+            public void onSuccess(List<Event> events) {
+                EventListAdapterItem adapter = new EventListAdapterItem(EventsFeedFragment.this.getContext(), R.layout.adapter_event_item, events);
+                listView.setAdapter(adapter);
+                listView.setOnItemClickListener(EventsFeedFragment.this);
+            }
+
+            @Override
+            public void onFailure(String message) {
+                Log.d(LOG_TAG, message);
+            }
+        });
+
+
         return v;
     }
 

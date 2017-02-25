@@ -10,17 +10,19 @@ import android.widget.TextView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
 
+import java.util.List;
+
 /**
  * Created by Andrew on 06/02/2017.
  */
 
 public class EventUsersAdapterItem extends ArrayAdapter {
     int layoutResourceID;
-    User data[] = null;
+    List<User> data = null;
     Context mContext;
 
 
-    public EventUsersAdapterItem(Context mContext, int layoutResourceID, User[] objects) {
+    public EventUsersAdapterItem(Context mContext, int layoutResourceID, List<User> objects) {
         super(mContext, layoutResourceID, objects);
 
         this.layoutResourceID = layoutResourceID;
@@ -44,7 +46,7 @@ public class EventUsersAdapterItem extends ArrayAdapter {
             convertView = inflater.inflate(layoutResourceID, parent, false);
         }
 
-        User user = data[position];
+        User user = data.get(position);
 
         TextView textViewUserName = (TextView) convertView.findViewById(R.id.event_user_name);
         textViewUserName.setText(user.getName());

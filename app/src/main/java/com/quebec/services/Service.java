@@ -18,8 +18,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
-import java.io.UTFDataFormatException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,6 +48,10 @@ public class Service extends AsyncTask<Void, Integer, APIResponse> {
         final String method = apiRequest.getApiEndpoint().getMethod();
         final String path = apiRequest.getApiEndpoint().getPath();
         final String body = apiRequest.getBody();
+
+        Log.d(LOG_TAG, "\tMethod: "+ method);
+        Log.d(LOG_TAG, "\tPath: "+ path);
+        Log.d(LOG_TAG, "\tBody: "+ body);
 
         final Map<String, String> parameters = new HashMap<>();
 
@@ -102,6 +104,9 @@ public class Service extends AsyncTask<Void, Integer, APIResponse> {
                         apiResponse = new APIResponse(responseCode + "");
                         apiResponse.setResponseBody(baseDAO);
                         Log.d(LOG_TAG, "APIResponse code : " + apiResponse.getStatus());
+                        if (apiResponse.getStatus().equals("400")) {
+                            Log.d(LOG_TAG, "APIResponse code : " + responseJSON.getString("errorMessage"));
+                        }
 
                     } else { // failed to receive response from server
 

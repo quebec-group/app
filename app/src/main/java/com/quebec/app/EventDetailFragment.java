@@ -1,7 +1,6 @@
 package com.quebec.app;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,6 +24,7 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.quebec.services.Video;
+
 
 
 public class EventDetailFragment extends Fragment implements AdapterView.OnItemClickListener,
@@ -101,8 +101,11 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
            the page */
         if (mEvent != null) {
             eventNameTextView.setText(mEvent.getEventName());
+            eventDetailDescription.setText("");
         }
 
+
+        eventVideoview.setVideoURI(mEvent.getEventVideos().get(0).getURI());
 
         gridView = (GridView) mFragmentView.findViewById(R.id.eventUsers);
 
@@ -114,6 +117,7 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
 
         return mFragmentView;
     }
+
 
     /**
      * Add the videos related to the event to the view.
