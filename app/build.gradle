@@ -57,7 +57,7 @@ dependencies {
     compile 'com.amazonaws:aws-android-sdk-cognito:2.3.8'
     compile 'com.amazonaws:aws-android-sdk-s3:2.3.8'
     compile 'com.amazonaws:aws-android-sdk-apigateway-core:2.3.8'
-    compile 'com.amazonaws:aws-android-sdk-sns:2.3.8'
+    compile 'com.amazonaws:aws-android-sdk-sns:2.3.9'
     compile 'com.amazonaws:aws-android-sdk-cognitoidentityprovider:2.3.8'
     compile 'com.facebook.android:facebook-android-sdk:4.6.0'
     compile 'com.google.code.gson:gson:2.7'
@@ -68,6 +68,10 @@ dependencies {
     compile 'com.google.android.gms:play-services-appindexing:9.8.0'
     compile 'com.makeramen:roundedimageview:2.3.0'
     compile 'com.android.support:recyclerview-v7:25.1.1'
+
+    compile 'com.google.android.gms:play-services-plus:7.8.0'
+    compile 'com.amazonaws:aws-android-sdk-sns:2.3.9'
+
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
 }
 
