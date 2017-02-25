@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
-public class VideoPreviewActivity extends AppCompatActivity {
+public class AddedVideoPreviewActivity extends AppCompatActivity {
 
     static final String VIDEO_URI = "videoUri";
     static final int REQUEST_VIDEO_CAPTURE = 1;
@@ -18,14 +18,13 @@ public class VideoPreviewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_video_preview);
+        setContentView(R.layout.activity_added_video_preview);
 
         Intent intent = getIntent();
         Uri videoURI = Uri.parse(intent.getStringExtra(VIDEO_URI));
 
         mVideoView = (VideoView)findViewById(R.id.videoView);
         mVideoView.setVideoURI(videoURI);
-
         /* Add scrubbing controls to the video view. */
         MediaController ctrl = new MediaController(this);
         mVideoView.setMediaController(ctrl);
@@ -61,7 +60,7 @@ public class VideoPreviewActivity extends AppCompatActivity {
      * @param view
      */
     public void chooseVideo(View view) {
-        Intent intent = new Intent(this, VideoUploadActivity.class);
+        Intent intent = new Intent(this, AddVideoToEventActivity.class);
         startActivity(intent);
         //Intent intent = new Intent();
         //intent.setType("video/*");
@@ -72,7 +71,7 @@ public class VideoPreviewActivity extends AppCompatActivity {
     }
 
     public void uploadVideo(View view){
-        Intent intent = new Intent(this, EventAddDetailsActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 

@@ -4,8 +4,10 @@
 <resources>
 
     <color name="colorPrimary">#a9a9a9</color>
-    <color name="colorWhite">#000000</color>
+    <color name="colorWhite">#fff</color>
     <color name="colorPrimaryDark">#00000000</color>
+
+    <color name="colorDarkGrey">#404040</color>
 
     <color name="top_bar_background">#969696</color>
     <color name="splash_text">#a4a4a4</color>
@@ -19,7 +21,10 @@
     <color name="dark_content_text">#333333</color>
     <color name="sign_in_separator_color">#DDDDDD</color>
     <color name="instructions_list_border_color">#FFDDDDDD</color>
+
     <color name="Colour1">#c800bcc8</color>
     <color name="Green_light">#ffffff</color>
     <color name="colour1">#99cc64</color>
+    <color name="Background1">#6680cbbf</color>
+
 </resources>

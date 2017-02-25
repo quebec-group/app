@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.S3Object;
-import com.quebec.app.User;
 import com.quebec.services.APICallback;
 import com.quebec.services.APIManager;
 

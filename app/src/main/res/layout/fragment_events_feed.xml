@@ -20,14 +20,13 @@
                 android:layout_height="match_parent"
                 android:id="@+id/textView3"
                 android:textAppearance="@style/TextAppearance.FontPathHeading"
-                android:textSize="20sp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:background="@color/colorPrimaryDark"
-                android:textColor="@color/colorWhite"
+                android:layout_width="150dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
-                android:layout_width="150dp" />
+                android:layout_alignParentEnd="true"
+                android:textSize="20sp" />
         </RelativeLayout>
 
         <RelativeLayout

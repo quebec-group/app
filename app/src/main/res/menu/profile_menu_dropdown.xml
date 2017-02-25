@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/profile_menu_dropdown_logout"
+        android:title="Logout"/>
+
+    <item
+        android:id="@+id/profile_menu_dropdown_update_picture"
+        android:title="Update Profile"/>
+
+    <item
+        android:id="@+id/profile_menu_dropdown_about"
+        android:title="About"/>
+
+</menu>

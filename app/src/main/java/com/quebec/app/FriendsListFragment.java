@@ -53,6 +53,7 @@ public class FriendsListFragment extends Fragment implements AdapterView.OnItemC
         listView = (ListView) v.findViewById(R.id.friendsList);
 
         // TODO: Load information from sources
+
         APIManager.getInstance().followers(new APICallback<List<User>>() {
             @Override
             public void onSuccess(List<User> responseBody) {
@@ -64,6 +65,7 @@ public class FriendsListFragment extends Fragment implements AdapterView.OnItemC
 
             }
         });
+
 
         adapter = new FriendListAdapterItem(this.getContext(), R.layout.adapter_friend_list_item, values);
         listView.setAdapter(adapter);

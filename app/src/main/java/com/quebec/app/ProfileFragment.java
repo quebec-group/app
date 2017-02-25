@@ -7,11 +7,13 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 
@@ -21,6 +23,7 @@ import com.amazonaws.mobile.content.ContentProgressListener;
 import com.amazonaws.mobile.user.IdentityManager;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.quebec.app.auth.SplashActivity;
+import com.quebec.services.Video;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -38,6 +41,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
     /** This fragment's view. */
     private View mFragmentView;
 
+    private Button dropdown_button;
     private TextView userNameTextView;
     private ListView profileEventsFeed;
     private RoundedImageView profile_picture_view;
@@ -124,12 +128,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
 
         /* Declare the onclick event handlers for the buttons. */
         Button b1 = (Button) mFragmentView.findViewById(R.id.button_friends_list);
-        Button b2 = (Button) mFragmentView.findViewById(R.id.profile_logout);
-        Button b3 = (Button) mFragmentView.findViewById(R.id.profile_update_details_button);
+        dropdown_button = (Button) mFragmentView.findViewById(R.id.profile_dropdown_button);
 
         b1.setOnClickListener(this);
-        b2.setOnClickListener(this);
-        b3.setOnClickListener(this);
+        dropdown_button.setOnClickListener(this);
 
         identityManager = AWSMobileClient.defaultMobileClient()
                 .getIdentityManager();
@@ -139,7 +141,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
 
         /* Initiate the events feed on the profile, by loading the data into the adapter view. */
         // TODO: Replace stubs with actual Events
+
         ArrayList<Event> values = new ArrayList<>();
+
 
         EventListAdapterItem adapter = new EventListAdapterItem(this.getContext(), R.layout.adapter_event_item, values);
         profileEventsFeed.setAdapter(adapter);
@@ -155,16 +159,47 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.profile_logout:
-                logoutAccount();
+            case R.id.profile_dropdown_button:
+                openDropdown();
                 break;
             case R.id.button_friends_list:
                 mListener.openFriendsList();
                 break;
-            case R.id.profile_update_details_button:
-                mListener.updateProfilePictureActivity();
-                break;
         }
+    }
+
+    /**
+     * Setup the dropdown navigation for use with the extra navigation links.
+     */
+    private void openDropdown() {
+
+        PopupMenu popup = new PopupMenu(this.getContext(), dropdown_button);
+        //Inflating the Popup using xml file
+        popup.getMenuInflater().inflate(R.menu.profile_menu_dropdown, popup.getMenu());
+
+        //registering popup with OnMenuItemClickListener
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.profile_menu_dropdown_about:
+                        mListener.openAboutPage();
+                        break;
+                    case R.id.profile_menu_dropdown_logout:
+                        logoutAccount();
+                        break;
+                    case R.id.profile_menu_dropdown_update_picture:
+                        break;
+                }
+                return false;
+            }
+
+
+        });
+
+        popup.show();
+
+
     }
 
     @Override
@@ -194,6 +229,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                 .signOut();
 
         Intent intent = new Intent(this.getContext(), SplashActivity.class);
+
+        // Should clear the back stack after returning to the splash screen.
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
@@ -215,6 +253,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
 
     public interface ProfileInteractionListener {
         void openFriendsList();
+        void openAboutPage();
         void updateProfilePictureActivity();
         void onProfileEventSelected(Event e);
     }

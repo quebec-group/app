@@ -39,7 +39,9 @@ public class EventFactory {
         }
 
         final ArrayList<User> attendees = new ArrayList<>();
+
         Event event = new Event(title, eventID, location, time, videos, attendees, likes, likesCount);
+
         return event;
     }
 }

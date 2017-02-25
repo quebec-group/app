@@ -11,8 +11,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+
 import com.quebec.services.APICallback;
 import com.quebec.services.APIManager;
+
+import com.quebec.services.Video;
+
+import java.util.ArrayList;
+
 
 import java.util.List;
 
@@ -52,6 +58,7 @@ public class EventsFeedFragment extends Fragment implements AdapterView.OnItemCl
         }
 
         // TODO: Replace stubs with actual Events
+
         APIManager.getInstance().getEvents(new APICallback<List<Event>>() {
             @Override
             public void onSuccess(List<Event> events) {

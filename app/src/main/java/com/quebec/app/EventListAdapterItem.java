@@ -45,11 +45,15 @@ public class EventListAdapterItem extends ArrayAdapter<Event> {
         TextView textViewItem = (TextView) convertView.findViewById(R.id.eventItemName);
         TextView textViewDescriptionItem = (TextView) convertView.findViewById(R.id.eventItemDescription);
 
-        textViewItem.setText(event.getEventName());
-//        textViewDescriptionItem.setText(event.getDescription());
 
+        textViewItem.setText(event.getEventName());
+
+
+        textViewItem.setText(event.getEventName());
 
         /* Setup the event ticker, by adding the users associated with the event. */
+        // TODO implement actual user details.
+
 
         EventUsersTickerAdapterItem adapter = new EventUsersTickerAdapterItem(event.getAttendees());
 

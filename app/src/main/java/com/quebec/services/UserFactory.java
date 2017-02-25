@@ -18,7 +18,7 @@ public class UserFactory {
     public User userFactory() throws JSONException {
         final String name = userDAO.get_DAO_BODY().getString("name");
         final String profileID = userDAO.get_DAO_BODY().getString("profileID");
-        User user = new User(name, profileID);
+        User user = new User(name);
         return user;
     }
 

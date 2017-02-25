@@ -52,6 +52,7 @@ public class Event implements Parcelable {
         }
     };
 
+
     public String getEventName() {
         return title;
     }
