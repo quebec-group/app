@@ -31,6 +31,8 @@ import com.roughike.bottombar.OnTabSelectListener;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+import static com.quebec.app.EventVideoUploadSelect.EVENT_VIDEO_MODE;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
                                                                EventsFeedFragment.EventsFeedInteractionListener,
@@ -172,7 +174,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * Handles opening the video upload panel.
      */
     public void showVideoUploadActivity() {
-        Intent intent = new Intent(this, VideoUploadActivity.class);
+        Intent intent = new Intent(this, EventVideoUploadSelect.class);
+        intent.putExtra(EVENT_VIDEO_MODE, 0);
         startActivity(intent);
     }
 

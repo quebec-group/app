@@ -68,8 +68,10 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/progressBar2"
-            android:layout_weight="0.25" />
+            android:id="@+id/event_video_upload_progress"
+            android:layout_weight="0.05"
+            android:max="20"
+            android:progress="10" />
 
         <Space
             android:layout_width="match_parent"
@@ -84,10 +86,9 @@
                 android:text="@string/save_details_button"
                 android:layout_width="129dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/button2"
+                android:id="@+id/event_upload_video_saveBtn"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:onClick="saveDetails"/>
+                android:layout_centerHorizontal="true" />
         </RelativeLayout>
 
     </LinearLayout>

@@ -10,7 +10,6 @@ import android.widget.VideoView;
 
 import com.quebec.app.R;
 
-import static com.quebec.app.VideoUploadActivity.REQUEST_VIDEO_CAPTURE;
 
 public class SignUpPhotoActivity extends AppCompatActivity {
 
@@ -27,7 +26,7 @@ public class SignUpPhotoActivity extends AppCompatActivity {
     public void takePhoto(View view) {
         Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         if (takeVideoIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);
+            startActivityForResult(takeVideoIntent, 0);
         }
     }
 
@@ -51,7 +50,7 @@ public class SignUpPhotoActivity extends AppCompatActivity {
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
+        if (requestCode == 0 && resultCode == RESULT_OK) {
             Uri videoUri = intent.getData();
 
             VideoView videoView = (VideoView) findViewById(R.id.videoView);

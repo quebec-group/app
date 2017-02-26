@@ -19,7 +19,7 @@
     <string name="button_text_sign_in">SIGN IN</string>
     <string name="button_text_sign_out">SIGN OUT</string>
     <string name="sign_in_email">Email</string>
-    <string name="sign_in_username">Username/Phone Number (+15551234567)</string>
+    <string name="sign_in_username">Username</string>
     <string name="sign_in_password">Password</string>
     <string name="sign_in_new_account">Create New Account</string>
     <string name="sign_in_forgot_password">Forgot Your Password?</string>

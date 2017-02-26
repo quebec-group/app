@@ -87,7 +87,7 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
 
         eventLikeButton = (Button) mFragmentView.findViewById(R.id.event_detail_likes);
         eventLikeButton.setOnClickListener(this);
-        
+
         /* Add event handler for the buttons. */
 
         Button eventLocationButton = (Button) mFragmentView.findViewById(R.id.event_detail_location_button);
