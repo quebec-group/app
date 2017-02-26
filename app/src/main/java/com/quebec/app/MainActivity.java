@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 setFragment(new EventsFeedFragment(), 0);
                 break;
             case R.id.menu_uploadvideo:
-                
+
                 //showVideoUploadActivity();
                 break;
             case R.id.menu_profile:
