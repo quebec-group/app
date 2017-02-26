@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Background" parent="AppTheme">
+    <style name="Background" parent="Theme.AppCompat">
         <item name="android:colorPrimary">@color/colorPrimaryDark</item>
     </style>
 
-    <style name="Background_dark" parent="Background">
+    <style name="Background_dark" parent="Theme.AppCompat">
         <item name="android:colorPrimary">@color/bb_darkBackgroundColor</item>
         <item name="android:colorPrimaryDark">@color/bb_darkBackgroundColor</item>
         <item name="android:colorBackground">@color/bb_darkBackgroundColor</item>
@@ -15,25 +15,4 @@
         <item name="android:textColorPrimaryInverse">@color/common_google_signin_btn_text_dark_disabled</item>
     </style>
 
-    <style name="Theme1" parent="android:Theme.Black" >
-        <item name="android:navigationBarColor">?android:attr/textColorSecondary</item>
-        <item name="android:textColorPrimary">@color/colour1</item>
-        <item name="android:statusBarColor">?android:attr/panelColorForeground</item>
-        <item name="android:textColorSecondary">@color/Colour1</item>
-        <item name="android:textColorSecondaryInverse">?android:attr/colorControlNormal</item>
-        <item name="android:textColorPrimaryInverse">@color/Colour1</item>
-    </style>
-
-    <style name="Background_dark." parent="Theme.Design">
-        <item name="android:colorBackground">@color/Background1</item>
-        <item name="android:textColorPrimary">@color/common_google_signin_btn_text_dark_focused</item>
-        <item name="android:textColorSecondaryInverse">?android:attr/colorForegroundInverse</item>
-        <item name="android:textColorPrimaryInverse">?android:attr/colorForegroundInverse</item>
-        <item name="android:windowBackground">@color/Colour1</item>
-        <item name="android:statusBarColor">?android:attr/colorPressedHighlight</item>
-        <item name="android:navigationBarColor">?android:attr/colorForeground</item>
-        <item name="colorPrimary">@color/Colour1</item>
-        <item name="android:colorForeground">@color/com_facebook_blue</item>
-        <item name="android:textColorSecondary">@color/bb_darkBackgroundColor</item>
-    </style>
 </resources>
