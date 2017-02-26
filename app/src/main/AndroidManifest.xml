@@ -107,10 +107,8 @@
 
     <!-- END - APP CONTENT DELIVERY AND USER DATA STORAGE -->
 
-    <activity android:name=".VideoUploadActivity" />
-    <activity android:name=".VideoPreviewActivity" />
-    <activity android:name=".EventAddDetailsActivity" />
-    <activity android:name=".ProfilePictureSignUpActivity" />
+
+        <activity android:name=".ProfilePictureSignUpActivity" />
     <activity android:name="com.facebook.FacebookActivity" android:label="@string/app_name"
         android:theme="@android:style/Theme.Black" />
 
@@ -195,16 +193,16 @@
       <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDoPJTYfr8pOhNan01moxI-WYG9XE8wW5s" />
-        <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyDoPJTYfr8pOhNan01moxI-WYG9XE8wW5s" />
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
     <activity android:name="com.quebec.app.EventDetailMapActivity" android:label="@string/title_activity_event_detail_map"></activity>
-    <activity android:name=".AddVideoToEventActivity" />
-    <activity android:name=".AddedVideoPreviewActivity"></activity>
+    <activity android:name=".EventVideoUploadSelect" />
+    <activity android:name=".EventVideoUploadPreview" />
+    <activity android:name=".EventVideoUploadDetails" />
+
     <activity android:name=".AboutActivity" android:label="@string/title_activity_about"></activity>
 </application>
 
