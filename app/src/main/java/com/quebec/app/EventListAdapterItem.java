@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,7 +24,7 @@ public class EventListAdapterItem extends ArrayAdapter<Event> {
     Context mContext;
 
 
-    public EventListAdapterItem(Context mContext, int layoutResourceID, List<Event> objects) {
+    public EventListAdapterItem(Context mContext, int layoutResourceID, ArrayList<Event> objects) {
         super(mContext, layoutResourceID, objects);
 
         this.layoutResourceID = layoutResourceID;

@@ -76,12 +76,13 @@
                         android:layout_height="50dp" />
 
                     <Button
-                        android:text="Like"
+                        android:text="25 likes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/button4"
+                        android:id="@+id/event_detail_likes"
                         android:layout_below="@+id/event_detail_location_button"
-                        android:layout_alignStart="@+id/event_detail_location_button" />
+                        android:layout_alignStart="@+id/event_detail_location_button"
+                        android:drawableLeft="@drawable/ic_heart_empty" />
                 </RelativeLayout>
 
             </LinearLayout>

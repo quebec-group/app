@@ -7,7 +7,7 @@
         <item name="windowActionBar">false</item>
         <item name="android:windowFullscreen">false</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="android:textColorPrimary">@android:color/white</item>
+
     </style>
 
     <!-- Backward-compatible version of ?android:attr/buttonBarStyle -->
@@ -62,12 +62,20 @@
     </style>
 
     <style name="Background_dark" parent="Theme.AppCompat">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+
         <item name="android:colorBackground">@color/bb_darkBackgroundColor</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textColorSecondaryInverse">@android:color/secondary_text_light_nodisable</item>
         <item name="android:textColorPrimaryInverse">@color/common_google_signin_btn_text_dark_disabled</item>
 
         <item name="android:buttonStyle">@style/DarkButtonDefault</item>
+
+        <item name="textAppearanceLargePopupMenu">@style/TextAppearance.AppCompat.Widget.PopupMenu.Large</item>
+        <item name="textAppearanceSmallPopupMenu">@style/TextAppearance.AppCompat.Widget.PopupMenu.Small</item>
     </style>
 
     <style name="DarkButtonDefault">

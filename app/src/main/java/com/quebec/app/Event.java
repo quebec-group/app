@@ -19,8 +19,8 @@ public class Event implements Parcelable {
     private String location;
     private String time;
     private ArrayList<Video> videos;
-    private String likes;
-    private String likesCount;
+    private boolean likes;
+    private int likesCount;
     private ArrayList<User> attendees;
 
 
@@ -32,6 +32,8 @@ public class Event implements Parcelable {
         this.time = time;
         this.videos = videos;
         this.attendees = attendees;
+        this.likes = likes;
+        this.likesCount = likesCount;
     }
 
 
@@ -65,6 +67,8 @@ public class Event implements Parcelable {
         return attendees;
     }
 
+    public int getLikesCount() { return likesCount; }
+
     @Override
     public int describeContents() {
         return 0;
@@ -73,5 +77,9 @@ public class Event implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(title);
+    }
+
+    public boolean getLikes() {
+        return likes;
     }
 }

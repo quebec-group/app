@@ -29,6 +29,10 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
     private View mFragmentView;
     private GridView gridView;
 
+    private Button eventLikeButton;
+    private boolean eventLikeState;
+    private int eventLikes;
+
     private OnEventDetailInteractionListener mListener;
 
     public EventDetailFragment() {
@@ -81,6 +85,9 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
         eventNameTextView = (TextView) mFragmentView.findViewById(R.id.eventDetailName);
         eventDetailDescription = (TextView) mFragmentView.findViewById(R.id.eventDetailDescription);
 
+        eventLikeButton = (Button) mFragmentView.findViewById(R.id.event_detail_likes);
+        eventLikeButton.setOnClickListener(this);
+        
         /* Add event handler for the buttons. */
 
         Button eventLocationButton = (Button) mFragmentView.findViewById(R.id.event_detail_location_button);
@@ -91,7 +98,18 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
         if (mEvent != null) {
             eventNameTextView.setText(mEvent.getEventName());
             eventDetailDescription.setText("");
-        }
+
+            eventLikes = mEvent.getLikesCount();
+            eventLikeButton.setText(mEvent.getLikesCount() + " likes");
+
+            if (mEvent.getLikes()) {
+                eventLikeState = true;
+                eventLikeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_heart_filled, 0, 0, 0);
+            }
+            else {
+                eventLikeState  = false;
+            }
+         }
 
 
         addVideosToView();
@@ -177,7 +195,27 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
              case R.id.event_detail_location_button:
                  mListener.openEventDetailLocation();
                  break;
+             case R.id.event_detail_likes:
+                 likeEventClick();
+                 break;
          }
+    }
+
+
+    private void likeEventClick() {
+
+
+        if (eventLikeState == false) {
+            eventLikeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_heart_filled, 0, 0, 0);
+            eventLikes = eventLikes + 1;
+        }
+        else {
+            eventLikeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_heart_empty, 0, 0, 0);
+            eventLikes = eventLikes - 1;
+        }
+
+        eventLikeButton.setText(eventLikes + " likes");
+        eventLikeState = eventLikeState ? false : true;
     }
 
 
