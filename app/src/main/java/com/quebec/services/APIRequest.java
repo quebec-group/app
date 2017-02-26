@@ -5,7 +5,7 @@ package com.quebec.services;
  */
 
 public class APIRequest {
-    private String body = "";
+    private String body = "{}";
     private APIEndpoint apiEndpoint;
 
     public APIRequest(APIEndpoint apiEndpoint) {

@@ -107,8 +107,8 @@ public class APIManager implements API {
                     JSONObject requestBody = new JSONObject();
                     requestBody.put("name", userName);
                     requestBody.put("email", userEmail);
-                    //final String arn = SNSManager.getArn();
-                    //requestBody.put("arn", arn);
+                    final String arn = SNSManager.getArn();
+                    requestBody.put("arn", arn);
                     request.setBody(requestBody.toString());
                 } catch (JSONException e) {
                     Log.e(LOG_TAG, e.getMessage());

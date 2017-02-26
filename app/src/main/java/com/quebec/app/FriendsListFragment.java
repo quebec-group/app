@@ -13,6 +13,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.quebec.services.APICallback;
+import com.quebec.services.APIManager;
+
+import java.util.List;
+
 
 public class FriendsListFragment extends Fragment implements AdapterView.OnItemClickListener {
 
@@ -48,13 +53,19 @@ public class FriendsListFragment extends Fragment implements AdapterView.OnItemC
         listView = (ListView) v.findViewById(R.id.friendsList);
 
         // TODO: Load information from sources
-        values = new User[] {
-                new User("Brad Pitt", "e"),
-                new User("Julia Roberts", "e"),
-                new User("Tom Cruise", "e"),
-                new User("Emma Watson", "e"),
-                new User("Matt Damon", "e"),
-        };
+
+        APIManager.getInstance().followers(new APICallback<List<User>>() {
+            @Override
+            public void onSuccess(List<User> responseBody) {
+
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
+
 
         adapter = new FriendListAdapterItem(this.getContext(), R.layout.adapter_friend_list_item, values);
         listView.setAdapter(adapter);

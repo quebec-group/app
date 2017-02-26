@@ -33,7 +33,7 @@ public class UserListFactory {
             final String name = currentUser.getString("name");
             final String email = currentUser.getString("email");
             final String userID = currentUser.getString("userID");
-            user = new User(name, profileID);
+            user = new User(name);
             user.setEmail(email);
             user.setUserID(userID);
             friends.add(user);

@@ -5,6 +5,7 @@ import com.quebec.app.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -25,19 +26,22 @@ public class EventFactory {
         final String eventID = eventDAO.get_DAO_BODY().getString("eventID");
         final String location = eventDAO.get_DAO_BODY().getString("location");
         final String time = eventDAO.get_DAO_BODY().getString("time");
-        final int likesCount = eventDAO.get_DAO_BODY().getInt("likesCount");
         final boolean likes = eventDAO.get_DAO_BODY().getBoolean("likes");
+        final int likesCount = eventDAO.get_DAO_BODY().getInt("likesCount");
+        final JSONArray videosJson = eventDAO.get_DAO_BODY().getJSONArray("videos");
 
-        JSONArray attendeesArray = new JSONArray(eventDAO.get_DAO_BODY().getString("members"));
-        JSONArray videosArray = new JSONArray(eventDAO.get_DAO_BODY().getString("videos"));
+        final ArrayList<Video> videos = new ArrayList<>();
 
-        UserListFactory userListFactory = new UserListFactory();
-        final ArrayList<User> attendees = userListFactory.userListFactory(new JSONArray(attendeesArray));
+        for (int i = 0; i < videosJson.length(); i++) {
+            JSONObject json = videosJson.getJSONObject(i);
 
-        VideoListFactory videoListFactory = new VideoListFactory();
-        final ArrayList<Video> videos = videoListFactory.videoListFactory(new JSONArray(videosArray));
+            videos.add(new Video(json.getString("videoID")));
+        }
+
+        final ArrayList<User> attendees = new ArrayList<>();
 
         Event event = new Event(title, eventID, location, time, videos, attendees, likes, likesCount);
+
         return event;
     }
 }

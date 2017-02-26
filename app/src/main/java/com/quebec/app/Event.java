@@ -52,6 +52,7 @@ public class Event implements Parcelable {
         }
     };
 
+
     public String getEventName() {
         return title;
     }
@@ -60,6 +61,9 @@ public class Event implements Parcelable {
         return videos;
     }
 
+    public ArrayList<User> getAttendees() {
+        return attendees;
+    }
 
     @Override
     public int describeContents() {

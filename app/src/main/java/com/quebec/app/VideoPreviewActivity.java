@@ -25,6 +25,7 @@ public class VideoPreviewActivity extends AppCompatActivity {
 
         mVideoView = (VideoView)findViewById(R.id.videoView);
         mVideoView.setVideoURI(videoURI);
+
         /* Add scrubbing controls to the video view. */
         MediaController ctrl = new MediaController(this);
         mVideoView.setMediaController(ctrl);

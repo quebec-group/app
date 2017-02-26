@@ -6,8 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+
+import java.util.List;
 
 /**
  * EventUsersTickerAdapterItem displays the users who were present at an event. This ticker is shown in
@@ -15,9 +15,9 @@ import android.widget.TextView;
  */
 
 public class EventUsersTickerAdapterItem extends RecyclerView.Adapter<EventUsersTickerAdapterItem.ViewHolder> {
-    private User[] usersData;
+    private List<User> usersData;
 
-    public EventUsersTickerAdapterItem(User[] usersData) {
+    public EventUsersTickerAdapterItem(List<User> usersData) {
         this.usersData = usersData;
     }
 
@@ -53,7 +53,7 @@ public class EventUsersTickerAdapterItem extends RecyclerView.Adapter<EventUsers
     // Return the size of your itemsData (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return usersData.length;
+        return usersData.size();
     }
 }
 
