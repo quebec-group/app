@@ -54,10 +54,13 @@ public class FriendsListFragment extends Fragment implements AdapterView.OnItemC
 
         // TODO: Load information from sources
 
+        final Context context = this.getContext();
+
         APIManager.getInstance().followers(new APICallback<List<User>>() {
             @Override
             public void onSuccess(List<User> responseBody) {
-
+                adapter = new FriendListAdapterItem(context, R.layout.adapter_friend_list_item, values);
+                listView.setAdapter(adapter);
             }
 
             @Override
@@ -66,9 +69,6 @@ public class FriendsListFragment extends Fragment implements AdapterView.OnItemC
             }
         });
 
-
-        adapter = new FriendListAdapterItem(this.getContext(), R.layout.adapter_friend_list_item, values);
-        listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
 
         // Setup the search field for the friends page.
