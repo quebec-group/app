@@ -7,8 +7,10 @@ package com.quebec.services;
 import android.util.Log;
 
 import com.amazonaws.auth.AWSCognitoIdentityProvider;
+import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.mobile.AWSMobileClient;
 import com.amazonaws.mobile.user.IdentityManager;
+import com.amazonaws.regions.Regions;
 import com.quebec.app.Event;
 import com.quebec.app.User;
 
@@ -178,40 +180,23 @@ public class APIManager implements API {
         service.execute();
     }
 
+
+
+
     /**
      *
      * @param userID
      * @param response
      */
     @Override
-    public void following(final String userID, final APICallback<List<User>> response) {
+    public void following(final String userID, final APICallback<ArrayList<User>> response) {
         final APIEndpoint endpoint = new APIEndpoint("following");
         final APIRequest request = new APIRequest(endpoint);
-        final String[] userIDA = new String[2];
-        String ID = "";
+
         // create the request body
-        if(userID.equals("current_user")) {
-            AWSMobileClient.defaultMobileClient()
-                    .getIdentityManager().getUserID(new IdentityManager.IdentityHandler() {
-                @Override
-                public void handleIdentityID(String identityId) {
-                    Log.d(LOG_TAG,identityId);
-                    userIDA[0] = identityId;
-                }
-
-                @Override
-                public void handleError(Exception exception) {
-
-                }
-            });
-            ID = userIDA[0];
-        } else {
-            ID = userID;
-        }
-
         try {
             JSONObject requestBody = new JSONObject();
-            requestBody.put("userID", ID);
+            requestBody.put("userID", userID);
             request.setBody(requestBody.toString());
             Log.d(LOG_TAG, requestBody.toString());
         } catch (JSONException e) {
@@ -239,6 +224,7 @@ public class APIManager implements API {
                     JSONArray jsonArray = new JSONArray(s);
                     try {
                         ArrayList<User> following =  userListFactory.userListFactory(jsonArray);
+                        Log.d(LOG_TAG, "following size: " + following.size()+"");
                         response.onSuccess(following);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -260,7 +246,7 @@ public class APIManager implements API {
      * @param response
      */
     @Override
-    public void followers(final String userID, final APICallback<List<User>> response)  {
+    public void followers(final String userID, final APICallback<ArrayList<User>> response)  {
         final APIEndpoint endpoint = new APIEndpoint("followers");
         final APIRequest request = new APIRequest(endpoint);
 
@@ -295,6 +281,7 @@ public class APIManager implements API {
                     JSONArray jsonArray = new JSONArray(s);
                     try {
                         ArrayList<User> followers =  userListFactory.userListFactory(jsonArray);
+                        Log.d(LOG_TAG, "followers size: " + followers.size()+"");
                         response.onSuccess(followers);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -389,7 +376,7 @@ public class APIManager implements API {
         final APIRequest request = new APIRequest(endpoint);
         try {
             JSONObject requestBody = new JSONObject();
-            requestBody.put("friendID", userID);
+            requestBody.put("userID", userID);
             requestBody.put("eventID", eventID);
             request.setBody(requestBody.toString());
         } catch (JSONException e) {
@@ -516,7 +503,7 @@ public class APIManager implements API {
      * @param response
      */
     @Override
-    public void getEvents(final APICallback<List<Event>> response) {
+    public void getEvents(final APICallback<ArrayList<Event>> response) {
         final APIEndpoint endpoint = new APIEndpoint("getEvents");
         final APIRequest request = new APIRequest(endpoint);
 
@@ -564,6 +551,41 @@ public class APIManager implements API {
     @Override
     public void addVideoToEvent(final String S3ID, final String eventID, final APICallback<String> response) {
 
+    }
+
+
+    @Override
+    public void getInfo(final APICallback<User> response){
+        final APIEndpoint endpoint = new APIEndpoint("getInfo");
+        final APIRequest request = new APIRequest(endpoint);
+
+        // perform the HTTP request and wait for callback
+        Service service = new Service(request, new Service.ServiceCallBack() {
+            @Override
+            /**
+             * onResponseReceived takes the DAO from inside the response, sets the status
+             */
+            public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
+
+                BaseDAO baseDAO = apiResponse.getResponseBody();
+                final APIResponse userResponse = new APIResponse(apiResponse.getStatus());
+                final String responseBody = apiResponse.getResponseBody().get_DAO_BODY().toString();
+                userResponse.setResponseBody(baseDAO);
+
+                if (apiResponse.getStatus().equals("200")) {
+                    try {
+                        User current_user = UserFactory.getInstance().userFactory(baseDAO.get_DAO_BODY());
+                        response.onSuccess(current_user);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    response.onFailure(responseBody);
+                }
+
+            }
+        });
+        service.execute();
     }
 
 

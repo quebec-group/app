@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  * Created by Andrew on 03/02/2017.
  */
@@ -17,11 +19,11 @@ import android.widget.TextView;
 public class FriendListAdapterItem extends ArrayAdapter<User> {
 
     int layoutResourceID;
-    User data[] = null;
+    ArrayList<User> data = new ArrayList<>();
     Context mContext;
 
 
-    public FriendListAdapterItem(Context mContext, int layoutResourceID, User[] objects) {
+    public FriendListAdapterItem(Context mContext, int layoutResourceID, ArrayList<User> objects) {
         super(mContext, layoutResourceID, objects);
 
         this.layoutResourceID = layoutResourceID;
@@ -45,7 +47,7 @@ public class FriendListAdapterItem extends ArrayAdapter<User> {
             convertView = inflater.inflate(layoutResourceID, parent, false);
         }
 
-        User user = data[position];
+        User user = data.get(position);
 
         TextView textViewItem = (TextView) convertView.findViewById(R.id.friendItemName);
         textViewItem.setText(user.getName());

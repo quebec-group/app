@@ -36,6 +36,10 @@ public class APIEndpoint {
                 this.path += this.following;
                 break;
 
+            case "followers":
+                this.path += this.followers;
+                break;
+
             case "setProfileVideo":
                 this.path += this.setProfileVideo;
                 break;
