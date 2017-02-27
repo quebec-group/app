@@ -16,15 +16,12 @@ import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.amazonaws.mobile.AWSMobileClient;
 import com.amazonaws.mobile.user.IdentityManager;
 import com.quebec.app.auth.SplashActivity;
-import com.quebec.services.APICallback;
-import com.quebec.services.APIManager;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabReselectListener;
 import com.roughike.bottombar.OnTabSelectListener;
@@ -144,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         ProfilePictureHandler profilePictureHandler = new ProfilePictureHandler();
         if (!profilePictureHandler.profilePictureExists()) {
-            Intent intent = new Intent(this, ProfilePictureSignUpActivity.class);
+            Intent intent = new Intent(this, ProfilePictureUpdateActivity.class);
             startActivity(intent);
         }
 
@@ -266,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void updateProfilePictureActivity() {
-        Intent intent = new Intent(this, ProfilePictureSignUpActivity.class);
+        Intent intent = new Intent(this, ProfilePictureUpdateActivity.class);
         startActivity(intent);
     }
 

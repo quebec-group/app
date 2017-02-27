@@ -177,7 +177,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
         //Inflating the Popup using xml file
         popup.getMenuInflater().inflate(R.menu.profile_menu_dropdown, popup.getMenu());
 
-        //registering popup with OnMenuItemClickListener
+        // Setp the popup to handle on click events.
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -189,6 +189,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                         logoutAccount();
                         break;
                     case R.id.profile_menu_dropdown_update_picture:
+                        openProfilePictureUpdate();
                         break;
                 }
                 return false;
@@ -200,6 +201,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
         popup.show();
 
 
+    }
+
+    /**
+     * Open the profile picture update page.
+     */
+    private void openProfilePictureUpdate() {
+        Intent intent = new Intent(this.getContext(), ProfilePictureUpdateActivity.class);
+        startActivity(intent);
     }
 
     @Override

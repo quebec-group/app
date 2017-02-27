@@ -108,7 +108,7 @@
     <!-- END - APP CONTENT DELIVERY AND USER DATA STORAGE -->
 
 
-        <activity android:name=".ProfilePictureSignUpActivity" />
+        <activity android:name=".ProfilePictureUpdateActivity" />
     <activity android:name="com.facebook.FacebookActivity" android:label="@string/app_name"
         android:theme="@android:style/Theme.Black" />
 

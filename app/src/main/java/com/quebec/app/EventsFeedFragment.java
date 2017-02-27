@@ -59,7 +59,7 @@ public class EventsFeedFragment extends Fragment implements AdapterView.OnItemCl
 
         // TODO: Replace stubs with actual Events
 
-
+        /*
         APIManager.getInstance().getEvents(new APICallback<List<Event>>() {
             @Override
             public void onSuccess(List<Event> events) {
@@ -74,7 +74,7 @@ public class EventsFeedFragment extends Fragment implements AdapterView.OnItemCl
                 Log.d(LOG_TAG, message);
             }
         });
-        /*
+        */
 
         ArrayList<Event> events = new ArrayList<>();
         events.add(new Event("Andrew's networking event", "123", "London", "25/06/2017", new ArrayList<Video>(), new ArrayList<User>(), false, 15));
@@ -83,7 +83,6 @@ public class EventsFeedFragment extends Fragment implements AdapterView.OnItemCl
         EventListAdapterItem adapter = new EventListAdapterItem(EventsFeedFragment.this.getContext(), R.layout.adapter_event_item, events);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(EventsFeedFragment.this);
-        */
 
         return v;
     }

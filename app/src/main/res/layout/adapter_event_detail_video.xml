@@ -14,5 +14,11 @@
             android:layout_width="wrap_content"
             android:layout_height="193dp"
             android:id="@+id/event_detail_video_view" />
+
+        <Button
+            android:text="Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button2" />
     </android.support.v7.widget.CardView>
 </LinearLayout>
