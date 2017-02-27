@@ -23,7 +23,6 @@ public class VideoUploadHandler {
 
     /**
      * Uploads the profile picture and stores the filepath as a key-value pair.
-     * @param filepath
      * @param callback
      */
     public void uploadVideo(File video, ContentProgressListener callback) {
