@@ -18,30 +18,21 @@
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="142dp"
+                android:layout_height="match_parent"
                 android:id="@+id/events_detail_videos_view" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.38">
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:padding="@dimen/box_padding">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="97dp">
-
-                <TextView
-                    android:text="TextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/eventDetailName"
-                    android:textAppearance="@style/TextAppearance.FontPath"
-                    android:textSize="30sp"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_weight="1" />
+                android:layout_height="match_parent"
+                android:layout_weight="1.38">
 
                 <TextView
                     android:text="TextView"
@@ -53,16 +44,18 @@
                     android:id="@+id/eventDetailDescription"
                     android:layout_weight="1" />
 
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/eventDetailName"
+                    android:textAppearance="@style/TextAppearance.FontPath"
+                    android:textSize="30sp"
+                    android:layout_weight="1"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true" />
+
             </RelativeLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="1"
-            android:padding="@dimen/box_padding">
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -81,7 +74,7 @@
 
                 <Button
                     android:text="25 likes"
-                    android:layout_width="130dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/event_detail_likes"
                     android:layout_below="@+id/event_detail_location_button"
