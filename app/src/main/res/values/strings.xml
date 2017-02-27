@@ -139,8 +139,10 @@
     <string name="signup_photo_error_cropping">Unable to crop the image. Please try again.</string>
     <string name="profile_update_profile_text">Update your profile picture</string>
     <string name="signup_photo_upload_title">Upload a profile picture</string>
+    <string name="signup_video_upload_title">Upload a video</string>
     <string name="signup_photo_confirm">Set photo as profile picture</string>
     <string name="signup_photo_description">Upload a profile picture. This will also be used for facial recognition training so use a clear photo,</string>
+    <string name="signup_video_description">Take a video of yourself. This will be used for facial recognition training purposes so please try to move the camera so that the video is taken from different angles compared to your face.</string>
     <string name="sign_in_no_internet">No internet connection detected.</string>
     <string name="signup_password_hint">Password must contain a special character, capital letter and number.</string>
 
