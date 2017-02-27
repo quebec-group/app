@@ -13,9 +13,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.amazonaws.mobile.AWSMobileClient;
+import com.amazonaws.mobile.user.IdentityManager;
 import com.quebec.services.APICallback;
 import com.quebec.services.APIManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -53,8 +56,21 @@ public class FriendsListFragment extends Fragment implements AdapterView.OnItemC
         listView = (ListView) v.findViewById(R.id.friendsList);
 
         // TODO: Load information from sources
+        final String[] userID = new String[1];
+        AWSMobileClient.defaultMobileClient()
+                .getIdentityManager().getUserID(new IdentityManager.IdentityHandler() {
+            @Override
+            public void handleIdentityID(String identityId) {
+                userID[0] = identityId;
+            }
 
-        APIManager.getInstance().followers(new APICallback<List<User>>() {
+            @Override
+            public void handleError(Exception exception) {
+
+            }
+        });
+
+        APIManager.getInstance().followers(userID[0],new APICallback<List<User>>() {
             @Override
             public void onSuccess(List<User> responseBody) {
 

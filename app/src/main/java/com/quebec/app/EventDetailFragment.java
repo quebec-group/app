@@ -105,7 +105,7 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
         }
 
 
-        eventVideoview.setVideoURI(mEvent.getEventVideos().get(0).getURI());
+        //eventVideoview.setVideoURI(mEvent.getEventVideos().get(0).getURI());
 
         gridView = (GridView) mFragmentView.findViewById(R.id.eventUsers);
 
@@ -149,16 +149,16 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
      */
     private void addUsersToView() {
         // TODO: replace with actual users
-        User[] values = new User[] {
-                new User("Brad Pitt"),
-                new User("Julia Roberts"),
-                new User("Tom Cruise"),
-                new User("Emma Watson"),
-                new User("Matt Damon")
-        };
-
-        EventUsersAdapterItem adapter = new EventUsersAdapterItem(this.getContext(), R.layout.adapter_grid_event_user, values);
-        gridView.setAdapter(adapter);
+//        User[] values = new User[] {
+//                new User("Brad Pitt"),
+//                new User("Julia Roberts"),
+//                new User("Tom Cruise"),
+//                new User("Emma Watson"),
+//                new User("Matt Damon")
+//        };
+//
+//        EventUsersAdapterItem adapter = new EventUsersAdapterItem(this.getContext(), R.layout.adapter_grid_event_user, values);
+       // gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(this);
 
     }

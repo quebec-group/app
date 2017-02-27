@@ -17,8 +17,8 @@ public interface API {
     public abstract void setProfileVideo(final String friendID, final APICallback<String> response);
 
     // User interactions
-    public abstract void following(final APICallback<List<User>> response);
-    public abstract void followers(final APICallback<List<User>> response);
+    public abstract void following(final String userID, final APICallback<List<User>> response);
+    public abstract void followers(final String userID, final APICallback<List<User>> response);
     public abstract void follow(final String friendID, final APICallback<String> response);
     public abstract void unfollow(final String friendID, final APICallback<String> response);
 
