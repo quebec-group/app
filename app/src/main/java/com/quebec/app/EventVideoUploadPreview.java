@@ -29,7 +29,7 @@ public class EventVideoUploadPreview extends AppCompatActivity implements View.O
         setContentView(R.layout.activity_event_upload_video_preview);
 
          /* Receive an intent to detect whether this is a new event, or
-           a new video on an existing event.
+            a new video on an existing event.
          */
 
         Intent intent = getIntent();
@@ -46,7 +46,9 @@ public class EventVideoUploadPreview extends AppCompatActivity implements View.O
         videoString = intent.getStringExtra(VIDEO_URI);
         Uri videoURI = Uri.parse(videoString);
 
-        mVideoView = (VideoView)findViewById(R.id.videoView);
+        Log.e("Tag on preview: ", videoString);
+
+        mVideoView = (VideoView) findViewById(R.id.videoView);
         mVideoView.setVideoURI(videoURI);
 
         /* Add scrubbing controls to the video view. */
