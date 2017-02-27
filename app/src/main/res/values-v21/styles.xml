@@ -15,12 +15,7 @@
         <item name="android:textColorPrimary">@android:color/white</item>
         <item name="android:textColorSecondaryInverse">@android:color/secondary_text_light_nodisable</item>
         <item name="android:textColorPrimaryInverse">@color/common_google_signin_btn_text_dark_disabled</item>
+
     </style>
 
-    <style name="AlertDialogCustom" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:colorPrimary">#00397F</item>
-        <item name="android:textColorPrimary">#22397F</item>
-        <item name="android:colorAccent">#00397F</item>
-        <item name="colorPrimaryDark">#22397F</item>
-    </style>
 </resources>

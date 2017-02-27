@@ -28,7 +28,6 @@ public class UserListFactory {
         for(int i=0;i<jsonArray.length();i++) {
             // create a user object from JSON
             JSONObject currentUser = new JSONObject(jsonArray.getString(i));
-            Log.d(LOG_TAG, currentUser.toString());
             final String profileID = currentUser.getString("profileID");
             final String name = currentUser.getString("name");
             final String email = currentUser.getString("email");
