@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -17,53 +18,98 @@ import java.util.List;
  * Created by Andrew on 03/02/2017.
  */
 
-public class EventListAdapterItem extends ArrayAdapter<Event> {
 
-    int layoutResourceID;
-    List<Event> data;
-    Context mContext;
+public class EventListAdapterItem extends RecyclerView.Adapter<EventListAdapterItem.EventHolder> {
+    private static String LOG_TAG = "MyRecyclerViewAdapter";
+    private final Context mContext;
 
+    private ArrayList<Event> mDataset;
+    private static EventItemClickInterface myClickListener;
 
-    public EventListAdapterItem(Context mContext, int layoutResourceID, List<Event> objects) {
-        super(mContext, layoutResourceID, objects);
+    public static class EventHolder extends RecyclerView.ViewHolder implements View
+            .OnClickListener {
 
-        this.layoutResourceID = layoutResourceID;
-        this.mContext = mContext;
-        this.data = objects;
+        private TextView eventName;
 
+        private RecyclerView eventItemTicker;
+        public EventHolder(View itemView) {
+            super(itemView);
+            eventName = (TextView) itemView.findViewById(R.id.eventItemName);
+            eventItemTicker = (RecyclerView) itemView.findViewById(R.id.eventItemTicker);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            myClickListener.onItemClick(getAdapterPosition(), v);
+        }
+    }
+
+    public void setOnItemClickListener(EventItemClickInterface myClickListener) {
+        this.myClickListener = myClickListener;
+    }
+
+    public EventListAdapterItem(ArrayList<Event> myDataset, Context context) {
+        mDataset = myDataset;
+        mContext = context;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public EventHolder onCreateViewHolder(ViewGroup parent,
+                                               int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.adapter_event_item, parent, false);
 
-        if (convertView == null) {
-            LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
-            convertView = inflater.inflate(layoutResourceID, parent, false);
-        }
+        EventHolder dataObjectHolder = new EventHolder(view);
+        return dataObjectHolder;
+    }
 
-        Event event = data.get(position);
-
-        TextView textViewItem = (TextView) convertView.findViewById(R.id.eventItemName);
-        TextView textViewDescriptionItem = (TextView) convertView.findViewById(R.id.eventItemDescription);
-
-
-        textViewItem.setText(event.getEventName());
+    @Override
+    public void onBindViewHolder(EventHolder holder, int position) {
+        holder.eventName.setText(mDataset.get(position).getEventName());
 
 
-        textViewItem.setText(event.getEventName());
+        EventUsersTickerAdapterItem adapter = new EventUsersTickerAdapterItem(mDataset.get(position).getAttendees());
 
-        /* Setup the event ticker, by adding the users associated with the event. */
-        // TODO implement actual user details.
+             /* Makes use of the RecyclerView for the horizontal scrolling field. */
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this.mContext , LinearLayoutManager.HORIZONTAL, false);
+
+        holder.eventItemTicker.setLayoutManager(layoutManager);
+        holder.eventItemTicker.setAdapter(adapter);
+    }
 
 
-        EventUsersTickerAdapterItem adapter = new EventUsersTickerAdapterItem(event.getAttendees());
+    /**
+     * Add item to the list of events on the events feed.
+     * @param dataObj
+     * @param index
+     */
+    public void addItem(Event dataObj, int index) {
+        mDataset.add(index, dataObj);
+        notifyItemInserted(index);
+    }
 
-        /* Makes use of the RecyclerView for the horizontal scrolling field. */
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this.mContext ,LinearLayoutManager.HORIZONTAL, false);
-        RecyclerView eventItemTicker = (RecyclerView) convertView.findViewById(R.id.eventItemTicker);
-        eventItemTicker.setLayoutManager(layoutManager);
-        eventItemTicker.setAdapter(adapter);
+    /**
+     * Deletes an item from the list on the events feed.
+     * @param index
+     */
+    public void deleteItem(int index) {
+        mDataset.remove(index);
+        notifyItemRemoved(index);
+    }
 
-        return convertView;
+    /**
+     * Counts the number of items in the events feed.
+     * @return
+     */
+    @Override
+    public int getItemCount() {
+        return mDataset.size();
+    }
+
+    public interface EventItemClickInterface {
+        void onItemClick(int position, View v);
     }
 }
+

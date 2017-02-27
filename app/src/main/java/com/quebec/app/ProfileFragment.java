@@ -137,17 +137,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                 .getIdentityManager();
 
 
-        profileEventsFeed = (ListView) mFragmentView.findViewById(R.id.profileEventsFeedList);
-
         /* Initiate the events feed on the profile, by loading the data into the adapter view. */
         // TODO: Replace stubs with actual Events
 
         ArrayList<Event> values = new ArrayList<>();
 
-
-        EventListAdapterItem adapter = new EventListAdapterItem(this.getContext(), R.layout.adapter_event_item, values);
-        profileEventsFeed.setAdapter(adapter);
-        profileEventsFeed.setOnItemClickListener(this);
 
         /* Get the logged in user information and display this information on the page. */
         fetchUserIdentity();

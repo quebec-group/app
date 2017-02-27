@@ -5,6 +5,8 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -31,7 +33,6 @@ public class EventsFeedFragment extends Fragment implements AdapterView.OnItemCl
     private static String LOG_TAG = EventsFeedFragment.class.getSimpleName();
     private EventsFeedInteractionListener mListener;
 
-    private PopupWindow popWindow;
 
     private Parcelable listViewState;
     private ListView listView;
@@ -51,17 +52,16 @@ public class EventsFeedFragment extends Fragment implements AdapterView.OnItemCl
         super.onCreate(savedInstanceState);
     }
 
+    private RecyclerView mRecyclerView;
+    private EventListAdapterItem mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_events_feed, container, false);
 
-        listView = (ListView) v.findViewById(R.id.eventsFeedList);
-
-        if (listViewState != null) {
-            listView.onRestoreInstanceState(listViewState);
-        }
 
         // TODO: Replace stubs with actual Events
 
@@ -82,13 +82,27 @@ public class EventsFeedFragment extends Fragment implements AdapterView.OnItemCl
         });
         */
 
-        ArrayList<Event> events = new ArrayList<>();
+        final ArrayList<Event> events = new ArrayList<>();
+        events.add(new Event("Andrew's networking event", "123", "London", "25/06/2017", new ArrayList<Video>(), new ArrayList<User>(), false, 15));
+        events.add(new Event("Andrew's networking event", "123", "London", "25/06/2017", new ArrayList<Video>(), new ArrayList<User>(), false, 15));
+        events.add(new Event("Andrew's networking event", "123", "London", "25/06/2017", new ArrayList<Video>(), new ArrayList<User>(), false, 15));
         events.add(new Event("Andrew's networking event", "123", "London", "25/06/2017", new ArrayList<Video>(), new ArrayList<User>(), false, 15));
 
+        mRecyclerView = (RecyclerView) v.findViewById(R.id.eventsFeedRecycler);
+        mRecyclerView.hasFixedSize();
+        mLayoutManager = new LinearLayoutManager(this.getContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
-        EventListAdapterItem adapter = new EventListAdapterItem(EventsFeedFragment.this.getContext(), R.layout.adapter_event_item, events);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(EventsFeedFragment.this);
+        mAdapter = new EventListAdapterItem(events, this.getContext());
+
+        mAdapter.setOnItemClickListener(new EventListAdapterItem.EventItemClickInterface() {
+            @Override
+            public void onItemClick(int position, View v) {
+                mListener.onEventSelected(events.get(position));
+            }
+        });
+
+        mRecyclerView.setAdapter(mAdapter);
 
         return v;
     }
@@ -114,7 +128,6 @@ public class EventsFeedFragment extends Fragment implements AdapterView.OnItemCl
 
     @Override
     public void onPause() {
-        listViewState = listView.onSaveInstanceState();
         super.onPause();
     }
 
