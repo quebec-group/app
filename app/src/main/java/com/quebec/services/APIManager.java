@@ -6,6 +6,9 @@ package com.quebec.services;
 
 import android.util.Log;
 
+import com.amazonaws.auth.AWSCognitoIdentityProvider;
+import com.amazonaws.mobile.AWSMobileClient;
+import com.amazonaws.mobile.user.IdentityManager;
 import com.quebec.app.Event;
 import com.quebec.app.User;
 
@@ -43,12 +46,12 @@ public class APIManager implements API {
 
     /**
      *
-     * @param eventName
-     * @param eventDescription
-     * @param eventVideoURL
+     * @param eventTitle
+     * @param eventLocation
+     * @param eventTime
      * @param response
      */
-    public void createEvent(String eventName, String eventDescription, String eventVideoURL, final APICallback<String> response) {
+    public void createEvent(String eventTitle, String eventLocation, String eventTime, final APICallback<String> response) {
         final APIEndpoint  endpoint = new APIEndpoint("createEvent");
         final APIRequest request = new APIRequest(endpoint);
 
@@ -56,9 +59,9 @@ public class APIManager implements API {
         // create the request body
         try {
             JSONObject requestBody = new JSONObject();
-            requestBody.put("title", eventName);
-            requestBody.put("location", eventDescription);
-            requestBody.put("time", eventName);
+            requestBody.put("title", eventTitle);
+            requestBody.put("location", eventLocation);
+            requestBody.put("time", eventTime);
             request.setBody(requestBody.toString());
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage());
@@ -177,12 +180,43 @@ public class APIManager implements API {
 
     /**
      *
+     * @param userID
      * @param response
      */
     @Override
-    public void following(final APICallback<List<User>> response) {
+    public void following(final String userID, final APICallback<List<User>> response) {
         final APIEndpoint endpoint = new APIEndpoint("following");
         final APIRequest request = new APIRequest(endpoint);
+        final String[] userIDA = new String[2];
+        String ID = "";
+        // create the request body
+        if(userID.equals("current_user")) {
+            AWSMobileClient.defaultMobileClient()
+                    .getIdentityManager().getUserID(new IdentityManager.IdentityHandler() {
+                @Override
+                public void handleIdentityID(String identityId) {
+                    Log.d(LOG_TAG,identityId);
+                    userIDA[0] = identityId;
+                }
+
+                @Override
+                public void handleError(Exception exception) {
+
+                }
+            });
+            ID = userIDA[0];
+        } else {
+            ID = userID;
+        }
+
+        try {
+            JSONObject requestBody = new JSONObject();
+            requestBody.put("userID", ID);
+            request.setBody(requestBody.toString());
+            Log.d(LOG_TAG, requestBody.toString());
+        } catch (JSONException e) {
+            Log.e(LOG_TAG, e.getMessage());
+        }
 
         // perform the HTTP request and wait for callback
         Service service = new Service(request, new Service.ServiceCallBack() {
@@ -222,12 +256,22 @@ public class APIManager implements API {
 
     /**
      *
+     * @param userID
      * @param response
      */
     @Override
-    public void followers(final APICallback<List<User>> response)  {
+    public void followers(final String userID, final APICallback<List<User>> response)  {
         final APIEndpoint endpoint = new APIEndpoint("followers");
         final APIRequest request = new APIRequest(endpoint);
+
+        // create the request body
+        try {
+            JSONObject requestBody = new JSONObject();
+            requestBody.put("userID", userID);
+            request.setBody(requestBody.toString());
+        } catch (JSONException e) {
+            Log.e(LOG_TAG, e.getMessage());
+        }
 
         // perform the HTTP request and wait for callback
         Service service = new Service(request, new Service.ServiceCallBack() {
@@ -280,7 +324,7 @@ public class APIManager implements API {
         // create the request body
         try {
             JSONObject requestBody = new JSONObject();
-            requestBody.put("friendID", userID);
+            requestBody.put("userID", userID);
             request.setBody(requestBody.toString());
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage());
@@ -313,7 +357,7 @@ public class APIManager implements API {
         // create the request body
         try {
             JSONObject requestBody = new JSONObject();
-            requestBody.put("friendID", friendID);
+            requestBody.put("userID", friendID);
             request.setBody(requestBody.toString());
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage());

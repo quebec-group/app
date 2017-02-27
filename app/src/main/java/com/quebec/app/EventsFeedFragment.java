@@ -1,15 +1,19 @@
 package com.quebec.app;
 
 import android.content.Context;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 
 
 import com.quebec.services.APICallback;
@@ -27,8 +31,10 @@ public class EventsFeedFragment extends Fragment implements AdapterView.OnItemCl
     private static String LOG_TAG = EventsFeedFragment.class.getSimpleName();
     private EventsFeedInteractionListener mListener;
 
-    Parcelable listViewState;
-    ListView listView;
+    private PopupWindow popWindow;
+
+    private Parcelable listViewState;
+    private ListView listView;
 
 
     public EventsFeedFragment() {

@@ -36,7 +36,22 @@ public class Event implements Parcelable {
         this.likesCount = likesCount;
     }
 
+    public String printEvent() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        sb.append("(title:" + this.title + "),");
+        sb.append("(eventID:" + this.eventID + "),");
+        sb.append("(location:" + this.location + "),");
+        sb.append("(time:" + this.time + "),");
+        sb.append("(likes:" + this.likes + "),");
+        sb.append("(likesCount:" + this.likesCount + "),");
+        sb.append("(attendees:");
+        for(User u : attendees) {
+            sb.append("(" + u.getName() + ")");
+        }
+        return sb.toString();
 
+    }
     protected Event(Parcel in) {
         title = in.readString();
         //videoURL = in.readString();

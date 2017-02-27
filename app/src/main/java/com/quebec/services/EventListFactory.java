@@ -41,19 +41,19 @@ public class EventListFactory {
             JSONObject currentEvent = new JSONObject(eventsArray.getString(i));
             Log.d(LOG_TAG, currentEvent.toString());
 
-            final String eventID = jsonObject.getString("eventID");
-            final String eventLocation = jsonObject.getString("location");
-            final int likesCount = jsonObject.getInt("likesCount");
-            final boolean likes = jsonObject.getBoolean("likes");
-            final String title = jsonObject.getString("title");
-            final String members = jsonObject.getString("members");
-            final String time = jsonObject.getString("time");
+            final String eventID = currentEvent.getString("eventID");
+            final String eventLocation = currentEvent.getString("location");
+            final int likesCount = currentEvent.getInt("likesCount");
+            final boolean likes = currentEvent.getBoolean("likes");
+            final String title = currentEvent.getString("title");
+            final String members = currentEvent.getString("members");
+            final String time = currentEvent.getString("time");
 
             JSONArray jsonArray = new JSONArray(members);
             UserListFactory userListFactory = new UserListFactory();
             ArrayList<User> currentAttendees = userListFactory.userListFactory(jsonArray);
 
-            JSONArray videoArray = new JSONArray(jsonObject.getString("videos"));
+            JSONArray videoArray = new JSONArray(currentEvent.getString("videos"));
             VideoListFactory videoListFactory = new VideoListFactory();
             ArrayList<Video> videos = videoListFactory.videoListFactory(videoArray);
 
