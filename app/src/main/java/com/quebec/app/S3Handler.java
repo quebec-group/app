@@ -23,11 +23,6 @@ public class S3Handler {
 
     public static final String S3_PREFIX_PROTECTED = "protected/";
 
-    private ImageView signup_image_preview;
-    private TextView error_text;
-
-    private Uri mCropImageUri;
-
     /** The user file manager. Used on uploads folder */
     private UserFileManager userFileManager;
 
