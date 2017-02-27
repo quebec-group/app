@@ -1,6 +1,7 @@
 package com.quebec.app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,19 +13,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.MediaController;
 import android.widget.TextView;
-import android.widget.VideoView;
 
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.quebec.services.Video;
-
+import static com.quebec.app.EventVideoUploadSelect.EVENT_VIDEO_MODE;
 
 
 public class EventDetailFragment extends Fragment implements AdapterView.OnItemClickListener,
@@ -39,6 +30,11 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
 
     private View mFragmentView;
     private GridView gridView;
+
+    private Button eventLikeButton;
+
+    private boolean eventLikeState;
+    private int eventLikes;
 
     private OnEventDetailInteractionListener mListener;
 
@@ -92,20 +88,37 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
         eventNameTextView = (TextView) mFragmentView.findViewById(R.id.eventDetailName);
         eventDetailDescription = (TextView) mFragmentView.findViewById(R.id.eventDetailDescription);
 
+        eventLikeButton = (Button) mFragmentView.findViewById(R.id.event_detail_likes);
+        eventLikeButton.setOnClickListener(this);
+
         /* Add event handler for the buttons. */
 
         Button eventLocationButton = (Button) mFragmentView.findViewById(R.id.event_detail_location_button);
         eventLocationButton.setOnClickListener(this);
+
+        Button eventUploadButton = (Button) mFragmentView.findViewById(R.id.event_detail_uploadBtn);
+        eventUploadButton.setOnClickListener(this);
 
         /* If the event has been initialised, then insert the Event information onto the
            the page */
         if (mEvent != null) {
             eventNameTextView.setText(mEvent.getEventName());
             eventDetailDescription.setText("");
-        }
+
+            eventLikes = mEvent.getLikesCount();
+            eventLikeButton.setText(mEvent.getLikesCount() + " likes");
+
+            if (mEvent.getLikes()) {
+                eventLikeState = true;
+                eventLikeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_heart_filled, 0, 0, 0);
+            }
+            else {
+                eventLikeState  = false;
+            }
+         }
 
 
-        //eventVideoview.setVideoURI(mEvent.getEventVideos().get(0).getURI());
+        addVideosToView();
 
         gridView = (GridView) mFragmentView.findViewById(R.id.eventUsers);
 
@@ -124,18 +137,8 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
      */
     private void addVideosToView() {
 
-        // TODO: Relace this example data with actual videos from the event.
-        Video[] values = new Video[] {
-                new Video("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"),
-                new Video("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"),
-                new Video("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"),
-                new Video("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"),
-                new Video("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4")
-        };
-
-
         /* Add the videos to the view, through the use of the card view. */
-        EventDetailVideoAdapterItem adapter = new EventDetailVideoAdapterItem(this.getContext(), values);
+        EventDetailVideoAdapterItem adapter = new EventDetailVideoAdapterItem(this.getContext(), mEvent.getEventVideos());
 
         /* Makes use of the RecyclerView for the horizontal scrolling field. */
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getContext() ,LinearLayoutManager.HORIZONTAL, false);
@@ -148,17 +151,9 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
      * Add the users to the view.
      */
     private void addUsersToView() {
-        // TODO: replace with actual users
-//        User[] values = new User[] {
-//                new User("Brad Pitt"),
-//                new User("Julia Roberts"),
-//                new User("Tom Cruise"),
-//                new User("Emma Watson"),
-//                new User("Matt Damon")
-//        };
-//
-//        EventUsersAdapterItem adapter = new EventUsersAdapterItem(this.getContext(), R.layout.adapter_grid_event_user, values);
-       // gridView.setAdapter(adapter);
+
+        EventUsersAdapterItem adapter = new EventUsersAdapterItem(this.getContext(), R.layout.adapter_grid_event_user, mEvent.getAttendees());
+        gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(this);
 
     }
@@ -206,7 +201,36 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
              case R.id.event_detail_location_button:
                  mListener.openEventDetailLocation();
                  break;
+             case R.id.event_detail_uploadBtn:
+                 showVideoUpload();
+                 break;
+             case R.id.event_detail_likes:
+                 likeEventClick();
+                 break;
          }
+    }
+
+    private void showVideoUpload() {
+        Intent intent = new Intent(this.getContext(), EventVideoUploadSelect.class);
+        intent.putExtra(EVENT_VIDEO_MODE, 1);
+        startActivity(intent);
+    }
+
+
+    private void likeEventClick() {
+
+
+        if (eventLikeState == false) {
+            eventLikeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_heart_filled, 0, 0, 0);
+            eventLikes = eventLikes + 1;
+        }
+        else {
+            eventLikeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_heart_empty, 0, 0, 0);
+            eventLikes = eventLikes - 1;
+        }
+
+        eventLikeButton.setText(eventLikes + " likes");
+        eventLikeState = eventLikeState ? false : true;
     }
 
 

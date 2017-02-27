@@ -6,19 +6,39 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.VideoView;
+import android.widget.Button;
 
-public class AddVideoToEventActivity extends AppCompatActivity {
+public class EventVideoUploadSelect extends AppCompatActivity {
 
     public static final int REQUEST_VIDEO_CAPTURE = 1;
-    private VideoView mVideoView;
+    public static final String EVENT_VIDEO = "event_video";
+    public static final String EVENT_VIDEO_MODE = "event_video_mode";
 
+    private Event event;
+
+    private int uploadMode = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_video_to_event);
+        setContentView(R.layout.activity_event_upload_video_select);
 
+        /* Receive an intent to detect whether this is a new event, or
+           a new video on an existing event.
+         */
 
+        Intent intent = getIntent();
+
+        Bundle b = intent.getExtras();
+
+        if (b != null) {
+            if (b.containsKey(EVENT_VIDEO_MODE)) {
+                uploadMode = intent.getIntExtra(EVENT_VIDEO_MODE, 0);
+            }
+
+            if (b.containsKey(EVENT_VIDEO)) {
+                event = intent.getExtras().getParcelable(EVENT_VIDEO);
+            }
+        }
     }
 
 
@@ -53,11 +73,20 @@ public class AddVideoToEventActivity extends AppCompatActivity {
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK) {
             Uri videoUri = intent.getData();
-            Intent intent1 = new Intent(this, AddedVideoPreviewActivity.class);
+
+            Intent intent1 = new Intent(this, EventVideoUploadPreview.class);
             intent1.putExtra("videoUri", videoUri.toString());
+
+            /* Pass the video upload mode to the next activity. */
+            intent1.putExtra(EVENT_VIDEO_MODE, uploadMode);
+            intent1.putExtra(EVENT_VIDEO, event);
+
             startActivity(intent1);
+
+
+
         }
 
     }

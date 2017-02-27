@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.S3Object;
+import com.quebec.app.User;
 import com.quebec.services.APICallback;
 import com.quebec.services.APIManager;
 
@@ -28,8 +29,6 @@ public class ServicesTester {
 
     final AmazonS3Client mockedClient = Mockito.mock(AmazonS3Client.class);
     final S3Object mockedS3Obj = Mockito.mock(S3Object.class);
-
-
 
     @Test
     public void createUserTest() {

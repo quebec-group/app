@@ -173,6 +173,7 @@ public class ProfilePictureActivity extends AppCompatActivity {
         } catch (IOException ex) {
             errorText.setText(R.string.signup_photo_error_permissions);
         }
+
         // Continue only if the File was successfully created
         if (photoFile != null) {
             Uri photoURI = FileProvider.getUriForFile(this, "com.quebec.android.fileprovider", photoFile);
