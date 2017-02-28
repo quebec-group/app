@@ -620,4 +620,44 @@ public class APIManager implements API {
 
         service.execute();
     }
+
+    @Override
+    public void isFollowing(final User user, final APICallback<Boolean> response) {
+        final APIEndpoint endpoint = new APIEndpoint("isFollowing");
+        final APIRequest request = new APIRequest(endpoint);
+
+
+        try {
+            JSONObject requestBody = new JSONObject();
+            requestBody.put("userID", user.getUserID());
+            request.setBody(requestBody.toString());
+        } catch (JSONException e) {
+            Log.e(LOG_TAG, e.getMessage());
+        }
+
+        // perform the HTTP request and wait for callback
+        Service service = new Service(request, new Service.ServiceCallBack() {
+            @Override
+            /**
+             * onResponseReceived takes the DAO from inside the response, sets the status
+             */
+            public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
+
+
+                BaseDAO baseDAO = apiResponse.getResponseBody();
+
+                if (apiResponse.getStatus().equals("200")) {
+                    JSONObject json = baseDAO.get_DAO_BODY();
+                    boolean isFollowing = json.getBoolean("isFollowing");
+                    response.onSuccess(isFollowing);
+                } else {
+                    response.onFailure("Error getting info");
+                }
+
+            }
+        });
+
+
+        service.execute();
+    }
 }
