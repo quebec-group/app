@@ -441,7 +441,7 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
     /** {@inheritDoc} */
     @Override
     public String getDisplayName() {
-        return "Amazon Cognito Your UserDTO Pools";
+        return "";
     }
 
     /** {@inheritDoc} */

@@ -39,7 +39,7 @@ public class SignUpConfirmActivity extends Activity {
         EditText userNameField = (EditText) this.findViewById(R.id.confirm_account_username);
         userNameField.setText(
                 getSharedPreferences("SignUp", Context.MODE_PRIVATE).getString("username", ""));
-        
+
     }
 
     /**
