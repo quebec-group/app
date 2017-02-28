@@ -56,7 +56,7 @@ public class EventListAdapterItem extends RecyclerView.Adapter<EventListAdapterI
     }
 
     public EventListAdapterItem(List<Event> myDataset, Context context) {
-        mDataset = new ArrayList<Event>(myDataset);
+        mDataset = new ArrayList<>(myDataset);
         mContext = context;
     }
 
