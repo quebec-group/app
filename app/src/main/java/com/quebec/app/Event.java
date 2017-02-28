@@ -94,6 +94,8 @@ public class Event implements Parcelable {
         dest.writeString(title);
     }
 
+    public void setLikes(boolean l) {  likes = l; }
+
     public boolean getLikes() {
         return likes;
     }

@@ -209,6 +209,7 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
     public void onClick(View v) {
         if (v.equals(saveButton)) {
             final String eventTime = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
             //TODO fill location
             final String location = "TODO";
             final String videoPath = VideoUploadHandler.getFullS3PathForFile(video);
