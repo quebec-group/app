@@ -10,18 +10,22 @@ package com.quebec.app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.amazonaws.mobile.AWSMobileClient;
 import com.amazonaws.mobile.user.IdentityManager;
 import com.quebec.app.auth.SplashActivity;
+import com.quebec.services.APICallback;
+import com.quebec.services.APIManager;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabReselectListener;
 import com.roughike.bottombar.OnTabSelectListener;
@@ -127,6 +131,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Obtain a reference to the identity manager.
         identityManager = awsMobileClient.getIdentityManager();
+
+        SharedPreferences sharedPref = getSharedPreferences("SignUp", Context.MODE_PRIVATE);
+
+        APIManager.getInstance().createUser(
+                sharedPref.getString("givenName", ""),
+                sharedPref.getString("email", ""),
+                new APICallback<String>() {
+                    @Override
+                    public void onSuccess(String responseBody) {
+                        Log.e(LOG_TAG, "User successfully added");
+                    }
+
+                    @Override
+                    public void onFailure(String message) {
+                        Log.e(LOG_TAG, "Couldn't add user");
+                    }
+                });
+
 
         setContentView(R.layout.activity_main);
 

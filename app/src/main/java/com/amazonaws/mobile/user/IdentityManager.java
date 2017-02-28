@@ -8,6 +8,7 @@ package com.amazonaws.mobile.user;
 // Source code generated from template: aws-my-sample-app-android v0.14
 //
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -455,6 +456,10 @@ public class IdentityManager {
         Log.d(getClass().getSimpleName(), "refresh credentials");
         credentialsProvider.refresh();
         Log.d(getClass().getSimpleName(), "Cognito ID: " + credentialsProvider.getIdentityId());
+        SharedPreferences sharedPref = appContext.getSharedPreferences("SignUp", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("cognitoID", credentialsProvider.getIdentityId());
+        editor.apply();
         Log.d(getClass().getSimpleName(), "Cognito Credentials: " + credentialsProvider.getCredentials());
     }
 
