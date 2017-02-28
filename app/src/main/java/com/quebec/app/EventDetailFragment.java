@@ -2,23 +2,21 @@ package com.quebec.app;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Display;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.quebec.services.APICallback;
+import com.quebec.services.APIManager;
 import com.quebec.services.Video;
 
 import java.util.ArrayList;
@@ -30,6 +28,7 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
                                                              View.OnClickListener {
 
     public static final String EVENT_KEY = "event_key";
+    private static String LOG_TAG = EventDetailFragment.class.getSimpleName();
 
     private Event mEvent;
 
@@ -230,10 +229,32 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
         if (eventLikeState == false) {
             eventLikeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_heart_filled, 0, 0, 0);
             eventLikes = eventLikes + 1;
+            APIManager.getInstance().likeEvent(mEvent.getEventID(), new APICallback<String>() {
+                @Override
+                public void onSuccess(String responseBody) {
+                    Log.d(LOG_TAG, "Liked event");
+                }
+
+                @Override
+                public void onFailure(String message) {
+                    Log.e(LOG_TAG, "Liked event failed");
+                }
+            });
         }
         else {
             eventLikeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_heart_empty, 0, 0, 0);
             eventLikes = eventLikes - 1;
+            APIManager.getInstance().unlikeEvent(mEvent.getEventID(), new APICallback<String>() {
+                @Override
+                public void onSuccess(String responseBody) {
+                    Log.d(LOG_TAG, "Liked event");
+                }
+
+                @Override
+                public void onFailure(String message) {
+                    Log.e(LOG_TAG, "Liked event failed");
+                }
+            });
         }
 
         eventLikeButton.setText(eventLikes + " likes");
