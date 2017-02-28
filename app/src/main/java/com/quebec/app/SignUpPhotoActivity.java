@@ -1,4 +1,4 @@
-package com.quebec;
+package com.quebec.app;
 
 import android.content.Intent;
 import android.net.Uri;

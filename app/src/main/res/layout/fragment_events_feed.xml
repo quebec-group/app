@@ -1,5 +1,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".EventsFeedFragment">
@@ -53,4 +56,66 @@
 
     </LinearLayout>
 
+    <android.support.v7.widget.CardView
+        android:id="@+id/empty_events_feed_message"
+        android:layout_width="fill_parent"
+        android:layout_gravity="center"
+
+        android:foreground="?android:attr/selectableItemBackground"
+        android:layout_marginLeft="@dimen/box_padding"
+        android:layout_marginRight="@dimen/box_padding"
+
+        card_view:cardCornerRadius="2dp"
+        card_view:cardElevation="20dp"
+        android:layout_height="150dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone">
+
+        <!--
+        <ImageView
+            android:src="@drawable/party"
+            android:alpha="0.2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"/>
+        -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/box_padding">
+
+            <TextView
+                android:id="@+id/eventItemName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="@string/empty_events_feed"
+                android:textAppearance="@style/TextAppearance.FontPath"
+                android:textSize="24sp"
+                android:textAlignment="center" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:id="@+id/eventItemLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/eventItemDate"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 </FrameLayout>

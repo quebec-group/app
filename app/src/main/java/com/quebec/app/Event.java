@@ -101,4 +101,8 @@ public class Event implements Parcelable {
     public int getEventID() {
         return eventID;
     }
+
+    public String getTime() {
+        return time;
+    }
 }

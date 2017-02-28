@@ -7,6 +7,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.TextView;
 
 public class EventVideoUploadSelect extends AppCompatActivity {
 
@@ -15,8 +16,8 @@ public class EventVideoUploadSelect extends AppCompatActivity {
     public static final String EVENT_VIDEO_MODE = "event_video_mode";
 
     private Event event;
-
     private int uploadMode = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +40,15 @@ public class EventVideoUploadSelect extends AppCompatActivity {
                 event = intent.getExtras().getParcelable(EVENT_VIDEO);
             }
         }
+
+        if (uploadMode ==0){
+            TextView description = (TextView)(this.findViewById(R.id.editText2));
+            description.setText("Uploading a video here will create a new event. If you want to add a video to an already existing event then please go back to EventsFeed and select the event you want to add the video to");
+        }
+        else{
+            TextView description = (TextView)(this.findViewById(R.id.editText2));
+            description.setText("This will add a video to this event. If you want to add a video for a new event, go to EventsFeed and press the Upload Button");
+        }
     }
 
 
@@ -53,10 +63,6 @@ public class EventVideoUploadSelect extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
 
     /**
      * Launches the Android gallery in order to select a video from the gallery
@@ -90,11 +96,7 @@ public class EventVideoUploadSelect extends AppCompatActivity {
 
             startActivity(intent1);
 
-
-
         }
-
     }
-
 
 }

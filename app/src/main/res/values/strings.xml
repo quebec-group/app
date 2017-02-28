@@ -2,7 +2,7 @@
 
     <!-- CUSTOMIZE THESE FOR YOUR APP -->
 
-    <string name="app_name">Whos at my party?</string>
+    <string name="app_name">Quebec</string>
     <!-- Suffix after '-' must be the app package name as specified in the build.gradle file. This
        is used by the com.amazonaws.mobile.downloader.query.DownloadQueueProvider class. -->
     <string name="download_queue_provider_authority">com.amazonaws.mobile.downloader-com.amazon.mysampleapp</string>
@@ -139,14 +139,17 @@
     <string name="signup_photo_error_cropping">Unable to crop the image. Please try again.</string>
     <string name="profile_update_profile_text">Update your profile picture</string>
     <string name="signup_photo_upload_title">Upload a profile picture</string>
+    <string name="signup_video_upload_title">Face training</string>
     <string name="signup_photo_confirm">Set photo as profile picture</string>
     <string name="signup_photo_description">Upload a profile picture. This will also be used for facial recognition training so use a clear photo,</string>
+    <string name="signup_video_description">Take a video of yourself from different angles and let the robots learn and recognize you face features</string>
     <string name="sign_in_no_internet">No internet connection detected.</string>
     <string name="signup_password_hint">Password must contain a special character, capital letter and number.</string>
 
     <string name="upload_video_title">Review your video</string>
     <string name="upload_video_upload">Upload your video here!</string>
     <string name="upload_video_upload_text">Upload your video here!</string>
+    <string name="upload_video_description0">Uploading a video here will create a new event. If you want to add a video to an already existing event then please go back to EventsFeed and select the event you want to add the video to</string>
     <string name="video_upload_button">Upload</string>
     <string name="retake_video_button">Retake Video</string>
     <string name="take_video_button">Take Video</string>
@@ -167,6 +170,7 @@
 
     <string name="sign_in_verify">Verify</string>
     <string name="about_text" >Quebec Group Project\\nUtilise the power of face detection to see who\'s at your party!</string>
+    <string name="empty_events_feed">Create your first event, or follow some users to see events.</string>
 
 
 </resources>

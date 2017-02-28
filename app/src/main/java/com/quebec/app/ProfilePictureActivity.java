@@ -276,10 +276,11 @@ public class ProfilePictureActivity extends AppCompatActivity {
     public void confirmPhoto() {
         ProfilePictureHandler up = new ProfilePictureHandler();
         final String path = croppedImageUri.getPath();
+
         up.uploadProfilePicture(path, new ContentProgressListener() {
             @Override
             public void onSuccess(ContentItem contentItem) {
-                saveProfileImage(path);
+                saveProfileImage(contentItem.getFilePath());
             }
 
             @Override
@@ -298,7 +299,7 @@ public class ProfilePictureActivity extends AppCompatActivity {
      * @param path
      */
     public void saveProfileImage(String path) {
-        APIManager.getInstance().setProfileVideo(path, new APICallback<String>() {
+        APIManager.getInstance().setTrainingVideo(path, new APICallback<String>() {
             @Override
             public void onSuccess(String responseBody) {
                 showMainActivity();
