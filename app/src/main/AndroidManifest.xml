@@ -43,7 +43,8 @@
             android:name=".auth.SplashActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -54,27 +55,32 @@
             android:name=".auth.SignInActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_sign_in"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".auth.ForgotPasswordActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_forgot_password"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".auth.SignUpActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_sign_up"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".auth.SignUpConfirmActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_sign_up_confirm"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
             android:launchMode="singleInstance"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
 
         <!-- BEGIN - APP CONTENT DELIVERY AND USER DATA STORAGE -->
 
@@ -202,9 +208,9 @@
             android:value="@integer/google_play_services_version" />
 
     <activity android:name="com.quebec.app.EventDetailMapActivity" android:label="@string/title_activity_event_detail_map"></activity>
-    <activity android:name=".EventVideoUploadSelect" />
-    <activity android:name=".EventVideoUploadPreview" />
-    <activity android:name=".EventVideoUploadDetails" />
+    <activity android:name=".EventVideoUploadSelect" android:windowSoftInputMode="adjustPan" />
+    <activity android:name=".EventVideoUploadPreview" android:windowSoftInputMode="adjustPan" />
+    <activity android:name=".EventVideoUploadDetails" android:windowSoftInputMode="adjustPan" />
 
     <activity android:name=".AboutActivity" android:label="@string/title_activity_about"></activity>
 </application>

@@ -20,6 +20,7 @@ public interface API {
     // User interactions
     public abstract void following(final String userID, final APICallback<List<User>> response);
     public abstract void following(final APICallback<List<User>> response);
+    public abstract void isFollowing(final User user, final APICallback<Boolean> response);
     public abstract void followers(final String userID, final APICallback<List<User>> response);
     public abstract void followers(final APICallback<List<User>> response);
     public abstract void follow(final User user, final APICallback<String> response);

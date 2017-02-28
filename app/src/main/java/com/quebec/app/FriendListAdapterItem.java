@@ -62,7 +62,7 @@ public class FriendListAdapterItem extends ArrayAdapter<User> implements View.On
 
         Button unfollowButton = (Button) convertView.findViewById(R.id.unfollowUser);
         unfollowButton.setOnClickListener(this);
-
+        current_user = user;
 
 
         return convertView;

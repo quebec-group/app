@@ -35,6 +35,7 @@ public class UserListFactory {
             user = new User(name);
             user.setEmail(email);
             user.setUserID(userID);
+            user.setProfileID(profileID);
             friends.add(user);
         }
         return friends;
