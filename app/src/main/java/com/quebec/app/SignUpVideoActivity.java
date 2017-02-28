@@ -10,6 +10,12 @@ import android.widget.VideoView;
 
 public class SignUpVideoActivity extends AppCompatActivity {
 
+    public static final String EVENT_VIDEO = "event_video";
+
+
+    private Event event;
+    private int uploadMode = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,8 +46,13 @@ public class SignUpVideoActivity extends AppCompatActivity {
         if (requestCode == 0 && resultCode == RESULT_OK) {
             Uri videoUri = intent.getData();
 
-            VideoView videoView = (VideoView) findViewById(R.id.videoView);
-            videoView.setVideoURI(videoUri);
+            Intent intent1 = new Intent(this, MainActivity.class);
+            intent1.putExtra("videoUri", videoUri.toString());
+
+            intent1.putExtra(EVENT_VIDEO, event);
+
+            startActivity(intent1);
+
         }
     }
 
