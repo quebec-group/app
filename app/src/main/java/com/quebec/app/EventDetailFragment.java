@@ -2,18 +2,26 @@ package com.quebec.app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import com.quebec.services.Video;
+
+import java.util.ArrayList;
 
 import static com.quebec.app.EventVideoUploadSelect.EVENT_VIDEO_MODE;
 
@@ -42,7 +50,6 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
         // Required empty public constructor
     }
 
-
     public static EventDetailFragment newInstance(Event e) {
         EventDetailFragment fragment = new EventDetailFragment();
 
@@ -61,10 +68,6 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
         if (getArguments() != null) {
             mEvent = getArguments().getParcelable(EVENT_KEY);
         }
-        else {
-            // TODO: Handle no event passed to the events detail panel.
-        }
-
 
     }
 
@@ -137,8 +140,12 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
      */
     private void addVideosToView() {
 
+        ArrayList<Video> videos = new ArrayList<Video>();
+        videos.add(new Video("http://techslides.com/demos/sample-videos/small.mp4"));
+        videos.add(new Video("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"));
+
         /* Add the videos to the view, through the use of the card view. */
-        EventDetailVideoAdapterItem adapter = new EventDetailVideoAdapterItem(this.getContext(), mEvent.getEventVideos());
+        EventDetailVideoAdapterItem adapter = new EventDetailVideoAdapterItem(this.getContext(), this.getActivity(), videos);
 
         /* Makes use of the RecyclerView for the horizontal scrolling field. */
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getContext() ,LinearLayoutManager.HORIZONTAL, false);

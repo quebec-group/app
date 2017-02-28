@@ -8,6 +8,7 @@ import android.net.Uri;
 
 public class Video {
     private String videoID;
+
     public Video(String videoID) {
         this.videoID = videoID;
     }

@@ -1,13 +1,13 @@
 package com.quebec.app;
 
+import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.MediaController;
-import android.widget.VideoView;
+import android.widget.Button;
 
 import com.quebec.services.Video;
 
@@ -18,14 +18,16 @@ import java.util.ArrayList;
  * event items on the feeds.
  */
 
-public class EventDetailVideoAdapterItem extends RecyclerView.Adapter<EventDetailVideoAdapterItem.ViewHolder> {
+public class EventDetailVideoAdapterItem extends RecyclerView.Adapter<EventDetailVideoAdapterItem.ViewHolder> implements View.OnClickListener {
     private ArrayList<Video> videoData;
     private Context mContext;
+    private Activity mActivity;
 
 
-    public EventDetailVideoAdapterItem(Context context, ArrayList<Video> videoData) {
+    public EventDetailVideoAdapterItem(Context context, Activity activity, ArrayList<Video> videoData) {
         this.videoData = videoData;
         this.mContext = context;
+        this.mActivity = activity;
     }
 
     // Create new views (invoked by the layout manager)
@@ -38,24 +40,27 @@ public class EventDetailVideoAdapterItem extends RecyclerView.Adapter<EventDetai
 
         ViewHolder viewHolder = new ViewHolder(itemLayoutView);
 
-        VideoView videoView = (VideoView) itemLayoutView.findViewById(R.id.event_detail_video_view);
+        Button button = (Button) itemLayoutView.findViewById(R.id.event_detail_video_btn);
+        button.setOnClickListener(this);
 
-        // TODO remove the example video.
-        Uri u = Uri.parse("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4");
-        videoView.setVideoURI(u);
-
-            /* Add scrubbing controls to the video view. */
-        MediaController ctrl = new MediaController(mContext);
-
-        videoView.setMediaController(ctrl);
-        videoView.start();
         return viewHolder;
+    }
+
+
+    public void onShowPopup() {
+        EventDetailVideoDialog dialog = new EventDetailVideoDialog(this.mContext, this.mActivity);
+        dialog.show();
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        onShowPopup();
     }
 
     // inner class to hold a reference to each item of RecyclerView
@@ -75,4 +80,5 @@ public class EventDetailVideoAdapterItem extends RecyclerView.Adapter<EventDetai
         return videoData.size();
     }
 }
+
 
