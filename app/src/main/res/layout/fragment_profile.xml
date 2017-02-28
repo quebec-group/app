@@ -13,10 +13,54 @@
         android:layout_height="match_parent"
         android:weightSum="1">
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:background="@color/colorDarkGrey"
+            android:elevation="10dp">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight = "1">
+
+                <TextView
+                    android:text="@string/profileFragmentTitle"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView3"
+                    android:textAppearance="@style/TextAppearance.FontPathHeading"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:textSize="20sp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:textAlignment="viewStart"
+                    android:gravity="left"
+                    android:layout_marginLeft="@dimen/box_padding"
+                    android:layout_marginRight="@dimen/box_padding" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight = "0"
+                android:id="@+id/profile_dropdown_button">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@android:drawable/ic_menu_set_as"
+                    android:id="@+id/imageView"
+                    android:layout_weight="0.03" />
+            </FrameLayout>
+
+        </LinearLayout>
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="175dp"
+            android:layout_height="102dp"
             android:layout_margin="@dimen/layout_margin">
 
             <LinearLayout
@@ -26,11 +70,12 @@
                 android:weightSum="1">
 
                 <FrameLayout
-                    android:layout_width="134dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent">
 
                     <com.makeramen.roundedimageview.RoundedImageView
                         android:id="@+id/profile_picture_view"
+                        android:src="@drawable/com_facebook_profile_picture_blank_square"
                         android:scaleType="fitXY"
                         app:riv_corner_radius="100dp"
                         app:riv_mutate_background="true"
@@ -38,63 +83,99 @@
                         android:layout_alignParentTop="true"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentEnd="true"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp" />
+                        android:layout_height="80dp"
+                        android:layout_width="80dp"
+                        android:layout_marginRight="@dimen/box_padding_leftright" />
                 </FrameLayout>
 
-                <RelativeLayout
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:text="152"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/textView14"
+                                android:textAppearance="@style/TextAppearance.FontPathHeading" />
+
+                            <TextView
+                                android:text="Events"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/textView2" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:text="42"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/textView14"
+                                android:textAppearance="@style/TextAppearance.FontPathHeading" />
+
+                            <TextView
+                                android:text="Following"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/textView2" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:text="103"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/textView14"
+                                android:textAppearance="@style/TextAppearance.FontPathHeading" />
+
+                            <TextView
+                                android:text="Followers"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/textView2" />
+                        </LinearLayout>
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="43dp"
                         android:id="@+id/profileFragment_name"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentStart="true"
                         android:textAppearance="@style/TextAppearance.FontPath"
-                        android:textSize="36sp"
                         android:ellipsize="marquee"
                         android:marqueeRepeatLimit="marquee_forever"
                         android:scrollHorizontally="true"
-                        android:layout_weight="1" />
-                </RelativeLayout>
-
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/activity_separator_small">
-
-                    <Button
-                        android:text="@string/button_friends_link"
-                        android:layout_width="249dp"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/button_friends_list"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentStart="true" />
-
-                    <Button
-                        android:text="More"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/profile_dropdown_button"
-                        android:layout_above="@+id/button_friends_list"
+                        android:layout_alignParentTop="true"
                         android:layout_alignParentStart="true"
-                        android:layout_weight="1" />
-
+                        android:paddingTop="@dimen/box_padding_leftright" />
 
                 </LinearLayout>
 
+            </LinearLayout>
 
-            </RelativeLayout>
         </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
