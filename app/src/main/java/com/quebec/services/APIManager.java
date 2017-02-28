@@ -657,9 +657,7 @@ public class APIManager implements API {
                 service.execute();
     }
 
-
-
-    public void find(final String searchString, final APICallback<List<User>> response){
+    public void find(final String searchString, final APICallback<List<User>> response) {
         final APIEndpoint endpoint = new APIEndpoint("find");
         final APIRequest request = new APIRequest(endpoint);
 

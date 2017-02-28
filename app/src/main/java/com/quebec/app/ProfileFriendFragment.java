@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import static com.quebec.app.R.id.friendsListSearchBox;
+
 
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.quebec.services.APICallback;
