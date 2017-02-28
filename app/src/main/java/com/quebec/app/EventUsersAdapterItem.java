@@ -53,6 +53,7 @@ public class EventUsersAdapterItem extends ArrayAdapter {
 
         RoundedImageView imageView = (RoundedImageView) convertView.findViewById(R.id.event_user_image);
 
+        // TODO: Be able to reference other users profile pictures.
         return convertView;
     }
 }

@@ -1,11 +1,15 @@
 package com.quebec.app;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,17 +27,21 @@ import com.amazonaws.mobile.content.ContentProgressListener;
 import com.amazonaws.mobile.user.IdentityManager;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.quebec.app.auth.SplashActivity;
+import com.quebec.services.APICallback;
+import com.quebec.services.APIManager;
 import com.quebec.services.Video;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ProfileFragment is the fragment for the profile view.
  */
-public class ProfileFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener  {
+public class ProfileFragment extends Fragment implements View.OnClickListener  {
 
 
+    private static final String LOG_TAG = "log tag";
     private ProfileInteractionListener mListener;
 
     private IdentityManager identityManager;
@@ -43,7 +51,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
 
     private Button dropdown_button;
     private TextView userNameTextView;
-    private ListView profileEventsFeed;
     private RoundedImageView profile_picture_view;
 
 
@@ -137,17 +144,45 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
                 .getIdentityManager();
 
 
-        profileEventsFeed = (ListView) mFragmentView.findViewById(R.id.profileEventsFeedList);
-
         /* Initiate the events feed on the profile, by loading the data into the adapter view. */
         // TODO: Replace stubs with actual Events
 
-        ArrayList<Event> values = new ArrayList<>();
 
+        final RecyclerView mRecyclerView = (RecyclerView) mFragmentView.findViewById(R.id.profileEventsFeedRecycler);
+        mRecyclerView.hasFixedSize();
 
-        EventListAdapterItem adapter = new EventListAdapterItem(this.getContext(), R.layout.adapter_event_item, values);
-        profileEventsFeed.setAdapter(adapter);
-        profileEventsFeed.setOnItemClickListener(this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        final Context context = this.getContext();
+
+        final ProgressDialog spinner = ProgressDialog.show(getContext(), "Loading", "Wait while loading...");
+
+        APIManager.getInstance().getEvents(new APICallback<List<Event>>() {
+            @Override
+            public void onSuccess(final List<Event> events) {
+
+                spinner.dismiss();
+
+                EventListAdapterItem mAdapter = new EventListAdapterItem(events, context);
+
+                mAdapter.setOnItemClickListener(new EventListAdapterItem.EventItemClickInterface() {
+                    @Override
+                    public void onItemClick(int position, View v) {
+                        mListener.onProfileEventSelected(events.get(position));
+                    }
+                });
+
+                mRecyclerView.setAdapter(mAdapter);
+
+            }
+
+            @Override
+            public void onFailure(String message) {
+                Log.e(LOG_TAG, "Failed to get events: " + message);
+                spinner.dismiss();
+            }
+        });
 
         /* Get the logged in user information and display this information on the page. */
         fetchUserIdentity();
@@ -244,21 +279,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, A
         startActivity(intent);
     }
 
-    /**
-     * Responds to item clicks on the events feed on the profile view.
-     * @param parent
-     * @param view
-     * @param position
-     * @param id
-     */
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        profileEventsFeed.setItemChecked(position, true);
-        Event e = (Event) profileEventsFeed.getItemAtPosition(position);
-
-        // Call the interaction listener with the Event object.
-        mListener.onProfileEventSelected(e);
-    }
 
     public interface ProfileInteractionListener {
         void openFriendsList();
