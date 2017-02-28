@@ -163,5 +163,6 @@
     <string name="title_activity_event_detail_map">Map</string>
     <string name="event_detail_location_button_text">See location</string>
     <string name="event_detail_uploadBtn_text">Upload</string>
+    <string name="sign_in_verify">Verify</string>
 
 </resources>

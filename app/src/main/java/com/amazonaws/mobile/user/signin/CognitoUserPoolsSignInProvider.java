@@ -82,6 +82,9 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
     /** Resource ID of the Forgot Password button. */
     private static final int TEXT_VIEW_FORGOT_PASSWORD_ID = R.id.signIn_textView_ForgotPassword;
 
+    /** Resource ID of the Verify button. */
+    private static final int TEXT_VIEW_VERIFY_ID = R.id.signIn_textView_Verify;
+
     /** Resource ID of the Create Account button. */
     private static final int TEXT_VIEW_CREATE_ACCOUNT_ID = R.id.signIn_textView_CreateNewAccount;
 
@@ -125,6 +128,9 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
 
     /** Sign-in username. */
     private String username;
+    private String givenName;
+    private String email;
+    private String phone;
 
     /** Sign-in password. */
     private String password;
@@ -176,12 +182,11 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
         public void onSuccess(final CognitoUser user, final boolean signUpConfirmationState,
                               final CognitoUserCodeDeliveryDetails cognitoUserCodeDeliveryDetails) {
             if (signUpConfirmationState) {
-//                Log.d(LOG_TAG, "Signed up. UserDTO ID = " + user.getUserId());
+                Log.d(LOG_TAG, "Signed up. UserDTO ID = " + user.getUserId());
 //                ViewHelper.showDialog(activity, activity.getString(title_activity_sign_up),
 //                        activity.getString(sign_up_success) + " " + user.getUserId());
             } else {
-//                Log.w(LOG_TAG, "Additional confirmation for sign up.");
-
+                Log.w(LOG_TAG, "Additional confirmation for sign up.");
                 final Intent intent = new Intent(context, SignUpConfirmActivity.class);
                 activity.startActivityForResult(intent, VERIFICATION_REQUEST_CODE);
             }
@@ -201,7 +206,7 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
     private GenericHandler signUpConfirmationHandler = new GenericHandler() {
         @Override
         public void onSuccess() {
-//            Log.i(LOG_TAG, "Confirmed.");
+            Log.i(LOG_TAG, "Confirmed.");
 //            ViewHelper.showDialog(activity, activity.getString(title_activity_sign_up_confirm),
 //                    activity.getString(sign_up_confirm_success));
         }
@@ -322,14 +327,15 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
                 case SIGN_UP_REQUEST_CODE:
                     username = data.getStringExtra(CognitoUserPoolsSignInProvider.AttributeKeys.USERNAME);
                     password = data.getStringExtra(CognitoUserPoolsSignInProvider.AttributeKeys.PASSWORD);
-                    final String givenName = data.getStringExtra(CognitoUserPoolsSignInProvider.AttributeKeys.GIVEN_NAME);
-                    final String email = data.getStringExtra(CognitoUserPoolsSignInProvider.AttributeKeys.EMAIL_ADDRESS);
-                    final String phone = data.getStringExtra(CognitoUserPoolsSignInProvider.AttributeKeys.PHONE_NUMBER);
+                    givenName = data.getStringExtra(CognitoUserPoolsSignInProvider.AttributeKeys.GIVEN_NAME);
+                    email = data.getStringExtra(CognitoUserPoolsSignInProvider.AttributeKeys.EMAIL_ADDRESS);
+                    phone = data.getStringExtra(CognitoUserPoolsSignInProvider.AttributeKeys.PHONE_NUMBER);
 
                     Log.d(LOG_TAG, "username = " + username);
                     Log.d(LOG_TAG, "given_name = " + givenName);
                     Log.d(LOG_TAG, "email = " + email);
                     Log.d(LOG_TAG, "phone = " + phone);
+
 
                     final CognitoUserAttributes userAttributes = new CognitoUserAttributes();
                     userAttributes.addAttribute(CognitoUserPoolsSignInProvider.AttributeKeys.GIVEN_NAME, givenName);
@@ -405,6 +411,14 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
 
                     cognitoUser.forgotPasswordInBackground(forgotPasswordHandler);
                 }
+            }
+        });
+
+        activity.findViewById(TEXT_VIEW_VERIFY_ID).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Intent intent = new Intent(context, SignUpConfirmActivity.class);
+                activity.startActivityForResult(intent, VERIFICATION_REQUEST_CODE);
             }
         });
 
