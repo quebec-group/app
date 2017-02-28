@@ -1,12 +1,9 @@
 package com.quebec.app;
 
-import android.app.Activity;
-
 import com.amazonaws.mobile.content.ContentProgressListener;
-
+import com.quebec.services.AWSWrapper;
 
 import java.io.File;
-import java.io.IOException;
 
 /**
  * Created by Andrew on 09/02/2017.
@@ -30,4 +27,7 @@ public class VideoUploadHandler {
     }
 
 
+    public static String getFullS3PathForFile(File file) {
+        return "protected/" + AWSWrapper.getCognitoID() + "/" + VIDEO_FOLDER_PREFIX + file.getName();
+    }
 }

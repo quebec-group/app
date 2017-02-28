@@ -44,8 +44,6 @@ public class EventListAdapterItem extends ArrayAdapter<Event> {
         Event event = data.get(position);
 
         TextView textViewItem = (TextView) convertView.findViewById(R.id.eventItemName);
-        TextView textViewDescriptionItem = (TextView) convertView.findViewById(R.id.eventItemDescription);
-
 
         textViewItem.setText(event.getEventName());
 

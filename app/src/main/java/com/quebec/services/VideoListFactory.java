@@ -1,7 +1,5 @@
 package com.quebec.services;
 
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,8 +18,7 @@ public class VideoListFactory {
         for(int i=0; i<videoArray.length();i++) {
 
             JSONObject currentVideo = new JSONObject(videoArray.getString(i));
-            final String videoID = currentVideo.getString("videoID");
-            Video vid = new Video(videoID);
+            Video vid = new Video(currentVideo);
             videos.add(vid);
         }
         return videos;
