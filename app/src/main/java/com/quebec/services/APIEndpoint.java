@@ -9,7 +9,8 @@ public class APIEndpoint {
     private static final String createUser = "createUser";
     private static final String following = "following";
     private static final String followers = "followers";
-    private static final String setProfileVideo = "setProfileVideo";
+    private static final String setProfileVideo = "setTrainingVideo";
+    private static final String setProfilePicture = "setProfilePicture";
     private static final String addVideoToEvent = "addVideoToEvent";
     private static final String follow = "follow";
     private static final String unfollow = "unfollow";
@@ -22,6 +23,7 @@ public class APIEndpoint {
     private static final String unlikeEvent = "unlikeEvent";
     private static final String getInfo = "getInfo";
     private static final String find = "find";
+    private static final String hasCompletedSignUp = "hasCompletedSignUp";
 
     private static final String POST_METHOD = "POST";
 
@@ -33,6 +35,10 @@ public class APIEndpoint {
         switch(action) {
             case "createUser":
                 this.path += this.createUser;
+                break;
+
+            case "hasCompletedSignUp":
+                this.path += this.hasCompletedSignUp;
                 break;
 
             case "following":
@@ -47,8 +53,12 @@ public class APIEndpoint {
                 this.path += this.isFollowing;
                 break;
 
-            case "setProfileVideo":
+            case "setTrainingVideo":
                 this.path += this.setProfileVideo;
+                break;
+
+            case "setProfilePicture":
+                this.path += this.setProfilePicture;
                 break;
 
             case "addVideoToEvent":

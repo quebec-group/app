@@ -1,6 +1,0 @@
-diff a/app/src/main/java/com/quebec/app/SignUpPhotoActivity.java b/app/src/main/java/com/quebec/app/SignUpPhotoActivity.java	(rejected hunks)
-@@ -2,3 +3,4 @@
-+package com.quebec.app;
- 
- import android.content.Intent;
- import android.net.Uri;
