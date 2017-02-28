@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * @param frag
      * @param transition
      */
-    private void setFragment(Fragment frag, FragmentTransition transition, boolean addToBackStack) {
+    private void setFragment(Fragment frag, int transition) {
 
         currentFragmentTab = frag.getClass().getName();
 
@@ -65,15 +65,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         boolean fragmentPopped = getSupportFragmentManager().popBackStackImmediate(frag.getClass().getName(), 0);
 
         if (!fragmentPopped) {
-            transaction.setCustomAnimations(transition.enter, transition.exit, transition.popEnter, transition.popExit);
-
-            transaction.replace(R.id.fragment_container, frag);
-
-            // Adds the current fragment to the back stack.
-            if (addToBackStack) {
-                transaction.addToBackStack(frag.getClass().getName());
+            if (transition == 0) {
+                transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
+            }
+            else {
+                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
             }
 
+            transaction.replace(R.id.fragment_container, frag);
+            transaction.addToBackStack(frag.getClass().getName());
             transaction.commit();
             currentBottomBarItem = -1;
 
@@ -81,7 +81,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
-    
+
+
     private int previousBottomBarItemIndex = 0;
     private int currentBottomBarItem;
 
@@ -91,9 +92,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (tabId) {
             case R.id.menu_eventsfeed:
-                setFragment(new EventsFeedFragment(), new FragmentTransitionFromLeft(), false);
+                setFragment(new EventsFeedFragment(), 0);
                 break;
             case R.id.menu_uploadvideo:
+
 
                 /* A fix for the video upload tab. Requires a timer as a workaround. */
                 Handler handlerTimer = new Handler();
@@ -102,10 +104,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         mBottomBar.selectTabAtPosition(previousBottomBarItemIndex);
                     }}, 500);
 
+
                 showVideoUploadActivity();
                 break;
             case R.id.menu_profile:
-                setFragment(new ProfileFragment(), new FragmentTransitionFromRight(), false);
+                setFragment(new ProfileFragment(), 1);
                 break;
         }
 
@@ -259,7 +262,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onEventSelected(Event e) {
-        setFragment(EventDetailFragment.newInstance(e), new FragmentTransitionFromRight(), true);
+        setFragment(EventDetailFragment.newInstance(e), 1);
     }
 
     /* Profile page interactions. */
@@ -272,7 +275,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void openFriendsList() {
-        setFragment(FriendsListFragment.newInstance(), new FragmentTransitionFromRight(), true);
+        setFragment(FriendsListFragment.newInstance(), 2);
     }
 
     @Override
@@ -289,13 +292,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onProfileEventSelected(Event e) {
-        setFragment(EventDetailFragment.newInstance(e), new FragmentTransitionFromRight(), true);
+        setFragment(EventDetailFragment.newInstance(e), 3);
     }
 
     /** Events for the event detail page. **/
     @Override
     public void onEventUserSelected(User u) {
-        setFragment(ProfileFriendFragment.newInstance(u), new FragmentTransitionFromRight(), true);
+        setFragment(ProfileFriendFragment.newInstance(u), 3);
     }
 
     @Override
