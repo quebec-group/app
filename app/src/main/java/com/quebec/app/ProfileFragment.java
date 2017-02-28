@@ -139,7 +139,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
         TextView followingCount = (TextView) mFragmentView.findViewById(R.id.profileFollowingCount);
         TextView followersCount = (TextView) mFragmentView.findViewById(R.id.profileFollowersCount);
 
-        APIManager.getInstance().
+
         /* Declare the onclick event handlers for the buttons. */
         dropdown_button = (View) mFragmentView.findViewById(R.id.profile_dropdown_button);
 
@@ -178,7 +178,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
         });
 
         /* Get the events related to the user. */
-        APIManager.getInstance().getEvents(new APICallback<List<Event>>() {
+        APIManager.getInstance().getAttendedEvents(new APICallback<List<Event>>() {
             @Override
             public void onSuccess(final List<Event> events) {
 

@@ -1,5 +1,6 @@
 package com.quebec.app;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +18,9 @@ import android.widget.TextView;
 
 import com.quebec.services.APICallback;
 import com.quebec.services.APIManager;
+import com.quebec.services.Video;
+
+import java.util.ArrayList;
 
 import static com.quebec.app.EventVideoUploadSelect.EVENT_VIDEO_MODE;
 
@@ -28,6 +32,9 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
     private static String LOG_TAG = EventDetailFragment.class.getSimpleName();
 
     private Event mEvent;
+
+    private Activity mActivity;
+    private Context mContext;
 
     private TextView eventNameTextView;
     private TextView eventDetailDescription;
@@ -64,6 +71,9 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
         if (getArguments() != null) {
             mEvent = getArguments().getParcelable(EVENT_KEY);
         }
+
+        mActivity = this.getActivity();
+        mContext = this.getContext();
 
     }
 
@@ -138,8 +148,20 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
      * Add the videos related to the event to the view.
      */
     private void addVideosToView() {
+
+        final ArrayList<Video> videos =  mEvent.getEventVideos();
+
         /* Add the videos to the view, through the use of the card view. */
-        EventDetailVideoAdapterItem adapter = new EventDetailVideoAdapterItem(this.getContext(), this.getActivity(), mEvent.getEventVideos());
+        EventDetailVideoAdapterItem adapter = new EventDetailVideoAdapterItem(videos);
+
+        adapter.setOnItemClickListener(new EventDetailVideoAdapterItem.EventDetailVideoItemClickInterface() {
+            @Override
+            public void onItemClick(int position, View v) {
+                Video vid = videos.get(position);
+                EventDetailVideoDialog dialog = new EventDetailVideoDialog(vid, mContext, mActivity);
+                dialog.show();
+            }
+        });
 
         /* Makes use of the RecyclerView for the horizontal scrolling field. */
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getContext() ,LinearLayoutManager.HORIZONTAL, false);
@@ -226,6 +248,7 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
             eventLikeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_heart_filled, 0, 0, 0);
             eventLikes = eventLikes + 1;
             mEvent.setLikes(true);
+
             APIManager.getInstance().likeEvent(mEvent, new APICallback<String>() {
                 @Override
                 public void onSuccess(String responseBody) {
@@ -237,11 +260,13 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
                     Log.e(LOG_TAG, "Liked event failed");
                 }
             });
+
         }
         else {
             eventLikeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_heart_empty, 0, 0, 0);
             eventLikes = eventLikes - 1;
             mEvent.setLikes(false);
+
             APIManager.getInstance().unlikeEvent(mEvent, new APICallback<String>() {
                 @Override
                 public void onSuccess(String responseBody) {
@@ -253,6 +278,7 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
                     Log.e(LOG_TAG, "Liked event failed");
                 }
             });
+
         }
 
         eventLikeButton.setText(eventLikes + " likes");

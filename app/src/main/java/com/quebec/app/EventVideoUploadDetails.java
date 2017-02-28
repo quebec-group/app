@@ -212,6 +212,7 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
             final String videoPath = VideoUploadHandler.getFullS3PathForFile(video);
 
 
+
             APIManager.getInstance().createEvent(
                     eventTitleEditText.getText().toString(),
                     eventTime,
@@ -228,6 +229,7 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
                             Log.e(LOG_TAG, "Event creation failed");
                         }
                     });
+
 
             Intent intent = new Intent(this.getApplicationContext(), MainActivity.class);
             startActivity(intent);
