@@ -24,6 +24,7 @@ public class APIEndpoint {
     private static final String getInfo = "getInfo";
     private static final String find = "find";
     private static final String hasCompletedSignUp = "hasCompletedSignUp";
+    private static final String getAttendedEvents = "getAttendedEvents";
 
     private static final String POST_METHOD = "POST";
 
@@ -39,6 +40,10 @@ public class APIEndpoint {
 
             case "hasCompletedSignUp":
                 this.path += this.hasCompletedSignUp;
+                break;
+
+            case "getAttendedEvents":
+                this.path += this.getAttendedEvents;
                 break;
 
             case "following":

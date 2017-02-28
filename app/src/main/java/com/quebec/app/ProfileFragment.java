@@ -46,7 +46,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
     private View mFragmentView;
 
     /* Elements on the page. */
-    private Button dropdown_button;
+    private View dropdown_button;
     private TextView userNameTextView;
     private RoundedImageView profile_picture_view;
 
@@ -134,10 +134,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
         profile_picture_view = (RoundedImageView) mFragmentView.findViewById(R.id.profile_picture_view);
 
         /* Declare the onclick event handlers for the buttons. */
-        Button b1 = (Button) mFragmentView.findViewById(R.id.button_friends_list);
-        dropdown_button = (Button) mFragmentView.findViewById(R.id.profile_dropdown_button);
+        dropdown_button = (View) mFragmentView.findViewById(R.id.profile_dropdown_button);
 
-        b1.setOnClickListener(this);
+        dropdown_button.setOnClickListener(this);
         dropdown_button.setOnClickListener(this);
 
         identityManager = AWSMobileClient.defaultMobileClient()
@@ -210,9 +209,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
         switch (view.getId()) {
             case R.id.profile_dropdown_button:
                 openDropdown();
-                break;
-            case R.id.button_friends_list:
-                mListener.openFriendsList();
                 break;
         }
     }

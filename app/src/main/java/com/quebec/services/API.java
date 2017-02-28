@@ -41,4 +41,7 @@ public interface API {
     public abstract void addVideoToEvent(final String S3ID, final Event event, final APICallback<String> response);
 
 
+    void getAttendedEvents(APICallback<List<Event>> response);
+
+    void getAttendedEvents(String userID, APICallback<List<Event>> response);
 }

@@ -105,4 +105,8 @@ public class Event implements Parcelable {
     public String getTime() {
         return time;
     }
+
+    public void setLikes(boolean likes) {
+        this.likes = likes;
+    }
 }
