@@ -3,6 +3,7 @@ package com.quebec.services;
 import com.quebec.app.Event;
 import com.quebec.app.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,8 +22,8 @@ public interface API {
     public abstract void following(final APICallback<List<User>> response);
     public abstract void followers(final String userID, final APICallback<List<User>> response);
     public abstract void followers(final APICallback<List<User>> response);
-    public abstract void follow(final String userID, final APICallback<String> response);
-    public abstract void unfollow(final String userID, final APICallback<String> response);
+    public abstract void follow(final User user, final APICallback<String> response);
+    public abstract void unfollow(final User user, final APICallback<String> response);
     public abstract void getInfo(final APICallback<User> response);
 
 
