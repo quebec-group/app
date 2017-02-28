@@ -238,6 +238,66 @@ public class APIManager implements API {
     @Override
     public void following(final String userID, final APICallback<List<User>> response) {
         final APIEndpoint endpoint = new APIEndpoint("following");
+        final APIRequest request = requestWithUserID(userID, endpoint);
+
+        userListService(request, response);
+    }
+
+    /**
+     *
+     * @param userID
+     * @param response
+     */
+    @Override
+    public void followingCount(final String userID, final APICallback<Integer> response) {
+        final APIEndpoint endpoint = new APIEndpoint("followingCount");
+        final APIRequest request = requestWithUserID(userID, endpoint);
+
+        countService(request, response);
+    }
+
+    /**
+     *
+     * @param userID
+     * @param response
+     */
+    @Override
+    public void followersCount(final String userID, final APICallback<Integer> response) {
+        final APIEndpoint endpoint = new APIEndpoint("followersCount");
+        final APIRequest request = requestWithUserID(userID, endpoint);
+
+        countService(request, response);
+    }
+
+    private void countService(final APIRequest request, final APICallback<Integer> response) {
+        // perform the HTTP request and wait for callback
+        Service service = new Service(request, new Service.ServiceCallBack() {
+            @Override
+            /**
+             * onResponseReceived takes the DAO from inside the response, sets the status
+             */
+            public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
+
+                BaseDAO baseDAO = apiResponse.getResponseBody();
+                final APIResponse userResponse = new APIResponse(apiResponse.getStatus());
+                final String responseBody = apiResponse.getResponseBody().get_DAO_BODY().toString();
+                userResponse.setResponseBody(baseDAO);
+
+                if (apiResponse.getStatus().equals("200")) {
+                    JSONObject jsonObject = baseDAO.get_DAO_BODY();
+                    response.onSuccess(jsonObject.getInt("count"));
+                } else {
+                    response.onFailure(responseBody);
+                }
+
+            }
+        });
+
+
+        service.execute();
+    }
+
+    private APIRequest requestWithUserID(final String userID, final APIEndpoint endpoint) {
         final APIRequest request = new APIRequest(endpoint);
 
         try {
@@ -249,7 +309,7 @@ public class APIManager implements API {
             Log.e(LOG_TAG, e.getMessage());
         }
 
-        userListService(request, response);
+        return request;
     }
 
     private void userListService(APIRequest request, final APICallback<List<User>> response) {
@@ -329,16 +389,7 @@ public class APIManager implements API {
     @Override
     public void follow(final User user, final APICallback<String> response) {
         final APIEndpoint endpoint = new APIEndpoint("follow");
-        final APIRequest request = new APIRequest(endpoint);
-
-        // create the request body
-        try {
-            JSONObject requestBody = new JSONObject();
-            requestBody.put("userID", user.getUserID());
-            request.setBody(requestBody.toString());
-        } catch (JSONException e) {
-            Log.e(LOG_TAG, e.getMessage());
-        }
+        final APIRequest request = requestWithUserID(user.getUserID(), endpoint);
 
         Service service = new Service(request, new Service.ServiceCallBack() {
             @Override
@@ -362,16 +413,7 @@ public class APIManager implements API {
     @Override
     public void unfollow(final User user, final APICallback<String> response) {
         final APIEndpoint endpoint = new APIEndpoint("unfollow");
-        final APIRequest request = new APIRequest(endpoint);
-
-        // create the request body
-        try {
-            JSONObject requestBody = new JSONObject();
-            requestBody.put("userID", user.getUserID());
-            request.setBody(requestBody.toString());
-        } catch (JSONException e) {
-            Log.e(LOG_TAG, e.getMessage());
-        }
+        final APIRequest request = requestWithUserID(user.getUserID(), endpoint);
 
         Service service = new Service(request, new Service.ServiceCallBack() {
             @Override
@@ -604,15 +646,7 @@ public class APIManager implements API {
     @Override
     public void isFollowing(final User user, final APICallback<Boolean> response) {
         final APIEndpoint endpoint = new APIEndpoint("isFollowing");
-        final APIRequest request = new APIRequest(endpoint);
-
-
-        try {
-            JSONObject requestBody = new JSONObject();
-            requestBody.put("userID", user.getUserID());
-        } catch (JSONException e) {
-            Log.e(LOG_TAG, e.getMessage());
-        }
+        final APIRequest request = requestWithUserID(user.getUserID(), endpoint);
 
         // perform the HTTP request and wait for callback
         Service service = new Service(request, new Service.ServiceCallBack() {
@@ -709,15 +743,7 @@ public class APIManager implements API {
     @Override
     public void getAttendedEvents(final String userID, final APICallback<List<Event>> response) {
         final APIEndpoint endpoint = new APIEndpoint("getAttendedEvents");
-        final APIRequest request = new APIRequest(endpoint);
-
-        try {
-            JSONObject requestBody = new JSONObject();
-            requestBody.put("userID", userID);
-            request.setBody(requestBody.toString());
-        } catch (JSONException e) {
-            Log.e(LOG_TAG, e.getMessage());
-        }
+        final APIRequest request = requestWithUserID(userID, endpoint);
 
         eventsListService(request, response);
     }
