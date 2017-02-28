@@ -25,6 +25,8 @@ public class APIEndpoint {
     private static final String find = "find";
     private static final String hasCompletedSignUp = "hasCompletedSignUp";
     private static final String getAttendedEvents = "getAttendedEvents";
+    private static final String followingCount = "followingCount";
+    private static final String followersCount = "followersCount";
 
     private static final String POST_METHOD = "POST";
 
@@ -44,6 +46,14 @@ public class APIEndpoint {
 
             case "getAttendedEvents":
                 this.path += this.getAttendedEvents;
+                break;
+
+            case "followingCount":
+                this.path += this.followingCount;
+                break;
+
+            case "followersCount":
+                this.path += this.followersCount;
                 break;
 
             case "following":
