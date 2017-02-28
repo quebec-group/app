@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/editText3" />
+            android:id="@+id/event_upload_details_event_name" />
 
         <Space
             android:layout_width="match_parent"
@@ -91,13 +91,6 @@
                 android:layout_centerHorizontal="true" />
 
         </RelativeLayout>
-
-        <TextView
-            android:text="TextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView10"
-            android:layout_weight="0.06" />
 
     </LinearLayout>
 </RelativeLayout>

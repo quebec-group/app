@@ -10,32 +10,31 @@
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="fill_parent"
-        android:layout_height="200dp"
         android:layout_gravity="center"
 
-        card_view:cardCornerRadius="2dp"
-        card_view:cardElevation="20dp"
-
         android:foreground="?android:attr/selectableItemBackground"
-
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
 
+        card_view:cardCornerRadius="2dp"
+        card_view:cardElevation="20dp"
+        android:layout_height="150dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true">
 
+        <!--
         <ImageView
             android:src="@drawable/party"
             android:alpha="0.2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"/>
-
-        <RelativeLayout
+        -->
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:focusableInTouchMode="true">
+            android:padding="@dimen/box_padding">
 
             <TextView
                 android:id="@+id/eventItemName"
@@ -46,45 +45,54 @@
                 android:textAppearance="@style/TextAppearance.FontPath"
                 android:textSize="30sp" />
 
-            <TextView
-                android:text="TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:id="@+id/eventItemDescription"
-                android:layout_below="@+id/eventItemName"
-                android:textAppearance="@style/TextAppearance.FontPath"
-                android:layout_alignParentStart="true" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:id="@+id/eventItemLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/eventItemDate"
+                    android:layout_weight="1"/>
+            </LinearLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="27dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_below="@+id/eventItemDescription"
                 android:layout_alignParentStart="true">
 
                 <android.support.v7.widget.RecyclerView
                         android:id="@+id/eventItemTicker"
                         android:layout_width="248dp"
-                        android:layout_height="25dp"
+                        android:layout_height="43dp"
                     android:layout_below="@+id/textView2"
                     android:layout_alignParentStart="true"
                     android:layout_marginTop="13dp" />
 
-                <TextView
-                    android:text="25 guests"
-                    android:layout_width="85dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="19dp"
-                    android:id="@+id/textView2"
-                    android:layout_below="@+id/eventItemDescription"
-                    android:layout_alignParentStart="true"
-                    android:textAppearance="@style/TextAppearance.FontPath" />
             </LinearLayout>
 
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        </RelativeLayout>
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView10"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </LinearLayout>
     </android.support.v7.widget.CardView>
 
 </RelativeLayout>

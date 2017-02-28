@@ -30,11 +30,16 @@ public class EventListAdapterItem extends RecyclerView.Adapter<EventListAdapterI
             .OnClickListener {
 
         private TextView eventName;
+        private TextView eventLocation;
+        private TextView eventDate;
 
         private RecyclerView eventItemTicker;
         public EventHolder(View itemView) {
             super(itemView);
             eventName = (TextView) itemView.findViewById(R.id.eventItemName);
+            eventLocation = (TextView) itemView.findViewById(R.id.eventItemLocation);
+            eventDate = (TextView) itemView.findViewById(R.id.eventItemDate);
+
             eventItemTicker = (RecyclerView) itemView.findViewById(R.id.eventItemTicker);
 
             itemView.setOnClickListener(this);
@@ -50,8 +55,8 @@ public class EventListAdapterItem extends RecyclerView.Adapter<EventListAdapterI
         this.myClickListener = myClickListener;
     }
 
-    public EventListAdapterItem(ArrayList<Event> myDataset, Context context) {
-        mDataset = myDataset;
+    public EventListAdapterItem(List<Event> myDataset, Context context) {
+        mDataset = new ArrayList<Event>(myDataset);
         mContext = context;
     }
 
@@ -69,10 +74,9 @@ public class EventListAdapterItem extends RecyclerView.Adapter<EventListAdapterI
     public void onBindViewHolder(EventHolder holder, int position) {
         holder.eventName.setText(mDataset.get(position).getEventName());
 
-
         EventUsersTickerAdapterItem adapter = new EventUsersTickerAdapterItem(mDataset.get(position).getAttendees());
 
-             /* Makes use of the RecyclerView for the horizontal scrolling field. */
+        /* Makes use of the RecyclerView for the horizontal scrolling field. */
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.mContext , LinearLayoutManager.HORIZONTAL, false);
 
         holder.eventItemTicker.setLayoutManager(layoutManager);

@@ -23,15 +23,15 @@ import com.amazonaws.mobile.util.ThreadUtils;
 import com.amazonaws.mobileconnectors.cognito.CognitoSyncManager;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
-
+import com.quebec.services.AWSWrapper;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -455,6 +455,7 @@ public class IdentityManager {
         Log.d(getClass().getSimpleName(), "refresh credentials");
         credentialsProvider.refresh();
         Log.d(getClass().getSimpleName(), "Cognito ID: " + credentialsProvider.getIdentityId());
+        AWSWrapper.setCognitoID(credentialsProvider.getIdentityId());
         Log.d(getClass().getSimpleName(), "Cognito Credentials: " + credentialsProvider.getCredentials());
     }
 

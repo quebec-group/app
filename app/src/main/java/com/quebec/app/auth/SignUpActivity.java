@@ -9,7 +9,9 @@
 package com.quebec.app.auth;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -97,6 +99,13 @@ public class SignUpActivity extends Activity implements Validator.ValidationList
         intent.putExtra(CognitoUserPoolsSignInProvider.AttributeKeys.PASSWORD, password);
         intent.putExtra(CognitoUserPoolsSignInProvider.AttributeKeys.GIVEN_NAME, givenName);
         intent.putExtra(CognitoUserPoolsSignInProvider.AttributeKeys.EMAIL_ADDRESS, email);
+
+        SharedPreferences sharedPref = getSharedPreferences("SignUp", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("givenName", givenName);
+        editor.putString("email", email);
+        editor.putString("username", username);
+        editor.apply();
 
         setResult(RESULT_OK, intent);
 

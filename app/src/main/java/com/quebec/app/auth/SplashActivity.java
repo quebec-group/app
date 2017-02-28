@@ -46,15 +46,13 @@ public class SplashActivity extends Activity {
          */
         @Override
         public void onSuccess(final IdentityProvider provider) {
-            Log.d(LOG_TAG, String.format("UserDTO sign-in with previous %s provider succeeded",
-                provider.getDisplayName()));
+            Log.d(LOG_TAG, "UserDTO sign-in succeeded");
 
 
             // The sign-in manager is no longer needed once signed in.
             SignInManager.dispose();
 
-            Toast.makeText(SplashActivity.this, String.format("Sign-in with %s succeeded.",
-                provider.getDisplayName()), Toast.LENGTH_LONG).show();
+            Toast.makeText(SplashActivity.this, "Sign-in succeeded.", Toast.LENGTH_LONG).show();
 
             AWSMobileClient.defaultMobileClient()
                 .getIdentityManager()
@@ -90,8 +88,7 @@ public class SplashActivity extends Activity {
                 String.format("Cognito credentials refresh with %s provider failed. Error: %s",
                     provider.getDisplayName(), ex.getMessage()), ex);
 
-            Toast.makeText(SplashActivity.this, String.format("Sign-in with %s failed.",
-                provider.getDisplayName()), Toast.LENGTH_LONG).show();
+            Toast.makeText(SplashActivity.this, "Sign-in failed.", Toast.LENGTH_LONG).show();
             goSignIn();
 
         }
