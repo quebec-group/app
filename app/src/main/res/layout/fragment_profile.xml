@@ -50,9 +50,11 @@
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
-                    app:srcCompat="@android:drawable/ic_menu_set_as"
+                    app:srcCompat="@drawable/ic_menu_icon"
                     android:id="@+id/imageView"
-                    android:layout_weight="0.03" />
+                    android:layout_weight="0.03"
+                    android:tint="@android:color/white"
+                    android:layout_margin="@dimen/box_padding_leftright" />
             </FrameLayout>
 
         </LinearLayout>
