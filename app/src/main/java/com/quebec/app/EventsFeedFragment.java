@@ -1,13 +1,9 @@
 package com.quebec.app;
 
 import android.content.Context;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.Display;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,16 +11,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 
-
-import com.quebec.services.APICallback;
-import com.quebec.services.APIManager;
-
 import com.quebec.services.Video;
 
 import java.util.ArrayList;
-
-
-import java.util.List;
 
 
 public class EventsFeedFragment extends Fragment implements AdapterView.OnItemClickListener {
@@ -83,7 +72,7 @@ public class EventsFeedFragment extends Fragment implements AdapterView.OnItemCl
         */
 
         ArrayList<Event> events = new ArrayList<>();
-        events.add(new Event("Andrew's networking event", "123", "London", "25/06/2017", new ArrayList<Video>(), new ArrayList<User>(), false, 15));
+        events.add(new Event("Andrew's networking event", 123, "London", "25/06/2017", new ArrayList<Video>(), new ArrayList<User>(), false, 15));
 
 
         EventListAdapterItem adapter = new EventListAdapterItem(EventsFeedFragment.this.getContext(), R.layout.adapter_event_item, events);

@@ -226,10 +226,10 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
     private void likeEventClick() {
 
 
-        if (eventLikeState == false) {
+        if (!eventLikeState) {
             eventLikeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_heart_filled, 0, 0, 0);
             eventLikes = eventLikes + 1;
-            APIManager.getInstance().likeEvent(mEvent.getEventID(), new APICallback<String>() {
+            APIManager.getInstance().likeEvent(mEvent, new APICallback<String>() {
                 @Override
                 public void onSuccess(String responseBody) {
                     Log.d(LOG_TAG, "Liked event");
@@ -244,7 +244,7 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
         else {
             eventLikeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_heart_empty, 0, 0, 0);
             eventLikes = eventLikes - 1;
-            APIManager.getInstance().unlikeEvent(mEvent.getEventID(), new APICallback<String>() {
+            APIManager.getInstance().unlikeEvent(mEvent, new APICallback<String>() {
                 @Override
                 public void onSuccess(String responseBody) {
                     Log.d(LOG_TAG, "Liked event");
@@ -258,7 +258,7 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
         }
 
         eventLikeButton.setText(eventLikes + " likes");
-        eventLikeState = eventLikeState ? false : true;
+        eventLikeState = !eventLikeState;
     }
 
 

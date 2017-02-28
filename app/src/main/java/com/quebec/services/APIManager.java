@@ -6,7 +6,6 @@ package com.quebec.services;
 
 import android.util.Log;
 
-import com.amazonaws.auth.AWSCognitoIdentityProvider;
 import com.amazonaws.mobile.AWSMobileClient;
 import com.amazonaws.mobile.user.IdentityManager;
 import com.quebec.app.Event;
@@ -110,8 +109,7 @@ public class APIManager implements API {
                     JSONObject requestBody = new JSONObject();
                     requestBody.put("name", userName);
                     requestBody.put("email", userEmail);
-                    final String arn = SNSManager.getArn();
-                    requestBody.put("arn", arn);
+                    requestBody.put("arn", SNSManager.getArn());
                     request.setBody(requestBody.toString());
                 } catch (JSONException e) {
                     Log.e(LOG_TAG, e.getMessage());
@@ -335,7 +333,7 @@ public class APIManager implements API {
             public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
                 Log.d(LOG_TAG, apiResponse.getStatus());
                 if (apiResponse.getStatus().equals("200")) {
-                    response.onSuccess(new String("Successfully followed: " + userID));
+                    response.onSuccess("Successfully followed: " + userID);
                 }
             }
         });
@@ -346,18 +344,18 @@ public class APIManager implements API {
 
     /**
      *
-     * @param friendID
+     * @param userID
      * @param response
      */
     @Override
-    public void unfollow(final String friendID, final APICallback<String> response) {
+    public void unfollow(final String userID, final APICallback<String> response) {
         final APIEndpoint endpoint = new APIEndpoint("unfollow");
         final APIRequest request = new APIRequest(endpoint);
 
         // create the request body
         try {
             JSONObject requestBody = new JSONObject();
-            requestBody.put("userID", friendID);
+            requestBody.put("userID", userID);
             request.setBody(requestBody.toString());
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage());
@@ -368,7 +366,7 @@ public class APIManager implements API {
             public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
                 Log.d(LOG_TAG, apiResponse.getStatus());
                 if (apiResponse.getStatus().equals("200")) {
-                    response.onSuccess(new String("Successfully unfollowed: " + friendID));
+                    response.onSuccess("Successfully unfollowed: " + userID);
                 }
             }
         });
@@ -379,18 +377,18 @@ public class APIManager implements API {
 
     /**
      *
-     * @param eventID
+     * @param event
      * @param userID
      * @param response
      */
     @Override
-    public void addUserToEvent(final String eventID, final String userID, final APICallback<String> response) {
+    public void addUserToEvent(final Event event, final String userID, final APICallback<String> response) {
         final APIEndpoint endpoint = new APIEndpoint("addUserToEvent");
         final APIRequest request = new APIRequest(endpoint);
         try {
             JSONObject requestBody = new JSONObject();
-            requestBody.put("friendID", userID);
-            requestBody.put("eventID", eventID);
+            requestBody.put("userID", userID);
+            requestBody.put("eventID", event.getEventID());
             request.setBody(requestBody.toString());
         } catch (JSONException e) {
             e.printStackTrace();
@@ -415,16 +413,16 @@ public class APIManager implements API {
 
     /**
      *
-     * @param eventID
+     * @param event
      * @param response
      */
     @Override
-    public void removeFromEvent(final String eventID, final APICallback<String> response) {
+    public void removeFromEvent(final Event event, final APICallback<String> response) {
         final APIEndpoint endpoint = new APIEndpoint("removeFromEvent");
         final APIRequest request = new APIRequest(endpoint);
         try {
             JSONObject requestBody = new JSONObject();
-            requestBody.put("eventID", eventID);
+            requestBody.put("eventID", event.getEventID());
             request.setBody(requestBody.toString());
         } catch (JSONException e) {
             e.printStackTrace();
@@ -449,18 +447,18 @@ public class APIManager implements API {
 
     /**
      *
-     * @param eventID
+     * @param event
      * @param response
      */
     @Override
-    public void likeEvent(final String eventID, final APICallback<String> response) {
+    public void likeEvent(final Event event, final APICallback<String> response) {
         final APIEndpoint endpoint = new APIEndpoint("likeEvent");
         final APIRequest request = new APIRequest(endpoint);
 
         // create the request body
         try {
             JSONObject requestBody = new JSONObject();
-            requestBody.put("eventID", eventID);
+            requestBody.put("eventID", event.getEventID());
             request.setBody(requestBody.toString());
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage());
@@ -471,7 +469,7 @@ public class APIManager implements API {
             public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
                 Log.d(LOG_TAG, apiResponse.getStatus());
                 if (apiResponse.getStatus().equals("200")) {
-                    response.onSuccess(new String("You liked: " + eventID));
+                    response.onSuccess("You liked: " + event.getEventName());
                 }
             }
         });
@@ -481,18 +479,18 @@ public class APIManager implements API {
 
     /**
      *
-     * @param eventID
+     * @param event
      * @param response
      */
     @Override
-    public void unlikeEvent(final String eventID, final APICallback<String> response) {
+    public void unlikeEvent(final Event event, final APICallback<String> response) {
         final APIEndpoint endpoint = new APIEndpoint("unlikeEvent");
         final APIRequest request = new APIRequest(endpoint);
 
         // create the request body
         try {
             JSONObject requestBody = new JSONObject();
-            requestBody.put("eventID", eventID);
+            requestBody.put("eventID", event.getEventID());
             request.setBody(requestBody.toString());
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage());
@@ -503,7 +501,7 @@ public class APIManager implements API {
             public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
                 Log.d(LOG_TAG, apiResponse.getStatus());
                 if (apiResponse.getStatus().equals("200")) {
-                    response.onSuccess(new String("You unliked: " + eventID));
+                    response.onSuccess("You unliked: " + event.getEventName());
                 }
             }
         });
@@ -558,13 +556,80 @@ public class APIManager implements API {
     /**
      *
      * @param S3ID
-     * @param eventID
+     * @param event
      * @param response
      */
     @Override
-    public void addVideoToEvent(final String S3ID, final String eventID, final APICallback<String> response) {
+    public void addVideoToEvent(final String S3ID, final Event event, final APICallback<String> response) {
+        final APIEndpoint endpoint = new APIEndpoint("addVideoToEvent");
+        final APIRequest request = new APIRequest(endpoint);
 
+        try {
+            JSONObject requestBody = new JSONObject();
+            requestBody.put("eventID", event.getEventID());
+            requestBody.put("S3ID", S3ID);
+            request.setBody(requestBody.toString());
+        } catch (JSONException e) {
+            Log.e(LOG_TAG, e.getMessage());
+        }
+
+        // perform the HTTP request and wait for callback
+        Service service = new Service(request, new Service.ServiceCallBack() {
+            @Override
+            /**
+             * onResponseReceived takes the DAO from inside the response, sets the status
+             */
+            public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
+                BaseDAO baseDAO = apiResponse.getResponseBody();
+                final String responseBody = apiResponse.getResponseBody().get_DAO_BODY().toString();
+                if (apiResponse.getStatus().equals("200")) {
+                    response.onSuccess("Video added to event");
+                } else {
+                    response.onFailure(responseBody);
+                }
+
+            }
+        });
+
+
+        service.execute();
     }
 
+    @Override
+    public void getInfo(final APICallback<User> response) {
+        final APIEndpoint endpoint = new APIEndpoint("getInfo");
+        final APIRequest request = new APIRequest(endpoint);
 
+
+        // perform the HTTP request and wait for callback
+        Service service = new Service(request, new Service.ServiceCallBack() {
+            @Override
+            /**
+             * onResponseReceived takes the DAO from inside the response, sets the status
+             */
+            public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
+
+
+                BaseDAO baseDAO = apiResponse.getResponseBody();
+                final APIResponse userResponse = new APIResponse(apiResponse.getStatus());
+                final String responseBody = apiResponse.getResponseBody().get_DAO_BODY().toString();
+                userResponse.setResponseBody(baseDAO);
+
+                if (apiResponse.getStatus().equals("200")) {
+                    JSONObject json = baseDAO.get_DAO_BODY();
+                    User currentUser = new User(json.optString("name", ""),
+                            json.optString("email",""),
+                            json.optString("userID", ""),
+                            json.optString("profileID", ""));
+                    response.onSuccess(currentUser);
+                } else {
+                    response.onFailure("Error getting info");
+                }
+
+            }
+        });
+
+
+        service.execute();
+    }
 }

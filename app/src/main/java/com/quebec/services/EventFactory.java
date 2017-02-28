@@ -23,7 +23,7 @@ public class EventFactory {
     public Event eventFactory() throws JSONException {
         final String title = eventDAO.get_DAO_BODY().getString("title");
         final String description = eventDAO.get_DAO_BODY().getString("description");
-        final String eventID = eventDAO.get_DAO_BODY().getString("eventID");
+        final int eventID = eventDAO.get_DAO_BODY().getInt("eventID");
         final String location = eventDAO.get_DAO_BODY().getString("location");
         final String time = eventDAO.get_DAO_BODY().getString("time");
         final boolean likes = eventDAO.get_DAO_BODY().getBoolean("likes");
