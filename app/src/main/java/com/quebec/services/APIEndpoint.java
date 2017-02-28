@@ -13,6 +13,7 @@ public class APIEndpoint {
     private static final String addVideoToEvent = "addVideoToEvent";
     private static final String follow = "follow";
     private static final String unfollow = "unfollow";
+    private static final String isFollowing = "isFollowing";
     private static final String createEvent = "createEvent";
     private static final String addUserToEvent = "addUserToEvent";
     private static final String removeFromEvent = "removeFromEvent";
@@ -39,6 +40,10 @@ public class APIEndpoint {
 
             case "followers":
                 this.path += this.followers;
+                break;
+
+            case "isFollowing":
+                this.path += this.isFollowing;
                 break;
 
             case "setProfileVideo":
