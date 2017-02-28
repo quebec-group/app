@@ -44,6 +44,9 @@ public class AWSConfiguration {
     // S3 BUCKET REGION
     public static final Regions AMAZON_S3_USER_FILES_BUCKET_REGION =
             Regions.fromName("eu-west-1");
+
+    public static final String AMAZON_S3_USER_FILES_BUCKET_REGION_URL = "eu_west_1";
+
     public static final String AMAZON_COGNITO_USER_POOL_ID =
             "eu-west-1_uSMoln18o";
     public static final String AMAZON_COGNITO_USER_POOL_CLIENT_ID =

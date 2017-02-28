@@ -24,6 +24,7 @@ import com.amazonaws.mobile.content.ContentProgressListener;
 import com.amazonaws.mobile.user.IdentityManager;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.quebec.app.auth.SplashActivity;
+import com.quebec.services.API;
 import com.quebec.services.APICallback;
 import com.quebec.services.APIManager;
 
@@ -49,6 +50,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
     private TextView userNameTextView;
     private RoundedImageView profile_picture_view;
 
+    private TextView followingCount;
+    private TextView followersCount;
     private User mUser;
 
     public ProfileFragment() {
@@ -132,6 +135,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
         userNameTextView = (TextView) mFragmentView.findViewById(R.id.profileFragment_name);
         profile_picture_view = (RoundedImageView) mFragmentView.findViewById(R.id.profile_picture_view);
 
+        /* Text views for the profile header. */
+        TextView eventsCount = (TextView)  mFragmentView.findViewById(R.id.profileEventsCount);
+        followingCount = (TextView) mFragmentView.findViewById(R.id.profileFollowingCount);
+        followersCount = (TextView) mFragmentView.findViewById(R.id.profileFollowersCount);
+
+
         /* Declare the onclick event handlers for the buttons. */
         dropdown_button = (View) mFragmentView.findViewById(R.id.profile_dropdown_button);
 
@@ -156,11 +165,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
 
         final ProgressDialog spinner = ProgressDialog.show(getContext(), "Loading", "Wait while loading...");
 
+
         /*  Gets the currently logged in user. */
         APIManager.getInstance().getInfo(new APICallback<User>() {
             @Override
             public void onSuccess(User responseBody) {
                 mUser = responseBody;
+                getStats();
             }
 
             @Override
@@ -202,6 +213,31 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
         return mFragmentView;
     }
 
+    public void getStats() {
+        APIManager.getInstance().followersCount(mUser.getUserID(), new APICallback<Integer>() {
+            @Override
+            public void onSuccess(Integer responseBody) {
+                followingCount.setText(responseBody);
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
+
+        APIManager.getInstance().followingCount(mUser.getUserID(), new APICallback<Integer>() {
+            @Override
+            public void onSuccess(Integer responseBody) {
+                followersCount.setText(responseBody);
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
+    }
 
     @Override
     public void onClick(View view) {

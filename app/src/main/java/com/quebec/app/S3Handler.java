@@ -21,6 +21,7 @@ public class S3Handler {
 
     private static final int EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE = 3;
 
+    /* Public to allow public URL access to the videos. */
     public static final String S3_PREFIX_PROTECTED = "protected/";
 
     /** The user file manager. Used on uploads folder */
@@ -38,6 +39,10 @@ public class S3Handler {
         return  folderPath + pathPrefix + f.getName();
     }
 
+    public static String getURL(String filepath) {
+        return "http://s3-" + (AWSConfiguration.AMAZON_S3_USER_FILES_BUCKET_REGION_URL) + ".amazonaws.com/" + AWSConfiguration.AMAZON_S3_USER_FILES_BUCKET + "/" + filepath;
+    }
+
     private void initialiseBucket(final String bucket, final String prefix, final Regions region) {
 
         final String identityId = AWSMobileClient.defaultMobileClient()
@@ -53,6 +58,8 @@ public class S3Handler {
                 userFileManagerCreatingLatch.countDown();
             }
         });
+
+
     }
 
 

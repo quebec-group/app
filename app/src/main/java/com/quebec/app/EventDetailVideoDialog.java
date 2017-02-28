@@ -11,16 +11,20 @@ import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.quebec.services.Video;
+
 /**
  * Created by Andrew on 27/02/2017.
  */
 
 public class EventDetailVideoDialog extends Dialog {
     private Activity mActivity;
+    private Video mVideo;
 
-    public EventDetailVideoDialog(Context context, Activity activity) {
+    public EventDetailVideoDialog(Video video, Context context, Activity activity) {
         super(context);
         this.mActivity = activity;
+        this.mVideo = video;
     }
 
     @Override
@@ -39,7 +43,7 @@ public class EventDetailVideoDialog extends Dialog {
         mediaController.setAnchorView(videoView);
 
         // Add the video to the dialog box.
-        Uri video = Uri.parse("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4");
+        Uri video = Uri.parse(S3Handler.getURL(mVideo.getVideoPath()));
         videoView.setMediaController(mediaController);
         videoView.setVideoURI(video);
         videoView.setZOrderOnTop(true);
