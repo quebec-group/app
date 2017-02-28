@@ -15,6 +15,7 @@ import com.quebec.services.APICallback;
 import com.quebec.services.APIManager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Andrew on 03/02/2017.
@@ -24,13 +25,13 @@ import java.util.ArrayList;
 public class FriendListAdapterItem extends ArrayAdapter<User> implements View.OnClickListener{
 
     int layoutResourceID;
-    ArrayList<User> data = new ArrayList<>();
+    List<User> data = new ArrayList<>();
     Context mContext;
     private User current_user;
     private static String LOG_TAG = FriendListAdapterItem.class.getSimpleName();
 
 
-    public FriendListAdapterItem(Context mContext, int layoutResourceID, ArrayList<User> objects) {
+    public FriendListAdapterItem(Context mContext, int layoutResourceID, List<User> objects) {
         super(mContext, layoutResourceID, objects);
 
         this.layoutResourceID = layoutResourceID;
@@ -78,7 +79,7 @@ public class FriendListAdapterItem extends ArrayAdapter<User> implements View.On
     }
 
     public void unfollow(final User user) {
-        APIManager.getInstance().unfollow(user.getUserID(), new APICallback<String>() {
+        APIManager.getInstance().unfollow(user, new APICallback<String>() {
             @Override
             public void onSuccess(String responseBody) {
                 Log.d(LOG_TAG, "Unfollowed:" + user.getUserID());

@@ -299,18 +299,18 @@ public class APIManager implements API {
 
     /**
      *
-     * @param userID
+     * @param user
      * @param response
      */
     @Override
-    public void follow(final String userID, final APICallback<String> response) {
+    public void follow(final User user, final APICallback<String> response) {
         final APIEndpoint endpoint = new APIEndpoint("follow");
         final APIRequest request = new APIRequest(endpoint);
 
         // create the request body
         try {
             JSONObject requestBody = new JSONObject();
-            requestBody.put("userID", userID);
+            requestBody.put("userID", user.getUserID());
             request.setBody(requestBody.toString());
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage());
@@ -321,7 +321,7 @@ public class APIManager implements API {
             public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
                 Log.d(LOG_TAG, apiResponse.getStatus());
                 if (apiResponse.getStatus().equals("200")) {
-                    response.onSuccess("Successfully followed: " + userID);
+                    response.onSuccess("Successfully followed: " + user.getUserID());
                 }
             }
         });
@@ -332,18 +332,18 @@ public class APIManager implements API {
 
     /**
      *
-     * @param userID
+     * @param user
      * @param response
      */
     @Override
-    public void unfollow(final String userID, final APICallback<String> response) {
+    public void unfollow(final User user, final APICallback<String> response) {
         final APIEndpoint endpoint = new APIEndpoint("unfollow");
         final APIRequest request = new APIRequest(endpoint);
 
         // create the request body
         try {
             JSONObject requestBody = new JSONObject();
-            requestBody.put("userID", userID);
+            requestBody.put("userID", user.getUserID());
             request.setBody(requestBody.toString());
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage());
@@ -354,7 +354,7 @@ public class APIManager implements API {
             public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
                 Log.d(LOG_TAG, apiResponse.getStatus());
                 if (apiResponse.getStatus().equals("200")) {
-                    response.onSuccess("Successfully unfollowed: " + userID);
+                    response.onSuccess("Successfully unfollowed: " + user.getUserID());
                 }
             }
         });

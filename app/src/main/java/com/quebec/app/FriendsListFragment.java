@@ -60,9 +60,9 @@ public class FriendsListFragment extends Fragment implements AdapterView.OnItemC
 
 
         // get the users that the current user is following
-        APIManager.getInstance().following(userID, new APICallback<ArrayList<User>>() {
+        APIManager.getInstance().following(userID, new APICallback<List<User>>() {
             @Override
-            public void onSuccess(ArrayList<User> responseBody) {
+            public void onSuccess(List<User> responseBody) {
                 adapter = new FriendListAdapterItem(FriendsListFragment.this.getContext(), R.layout.adapter_friend_list_item, responseBody);
                 listView.setAdapter(adapter);
                 listView.setOnItemClickListener(FriendsListFragment.this);
