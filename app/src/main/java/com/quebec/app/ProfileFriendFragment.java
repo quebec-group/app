@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import static com.quebec.app.R.id.friendsListSearchBox;
+
 
 public class ProfileFriendFragment extends Fragment {
 

@@ -20,6 +20,7 @@ public class APIEndpoint {
     private static final String likeEvent = "likeEvent";
     private static final String unlikeEvent = "unlikeEvent";
     private static final String getInfo = "getInfo";
+    private static final String find = "find";
 
     private static final String POST_METHOD = "POST";
 
@@ -78,6 +79,9 @@ public class APIEndpoint {
                 break;
             case "getInfo":
                 this.path += this.getInfo;
+                break;
+            case "find":
+                this.path += this.find;
                 break;
         }
         this.method = this.POST_METHOD;

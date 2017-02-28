@@ -24,6 +24,7 @@ public interface API {
     public abstract void follow(final String userID, final APICallback<String> response);
     public abstract void unfollow(final String userID, final APICallback<String> response);
     public abstract void getInfo(final APICallback<User> response);
+    public abstract void find(final String searchString, final APICallback<List<User>> response);
 
 
 

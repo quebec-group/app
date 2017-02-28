@@ -27,8 +27,6 @@ import com.quebec.services.APICallback;
 import com.quebec.services.APIManager;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class EventVideoUploadDetails extends AppCompatActivity implements View.OnClickListener {
     private static String LOG_TAG = EventVideoUploadDetails.class.getSimpleName();
@@ -208,7 +206,7 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
     @Override
     public void onClick(View v) {
         if (v.equals(saveButton)) {
-            final String eventTime = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+            final String eventTime = String.valueOf(System.currentTimeMillis());
             //TODO fill location
             final String location = "TODO";
             final String videoPath = VideoUploadHandler.getFullS3PathForFile(video);
