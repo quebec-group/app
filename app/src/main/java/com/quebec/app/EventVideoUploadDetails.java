@@ -6,32 +6,49 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.MediaController;
+import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.VideoView;
 
 import com.amazonaws.mobile.content.ContentItem;
 import com.amazonaws.mobile.content.ContentProgressListener;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.quebec.services.APICallback;
+import com.quebec.services.APIManager;
 
 import java.io.File;
-import java.net.URI;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class EventVideoUploadDetails extends AppCompatActivity implements View.OnClickListener {
+    private static String LOG_TAG = EventVideoUploadDetails.class.getSimpleName();
 
     static final String VIDEO_URI = "videoUri";
 
     private String mVideoURI;
+    private EditText eventTitleEditText;
+    private Button saveButton;
+    private String videoPath = "";
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
+    private File video;
 
     /**
      * Converts from a URI to a complete file path. Handles edge cases for Android KitKat etc.
+     *
      * @param context
      * @param uri
      * @return
@@ -76,7 +93,7 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
                 }
 
                 final String selection = "_id=?";
-                final String[] selectionArgs = new String[] {
+                final String[] selectionArgs = new String[]{
                         split[1]
                 };
 
@@ -133,6 +150,7 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
 
     /**
      * onCreate loads when the video upload panel is loaded.
+     *
      * @param savedInstanceState
      */
     @Override
@@ -140,20 +158,23 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_upload_video_details);
 
+        eventTitleEditText = (EditText) findViewById(R.id.event_upload_details_event_name);
+        saveButton = (Button) findViewById(R.id.event_upload_video_saveBtn);
+
         final ProgressBar progressBar = (ProgressBar) this.findViewById(R.id.event_video_upload_progress);
 
         Intent intent = getIntent();
         mVideoURI = intent.getStringExtra(VIDEO_URI);
 
         Uri u = Uri.parse(mVideoURI);
-        File video = new File(getPathFromURI(this.getApplicationContext(), u));
+        video = new File(getPathFromURI(this.getApplicationContext(), u));
 
 
         VideoUploadHandler uploader = new VideoUploadHandler();
         uploader.uploadVideo(video, new ContentProgressListener() {
             @Override
             public void onSuccess(ContentItem contentItem) {
-
+                saveButton.setEnabled(true);
             }
 
             @Override
@@ -173,19 +194,82 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
         Button btn = (Button) this.findViewById(R.id.event_upload_video_saveBtn);
         btn.setOnClickListener(this);
 
+        saveButton.setEnabled(false);
+
+        saveButton.setOnClickListener(this);
+
         Log.e("tag", mVideoURI);
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.event_upload_video_saveBtn:
-                Intent intent = new Intent(this.getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                break;
+        if (v.equals(saveButton)) {
+            final String eventTime = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+            //TODO fill location
+            final String location = "TODO";
+            final String videoPath = VideoUploadHandler.getFullS3PathForFile(video);
+
+
+            APIManager.getInstance().createEvent(
+                    eventTitleEditText.getText().toString(),
+                    eventTime,
+                    location,
+                    videoPath,
+                    new APICallback<String>() {
+                        @Override
+                        public void onSuccess(String responseBody) {
+                            Log.d(LOG_TAG, "Event created");
+                        }
+
+                        @Override
+                        public void onFailure(String message) {
+                            Log.e(LOG_TAG, "Event creation failed");
+                        }
+                    });
+
+            Intent intent = new Intent(this.getApplicationContext(), MainActivity.class);
+            startActivity(intent);
         }
     }
 
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("EventVideoUploadDetails Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
+    }
 }
 

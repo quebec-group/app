@@ -8,13 +8,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class ProfilePictureSignUpActivity extends ProfilePictureActivity {
+public class ProfilePictureUpdateActivity extends ProfilePictureActivity {
 
-    public ProfilePictureSignUpActivity() {
+    public ProfilePictureUpdateActivity() {
         super();
     }
 
-    public ProfilePictureSignUpActivity(ImageView signup_image_preview,
+    public ProfilePictureUpdateActivity(ImageView signup_image_preview,
                                         TextView errorText,
                                         Button confirmButton) {
         super(signup_image_preview, errorText, confirmButton);
@@ -28,7 +28,7 @@ public class ProfilePictureSignUpActivity extends ProfilePictureActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up_photo);
+        setContentView(R.layout.activity_update_profile_photo);
 
         ImageView signup_image_preview = (ImageView) findViewById(R.id.signup_image_preview);
         TextView errorText = (TextView) findViewById(R.id.signup_image_error);

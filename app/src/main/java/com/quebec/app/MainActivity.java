@@ -10,6 +10,7 @@ package com.quebec.app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.IdRes;
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
+        // TODO: Fix whatever is breaking this
         boolean fragmentPopped = getSupportFragmentManager().popBackStackImmediate(frag.getClass().getName(), 0);
 
         if (!fragmentPopped) {
@@ -74,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             transaction.addToBackStack(frag.getClass().getName());
             transaction.commit();
             currentBottomBarItem = -1;
-            
+
             mFragment = frag;
         }
 
@@ -131,6 +133,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Obtain a reference to the identity manager.
         identityManager = awsMobileClient.getIdentityManager();
 
+        SharedPreferences sharedPref = getSharedPreferences("SignUp", Context.MODE_PRIVATE);
+
+        APIManager.getInstance().createUser(
+                sharedPref.getString("givenName", ""),
+                sharedPref.getString("email", ""),
+                new APICallback<String>() {
+                    @Override
+                    public void onSuccess(String responseBody) {
+                        Log.e(LOG_TAG, "User successfully added");
+                    }
+
+                    @Override
+                    public void onFailure(String message) {
+                        Log.e(LOG_TAG, "Couldn't add user");
+                    }
+                });
+
+
         setContentView(R.layout.activity_main);
 
         if (findViewById(R.id.fragment_container) != null) {
@@ -144,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         ProfilePictureHandler profilePictureHandler = new ProfilePictureHandler();
         if (!profilePictureHandler.profilePictureExists()) {
-            Intent intent = new Intent(this, ProfilePictureSignUpActivity.class);
+            Intent intent = new Intent(this, ProfilePictureUpdateActivity.class);
             startActivity(intent);
         }
 
@@ -266,7 +286,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void updateProfilePictureActivity() {
-        Intent intent = new Intent(this, ProfilePictureSignUpActivity.class);
+        Intent intent = new Intent(this, ProfilePictureUpdateActivity.class);
         startActivity(intent);
     }
 

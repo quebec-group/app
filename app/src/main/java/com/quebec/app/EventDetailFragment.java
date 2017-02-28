@@ -15,6 +15,9 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.quebec.services.APICallback;
+import com.quebec.services.APIManager;
+
 import static com.quebec.app.EventVideoUploadSelect.EVENT_VIDEO_MODE;
 
 
@@ -22,6 +25,7 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
                                                              View.OnClickListener {
 
     public static final String EVENT_KEY = "event_key";
+    private static String LOG_TAG = EventDetailFragment.class.getSimpleName();
 
     private Event mEvent;
 
@@ -42,7 +46,6 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
         // Required empty public constructor
     }
 
-
     public static EventDetailFragment newInstance(Event e) {
         EventDetailFragment fragment = new EventDetailFragment();
 
@@ -61,10 +64,6 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
         if (getArguments() != null) {
             mEvent = getArguments().getParcelable(EVENT_KEY);
         }
-        else {
-            // TODO: Handle no event passed to the events detail panel.
-        }
-
 
     }
 
@@ -108,12 +107,14 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
             eventLikes = mEvent.getLikesCount();
             eventLikeButton.setText(mEvent.getLikesCount() + " likes");
 
+            // TODO: The like state is not working.
             if (mEvent.getLikes()) {
                 eventLikeState = true;
                 eventLikeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_heart_filled, 0, 0, 0);
             }
             else {
                 eventLikeState  = false;
+                eventLikeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_heart_empty, 0, 0, 0);
             }
          }
 
@@ -136,9 +137,8 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
      * Add the videos related to the event to the view.
      */
     private void addVideosToView() {
-
         /* Add the videos to the view, through the use of the card view. */
-        EventDetailVideoAdapterItem adapter = new EventDetailVideoAdapterItem(this.getContext(), mEvent.getEventVideos());
+        EventDetailVideoAdapterItem adapter = new EventDetailVideoAdapterItem(this.getContext(), this.getActivity(), mEvent.getEventVideos());
 
         /* Makes use of the RecyclerView for the horizontal scrolling field. */
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getContext() ,LinearLayoutManager.HORIZONTAL, false);
@@ -220,17 +220,39 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
     private void likeEventClick() {
 
 
-        if (eventLikeState == false) {
+        if (!eventLikeState) {
             eventLikeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_heart_filled, 0, 0, 0);
             eventLikes = eventLikes + 1;
+            APIManager.getInstance().likeEvent(mEvent, new APICallback<String>() {
+                @Override
+                public void onSuccess(String responseBody) {
+                    Log.d(LOG_TAG, "Liked event");
+                }
+
+                @Override
+                public void onFailure(String message) {
+                    Log.e(LOG_TAG, "Liked event failed");
+                }
+            });
         }
         else {
             eventLikeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_heart_empty, 0, 0, 0);
             eventLikes = eventLikes - 1;
+            APIManager.getInstance().unlikeEvent(mEvent, new APICallback<String>() {
+                @Override
+                public void onSuccess(String responseBody) {
+                    Log.d(LOG_TAG, "Liked event");
+                }
+
+                @Override
+                public void onFailure(String message) {
+                    Log.e(LOG_TAG, "Liked event failed");
+                }
+            });
         }
 
         eventLikeButton.setText(eventLikes + " likes");
-        eventLikeState = eventLikeState ? false : true;
+        eventLikeState = !eventLikeState;
     }
 
 

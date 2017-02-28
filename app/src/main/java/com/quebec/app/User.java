@@ -14,6 +14,13 @@ public class User implements Parcelable {
     private String userID;
     private String profileID;
 
+    public User(String name, String email, String userID, String profileID) {
+        this.name = name;
+        this.email = email;
+        this.userID = userID;
+        this.profileID = profileID;
+    }
+
     public User(String name) {
         this.name = name;
     }
@@ -58,23 +65,11 @@ public class User implements Parcelable {
         this.userID = userID;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getUserID() {
-        return userID;
-    }
-
     public String getProfileID() {
         return profileID;
     }
 
-    public void setProfileID(String profileID) {
-        this.profileID = profileID;
+    public String getUserID() {
+        return userID;
     }
 }
