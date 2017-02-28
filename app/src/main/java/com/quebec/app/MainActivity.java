@@ -73,6 +73,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (addToBackStack) {
                 transaction.addToBackStack(frag.getClass().getName());
             }
+            else {
+                getSupportFragmentManager().popBackStack(null, getSupportFragmentManager().POP_BACK_STACK_INCLUSIVE);
+            }
 
             transaction.commit();
             currentBottomBarItem = -1;
@@ -302,5 +305,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void openEventDetailLocation() {
         Intent intent = new Intent(this, EventDetailMapActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onProfileFriendEventSelected(Event event) {
+        setFragment(EventDetailFragment.newInstance(event), new FragmentTransitionFromRight(), true);
     }
 }

@@ -16,7 +16,7 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="175dp"
+            android:layout_height="match_parent"
             android:layout_margin="@dimen/layout_margin">
 
             <LinearLayout
@@ -32,6 +32,7 @@
                     <com.makeramen.roundedimageview.RoundedImageView
                         android:id="@+id/profile_friend_picture_view"
                         android:scaleType="fitXY"
+                        android:src="@drawable/com_facebook_profile_picture_blank_square"
                         app:riv_corner_radius="100dp"
                         app:riv_mutate_background="true"
                         app:riv_oval="false"
@@ -63,12 +64,12 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/activity_separator_small">
 
                     <Button
@@ -81,12 +82,12 @@
                 </LinearLayout>
 
             </RelativeLayout>
-        </LinearLayout>
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/profileFriendEventsList" />
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/profileFriendEventsRecycler" />
+        </LinearLayout>
 
     </LinearLayout>
 
