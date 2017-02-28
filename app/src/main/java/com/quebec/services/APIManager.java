@@ -526,6 +526,7 @@ public class APIManager implements API {
                     eventListFactory.setEventListDAO(baseDAO);
                     try {
                         ArrayList<Event> events = eventListFactory.eventListFactory();
+
                         response.onSuccess(events);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -630,6 +631,41 @@ public class APIManager implements API {
         try {
             JSONObject requestBody = new JSONObject();
             requestBody.put("userID", user.getUserID());
+        } catch (JSONException e) {
+            Log.e(LOG_TAG, e.getMessage());
+        }
+
+        // perform the HTTP request and wait for callback
+        Service service = new Service(request, new Service.ServiceCallBack() {
+            @Override
+            /**
+             * onResponseReceived takes the DAO from inside the response, sets the status
+             */
+            public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
+                BaseDAO baseDAO = apiResponse.getResponseBody();
+
+                if (apiResponse.getStatus().equals("200")) {
+                    JSONObject json = baseDAO.get_DAO_BODY();
+                    boolean isFollowing = json.getBoolean("isFollowing");
+                    response.onSuccess(isFollowing);
+                } else {
+                    response.onFailure("Error getting info");
+                }
+            }
+        });
+
+                service.execute();
+    }
+
+
+
+    public void find(final String searchString, final APICallback<List<User>> response){
+        final APIEndpoint endpoint = new APIEndpoint("find");
+        final APIRequest request = new APIRequest(endpoint);
+
+        try {
+            JSONObject requestBody = new JSONObject();
+            requestBody.put("searchString", searchString);
             request.setBody(requestBody.toString());
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage());
@@ -642,22 +678,30 @@ public class APIManager implements API {
              * onResponseReceived takes the DAO from inside the response, sets the status
              */
             public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
-
-
                 BaseDAO baseDAO = apiResponse.getResponseBody();
+                final APIResponse userResponse = new APIResponse(apiResponse.getStatus());
+                final String responseBody = apiResponse.getResponseBody().get_DAO_BODY().toString();
+                userResponse.setResponseBody(baseDAO);
 
                 if (apiResponse.getStatus().equals("200")) {
-                    JSONObject json = baseDAO.get_DAO_BODY();
-                    boolean isFollowing = json.getBoolean("isFollowing");
-                    response.onSuccess(isFollowing);
-                } else {
-                    response.onFailure("Error getting info");
-                }
 
+                    UserListFactory userListFactory = new UserListFactory();
+                    JSONObject jsonObject = baseDAO.get_DAO_BODY();
+                    String s = jsonObject.getString("users");
+                    JSONArray jsonArray = new JSONArray(s);
+                    try {
+                        ArrayList<User> followers =  userListFactory.userListFactory(jsonArray);
+                        response.onSuccess(followers);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    response.onFailure(responseBody);
+                }
             }
         });
 
-
         service.execute();
     }
+
 }
