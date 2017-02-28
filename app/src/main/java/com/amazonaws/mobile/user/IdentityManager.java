@@ -456,6 +456,7 @@ public class IdentityManager {
         credentialsProvider.refresh();
         Log.d(getClass().getSimpleName(), "Cognito ID: " + credentialsProvider.getIdentityId());
         AWSWrapper.setCognitoID(credentialsProvider.getIdentityId());
+        AWSWrapper.setCredentialsProvider(credentialsProvider);
         Log.d(getClass().getSimpleName(), "Cognito Credentials: " + credentialsProvider.getCredentials());
     }
 
