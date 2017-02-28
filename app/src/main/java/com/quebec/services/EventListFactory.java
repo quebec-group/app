@@ -10,6 +10,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by Andy on 25/02/2017.
@@ -61,6 +63,13 @@ public class EventListFactory {
 
             eventsAttended.add(event);
         }
+
+        Collections.sort(eventsAttended, new Comparator<Event>() {
+            @Override
+            public int compare(Event o1, Event o2) {
+                return o1.getTime().compareTo(o2.getTime());
+            }
+        });
 
         return eventsAttended;
 
