@@ -18,7 +18,6 @@ import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
-
 import com.amazonaws.mobile.AWSMobileClient;
 import com.amazonaws.mobile.content.ContentItem;
 import com.amazonaws.mobile.content.ContentProgressListener;
@@ -172,7 +171,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
         });
 
         /* Get the events related to the user. */
-        APIManager.getInstance().getEvents(new APICallback<List<Event>>() {
+        APIManager.getInstance().getAttendedEvents(new APICallback<List<Event>>() {
             @Override
             public void onSuccess(final List<Event> events) {
 
