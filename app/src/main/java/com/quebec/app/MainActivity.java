@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
+        // TODO: Fix whatever is breaking this
         boolean fragmentPopped = getSupportFragmentManager().popBackStackImmediate(frag.getClass().getName(), 0);
 
         if (!fragmentPopped) {
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             transaction.addToBackStack(frag.getClass().getName());
             transaction.commit();
             currentBottomBarItem = -1;
-            
+
             mFragment = frag;
         }
 

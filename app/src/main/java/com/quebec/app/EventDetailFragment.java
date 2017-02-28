@@ -17,9 +17,6 @@ import android.widget.TextView;
 
 import com.quebec.services.APICallback;
 import com.quebec.services.APIManager;
-import com.quebec.services.Video;
-
-import java.util.ArrayList;
 
 import static com.quebec.app.EventVideoUploadSelect.EVENT_VIDEO_MODE;
 
@@ -138,13 +135,8 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
      * Add the videos related to the event to the view.
      */
     private void addVideosToView() {
-
-        ArrayList<Video> videos = new ArrayList<Video>();
-        videos.add(new Video("http://techslides.com/demos/sample-videos/small.mp4"));
-        videos.add(new Video("http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"));
-
         /* Add the videos to the view, through the use of the card view. */
-        EventDetailVideoAdapterItem adapter = new EventDetailVideoAdapterItem(this.getContext(), this.getActivity(), videos);
+        EventDetailVideoAdapterItem adapter = new EventDetailVideoAdapterItem(this.getContext(), this.getActivity(), mEvent.getEventVideos());
 
         /* Makes use of the RecyclerView for the horizontal scrolling field. */
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getContext() ,LinearLayoutManager.HORIZONTAL, false);

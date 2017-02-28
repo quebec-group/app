@@ -35,7 +35,7 @@ public class EventFactory {
         for (int i = 0; i < videosJson.length(); i++) {
             JSONObject json = videosJson.getJSONObject(i);
 
-            videos.add(new Video(json.getString("videoID")));
+            videos.add(new Video(json));
         }
 
         final ArrayList<User> attendees = new ArrayList<>();

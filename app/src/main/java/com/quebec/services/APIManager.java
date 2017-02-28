@@ -6,8 +6,6 @@ package com.quebec.services;
 
 import android.util.Log;
 
-import com.amazonaws.mobile.AWSMobileClient;
-import com.amazonaws.mobile.user.IdentityManager;
 import com.quebec.app.Event;
 import com.quebec.app.User;
 
@@ -50,7 +48,7 @@ public class APIManager implements API {
      * @param eventTime
      * @param response
      */
-    public void createEvent(String eventTitle, String eventLocation, String eventTime, final APICallback<String> response) {
+    public void createEvent(String eventTitle, String eventLocation, String eventTime, String videoPath, final APICallback<String> response) {
         final APIEndpoint  endpoint = new APIEndpoint("createEvent");
         final APIRequest request = new APIRequest(endpoint);
 
@@ -61,6 +59,7 @@ public class APIManager implements API {
             requestBody.put("title", eventTitle);
             requestBody.put("location", eventLocation);
             requestBody.put("time", eventTime);
+            requestBody.put("videoPath", videoPath);
             request.setBody(requestBody.toString());
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage());
@@ -168,7 +167,7 @@ public class APIManager implements API {
             public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
                 Log.d(LOG_TAG, apiResponse.getStatus());
                 if (apiResponse.getStatus().equals("200")) {
-                    response.onSuccess(new String("Successfully changed profile video to: " + S3ID));
+                    response.onSuccess("Successfully changed profile video to: " + S3ID);
                 }
             }
         });
@@ -185,31 +184,10 @@ public class APIManager implements API {
     public void following(final String userID, final APICallback<List<User>> response) {
         final APIEndpoint endpoint = new APIEndpoint("following");
         final APIRequest request = new APIRequest(endpoint);
-        final String[] userIDA = new String[2];
-        String ID = "";
-        // create the request body
-        if(userID.equals("current_user")) {
-            AWSMobileClient.defaultMobileClient()
-                    .getIdentityManager().getUserID(new IdentityManager.IdentityHandler() {
-                @Override
-                public void handleIdentityID(String identityId) {
-                    Log.d(LOG_TAG,identityId);
-                    userIDA[0] = identityId;
-                }
-
-                @Override
-                public void handleError(Exception exception) {
-
-                }
-            });
-            ID = userIDA[0];
-        } else {
-            ID = userID;
-        }
 
         try {
             JSONObject requestBody = new JSONObject();
-            requestBody.put("userID", ID);
+            requestBody.put("userID", userID);
             request.setBody(requestBody.toString());
             Log.d(LOG_TAG, requestBody.toString());
         } catch (JSONException e) {
@@ -250,6 +228,16 @@ public class APIManager implements API {
 
 
         service.execute();
+    }
+
+    @Override
+    public void followers(final APICallback<List<User>> response) {
+        followers(AWSWrapper.getCognitoID(), response);
+    }
+
+    @Override
+    public void following(final APICallback<List<User>> response) {
+        following(AWSWrapper.getCognitoID(), response);
     }
 
     /**

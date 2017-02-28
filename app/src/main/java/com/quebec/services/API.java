@@ -18,7 +18,9 @@ public interface API {
 
     // User interactions
     public abstract void following(final String userID, final APICallback<List<User>> response);
+    public abstract void following(final APICallback<List<User>> response);
     public abstract void followers(final String userID, final APICallback<List<User>> response);
+    public abstract void followers(final APICallback<List<User>> response);
     public abstract void follow(final String userID, final APICallback<String> response);
     public abstract void unfollow(final String userID, final APICallback<String> response);
     public abstract void getInfo(final APICallback<User> response);
@@ -26,7 +28,7 @@ public interface API {
 
 
     // Event interactions
-    public abstract void createEvent(final String eventName, final String eventDescription, final String eventVideoURL, final APICallback<String> response);
+    public abstract void createEvent(String eventTitle, String eventLocation, String eventTime, String videoPath, final APICallback<String> response);
     public abstract void addUserToEvent(final Event event, final String userID, final APICallback<String> response);
     public abstract void removeFromEvent(final Event event, final APICallback<String> response);
     public abstract void likeEvent(final Event eventID,final APICallback<String> response);
