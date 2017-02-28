@@ -69,6 +69,10 @@ public class User implements Parcelable {
         return profileID;
     }
 
+    public void setProfileID(final String profileID) {
+        this.profileID = profileID;
+    }
+
     public String getUserID() {
         return userID;
     }
