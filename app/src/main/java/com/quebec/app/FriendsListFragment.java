@@ -9,21 +9,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.amazonaws.mobile.AWSMobileClient;
 import com.quebec.services.APICallback;
 import com.quebec.services.APIManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
 public class FriendsListFragment extends Fragment implements AdapterView.OnItemClickListener {
-
+    private static String LOG_TAG = FriendsListFragment.class.getSimpleName();
 
     private FriendsListInteractionHandler mListener;
 
@@ -31,8 +30,6 @@ public class FriendsListFragment extends Fragment implements AdapterView.OnItemC
     private ListView listView;
 
     private FriendListAdapterItem adapter;
-    private User[] values;
-    private static String LOG_TAG = APIManager.class.getSimpleName();
 
     public FriendsListFragment() {
         // Required empty public constructor
@@ -54,23 +51,22 @@ public class FriendsListFragment extends Fragment implements AdapterView.OnItemC
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_friends_list, container, false);
 
+        adapter = new FriendListAdapterItem(getContext(), R.layout.adapter_friend_list_item);
+
+
         listView = (ListView) v.findViewById(R.id.friendsList);
 
-        String userID = AWSMobileClient.defaultMobileClient().getIdentityManager().getCachedUserID();
+        listView.setAdapter(adapter);
 
-
-        // get the users that the current user is following
-        APIManager.getInstance().following(userID, new APICallback<List<User>>() {
+        APIManager.getInstance().following(new APICallback<List<User>>() {
             @Override
-            public void onSuccess(List<User> responseBody) {
-                adapter = new FriendListAdapterItem(FriendsListFragment.this.getContext(), R.layout.adapter_friend_list_item, responseBody);
-                listView.setAdapter(adapter);
-                listView.setOnItemClickListener(FriendsListFragment.this);
+            public void onSuccess(List<User> users) {
+                setUsers(users);
             }
 
             @Override
             public void onFailure(String message) {
-                Log.e(LOG_TAG, "Failed to retrieve following.");
+                Log.d(LOG_TAG, "Couldn't get followers: " + message);
             }
         });
 
@@ -78,28 +74,19 @@ public class FriendsListFragment extends Fragment implements AdapterView.OnItemC
         listView.setOnItemClickListener(this);
 
         // Setup the search field for the friends page.
-        // TODO: Fix the implementation of the search field.
         friendsListSearchBox = (EditText) v.findViewById(R.id.friendsListSearchBox);
+
+        friendsListSearchBox.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
 
         friendsListSearchBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     performSearch();
+                    InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                     return true;
                 }
-                return false;
-            }
-        });
-
-        friendsListSearchBox.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction()==KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                    performSearch();
-                    return true;
-                }
-                performSearch();
                 return false;
             }
         });
@@ -107,23 +94,26 @@ public class FriendsListFragment extends Fragment implements AdapterView.OnItemC
         return v;
     }
 
-    // TODO: Function incomplete
     public void performSearch() {
-
-        /*
         String request = friendsListSearchBox.getText().toString();
 
-        // TODO Make request to the server for search
+        APIManager.getInstance().find(request, new APICallback<List<User>>() {
+            @Override
+            public void onSuccess(List<User> users) {
+                setUsers(users);
+            }
 
-        UserDTO[] newValues = new UserDTO[] {
-                new UserDTO("change 1"),
-                new UserDTO("change 2")
-        };
+            @Override
+            public void onFailure(String message) {
+                Log.e(LOG_TAG, "Error searching: " + message);
+            }
+        });
+    }
 
+    private void setUsers(List<User> users) {
         adapter.clear();
-        adapter.addAll(newValues);
+        adapter.addAll(users);
         adapter.notifyDataSetChanged();
-        */
     }
 
     @Override

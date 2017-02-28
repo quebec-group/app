@@ -101,4 +101,12 @@ public class Event implements Parcelable {
     public int getEventID() {
         return eventID;
     }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setLikes(boolean likes) {
+        this.likes = likes;
+    }
 }

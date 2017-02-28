@@ -170,6 +170,8 @@
 
     <string name="sign_in_verify">Verify</string>
     <string name="about_text" >Quebec Group Project\\nUtilise the power of face detection to see who\'s at your party!</string>
+    <string name="empty_events_feed">Create your first event, or follow some users to see events.</string>
+    <string name="profileFragmentTitle">Profile</string>
 
 
 </resources>

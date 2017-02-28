@@ -3,7 +3,6 @@ package com.quebec.services;
 import com.quebec.app.Event;
 import com.quebec.app.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +14,9 @@ public interface API {
 
     // Profile interactions
     public abstract void createUser(final String userName, final String userEmail, final APICallback<String> response);
-    public abstract void setProfileVideo(final String userID, final APICallback<String> response);
+    public abstract void setTrainingVideo(final String userID, final APICallback<String> response);
+    public abstract void setProfilePicture(String S3ID, APICallback<String> response);
+    public abstract void hasCompletedSignUp(APICallback<Boolean> response);
 
     // User interactions
     public abstract void following(final String userID, final APICallback<List<User>> response);
@@ -26,6 +27,7 @@ public interface API {
     public abstract void follow(final User user, final APICallback<String> response);
     public abstract void unfollow(final User user, final APICallback<String> response);
     public abstract void getInfo(final APICallback<User> response);
+    public abstract void find(final String searchString, final APICallback<List<User>> response);
 
 
 
@@ -39,4 +41,7 @@ public interface API {
     public abstract void addVideoToEvent(final String S3ID, final Event event, final APICallback<String> response);
 
 
+    void getAttendedEvents(APICallback<List<Event>> response);
+
+    void getAttendedEvents(String userID, APICallback<List<Event>> response);
 }

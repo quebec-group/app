@@ -16,72 +16,78 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/layout_margin">
+            android:layout_height="match_parent">
 
             <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="103dp"
-                android:weightSum="1">
-
-                <FrameLayout
-                    android:layout_width="134dp"
-                    android:layout_height="match_parent">
-
-                    <com.makeramen.roundedimageview.RoundedImageView
-                        android:id="@+id/profile_friend_picture_view"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/com_facebook_profile_picture_blank_square"
-                        app:riv_corner_radius="100dp"
-                        app:riv_mutate_background="true"
-                        app:riv_oval="false"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp" />
-                </FrameLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:text="TextView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/profile_friend_name"
-                        android:textAppearance="@style/TextAppearance.FontPath"
-                        android:textSize="36sp"
-                        android:layout_weight="1"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentStart="true" />
-                </RelativeLayout>
-
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp">
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/activity_separator_small">
+                    android:layout_height="match_parent"
+                    android:weightSum="1">
 
-                    <Button
-                        android:text="@string/fragment_friend_profile_add_friend"
+                    <FrameLayout
+                        android:layout_width="134dp"
+                        android:layout_height="match_parent">
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:id="@+id/profile_friend_picture_view"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/com_facebook_profile_picture_blank_square"
+                            app:riv_corner_radius="100dp"
+                            app:riv_mutate_background="true"
+                            app:riv_oval="false"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp" />
+                    </FrameLayout>
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/profile_friend_follow"
-                        android:layout_above="@+id/profile_dropdown_button" />
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:text="TextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/profile_friend_name"
+                            android:textAppearance="@style/TextAppearance.FontPath"
+                            android:textSize="36sp"
+                            android:layout_weight="1"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentStart="true" />
+                    </RelativeLayout>
 
                 </LinearLayout>
 
-            </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_separator_small">
+
+                        <Button
+                            android:text="@string/fragment_friend_profile_add_friend"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/profile_friend_follow"
+                            android:layout_above="@+id/profile_dropdown_button" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+            </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
