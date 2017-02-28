@@ -7,9 +7,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import static com.quebec.app.R.id.friendsListSearchBox;
@@ -18,20 +20,25 @@ import static com.quebec.app.R.id.friendsListSearchBox;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.quebec.services.APICallback;
 import com.quebec.services.APIManager;
+import com.quebec.services.APIResponse;
 
 import java.util.List;
 
 
 
+public class ProfileFriendFragment extends Fragment implements View.OnClickListener{
 
-public class ProfileFriendFragment extends Fragment {
 
     private User user;
 
     private static final String USER_KEY = "user_key";
     private OnFragmentInteractionListener mListener;
+    private static String LOG_TAG = ProfileFriendFragment.class.getSimpleName();
 
     private View mFragmentView;
+    private boolean following;
+    private Button follow;
+
 
     public ProfileFriendFragment() {
         // Required empty public constructor
@@ -57,6 +64,34 @@ public class ProfileFriendFragment extends Fragment {
         }
     }
 
+    public void getFollowStatus(final FollowStatusCallBack callback) {
+        APIManager.getInstance().isFollowing(user, new APICallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean responseBody) {
+                callback.onResponseReceived(true);
+            }
+
+            @Override
+            public void onFailure(String message) {
+                callback.onResponseReceived(false);
+                Log.d(LOG_TAG, "Failed to get following status");
+            }
+        });
+    }
+
+
+    public void followButton(Boolean follows) {
+        if(follows) {
+            follow.setText("Unfollow");
+            following = true;
+
+        } else {
+            follow.setText("Follow");
+            following = false;
+        }
+        follow.setOnClickListener(this);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -68,6 +103,18 @@ public class ProfileFriendFragment extends Fragment {
 
         // Update the profile picture on screen.
         RoundedImageView imageField = (RoundedImageView) mFragmentView.findViewById(R.id.profile_friend_picture_view);
+
+        follow = (Button) mFragmentView.findViewById(R.id.profile_friend_follow);
+
+        FollowStatusCallBack followStatusCallBack = new FollowStatusCallBack() {
+            @Override
+            public void onResponseReceived(Boolean follows) {
+                followButton(follows);
+            }
+        };
+
+        this.getFollowStatus(followStatusCallBack);
+
 
         /* Check if the user profile picture is set. */
         if (!(user.getProfileID()).equals("")) {
@@ -136,7 +183,47 @@ public class ProfileFriendFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.profile_friend_follow:
+                // Give user ability to follow/unfollow user dependent on current state
+                if(following) {
+                    APIManager.getInstance().unfollow(user, new APICallback<String>() {
+                        @Override
+                        public void onSuccess(String responseBody) {
+                            followButton(false);
+                            Log.d(LOG_TAG, "Unfollowed: " + user.getUserID());
+                        }
+
+                        @Override
+                        public void onFailure(String message) {
+                            Log.d(LOG_TAG, "Failed to unfollow: " + user.getUserID());
+                        }
+                    });
+                } else {
+                    APIManager.getInstance().follow(user, new APICallback<String>() {
+                        @Override
+                        public void onSuccess(String responseBody) {
+                            followButton(true);
+                            Log.d(LOG_TAG, "Followed: " + user.getUserID());
+                        }
+
+                        @Override
+                        public void onFailure(String message) {
+                            Log.d(LOG_TAG, "Failed to follow: " + user.getUserID());
+                        }
+                    });
+                }
+        }
+    }
+
     public interface OnFragmentInteractionListener {
         void onProfileFriendEventSelected(Event event);
     }
+
+    public static interface FollowStatusCallBack {
+        public void onResponseReceived(Boolean follows);
+    }
+
 }

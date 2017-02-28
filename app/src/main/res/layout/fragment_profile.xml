@@ -108,10 +108,10 @@
                             android:layout_weight="1">
 
                             <TextView
-                                android:text="152"
+                                android:text="0"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/textView14"
+                                android:id="@+id/profileEventsCount"
                                 android:textAppearance="@style/TextAppearance.FontPathHeading" />
 
                             <TextView
@@ -128,10 +128,10 @@
                             android:layout_weight="1">
 
                             <TextView
-                                android:text="42"
+                                android:text="0"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/textView14"
+                                android:id="@+id/profileFollowingCount"
                                 android:textAppearance="@style/TextAppearance.FontPathHeading" />
 
                             <TextView
@@ -148,10 +148,10 @@
                             android:layout_weight="1">
 
                             <TextView
-                                android:text="103"
+                                android:text="0"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/textView14"
+                                android:id="@+id/profileFollowersCount"
                                 android:textAppearance="@style/TextAppearance.FontPathHeading" />
 
                             <TextView

@@ -25,6 +25,7 @@ import com.amazonaws.mobile.content.ContentProgressListener;
 import com.amazonaws.mobile.user.IdentityManager;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.quebec.app.auth.SplashActivity;
+import com.quebec.services.API;
 import com.quebec.services.APICallback;
 import com.quebec.services.APIManager;
 
@@ -133,6 +134,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
         userNameTextView = (TextView) mFragmentView.findViewById(R.id.profileFragment_name);
         profile_picture_view = (RoundedImageView) mFragmentView.findViewById(R.id.profile_picture_view);
 
+        /* Text views for the profile header. */
+        TextView eventsCount = (TextView)  mFragmentView.findViewById(R.id.profileEventsCount);
+        TextView followingCount = (TextView) mFragmentView.findViewById(R.id.profileFollowingCount);
+        TextView followersCount = (TextView) mFragmentView.findViewById(R.id.profileFollowersCount);
+
+        APIManager.getInstance().
         /* Declare the onclick event handlers for the buttons. */
         dropdown_button = (View) mFragmentView.findViewById(R.id.profile_dropdown_button);
 

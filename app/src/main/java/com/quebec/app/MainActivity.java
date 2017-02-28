@@ -26,6 +26,7 @@ import com.amazonaws.mobile.user.IdentityManager;
 import com.quebec.app.auth.SplashActivity;
 import com.quebec.services.APICallback;
 import com.quebec.services.APIManager;
+import com.quebec.services.AWSWrapper;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabReselectListener;
 import com.roughike.bottombar.OnTabSelectListener;
@@ -47,7 +48,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Fragment mFragment;
     private String currentFragmentTab;
     private static String LOG_TAG = MainActivity.class.getSimpleName();
-
+    private SharedPreferences sharedPreferences;
+    private User current_user;
 
     private BottomBar mBottomBar;
     /**
@@ -133,11 +135,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Obtain a reference to the identity manager.
         identityManager = awsMobileClient.getIdentityManager();
 
-        SharedPreferences sharedPref = getSharedPreferences("SignUp", Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("SignUp", Context.MODE_PRIVATE);
 
         APIManager.getInstance().createUser(
-                sharedPref.getString("givenName", ""),
-                sharedPref.getString("email", ""),
+                sharedPreferences.getString("givenName", ""),
+                sharedPreferences.getString("email", ""),
                 new APICallback<String>() {
                     @Override
                     public void onSuccess(String responseBody) {
@@ -298,7 +300,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /** Events for the event detail page. **/
     @Override
     public void onEventUserSelected(User u) {
-        setFragment(ProfileFriendFragment.newInstance(u), new FragmentTransitionFromRight(), true);
+        String us = sharedPreferences.getString("userID","");
+
+        Log.d(LOG_TAG, "u:" + u.getUserID() + "curr" +  AWSWrapper.getCognitoID());
+
+        if(u.getUserID().equals(AWSWrapper.getCognitoID())) {
+            setFragment(ProfileFragment.newInstance(), new FragmentTransitionFromRight(), true);
+            currentBottomBarItem  = R.id.menu_profile;
+        } else {
+            setFragment(ProfileFriendFragment.newInstance(u), new FragmentTransitionFromRight(), true);
+        }
+
     }
 
     @Override
