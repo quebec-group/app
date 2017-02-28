@@ -79,6 +79,15 @@
                 />
 
             <TextView
+                android:id="@+id/signIn_textView_Verify"
+                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:text="Verify"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:gravity="left"
+                android:layout_marginLeft="@dimen/sign_in_text_margin" />
+
+            <TextView
                 android:id="@+id/signIn_textView_ForgotPassword"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"

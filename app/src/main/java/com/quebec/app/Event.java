@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class Event implements Parcelable {
 
     private String title;
-    private String eventID;
+    private int eventID;
     private String location;
     private String time;
     private ArrayList<Video> videos;
@@ -25,7 +25,7 @@ public class Event implements Parcelable {
 
 
 
-    public Event(String title, String eventID, String location, String time, ArrayList<Video> videos, ArrayList<User> attendees, boolean likes, int likesCount) {
+    public Event(String title, int eventID, String location, String time, ArrayList<Video> videos, ArrayList<User> attendees, boolean likes, int likesCount) {
         this.title = title;
         this.eventID = eventID;
         this.location = location;
@@ -96,5 +96,9 @@ public class Event implements Parcelable {
 
     public boolean getLikes() {
         return likes;
+    }
+
+    public int getEventID() {
+        return eventID;
     }
 }

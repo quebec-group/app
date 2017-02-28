@@ -41,7 +41,7 @@ public class EventListFactory {
             JSONObject currentEvent = new JSONObject(eventsArray.getString(i));
             Log.d(LOG_TAG, currentEvent.toString());
 
-            final String eventID = currentEvent.getString("eventID");
+            final int eventID = currentEvent.getInt("eventID");
             final String eventLocation = currentEvent.getString("location");
             final int likesCount = currentEvent.getInt("likesCount");
             final boolean likes = currentEvent.getBoolean("likes");

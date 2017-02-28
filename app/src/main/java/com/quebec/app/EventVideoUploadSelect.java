@@ -2,11 +2,11 @@ package com.quebec.app;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 
 public class EventVideoUploadSelect extends AppCompatActivity {
 
@@ -51,6 +51,11 @@ public class EventVideoUploadSelect extends AppCompatActivity {
         if (takeVideoIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     /**
