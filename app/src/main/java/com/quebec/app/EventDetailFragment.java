@@ -107,12 +107,14 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
             eventLikes = mEvent.getLikesCount();
             eventLikeButton.setText(mEvent.getLikesCount() + " likes");
 
+            // TODO: The like state is not working.
             if (mEvent.getLikes()) {
                 eventLikeState = true;
                 eventLikeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_heart_filled, 0, 0, 0);
             }
             else {
                 eventLikeState  = false;
+                eventLikeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_heart_empty, 0, 0, 0);
             }
          }
 
