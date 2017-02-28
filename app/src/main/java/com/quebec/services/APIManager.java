@@ -149,8 +149,8 @@ public class APIManager implements API {
      * @param response
      */
     @Override
-    public void setProfileVideo(final String S3ID, final APICallback<String> response) {
-        final APIEndpoint endpoint = new APIEndpoint("setProfileVideo");
+    public void setTrainingVideo(final String S3ID, final APICallback<String> response) {
+        final APIEndpoint endpoint = new APIEndpoint("setTrainingVideo");
         final APIRequest request = new APIRequest(endpoint);
 
         // create the request body
@@ -167,7 +167,62 @@ public class APIManager implements API {
             public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
                 Log.d(LOG_TAG, apiResponse.getStatus());
                 if (apiResponse.getStatus().equals("200")) {
-                    response.onSuccess("Successfully changed profile video to: " + S3ID);
+                    response.onSuccess("Successfully changed training video to: " + S3ID);
+                }
+            }
+        });
+
+        service.execute();
+    }
+
+    /**
+     *
+     * @param S3ID
+     * @param response
+     */
+    @Override
+    public void setProfilePicture(final String S3ID, final APICallback<String> response) {
+        final APIEndpoint endpoint = new APIEndpoint("setProfilePicture");
+        final APIRequest request = new APIRequest(endpoint);
+
+        // create the request body
+        try {
+            JSONObject requestBody = new JSONObject();
+            requestBody.put("S3ID", S3ID);
+            request.setBody(requestBody.toString());
+        } catch (JSONException e) {
+            Log.e(LOG_TAG, e.getMessage());
+        }
+
+        Service service = new Service(request, new Service.ServiceCallBack() {
+            @Override
+            public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
+                Log.d(LOG_TAG, apiResponse.getStatus());
+                if (apiResponse.getStatus().equals("200")) {
+                    response.onSuccess("Successfully changed profile picture to: " + S3ID);
+                }
+            }
+        });
+
+        service.execute();
+    }
+
+    @Override
+    public void hasCompletedSignUp(final APICallback<Boolean> response) {
+        final APIEndpoint endpoint = new APIEndpoint("hasCompletedSignUp");
+        final APIRequest request = new APIRequest(endpoint);
+
+        JSONObject requestBody = new JSONObject();
+        request.setBody(requestBody.toString());
+
+        Service service = new Service(request, new Service.ServiceCallBack() {
+            @Override
+            public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
+                Log.d(LOG_TAG, apiResponse.getStatus());
+                BaseDAO baseDAO = apiResponse.getResponseBody();
+                if (apiResponse.getStatus().equals("200")) {
+                    JSONObject jsonObject = baseDAO.get_DAO_BODY();
+                    response.onSuccess(jsonObject.getBoolean("hasCompletedSignUp"));
                 }
             }
         });
