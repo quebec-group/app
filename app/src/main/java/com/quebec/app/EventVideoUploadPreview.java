@@ -78,7 +78,9 @@ public class EventVideoUploadPreview extends AppCompatActivity implements View.O
     }
 
     private void retakeVideo() {
+
         Intent intent = new Intent(this.getApplicationContext(), EventVideoUploadSelect.class);
+        intent.putExtra(EVENT_VIDEO_MODE, uploadMode);
         startActivity(intent);
     }
 
