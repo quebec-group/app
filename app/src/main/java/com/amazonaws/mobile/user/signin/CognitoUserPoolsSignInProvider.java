@@ -43,6 +43,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 
+import static com.quebec.app.R.string.sign_up_confirm_failed;
+import static com.quebec.app.R.string.sign_up_confirm_success;
+import static com.quebec.app.R.string.title_activity_sign_up_confirm;
+
 /**
  * Manages sign-in using Cognito UserDTO Pools.
  */
@@ -207,15 +211,15 @@ public class CognitoUserPoolsSignInProvider implements SignInProvider {
         @Override
         public void onSuccess() {
             Log.i(LOG_TAG, "Confirmed.");
-//            ViewHelper.showDialog(activity, activity.getString(title_activity_sign_up_confirm),
-//                    activity.getString(sign_up_confirm_success));
+            ViewHelper.showDialog(activity, activity.getString(title_activity_sign_up_confirm),
+                    activity.getString(sign_up_confirm_success));
         }
 
         @Override
         public void onFailure(Exception exception) {
 //            Log.e(LOG_TAG, "Failed to confirm user.", exception);
-//            ViewHelper.showDialog(activity, activity.getString(title_activity_sign_up_confirm),
-//                    activity.getString(sign_up_confirm_failed) + " " + exception);
+            ViewHelper.showDialog(activity, activity.getString(title_activity_sign_up_confirm),
+                    activity.getString(sign_up_confirm_failed) + " " + exception);
         }
     };
 

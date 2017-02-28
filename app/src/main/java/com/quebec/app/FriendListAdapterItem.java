@@ -2,12 +2,17 @@ package com.quebec.app;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.quebec.services.APICallback;
+import com.quebec.services.APIManager;
 
 import java.util.ArrayList;
 
@@ -16,11 +21,13 @@ import java.util.ArrayList;
  */
 
 
-public class FriendListAdapterItem extends ArrayAdapter<User> {
+public class FriendListAdapterItem extends ArrayAdapter<User> implements View.OnClickListener{
 
     int layoutResourceID;
     ArrayList<User> data = new ArrayList<>();
     Context mContext;
+    private User current_user;
+    private static String LOG_TAG = FriendListAdapterItem.class.getSimpleName();
 
 
     public FriendListAdapterItem(Context mContext, int layoutResourceID, ArrayList<User> objects) {
@@ -52,7 +59,39 @@ public class FriendListAdapterItem extends ArrayAdapter<User> {
         TextView textViewItem = (TextView) convertView.findViewById(R.id.friendItemName);
         textViewItem.setText(user.getName());
 
+        Button unfollowButton = (Button) convertView.findViewById(R.id.unfollowUser);
+        unfollowButton.setOnClickListener(this);
+
+
 
         return convertView;
     }
+
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.unfollowUser:
+                unfollow(current_user);
+        }
+    }
+
+    public void unfollow(final User user) {
+        APIManager.getInstance().unfollow(user.getUserID(), new APICallback<String>() {
+            @Override
+            public void onSuccess(String responseBody) {
+                Log.d(LOG_TAG, "Unfollowed:" + user.getUserID());
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
+    }
+
+
 }
+
+
