@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -48,6 +49,8 @@ public class EventsFeedFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_events_feed, container, false);
 
+        final CardView emptyEvents = (CardView) v.findViewById(R.id.empty_events_feed_message);
+
         final RecyclerView mRecyclerView = (RecyclerView) v.findViewById(R.id.eventsFeedRecycler);
         mRecyclerView.hasFixedSize();
 
@@ -64,16 +67,23 @@ public class EventsFeedFragment extends Fragment {
 
                 spinner.dismiss();
 
-                EventListAdapterItem mAdapter = new EventListAdapterItem(events, context);
+                /* If no events are in the events feed. */
+                if (events.size() == 0) {
+                    emptyEvents.setVisibility(View.VISIBLE);
+                }
+                else {
+                    EventListAdapterItem mAdapter = new EventListAdapterItem(events, context);
 
-                mAdapter.setOnItemClickListener(new EventListAdapterItem.EventItemClickInterface() {
-                    @Override
-                    public void onItemClick(int position, View v) {
-                        mListener.onEventSelected(events.get(position));
-                    }
-                });
+                    mAdapter.setOnItemClickListener(new EventListAdapterItem.EventItemClickInterface() {
+                        @Override
+                        public void onItemClick(int position, View v) {
+                            mListener.onEventSelected(events.get(position));
+                        }
+                    });
 
-                mRecyclerView.setAdapter(mAdapter);
+                    mRecyclerView.setAdapter(mAdapter);
+                }
+
 
             }
 
