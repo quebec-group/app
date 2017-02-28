@@ -3,6 +3,7 @@ package com.quebec.app;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +14,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.amazonaws.mobile.AWSMobileClient;
 import com.quebec.services.APICallback;
 import com.quebec.services.APIManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,6 +32,7 @@ public class FriendsListFragment extends Fragment implements AdapterView.OnItemC
 
     private FriendListAdapterItem adapter;
     private User[] values;
+    private static String LOG_TAG = APIManager.class.getSimpleName();
 
     public FriendsListFragment() {
         // Required empty public constructor
@@ -52,9 +56,24 @@ public class FriendsListFragment extends Fragment implements AdapterView.OnItemC
 
         listView = (ListView) v.findViewById(R.id.friendsList);
 
-        // TODO: Load information from sources
+        String userID = AWSMobileClient.defaultMobileClient().getIdentityManager().getCachedUserID();
 
-        final Context context = this.getContext();
+
+        // get the users that the current user is following
+        APIManager.getInstance().following(userID, new APICallback<List<User>>() {
+            @Override
+            public void onSuccess(List<User> responseBody) {
+                adapter = new FriendListAdapterItem(FriendsListFragment.this.getContext(), R.layout.adapter_friend_list_item, responseBody);
+                listView.setAdapter(adapter);
+                listView.setOnItemClickListener(FriendsListFragment.this);
+            }
+
+            @Override
+            public void onFailure(String message) {
+                Log.e(LOG_TAG, "Failed to retrieve following.");
+            }
+        });
+
 
         listView.setOnItemClickListener(this);
 

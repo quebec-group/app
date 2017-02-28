@@ -44,8 +44,6 @@ public class ProfilePictureHandler {
      */
     public void uploadProfilePicture(String filepath, ContentProgressListener callback) {
         File file = new File(filepath);
-        dataset.remove(PROFILE_KEY);
-        dataset.put(PROFILE_KEY, PROFILE_IMAGE_PREFIX + file.getName());
         uploader.uploadFile(file, PROFILE_IMAGE_PREFIX, callback);
     }
 
@@ -53,8 +51,7 @@ public class ProfilePictureHandler {
      * Gets the image from the S3 handler, and returns this through the callback.
      * @param callback
      */
-    public void getImage(ContentProgressListener callback) {
-        final String path = dataset.get(PROFILE_KEY);
-        uploader.getFile(path, callback);
+    public void getUserProfilePicture(User user, ContentProgressListener callback) {
+        // uploader.getFile(user.getProfileID(), callback);
     }
 }
