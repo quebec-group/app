@@ -14,9 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
@@ -29,10 +27,8 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.quebec.app.auth.SplashActivity;
 import com.quebec.services.APICallback;
 import com.quebec.services.APIManager;
-import com.quebec.services.Video;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,10 +45,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
     /** This fragment's view. */
     private View mFragmentView;
 
+    /* Elements on the page. */
     private Button dropdown_button;
     private TextView userNameTextView;
     private RoundedImageView profile_picture_view;
 
+    private User mUser;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -101,9 +99,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
                 });
 
 
+
         /* Get the profile picture. */
         ProfilePictureHandler handler = new ProfilePictureHandler();
-        handler.getImage(new ContentProgressListener() {
+        handler.getUserProfilePicture(mUser, new ContentProgressListener() {
             @Override
             public void onSuccess(ContentItem contentItem) {
                 File f = contentItem.getFile();
@@ -119,6 +118,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
                 // TODO profile picture could not be loaded and hence show the placeholder image.
             }
         });
+
     }
 
 
@@ -158,6 +158,20 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
 
         final ProgressDialog spinner = ProgressDialog.show(getContext(), "Loading", "Wait while loading...");
 
+        /*  Gets the currently logged in user. */
+        APIManager.getInstance().getInfo(new APICallback<User>() {
+            @Override
+            public void onSuccess(User responseBody) {
+                mUser = responseBody;
+            }
+
+            @Override
+            public void onFailure(String message) {
+                // TODO: Handle the failure state.
+            }
+        });
+
+        /* Get the events related to the user. */
         APIManager.getInstance().getEvents(new APICallback<List<Event>>() {
             @Override
             public void onSuccess(final List<Event> events) {

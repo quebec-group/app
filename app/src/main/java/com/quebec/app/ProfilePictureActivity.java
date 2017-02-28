@@ -22,6 +22,8 @@ import android.widget.TextView;
 
 import com.amazonaws.mobile.content.ContentItem;
 import com.amazonaws.mobile.content.ContentProgressListener;
+import com.quebec.services.APICallback;
+import com.quebec.services.APIManager;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -273,11 +275,11 @@ public class ProfilePictureActivity extends AppCompatActivity {
 
     public void confirmPhoto() {
         ProfilePictureHandler up = new ProfilePictureHandler();
-
-        up.uploadProfilePicture(croppedImageUri.getPath(), new ContentProgressListener() {
+        final String path = croppedImageUri.getPath();
+        up.uploadProfilePicture(path, new ContentProgressListener() {
             @Override
             public void onSuccess(ContentItem contentItem) {
-                showMainActivity();
+                saveProfileImage(path);
             }
 
             @Override
@@ -287,6 +289,24 @@ public class ProfilePictureActivity extends AppCompatActivity {
             public void onError(String filePath, Exception ex) {
                 // TODO: The profile picture could not be uploaded - respond with an alert dialog indicating this.
                 Log.e("error", "an error occurred");
+            }
+        });
+    }
+
+    /**
+     * Save the profile picture to the user on the database.
+     * @param path
+     */
+    public void saveProfileImage(String path) {
+        APIManager.getInstance().setProfileVideo(path, new APICallback<String>() {
+            @Override
+            public void onSuccess(String responseBody) {
+                showMainActivity();
+            }
+
+            @Override
+            public void onFailure(String message) {
+
             }
         });
     }
