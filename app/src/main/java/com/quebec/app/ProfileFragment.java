@@ -18,7 +18,6 @@ import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
-
 import com.amazonaws.mobile.AWSMobileClient;
 import com.amazonaws.mobile.content.ContentItem;
 import com.amazonaws.mobile.content.ContentProgressListener;

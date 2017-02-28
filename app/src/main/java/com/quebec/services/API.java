@@ -23,6 +23,12 @@ public interface API {
     public abstract void following(final APICallback<List<User>> response);
     public abstract void isFollowing(final User user, final APICallback<Boolean> response);
     public abstract void followers(final String userID, final APICallback<List<User>> response);
+
+
+    void followingCount(String userID, APICallback<Integer> response);
+
+    void followersCount(String userID, APICallback<Integer> response);
+
     public abstract void followers(final APICallback<List<User>> response);
     public abstract void follow(final User user, final APICallback<String> response);
     public abstract void unfollow(final User user, final APICallback<String> response);
@@ -39,9 +45,6 @@ public interface API {
     public abstract void unlikeEvent(final Event eventID, final APICallback<String> response);
     public abstract void getEvents(final APICallback<List<Event>> response);
     public abstract void addVideoToEvent(final String S3ID, final Event event, final APICallback<String> response);
-
-
-    void getAttendedEvents(APICallback<List<Event>> response);
-
-    void getAttendedEvents(String userID, APICallback<List<Event>> response);
+    public abstract void getAttendedEvents(APICallback<List<Event>> response);
+    public abstract void getAttendedEvents(String userID, APICallback<List<Event>> response);
 }
