@@ -3,6 +3,7 @@ package com.quebec.services;
 import com.quebec.app.Event;
 import com.quebec.app.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,10 +18,10 @@ public interface API {
     public abstract void setProfileVideo(final String userID, final APICallback<String> response);
 
     // User interactions
-    public abstract void following(final String userID, final APICallback<List<User>> response);
-    public abstract void following(final APICallback<List<User>> response);
+    public abstract void following(final String userID, final APICallback<ArrayList<User>> response);
+    public abstract void following(final APICallback<ArrayList<User>> response);
     public abstract void followers(final String userID, final APICallback<List<User>> response);
-    public abstract void followers(final APICallback<List<User>> response);
+    public abstract void followers(final APICallback<ArrayList<User>> response);
     public abstract void follow(final String userID, final APICallback<String> response);
     public abstract void unfollow(final String userID, final APICallback<String> response);
     public abstract void getInfo(final APICallback<User> response);
@@ -33,7 +34,7 @@ public interface API {
     public abstract void removeFromEvent(final Event event, final APICallback<String> response);
     public abstract void likeEvent(final Event eventID,final APICallback<String> response);
     public abstract void unlikeEvent(final Event eventID, final APICallback<String> response);
-    public abstract void getEvents(final APICallback<List<Event>> response);
+    public abstract void getEvents(final APICallback<ArrayList<Event>> response);
     public abstract void addVideoToEvent(final String S3ID, final Event event, final APICallback<String> response);
 
 
