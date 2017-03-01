@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.quebec.services.APICallback;
 import com.quebec.services.APIManager;
-import com.quebec.services.FollowStatus;
 import com.quebec.services.FollowStatusCallback;
 
 import java.util.ArrayList;
@@ -30,9 +29,11 @@ public class FriendListAdapterItem extends ArrayAdapter<User>{
     List<User> data = new ArrayList<>();
     List<Boolean> togg = new ArrayList<>();
     Context mContext;
-
+    private User current_user;
+    private boolean following;
+    private View convertView;
     private static String LOG_TAG = FriendListAdapterItem.class.getSimpleName();
-
+    HashMap<User, Boolean> booleanHashMap =  new HashMap<>();
 
 
     public FriendListAdapterItem(Context mContext, int layoutResourceID, List<User> objects) {
@@ -70,6 +71,14 @@ public class FriendListAdapterItem extends ArrayAdapter<User>{
 
         final Button followToggleButton = (Button) convertView.findViewById(R.id.followToggleButton);
         followToggleButton.setText("Unfollow");
+
+        FollowStatusCallback followStatusCallBack = new FollowStatusCallback() {
+            @Override
+            public void onResponseReceived(Boolean follows) {
+                final String text = (follows) ? "Unfollow" : "Follow";
+                followButton(followToggleButton, text);
+            }
+        };
 
 
         followToggleButton.setOnClickListener(new View.OnClickListener() {
@@ -117,7 +126,59 @@ public class FriendListAdapterItem extends ArrayAdapter<User>{
     }
 
 
+    public void exe(final User user, Boolean bool) {
+        if(!bool) {
+            APIManager.getInstance().unfollow(user, new APICallback<String>() {
+                @Override
+                public void onSuccess(String responseBody) {
+                    Log.d(LOG_TAG, "Unfollowed: " + user.getUserID());
+                }
 
+                @Override
+                public void onFailure(String message) {
+                    Log.d(LOG_TAG, "Failed to unfollow: " + user.getUserID());
+                }
+            });
+        } else {
+            APIManager.getInstance().follow(user, new APICallback<String>() {
+                @Override
+                public void onSuccess(String responseBody) {
+                    Log.d(LOG_TAG, "Followed: " + user.getUserID());
+                }
+
+                @Override
+                public void onFailure(String message) {
+                    Log.d(LOG_TAG, "Failed to follow: " + user.getUserID());
+                }
+            });
+        }
+    }
+
+    public void getFollowStatus(final User user, final FollowStatusCallback callback) {
+        APIManager.getInstance().followsMe(user, new APICallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean responseBody) {
+                callback.onResponseReceived(responseBody);
+            }
+
+            @Override
+            public void onFailure(String message) {
+                callback.onResponseReceived(false);
+                Log.d(LOG_TAG, "Failed to get following status");
+            }
+        });
+    }
+
+    public void followButton(Button b, String str) {
+        if(str.equals("unfollow")) {
+            b.setText("Unfollow");
+            following = true;
+
+        } else {
+            b.setText("Follow");
+            following = false;
+        }
+    }
 
 
 
