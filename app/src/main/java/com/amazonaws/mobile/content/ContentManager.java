@@ -13,7 +13,6 @@ import android.util.Log;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.ClientConfiguration;
-import com.amazonaws.mobile.AWSConfiguration;
 import com.amazonaws.mobile.user.IdentityManager;
 import com.amazonaws.mobile.util.StringFormatUtils;
 import com.amazonaws.mobile.util.ThreadUtils;
@@ -63,7 +62,7 @@ public class ContentManager implements Iterable<ContentItem> {
     /**
      * Amazon S3 Client to use for obtaining content.
      */
-    protected final AmazonS3Client s3Client;
+    public final AmazonS3Client s3Client;
 
     /**
      * The transfer manager to manage transfers.
@@ -872,4 +871,5 @@ public class ContentManager implements Iterable<ContentItem> {
     public synchronized void destroy() {
         transferHelper.destroy();
     }
+
 }

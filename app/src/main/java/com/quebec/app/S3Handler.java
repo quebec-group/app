@@ -5,8 +5,10 @@ import com.amazonaws.mobile.AWSMobileClient;
 import com.amazonaws.mobile.content.ContentProgressListener;
 import com.amazonaws.mobile.content.UserFileManager;
 import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 
 import java.io.File;
+import java.net.URL;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -26,10 +28,18 @@ public class S3Handler {
     private String folderPath;
     private final CountDownLatch userFileManagerCreatingLatch = new CountDownLatch(1);
 
-    public S3Handler() {
+    private static S3Handler instance;
+
+    private S3Handler() {
         initialiseBucket(AWSConfiguration.AMAZON_S3_USER_FILES_BUCKET, S3_PREFIX_PROTECTED, AWSConfiguration.AMAZON_S3_USER_FILES_BUCKET_REGION);
     }
 
+    public static S3Handler getInstance() {
+        if (instance == null) {
+            instance = new S3Handler();
+        }
+        return instance;
+    }
 
     public String createPathProtected(File f, String pathPrefix) {
         return  folderPath + pathPrefix + f.getName();
@@ -37,6 +47,13 @@ public class S3Handler {
 
     public static String getURL(String filepath) {
         return "http://s3-" + (AWSConfiguration.AMAZON_S3_USER_FILES_BUCKET_REGION_URL) + ".amazonaws.com/" + AWSConfiguration.AMAZON_S3_USER_FILES_BUCKET + "/" + filepath;
+    }
+
+    public String getVideoURL(String key) {
+        GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(AWSConfiguration.AMAZON_S3_USER_FILES_BUCKET, key);
+        URL objectURL = userFileManager.s3Client.generatePresignedUrl(request);
+
+        return objectURL.toString();
     }
 
     private void initialiseBucket(final String bucket, final String prefix, final Regions region) {
