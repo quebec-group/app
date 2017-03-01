@@ -28,7 +28,7 @@ public class VideoUploadHandler {
     private S3Handler uploader;
 
     public VideoUploadHandler() {
-        uploader = new S3Handler();
+        uploader = S3Handler.getInstance();
     }
 
     /**

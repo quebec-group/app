@@ -42,8 +42,10 @@ public class EventDetailVideoDialog extends Dialog {
         MediaController mediaController = new MediaController(this.mActivity);
         mediaController.setAnchorView(videoView);
 
+
+
         // Add the video to the dialog box.
-        Uri video = Uri.parse(S3Handler.getURL(mVideo.getVideoPath()));
+        Uri video = Uri.parse(S3Handler.getInstance().getVideoURL(mVideo.getVideoPath()));
         videoView.setMediaController(mediaController);
         videoView.setVideoURI(video);
         videoView.setZOrderOnTop(true);

@@ -81,8 +81,7 @@ public class User implements Parcelable {
 
     public void getProfilePicture(ContentProgressListener callback) {
         if (profileID != null && !profileID.isEmpty()) {
-            S3Handler s3 = new S3Handler();
-            s3.getFile(getProfileID(), callback);
+            S3Handler.getInstance().getFile(getProfileID(), callback);
         }
     }
 }

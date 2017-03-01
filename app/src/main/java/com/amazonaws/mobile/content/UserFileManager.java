@@ -15,7 +15,6 @@ import com.amazonaws.AmazonClientException;
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.mobile.user.IdentityManager;
 import com.amazonaws.mobile.util.ThreadUtils;
-import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 
