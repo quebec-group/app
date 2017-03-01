@@ -9,6 +9,10 @@
         android:title="Update Profile"/>
 
     <item
+        android:id="@+id/profile_menu_dropdown_training"
+        android:title="Training"/>
+
+    <item
         android:id="@+id/profile_menu_dropdown_about"
         android:title="About"/>
 

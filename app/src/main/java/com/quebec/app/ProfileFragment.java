@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,10 +15,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-
 
 import com.amazonaws.mobile.AWSMobileClient;
 import com.amazonaws.mobile.content.ContentItem;
@@ -46,10 +45,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
     private View mFragmentView;
 
     /* Elements on the page. */
-    private Button dropdown_button;
+    private View dropdown_button;
     private TextView userNameTextView;
     private RoundedImageView profile_picture_view;
 
+    private TextView followingCount;
+    private TextView followersCount;
+    private TextView eventsCount;
     private User mUser;
 
     public ProfileFragment() {
@@ -133,11 +135,17 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
         userNameTextView = (TextView) mFragmentView.findViewById(R.id.profileFragment_name);
         profile_picture_view = (RoundedImageView) mFragmentView.findViewById(R.id.profile_picture_view);
 
-        /* Declare the onclick event handlers for the buttons. */
-        Button b1 = (Button) mFragmentView.findViewById(R.id.button_friends_list);
-        dropdown_button = (Button) mFragmentView.findViewById(R.id.profile_dropdown_button);
+        /* Text views for the profile header. */
+        TextView eventsCount = (TextView)  mFragmentView.findViewById(R.id.profileEventsCount);
+        followingCount = (TextView) mFragmentView.findViewById(R.id.profileFollowingCount);
+        followersCount = (TextView) mFragmentView.findViewById(R.id.profileFollowersCount);
+        eventsCount = (TextView) mFragmentView.findViewById(R.id.profileEventsCount);
 
-        b1.setOnClickListener(this);
+
+        /* Declare the onclick event handlers for the buttons. */
+        dropdown_button = (View) mFragmentView.findViewById(R.id.profile_dropdown_button);
+
+        dropdown_button.setOnClickListener(this);
         dropdown_button.setOnClickListener(this);
 
         identityManager = AWSMobileClient.defaultMobileClient()
@@ -158,11 +166,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
 
         final ProgressDialog spinner = ProgressDialog.show(getContext(), "Loading", "Wait while loading...");
 
+
         /*  Gets the currently logged in user. */
         APIManager.getInstance().getInfo(new APICallback<User>() {
             @Override
             public void onSuccess(User responseBody) {
                 mUser = responseBody;
+                setProfilePicture();
+                getStats();
             }
 
             @Override
@@ -172,9 +183,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
         });
 
         /* Get the events related to the user. */
-        APIManager.getInstance().getEvents(new APICallback<List<Event>>() {
+        final TextView finalEventsCount = eventsCount;
+        APIManager.getInstance().getAttendedEvents(new APICallback<List<Event>>() {
             @Override
             public void onSuccess(final List<Event> events) {
+                finalEventsCount.setText(String.valueOf(events.size()));
 
                 spinner.dismiss();
 
@@ -204,15 +217,56 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
         return mFragmentView;
     }
 
+    private void setProfilePicture() {
+        mUser.getProfilePicture(new ContentProgressListener() {
+            @Override
+            public void onSuccess(ContentItem contentItem) {
+                profile_picture_view.setImageURI(Uri.fromFile(contentItem.getFile()));
+            }
+
+            @Override
+            public void onProgressUpdate(String filePath, boolean isWaiting, long bytesCurrent, long bytesTotal) {
+
+            }
+
+            @Override
+            public void onError(String filePath, Exception ex) {
+                Log.e(LOG_TAG, "Error getting " + filePath, ex);
+            }
+        });
+    }
+
+    public void getStats() {
+        APIManager.getInstance().followersCount(mUser.getUserID(), new APICallback<Integer>() {
+            @Override
+            public void onSuccess(Integer responseBody) {
+                followingCount.setText(responseBody.toString());
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
+
+        APIManager.getInstance().followingCount(mUser.getUserID(), new APICallback<Integer>() {
+            @Override
+            public void onSuccess(Integer responseBody) {
+                followersCount.setText(responseBody.toString());
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
+    }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.profile_dropdown_button:
                 openDropdown();
-                break;
-            case R.id.button_friends_list:
-                mListener.openFriendsList();
                 break;
         }
     }
@@ -240,6 +294,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
                     case R.id.profile_menu_dropdown_update_picture:
                         openProfilePictureUpdate();
                         break;
+                    case R.id.profile_menu_dropdown_training:
+                        openVideoTraining();
                 }
                 return false;
             }
@@ -250,6 +306,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
         popup.show();
 
 
+    }
+
+    private void openVideoTraining() {
+        Intent intent = new Intent(this.getContext(), SignUpVideoActivity.class);
+        startActivity(intent);
     }
 
     /**

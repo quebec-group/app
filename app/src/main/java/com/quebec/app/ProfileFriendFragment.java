@@ -14,14 +14,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import static com.quebec.app.R.id.friendsListSearchBox;
-
-
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.quebec.services.APICallback;
 import com.quebec.services.APIManager;
-import com.quebec.services.APIResponse;
-import com.quebec.services.FollowStatusCallback;
 
 import java.util.List;
 
@@ -65,11 +60,11 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
         }
     }
 
-    public void getFollowStatus(final FollowStatusCallback callback) {
-        APIManager.getInstance().isFollowing(user, new APICallback<Boolean>() {
+    public void getFollowStatus(final FollowStatusCallBack callback) {
+        APIManager.getInstance().followsMe(user, new APICallback<Boolean>() {
             @Override
             public void onSuccess(Boolean responseBody) {
-                callback.onResponseReceived(responseBody);
+                callback.onResponseReceived(true);
             }
 
             @Override
@@ -81,14 +76,12 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
     }
 
 
-    public void followButton(String str) {
-        if(str.equals("unfollow")) {
-            Button follow = (Button) mFragmentView.findViewById(R.id.profile_friend_follow);
+    public void followButton(Boolean follows) {
+        if(follows) {
             follow.setText("Unfollow");
             following = true;
 
         } else {
-            Button follow = (Button) mFragmentView.findViewById(R.id.profile_friend_follow);
             follow.setText("Follow");
             following = false;
         }
@@ -109,15 +102,14 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
 
         follow = (Button) mFragmentView.findViewById(R.id.profile_friend_follow);
 
-        FollowStatusCallback followStatusCallBack = new FollowStatusCallback() {
+        FollowStatusCallBack followStatusCallBack = new FollowStatusCallBack() {
             @Override
             public void onResponseReceived(Boolean follows) {
-                final String text = (follows) ? "unfollow" : "follow";
-                followButton(text);
+                followButton(follows);
             }
         };
 
-        getFollowStatus(followStatusCallBack);
+        this.getFollowStatus(followStatusCallBack);
 
 
         /* Check if the user profile picture is set. */
@@ -141,7 +133,7 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
         final ProgressDialog spinner = ProgressDialog.show(getContext(), "Loading", "Wait while loading...");
 
         // TOOO
-        APIManager.getInstance().getEvents(new APICallback<List<Event>>() {
+        APIManager.getInstance().getAttendedEvents(user.getUserID(), new APICallback<List<Event>>() {
             @Override
             public void onSuccess(final List<Event> events) {
 
@@ -196,7 +188,7 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
                     APIManager.getInstance().unfollow(user, new APICallback<String>() {
                         @Override
                         public void onSuccess(String responseBody) {
-                            followButton("follow");
+                            followButton(false);
                             Log.d(LOG_TAG, "Unfollowed: " + user.getUserID());
                         }
 
@@ -209,7 +201,7 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
                     APIManager.getInstance().follow(user, new APICallback<String>() {
                         @Override
                         public void onSuccess(String responseBody) {
-                            followButton("unfollow");
+                            followButton(true);
                             Log.d(LOG_TAG, "Followed: " + user.getUserID());
                         }
 
@@ -226,6 +218,8 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
         void onProfileFriendEventSelected(Event event);
     }
 
-
+    public static interface FollowStatusCallBack {
+        public void onResponseReceived(Boolean follows);
+    }
 
 }

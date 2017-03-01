@@ -14,7 +14,8 @@ public class APIEndpoint {
     private static final String addVideoToEvent = "addVideoToEvent";
     private static final String follow = "follow";
     private static final String unfollow = "unfollow";
-    private static final String isFollowing = "isFollowing";
+    private static final String followsMe = "followsMe";
+    private static final String iFollow = "iFollow";
     private static final String createEvent = "createEvent";
     private static final String addUserToEvent = "addUserToEvent";
     private static final String removeFromEvent = "removeFromEvent";
@@ -24,6 +25,9 @@ public class APIEndpoint {
     private static final String getInfo = "getInfo";
     private static final String find = "find";
     private static final String hasCompletedSignUp = "hasCompletedSignUp";
+    private static final String getAttendedEvents = "getAttendedEvents";
+    private static final String followingCount = "followingCount";
+    private static final String followersCount = "followersCount";
 
     private static final String POST_METHOD = "POST";
 
@@ -41,6 +45,18 @@ public class APIEndpoint {
                 this.path += this.hasCompletedSignUp;
                 break;
 
+            case "getAttendedEvents":
+                this.path += this.getAttendedEvents;
+                break;
+
+            case "followingCount":
+                this.path += this.followingCount;
+                break;
+
+            case "followersCount":
+                this.path += this.followersCount;
+                break;
+
             case "following":
                 this.path += this.following;
                 break;
@@ -49,8 +65,12 @@ public class APIEndpoint {
                 this.path += this.followers;
                 break;
 
-            case "isFollowing":
-                this.path += this.isFollowing;
+            case "followsMe":
+                this.path += this.followsMe;
+                break;
+
+            case "iFollow":
+                this.path += this.iFollow;
                 break;
 
             case "setTrainingVideo":

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.quebec.services.Video;
 
@@ -18,16 +19,14 @@ import java.util.ArrayList;
  * event items on the feeds.
  */
 
-public class EventDetailVideoAdapterItem extends RecyclerView.Adapter<EventDetailVideoAdapterItem.ViewHolder> implements View.OnClickListener {
+public class EventDetailVideoAdapterItem extends RecyclerView.Adapter<EventDetailVideoAdapterItem.ViewHolder> {
     private ArrayList<Video> videoData;
-    private Context mContext;
-    private Activity mActivity;
 
+    private static EventDetailVideoItemClickInterface mListener;
 
-    public EventDetailVideoAdapterItem(Context context, Activity activity, ArrayList<Video> videoData) {
+    public EventDetailVideoAdapterItem(ArrayList<Video> videoData) {
         this.videoData = videoData;
-        this.mContext = context;
-        this.mActivity = activity;
+
     }
 
     // Create new views (invoked by the layout manager)
@@ -40,17 +39,14 @@ public class EventDetailVideoAdapterItem extends RecyclerView.Adapter<EventDetai
 
         ViewHolder viewHolder = new ViewHolder(itemLayoutView);
 
-        Button button = (Button) itemLayoutView.findViewById(R.id.event_detail_video_btn);
-        button.setOnClickListener(this);
-
         return viewHolder;
     }
 
 
-    public void onShowPopup() {
-        EventDetailVideoDialog dialog = new EventDetailVideoDialog(this.mContext, this.mActivity);
-        dialog.show();
+    public void setOnItemClickListener(EventDetailVideoItemClickInterface mListener) {
+        this.mListener = mListener;
     }
+
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
@@ -58,19 +54,22 @@ public class EventDetailVideoAdapterItem extends RecyclerView.Adapter<EventDetai
 
     }
 
-    @Override
-    public void onClick(View v) {
-        onShowPopup();
-    }
-
     // inner class to hold a reference to each item of RecyclerView
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
 
+            ImageView image = (ImageView) itemLayoutView.findViewById(R.id.eventVideoImage);
+            image.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            mListener.onItemClick(getAdapterPosition(), v);
+        }
+
     }
 
 
@@ -78,6 +77,10 @@ public class EventDetailVideoAdapterItem extends RecyclerView.Adapter<EventDetai
     @Override
     public int getItemCount() {
         return videoData.size();
+    }
+
+    public interface EventDetailVideoItemClickInterface {
+        void onItemClick(int position, View v);
     }
 }
 
