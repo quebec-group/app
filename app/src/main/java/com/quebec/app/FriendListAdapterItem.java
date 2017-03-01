@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.quebec.services.APICallback;
 import com.quebec.services.APIManager;
-import com.quebec.services.FollowStatus;
 import com.quebec.services.FollowStatusCallback;
 
 import java.util.ArrayList;
@@ -156,7 +155,7 @@ public class FriendListAdapterItem extends ArrayAdapter<User>{
     }
 
     public void getFollowStatus(final User user, final FollowStatusCallback callback) {
-        APIManager.getInstance().isFollowing(user, new APICallback<Boolean>() {
+        APIManager.getInstance().followsMe(user, new APICallback<Boolean>() {
             @Override
             public void onSuccess(Boolean responseBody) {
                 callback.onResponseReceived(responseBody);

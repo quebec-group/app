@@ -240,7 +240,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
         APIManager.getInstance().followersCount(mUser.getUserID(), new APICallback<Integer>() {
             @Override
             public void onSuccess(Integer responseBody) {
-                followingCount.setText(responseBody.toString());
+                followersCount.setText(responseBody.toString());
             }
 
             @Override
@@ -252,7 +252,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
         APIManager.getInstance().followingCount(mUser.getUserID(), new APICallback<Integer>() {
             @Override
             public void onSuccess(Integer responseBody) {
-                followersCount.setText(responseBody.toString());
+                followingCount.setText(responseBody.toString());
             }
 
             @Override

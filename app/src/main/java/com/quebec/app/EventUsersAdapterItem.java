@@ -2,12 +2,15 @@ package com.quebec.app;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.amazonaws.mobile.content.ContentItem;
+import com.amazonaws.mobile.content.ContentProgressListener;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
@@ -51,9 +54,25 @@ public class EventUsersAdapterItem extends ArrayAdapter {
         TextView textViewUserName = (TextView) convertView.findViewById(R.id.event_user_name);
         textViewUserName.setText(user.getName());
 
-        RoundedImageView imageView = (RoundedImageView) convertView.findViewById(R.id.event_user_image);
+        final RoundedImageView imageView = (RoundedImageView) convertView.findViewById(R.id.event_user_image);
 
-        // TODO: Be able to reference other users profile pictures.
+        user.getProfilePicture(new ContentProgressListener() {
+            @Override
+            public void onSuccess(ContentItem contentItem) {
+                imageView.setImageURI(Uri.fromFile(contentItem.getFile()));
+            }
+
+            @Override
+            public void onProgressUpdate(String filePath, boolean isWaiting, long bytesCurrent, long bytesTotal) {
+
+            }
+
+            @Override
+            public void onError(String filePath, Exception ex) {
+
+            }
+        });
+
         return convertView;
     }
 }
