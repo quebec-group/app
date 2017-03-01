@@ -296,6 +296,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
                         break;
                     case R.id.profile_menu_dropdown_training:
                         openVideoTraining();
+                        break;
                 }
                 return false;
             }

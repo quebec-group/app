@@ -270,10 +270,12 @@ public class ProfilePictureActivity extends AppCompatActivity {
 
     public void showMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(FRAGMENT_REFRESH, true);
 
         // TODO add the event to return to the profile view and refresh te
         startActivity(intent);
+        finish();
     }
 
     public void confirmPhoto() {

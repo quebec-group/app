@@ -158,7 +158,9 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
 
 
             Intent intent = new Intent(this.getApplicationContext(), MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
+            finish();
         }
     }
 
