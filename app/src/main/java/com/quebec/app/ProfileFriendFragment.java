@@ -61,7 +61,7 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
     }
 
     public void getFollowStatus(final FollowStatusCallBack callback) {
-        APIManager.getInstance().isFollowing(user, new APICallback<Boolean>() {
+        APIManager.getInstance().followsMe(user, new APICallback<Boolean>() {
             @Override
             public void onSuccess(Boolean responseBody) {
                 callback.onResponseReceived(true);

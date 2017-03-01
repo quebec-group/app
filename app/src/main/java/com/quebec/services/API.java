@@ -21,7 +21,7 @@ public interface API {
     // User interactions
     public abstract void following(final String userID, final APICallback<List<User>> response);
     public abstract void following(final APICallback<List<User>> response);
-    public abstract void isFollowing(final User user, final APICallback<Boolean> response);
+    public abstract void followsMe(final User user, final APICallback<Boolean> response);
     public abstract void followers(final String userID, final APICallback<List<User>> response);
 
 
@@ -33,6 +33,9 @@ public interface API {
     public abstract void follow(final User user, final APICallback<String> response);
     public abstract void unfollow(final User user, final APICallback<String> response);
     public abstract void getInfo(final APICallback<User> response);
+
+    void iFollow(User user, APICallback<Boolean> response);
+
     public abstract void find(final String searchString, final APICallback<List<User>> response);
 
 

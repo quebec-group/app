@@ -40,8 +40,8 @@
 
             <Button
                 android:text="@string/profile_train_photo_upload_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_marginTop="15dp"
                 android:id="@+id/signup_upload_photo_button"
                 android:onClick="choosePhoto"
@@ -51,8 +51,8 @@
 
             <Button
                 android:text="@string/profile_train_photo_take_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_marginTop="17dp"
                 android:id="@+id/signup_take_photo_button"
                 android:onClick="takePhoto"
@@ -95,12 +95,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"></LinearLayout>
 
 </RelativeLayout>

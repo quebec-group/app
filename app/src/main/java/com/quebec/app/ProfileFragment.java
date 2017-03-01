@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
@@ -24,7 +23,6 @@ import com.amazonaws.mobile.content.ContentProgressListener;
 import com.amazonaws.mobile.user.IdentityManager;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.quebec.app.auth.SplashActivity;
-import com.quebec.services.API;
 import com.quebec.services.APICallback;
 import com.quebec.services.APIManager;
 
@@ -52,6 +50,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
 
     private TextView followingCount;
     private TextView followersCount;
+    private TextView eventsCount;
     private User mUser;
 
     public ProfileFragment() {
@@ -139,6 +138,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
         TextView eventsCount = (TextView)  mFragmentView.findViewById(R.id.profileEventsCount);
         followingCount = (TextView) mFragmentView.findViewById(R.id.profileFollowingCount);
         followersCount = (TextView) mFragmentView.findViewById(R.id.profileFollowersCount);
+        eventsCount = (TextView) mFragmentView.findViewById(R.id.profileEventsCount);
 
 
         /* Declare the onclick event handlers for the buttons. */
@@ -181,9 +181,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
         });
 
         /* Get the events related to the user. */
+        final TextView finalEventsCount = eventsCount;
         APIManager.getInstance().getAttendedEvents(new APICallback<List<Event>>() {
             @Override
             public void onSuccess(final List<Event> events) {
+                finalEventsCount.setText(String.valueOf(events.size()));
 
                 spinner.dismiss();
 
@@ -217,7 +219,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
         APIManager.getInstance().followersCount(mUser.getUserID(), new APICallback<Integer>() {
             @Override
             public void onSuccess(Integer responseBody) {
-                followingCount.setText(responseBody);
+                followingCount.setText(responseBody.toString());
             }
 
             @Override
@@ -229,7 +231,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
         APIManager.getInstance().followingCount(mUser.getUserID(), new APICallback<Integer>() {
             @Override
             public void onSuccess(Integer responseBody) {
-                followersCount.setText(responseBody);
+                followersCount.setText(responseBody.toString());
             }
 
             @Override

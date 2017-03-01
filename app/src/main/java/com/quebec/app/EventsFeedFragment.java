@@ -3,7 +3,6 @@ package com.quebec.app;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,14 +11,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.PopupWindow;
 
 import com.quebec.services.APICallback;
 import com.quebec.services.APIManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -54,7 +49,7 @@ public class EventsFeedFragment extends Fragment {
         final RecyclerView mRecyclerView = (RecyclerView) v.findViewById(R.id.eventsFeedRecycler);
         mRecyclerView.hasFixedSize();
 
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getContext());
+        final RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         final Context context = this.getContext();
