@@ -45,12 +45,12 @@ public class APIManager implements API {
      *
      * @param eventTitle
      * @param eventLocation
-     * @param eventTime
      * @param response
      */
-    public void createEvent(String eventTitle, String eventLocation, String eventTime, String videoPath, final APICallback<String> response) {
+    public void createEvent(String eventTitle, String eventLocation, String videoPath, final APICallback<String> response) {
         final APIEndpoint  endpoint = new APIEndpoint("createEvent");
         final APIRequest request = new APIRequest(endpoint);
+        final String eventTime = String.valueOf(System.currentTimeMillis());
 
 
         // create the request body

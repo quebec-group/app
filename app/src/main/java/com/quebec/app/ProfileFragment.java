@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -171,6 +172,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
             @Override
             public void onSuccess(User responseBody) {
                 mUser = responseBody;
+                setProfilePicture();
                 getStats();
             }
 
@@ -213,6 +215,25 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
         fetchUserIdentity();
 
         return mFragmentView;
+    }
+
+    private void setProfilePicture() {
+        mUser.getProfilePicture(new ContentProgressListener() {
+            @Override
+            public void onSuccess(ContentItem contentItem) {
+                profile_picture_view.setImageURI(Uri.fromFile(contentItem.getFile()));
+            }
+
+            @Override
+            public void onProgressUpdate(String filePath, boolean isWaiting, long bytesCurrent, long bytesTotal) {
+
+            }
+
+            @Override
+            public void onError(String filePath, Exception ex) {
+                Log.e(LOG_TAG, "Error getting " + filePath, ex);
+            }
+        });
     }
 
     public void getStats() {
@@ -273,6 +294,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
                     case R.id.profile_menu_dropdown_update_picture:
                         openProfilePictureUpdate();
                         break;
+                    case R.id.profile_menu_dropdown_training:
+                        openVideoTraining();
                 }
                 return false;
             }
@@ -283,6 +306,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
         popup.show();
 
 
+    }
+
+    private void openVideoTraining() {
+        Intent intent = new Intent(this.getContext(), SignUpVideoActivity.class);
+        startActivity(intent);
     }
 
     /**

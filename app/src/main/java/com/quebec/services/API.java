@@ -41,7 +41,7 @@ public interface API {
 
 
     // Event interactions
-    public abstract void createEvent(String eventTitle, String eventLocation, String eventTime, String videoPath, final APICallback<String> response);
+    public abstract void createEvent(String eventTitle, String eventLocation, String videoPath, final APICallback<String> response);
     public abstract void addUserToEvent(final Event event, final String userID, final APICallback<String> response);
     public abstract void removeFromEvent(final Event event, final APICallback<String> response);
     public abstract void likeEvent(final Event eventID,final APICallback<String> response);

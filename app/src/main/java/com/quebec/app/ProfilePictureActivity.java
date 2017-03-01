@@ -40,7 +40,7 @@ import java.util.Date;
  */
 
 public class ProfilePictureActivity extends AppCompatActivity {
-
+    private static String LOG_TAG = ProfilePictureActivity.class.getSimpleName();
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_TAKE_PHOTO = 1;
@@ -255,6 +255,9 @@ public class ProfilePictureActivity extends AppCompatActivity {
                 signup_image_preview.setImageURI(croppedImageUri);
                 resultView.setVisibility(View.VISIBLE);
                 confirmButton.setEnabled(true);
+                confirmButton.setVisibility(View.VISIBLE);
+                //TODO remove this hack, only because confirm button doesn't appear on smaller phones
+                confirmPhoto();
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 errorText.setText(R.string.signup_photo_error_cropping);
@@ -280,6 +283,7 @@ public class ProfilePictureActivity extends AppCompatActivity {
         up.uploadProfilePicture(path, new ContentProgressListener() {
             @Override
             public void onSuccess(ContentItem contentItem) {
+                Log.d(LOG_TAG, "Saved new profile picture");
                 saveProfileImage(contentItem.getFilePath());
             }
 
@@ -299,7 +303,7 @@ public class ProfilePictureActivity extends AppCompatActivity {
      * @param path
      */
     public void saveProfileImage(String path) {
-        APIManager.getInstance().setTrainingVideo(path, new APICallback<String>() {
+        APIManager.getInstance().setProfilePicture(path, new APICallback<String>() {
             @Override
             public void onSuccess(String responseBody) {
                 showMainActivity();
