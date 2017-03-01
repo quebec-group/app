@@ -269,34 +269,6 @@ public class APIManager implements API {
         countService(request, response);
     }
 
-    private void countService(final APIRequest request, final APICallback<Integer> response) {
-        // perform the HTTP request and wait for callback
-        Service service = new Service(request, new Service.ServiceCallBack() {
-            @Override
-            /**
-             * onResponseReceived takes the DAO from inside the response, sets the status
-             */
-            public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
-
-                BaseDAO baseDAO = apiResponse.getResponseBody();
-                final APIResponse userResponse = new APIResponse(apiResponse.getStatus());
-                final String responseBody = apiResponse.getResponseBody().get_DAO_BODY().toString();
-                userResponse.setResponseBody(baseDAO);
-
-                if (apiResponse.getStatus().equals("200")) {
-                    JSONObject jsonObject = baseDAO.get_DAO_BODY();
-                    response.onSuccess(jsonObject.getInt("count"));
-                } else {
-                    response.onFailure(responseBody);
-                }
-
-            }
-        });
-
-
-        service.execute();
-    }
-
     private APIRequest requestWithUserID(final String userID, final APIEndpoint endpoint) {
         final APIRequest request = new APIRequest(endpoint);
 
@@ -310,43 +282,6 @@ public class APIManager implements API {
         }
 
         return request;
-    }
-
-    private void userListService(APIRequest request, final APICallback<List<User>> response) {
-        // perform the HTTP request and wait for callback
-        Service service = new Service(request, new Service.ServiceCallBack() {
-            @Override
-            /**
-             * onResponseReceived takes the DAO from inside the response, sets the status
-             */
-            public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
-
-                BaseDAO baseDAO = apiResponse.getResponseBody();
-                final APIResponse userResponse = new APIResponse(apiResponse.getStatus());
-                final String responseBody = apiResponse.getResponseBody().get_DAO_BODY().toString();
-                userResponse.setResponseBody(baseDAO);
-
-                if (apiResponse.getStatus().equals("200")) {
-
-                    UserListFactory userListFactory = new UserListFactory();
-                    JSONObject jsonObject = baseDAO.get_DAO_BODY();
-                    String s = jsonObject.getString("users");
-                    JSONArray jsonArray = new JSONArray(s);
-                    try {
-                        ArrayList<User> following =  userListFactory.userListFactory(jsonArray);
-                        response.onSuccess(following);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    response.onFailure(responseBody);
-                }
-
-            }
-        });
-
-
-        service.execute();
     }
 
     @Override
@@ -644,30 +579,19 @@ public class APIManager implements API {
     }
 
     @Override
-    public void isFollowing(final User user, final APICallback<Boolean> response) {
-        final APIEndpoint endpoint = new APIEndpoint("isFollowing");
+    public void followsMe(final User user, final APICallback<Boolean> response) {
+        final APIEndpoint endpoint = new APIEndpoint("followsMe");
         final APIRequest request = requestWithUserID(user.getUserID(), endpoint);
 
-        // perform the HTTP request and wait for callback
-        Service service = new Service(request, new Service.ServiceCallBack() {
-            @Override
-            /**
-             * onResponseReceived takes the DAO from inside the response, sets the status
-             */
-            public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
-                BaseDAO baseDAO = apiResponse.getResponseBody();
+        boolService(request, response);
+    }
 
-                if (apiResponse.getStatus().equals("200")) {
-                    JSONObject json = baseDAO.get_DAO_BODY();
-                    boolean isFollowing = json.getBoolean("isFollowing");
-                    response.onSuccess(isFollowing);
-                } else {
-                    response.onFailure("Error getting info");
-                }
-            }
-        });
+    @Override
+    public void iFollow(final User user, final APICallback<Boolean> response) {
+        final APIEndpoint endpoint = new APIEndpoint("iFollow");
+        final APIRequest request = requestWithUserID(user.getUserID(), endpoint);
 
-                service.execute();
+        boolService(request, response);
     }
 
     public void find(final String searchString, final APICallback<List<User>> response) {
@@ -758,7 +682,6 @@ public class APIManager implements API {
              */
             public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
 
-
                 BaseDAO baseDAO = apiResponse.getResponseBody();
                 final APIResponse userResponse = new APIResponse(apiResponse.getStatus());
                 final String responseBody = apiResponse.getResponseBody().get_DAO_BODY().toString();
@@ -777,6 +700,95 @@ public class APIManager implements API {
                     }
                 } else {
                     response.onFailure(responseBody);
+                }
+
+            }
+        });
+
+
+        service.execute();
+    }
+
+    private void userListService(APIRequest request, final APICallback<List<User>> response) {
+        // perform the HTTP request and wait for callback
+        Service service = new Service(request, new Service.ServiceCallBack() {
+            @Override
+            /**
+             * onResponseReceived takes the DAO from inside the response, sets the status
+             */
+            public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
+
+                BaseDAO baseDAO = apiResponse.getResponseBody();
+                final APIResponse userResponse = new APIResponse(apiResponse.getStatus());
+                final String responseBody = apiResponse.getResponseBody().get_DAO_BODY().toString();
+                userResponse.setResponseBody(baseDAO);
+
+                if (apiResponse.getStatus().equals("200")) {
+
+                    UserListFactory userListFactory = new UserListFactory();
+                    JSONObject jsonObject = baseDAO.get_DAO_BODY();
+                    String s = jsonObject.getString("users");
+                    JSONArray jsonArray = new JSONArray(s);
+                    try {
+                        ArrayList<User> following =  userListFactory.userListFactory(jsonArray);
+                        response.onSuccess(following);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    response.onFailure(responseBody);
+                }
+
+            }
+        });
+
+
+        service.execute();
+    }
+
+    private void countService(final APIRequest request, final APICallback<Integer> response) {
+        // perform the HTTP request and wait for callback
+        Service service = new Service(request, new Service.ServiceCallBack() {
+            @Override
+            /**
+             * onResponseReceived takes the DAO from inside the response, sets the status
+             */
+            public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
+
+                BaseDAO baseDAO = apiResponse.getResponseBody();
+                final APIResponse userResponse = new APIResponse(apiResponse.getStatus());
+                final String responseBody = apiResponse.getResponseBody().get_DAO_BODY().toString();
+                userResponse.setResponseBody(baseDAO);
+
+                if (apiResponse.getStatus().equals("200")) {
+                    JSONObject jsonObject = baseDAO.get_DAO_BODY();
+                    response.onSuccess(jsonObject.getInt("count"));
+                } else {
+                    response.onFailure(responseBody);
+                }
+
+            }
+        });
+
+
+        service.execute();
+    }
+
+    private void boolService(final APIRequest request, final APICallback<Boolean> response) {
+        // perform the HTTP request and wait for callback
+        Service service = new Service(request, new Service.ServiceCallBack() {
+            @Override
+            /**
+             * onResponseReceived takes the DAO from inside the response, sets the status
+             */
+            public void onResponseReceived(APIResponse<BaseDAO> apiResponse) throws JSONException {
+                BaseDAO baseDAO = apiResponse.getResponseBody();
+
+                if (apiResponse.getStatus().equals("200")) {
+                    JSONObject jsonObject = baseDAO.get_DAO_BODY();
+                    response.onSuccess(jsonObject.getBoolean("result"));
+                } else {
+                    response.onFailure(baseDAO.get_DAO_BODY().toString());
                 }
 
             }
