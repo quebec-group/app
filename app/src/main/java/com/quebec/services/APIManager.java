@@ -686,6 +686,7 @@ public class APIManager implements API {
         try {
             JSONObject requestBody = new JSONObject();
             requestBody.put("userID", user.getUserID());
+            request.setBody(requestBody.toString());
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage());
         }
@@ -702,6 +703,7 @@ public class APIManager implements API {
                 if (apiResponse.getStatus().equals("200")) {
                     JSONObject json = baseDAO.get_DAO_BODY();
                     boolean isFollowing = json.getBoolean("isFollowing");
+                    Log.d(LOG_TAG, isFollowing + "");
                     response.onSuccess(isFollowing);
                 } else {
                     response.onFailure("Error getting info");
