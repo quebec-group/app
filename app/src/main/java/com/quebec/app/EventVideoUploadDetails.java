@@ -1,15 +1,10 @@
 package com.quebec.app;
 
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.DocumentsContract;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -28,6 +23,7 @@ import com.quebec.services.APIManager;
 
 import java.io.File;
 
+
 public class EventVideoUploadDetails extends AppCompatActivity implements View.OnClickListener {
     private static String LOG_TAG = EventVideoUploadDetails.class.getSimpleName();
 
@@ -43,72 +39,6 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
      */
     private GoogleApiClient client;
     private File video;
-
-    /**
-     * Converts from a URI to a complete file path. Handles edge cases for Android KitKat etc.
-     *
-     * @param context
-     * @param uri
-     * @return
-     */
-    public static String getPathFromURI(final Context context, final Uri uri) {
-
-        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
-
-        // DocumentProvider
-        if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
-            // ExternalStorageProvider
-            if (isExternalStorageDocument(uri)) {
-                final String docId = DocumentsContract.getDocumentId(uri);
-                final String[] split = docId.split(":");
-                final String type = split[0];
-
-                if ("primary".equalsIgnoreCase(type)) {
-                    return Environment.getExternalStorageDirectory() + "/" + split[1];
-                }
-            }
-            // DownloadsProvider
-            else if (isDownloadsDocument(uri)) {
-
-                final String id = DocumentsContract.getDocumentId(uri);
-                final Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
-
-                return getDataColumn(context, contentUri, null, null);
-            }
-            // MediaProvider
-            else if (isMediaDocument(uri)) {
-                final String docId = DocumentsContract.getDocumentId(uri);
-                final String[] split = docId.split(":");
-                final String type = split[0];
-
-                Uri contentUri = null;
-                if ("image".equals(type)) {
-                    contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-                } else if ("video".equals(type)) {
-                    contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
-                } else if ("audio".equals(type)) {
-                    contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-                }
-
-                final String selection = "_id=?";
-                final String[] selectionArgs = new String[]{
-                        split[1]
-                };
-
-                return getDataColumn(context, contentUri, selection, selectionArgs);
-            }
-        }
-        // MediaStore (and general)
-        else if ("content".equalsIgnoreCase(uri.getScheme())) {
-            return getDataColumn(context, uri, null, null);
-        }
-        // File
-        else if ("file".equalsIgnoreCase(uri.getScheme())) {
-            return uri.getPath();
-        }
-
-        return null;
-    }
 
     public static String getDataColumn(Context context, Uri uri, String selection,
                                        String[] selectionArgs) {
@@ -165,10 +95,10 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
         mVideoURI = intent.getStringExtra(VIDEO_URI);
 
         Uri u = Uri.parse(mVideoURI);
-        video = new File(getPathFromURI(this.getApplicationContext(), u));
-
 
         VideoUploadHandler uploader = new VideoUploadHandler();
+        video = new File(VideoUploadHandler.getPathFromURI(getApplicationContext(), u));
+
         uploader.uploadVideo(video, new ContentProgressListener() {
             @Override
             public void onSuccess(ContentItem contentItem) {
@@ -206,16 +136,12 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
     @Override
     public void onClick(View v) {
         if (v.equals(saveButton)) {
-            final String eventTime = String.valueOf(System.currentTimeMillis());
             //TODO fill location
             final String location = "TODO";
-            final String videoPath = VideoUploadHandler.getFullS3PathForFile(video);
-
-
+            final String videoPath = VideoUploadHandler.getFullS3Path(video);
 
             APIManager.getInstance().createEvent(
                     eventTitleEditText.getText().toString(),
-                    eventTime,
                     location,
                     videoPath,
                     new APICallback<String>() {

@@ -28,6 +28,7 @@
     <string name="content_helper_error_title">No Content Viewer</string>
     <string name="content_helper_error_no_app">No Viewing App exists for content type \'%s\'.</string>
     <string name="title_activity_sign_up">Sign Up</string>
+    <string name="title_activity_sign_up_video">Sign Up Video</string>
     <string name="title_activity_forgot_password">Forgot Password</string>
     <string name="title_activity_mfa">MFA Code</string>
     <string name="title_activity_sign_up_confirm">Confirm Account</string>

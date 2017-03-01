@@ -1,9 +1,5 @@
 package com.quebec.app;
 
-import android.net.Uri;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.amazonaws.mobile.AWSConfiguration;
 import com.amazonaws.mobile.AWSMobileClient;
 import com.amazonaws.mobile.content.ContentProgressListener;
@@ -65,7 +61,6 @@ public class S3Handler {
 
     /**
      * Uploads a file to the S3 storage bucket.
-     * @param path
      */
     public void uploadFile(final File file, final String filePath, final ContentProgressListener callback) {
         new Thread(new Runnable() {
@@ -99,11 +94,8 @@ public class S3Handler {
                     throw new RuntimeException(ex);
                 }
 
-                userFileManager.getContent(folderPath + path, callback);
+                userFileManager.getContent(path, callback);
             }
         }).start();
-
     }
-
-
 }

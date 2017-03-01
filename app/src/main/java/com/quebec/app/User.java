@@ -3,6 +3,8 @@ package com.quebec.app;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.amazonaws.mobile.content.ContentProgressListener;
+
 /**
  * Created by Andrew on 04/02/2017.
  */
@@ -75,5 +77,10 @@ public class User implements Parcelable {
 
     public String getUserID() {
         return userID;
+    }
+
+    public void getProfilePicture(ContentProgressListener callback) {
+        S3Handler s3 = new S3Handler();
+        s3.getFile(getProfileID(), callback);
     }
 }
