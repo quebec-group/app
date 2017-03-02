@@ -41,13 +41,6 @@ public class S3Handler {
         return instance;
     }
 
-    public String createPathProtected(File f, String pathPrefix) {
-        return  folderPath + pathPrefix + f.getName();
-    }
-
-    public static String getURL(String filepath) {
-        return "http://s3-" + (AWSConfiguration.AMAZON_S3_USER_FILES_BUCKET_REGION_URL) + ".amazonaws.com/" + AWSConfiguration.AMAZON_S3_USER_FILES_BUCKET + "/" + filepath;
-    }
 
     public String getVideoURL(String key) {
         GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(AWSConfiguration.AMAZON_S3_USER_FILES_BUCKET, key);
@@ -71,7 +64,6 @@ public class S3Handler {
                 userFileManagerCreatingLatch.countDown();
             }
         });
-
 
     }
 
@@ -100,6 +92,8 @@ public class S3Handler {
      * Retrieve a file from the S3 storage bucket.
      */
     public void getFile(final String path, final ContentProgressListener callback) {
+
+
         new Thread(new Runnable() {
             @Override
             public void run() {

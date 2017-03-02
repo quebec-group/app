@@ -28,7 +28,7 @@
             android:layout_height="73dp"
             android:scaleType="fitXY"/>
         -->
-        
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"
