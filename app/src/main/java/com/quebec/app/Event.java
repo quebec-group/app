@@ -5,7 +5,9 @@ import android.os.Parcelable;
 
 import com.quebec.services.Video;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 /**
@@ -110,7 +112,9 @@ public class Event implements Parcelable {
     }
 
     public String getTime() {
-        return time;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd:mm:yy");
+        Date eventDate = new Date(Integer.parseInt(time));
+        return formatter.format(eventDate);
     }
 
     public void setLikes(boolean likes) {
