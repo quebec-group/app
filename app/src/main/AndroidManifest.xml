@@ -218,8 +218,7 @@
 
     <activity android:name="com.quebec.app.EventDetailMapActivity" android:label="@string/title_activity_event_detail_map"></activity>
     <activity android:name=".EventVideoUploadSelect" android:windowSoftInputMode="adjustPan" />
-    <activity android:name=".EventVideoUploadPreview" android:windowSoftInputMode="adjustPan" />
-    <activity android:name=".EventVideoUploadDetails" android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".EventVideoUploadDetails" android:windowSoftInputMode="adjustPan" />
 
     <activity android:name=".AboutActivity" android:label="@string/title_activity_about"></activity>
 </application>
