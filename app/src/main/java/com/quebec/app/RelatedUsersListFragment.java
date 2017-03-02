@@ -1,5 +1,6 @@
 package com.quebec.app;
 
+import android.app.Activity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,6 +17,7 @@ import java.util.List;
 
 public class RelatedUsersListFragment extends FriendsListFragment {
     private static String LOG_TAG = RelatedUsersListFragment.class.getSimpleName();
+    public MainActivity mActivity;
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -29,9 +31,12 @@ public class RelatedUsersListFragment extends FriendsListFragment {
 
     private UsersRelation usersRelation;
 
-    public static RelatedUsersListFragment newInstance(UsersRelation usersRelation) {
+
+    public static RelatedUsersListFragment newInstance(UsersRelation usersRelation, MainActivity activity) {
         RelatedUsersListFragment fragment = new RelatedUsersListFragment();
         fragment.usersRelation = usersRelation;
+        fragment.mActivity = activity;
+
         return fragment;
     }
 
@@ -108,5 +113,20 @@ public class RelatedUsersListFragment extends FriendsListFragment {
 
             }
         });
+    }
+
+    @Override
+    public void setupListItem(final View listItem, int position) {
+        final User user = getUsers().get(position);
+
+        listItem.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                mActivity.onUserSelected(user);
+            }
+
+        });
+
     }
 }

@@ -94,15 +94,6 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
         RoundedImageView imageField = (RoundedImageView) mFragmentView.findViewById(R.id.profile_picture_view);
 
 
-
-//        FollowStatusCallBack followStatusCallBack = new FollowStatusCallBack() {
-//            @Override
-//            public void onResponseReceived(Boolean follows) {
-//                followButton(follows);
-//            }
-//        };
-
-
 //        this.getFollowStatus(followStatusCallBack);
         final Button follow = (Button) mFragmentView.findViewById(R.id.profile_friend_follow);
         follow.setOnClickListener(this);
@@ -110,9 +101,9 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
         followingCount = (TextView) mFragmentView.findViewById(R.id.profileFollowingCount);
         followersCount = (TextView) mFragmentView.findViewById(R.id.profileFollowersCount);
         eventsCount = (TextView) mFragmentView.findViewById(R.id.profileEventsCount);
-        followersCount.setText("69");
-        followingCount.setText("69");
+
         getStats();
+
         APIManager.getInstance().iFollow(user, new APICallback<Boolean>() {
             @Override
             public void onSuccess(Boolean responseBody) {
@@ -123,7 +114,7 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
                     follow.setText("Follow");
                     user.setiFollow(false);
                 }
-                Log.d("Event users adapater", user.getUserID() + " " + user.doIFollow());
+                Log.d("Event users adapter", user.getUserID() + " " + user.doIFollow());
             }
 
             @Override

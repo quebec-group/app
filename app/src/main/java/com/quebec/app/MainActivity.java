@@ -312,13 +312,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void openFollowingList() {
         RelatedUsersListFragment.UsersRelation usersRelation = RelatedUsersListFragment.UsersRelation.FOLLOWING;
-        setFragment(RelatedUsersListFragment.newInstance(usersRelation), new FragmentTransitionFromRight(), true);
+        setFragment(RelatedUsersListFragment.newInstance(usersRelation, this), new FragmentTransitionFromRight(), true);
     }
 
     @Override
     public void openFollowersList() {
         RelatedUsersListFragment.UsersRelation usersRelation = RelatedUsersListFragment.UsersRelation.FOLLOWERS;
-        setFragment(RelatedUsersListFragment.newInstance(usersRelation), new FragmentTransitionFromRight(), true);
+        setFragment(RelatedUsersListFragment.newInstance(usersRelation, this), new FragmentTransitionFromRight(), true);
     }
 
     @Override
@@ -341,16 +341,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /** Events for the event detail page. **/
     @Override
     public void onEventUserSelected(User u) {
-        String us = sharedPreferences.getString("userID","");
-
-        Log.d(LOG_TAG, "u:" + u.getUserID() + "curr" +  AWSWrapper.getCognitoID());
-
-        if(u.getUserID().equals(AWSWrapper.getCognitoID())) {
-            setFragment(ProfileFragment.newInstance(), new FragmentTransitionFromRight(), true);
-            currentBottomBarItem  = R.id.menu_profile;
-        } else {
-            setFragment(ProfileFriendFragment.newInstance(u), new FragmentTransitionFromRight(), true);
-        }
+        onUserSelected(u);
     }
 
     @Override
@@ -364,7 +355,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void openUserSelector(Event event) {
-        setFragment(AddUserListFragment.newInstance(event), new FragmentTransitionFromRight(), true);
+        setFragment(AddUserListFragment.newInstance(event, this), new FragmentTransitionFromRight(), true);
     }
 
     @Override
@@ -373,4 +364,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    public void onUserSelected(User user) {
+        String us = sharedPreferences.getString("userID","");
+
+        Log.d(LOG_TAG, "u:" + user.getUserID() + "curr" +  AWSWrapper.getCognitoID());
+
+        if(user.getUserID().equals(AWSWrapper.getCognitoID())) {
+            setFragment(ProfileFragment.newInstance(), new FragmentTransitionFromRight(), true);
+            currentBottomBarItem  = R.id.menu_profile;
+        } else {
+            setFragment(ProfileFriendFragment.newInstance(user), new FragmentTransitionFromRight(), true);
+        }
+    }
 }
