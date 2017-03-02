@@ -2,6 +2,7 @@ package com.quebec.app;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 
 import com.quebec.services.APICallback;
@@ -15,6 +16,11 @@ import java.util.List;
 
 public class RelatedUsersListFragment extends FriendsListFragment {
     private static String LOG_TAG = RelatedUsersListFragment.class.getSimpleName();
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+    }
 
     public enum UsersRelation {
         FOLLOWING,

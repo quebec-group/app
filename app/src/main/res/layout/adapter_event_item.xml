@@ -22,15 +22,15 @@
 
 
         <ImageView
-            android:src="@drawable/party"
-            android:alpha="0.2"
+            android:src="@drawable/bg_header"
+            android:alpha="0.8"
             android:layout_width="match_parent"
-            android:layout_height="178dp"
+            android:layout_height="73dp"
             android:scaleType="fitXY"/>
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:padding="@dimen/box_padding">
 
@@ -66,6 +66,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/eventItemDescription"
+                android:layout_centerHorizontal="true"
                 android:layout_alignParentStart="true"
                 android:clickable="false"
                 android:focusable="false">
@@ -86,11 +87,88 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <LinearLayout
+                    android:layout_width="334dp"
+                    android:layout_height="43dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="43dp"
+                        android:orientation="vertical"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:text="Likes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/textView16"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentStart="true" />
+
+                        <TextView
+                            android:text="TextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/eventTileLikeCount"
+                            android:layout_below="@+id/textView16"
+                            android:layout_alignParentStart="true" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="43dp"
+                        android:orientation="vertical"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:text="Created by"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/textView17" />
+
+                        <TextView
+                            android:text="TextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/eventTileCreator"
+                            android:layout_below="@+id/textView17"
+                            android:layout_alignStart="@+id/textView17" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="43dp"
+                        android:orientation="vertical"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:text="Date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:layout_toEndOf="@+id/textView17"
+                            android:id="@+id/text" />
+
+                        <TextView
+                            android:text="TextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/text"
+                            android:layout_alignStart="@+id/text"
+                            android:id="@+id/eventTileDate" />
+                    </LinearLayout>
+                </LinearLayout>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView10"
                     android:layout_weight="1" />
+
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>

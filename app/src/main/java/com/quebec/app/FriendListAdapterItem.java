@@ -2,6 +2,8 @@ package com.quebec.app;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,7 @@ public class FriendListAdapterItem extends ArrayAdapter<User>{
     int layoutResourceID;
     List<User> data = new ArrayList<>();
     Context mContext;
+    private static FriendsListFragment.FriendsListInteractionHandler myClickListener;
     private static String LOG_TAG = FriendListAdapterItem.class.getSimpleName();
 
 
@@ -39,6 +42,8 @@ public class FriendListAdapterItem extends ArrayAdapter<User>{
     public FriendListAdapterItem(FriendsListFragment fragment, int layoutResourceID) {
         this(fragment, layoutResourceID, new ArrayList<User>());
     }
+
+
 
 
     /**
@@ -60,6 +65,14 @@ public class FriendListAdapterItem extends ArrayAdapter<User>{
 
         TextView textViewItem = (TextView) convertView.findViewById(R.id.friendItemName);
         textViewItem.setText(user.getName());
+        textViewItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragment.onUserItemClick(user);
+                Log.d(LOG_TAG, "onclick here");
+            }
+        });
+
 
         final Button button = (Button) convertView.findViewById(R.id.followToggleButton);
 

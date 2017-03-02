@@ -15,7 +15,7 @@ public class APIEndpoint {
     private static final String follow = "follow";
     private static final String unfollow = "unfollow";
     private static final String followsMe = "followsMe";
-    private static final String iFollow = "doIFollow";
+    private static final String iFollow = "iFollow";
     private static final String createEvent = "createEvent";
     private static final String addUserToEvent = "addUserToEvent";
     private static final String removeFromEvent = "removeFromEvent";
