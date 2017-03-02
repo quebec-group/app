@@ -112,9 +112,15 @@ public class Event implements Parcelable {
     }
 
     public String getTime() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd:mm:yy");
-        Date eventDate = new Date(Integer.parseInt(time));
-        return formatter.format(eventDate);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yy");
+        if (!time.equals("")) {
+            Date eventDate = new Date(Long.parseLong(time));
+            return formatter.format(eventDate);
+        }
+        else {
+            return "";
+        }
+
     }
 
     public void setLikes(boolean likes) {
