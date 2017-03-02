@@ -45,7 +45,7 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
     static final String VIDEO_URI = "videoUri";
 
     private String mVideoURI = "";
-    private String mLocation;
+    private String mLocation = "";
 
     private EditText eventTitleEditText;
     private EditText eventLocationEditText;
@@ -203,8 +203,6 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
                 mLocation = Double.toString(mLastKnownLocation.getLatitude()) + "," + Double.toString(mLastKnownLocation.getLongitude());
             } else {
                 // Create the LocationRequest object request
-
-
                 eventLocationEditText.setText("Location not found");
                 mLocation = "";
             }
@@ -231,8 +229,8 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
 
     @Override
     public void onClick(View v) {
-        if (v.equals(saveButton)) {
-            //TODO fill location
+        if (v.getId() == R.id.event_upload_video_saveBtn) {
+
             final String location = mLocation;
             final String videoPath = VideoUploadHandler.getFullS3Path(video);
 

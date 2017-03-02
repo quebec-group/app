@@ -186,7 +186,6 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
      * Add the users to the view.
      */
     private void addUsersToView() {
-
         EventUsersAdapterItem adapter = new EventUsersAdapterItem(this.getContext(), R.layout.adapter_grid_event_user, mEvent.getAttendees());
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(this);
