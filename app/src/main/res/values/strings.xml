@@ -175,6 +175,8 @@
     <string name="profileFragmentTitle">Profile</string>
     <string name="event_detail_join">Join</string>
     <string name="event_detail_leave">LEAVE</string>
+    <string name="friends_list_activity_label">Friends list fragment</string>
+    <string name="search_by_name_or_email">Search by name or email</string>
 
 
 </resources>

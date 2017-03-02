@@ -276,8 +276,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void openFriendsList() {
-        setFragment(FriendsListFragment.newInstance(), new FragmentTransitionFromRight(), true);
+    public void openFollowingList() {
+        setFragment(RelatedUsersListFragment.newInstance(false), new FragmentTransitionFromRight(), true);
+    }
+
+    @Override
+    public void openFollowersList() {
+        setFragment(RelatedUsersListFragment.newInstance(true), new FragmentTransitionFromRight(), true);
     }
 
     @Override
@@ -310,8 +315,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             setFragment(ProfileFriendFragment.newInstance(u), new FragmentTransitionFromRight(), true);
         }
-
     }
+
+
 
     @Override
     public void openEventDetailLocation() {
@@ -320,7 +326,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    public void openUserSelector(Event event) {
+        setFragment(AddUserListFragment.newInstance(event), new FragmentTransitionFromRight(), true);
+    }
+
+    @Override
     public void onProfileFriendEventSelected(Event event) {
         setFragment(EventDetailFragment.newInstance(event), new FragmentTransitionFromRight(), true);
     }
+
+
 }

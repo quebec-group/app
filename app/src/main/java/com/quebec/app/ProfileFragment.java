@@ -151,10 +151,19 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
         identityManager = AWSMobileClient.defaultMobileClient()
                 .getIdentityManager();
 
+        mFragmentView.findViewById(R.id.followingLayout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.openFollowingList();
+            }
+        });
 
-        /* Initiate the events feed on the profile, by loading the data into the adapter view. */
-        // TODO: Replace stubs with actual Events
-
+        mFragmentView.findViewById(R.id.followersLayout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.openFollowersList();
+            }
+        });
 
         final RecyclerView mRecyclerView = (RecyclerView) mFragmentView.findViewById(R.id.profileEventsFeedRecycler);
         mRecyclerView.hasFixedSize();
@@ -357,7 +366,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
 
 
     public interface ProfileInteractionListener {
-        void openFriendsList();
+        void openFollowingList();
+        void openFollowersList();
         void openAboutPage();
         void updateProfilePictureActivity();
         void onProfileEventSelected(Event e);

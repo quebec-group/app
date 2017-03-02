@@ -240,7 +240,7 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
                  likeEventClick();
                  break;
              case R.id.event_detail_add_user:
-                 addToEventButtonClicked();
+                 mListener.openUserSelector(mEvent);
                  break;
              case R.id.event_detail_addRemoveMe:
                  addOrRemoveMeFromEventButtonClicked();
@@ -307,10 +307,7 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
     public interface OnEventDetailInteractionListener {
         void onEventUserSelected(User u);
         void openEventDetailLocation();
-    }
-
-    private void addToEventButtonClicked() {
-
+        void openUserSelector(Event e);
     }
 
     private User currentUserFromEvent() {
