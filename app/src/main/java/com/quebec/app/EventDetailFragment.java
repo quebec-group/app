@@ -125,8 +125,10 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
             eventLikes = mEvent.getLikesCount();
             eventLikeButton.setText(mEvent.getLikesCount() + "");
 
-            // TODO: The like state is not working.
-
+            if (mEvent.getLocation().equals(""))  {
+                eventLocationButton.setText(R.string.event_detail_no_location);
+                eventLocationButton.setEnabled(false);
+            }
             if (mEvent.getLikes()) {
                 eventLikeState = true;
                 eventLikeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_heart_filled, 0, 0, 0);
@@ -231,7 +233,7 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
     public void onClick(View view) {
          switch (view.getId()) {
              case R.id.event_detail_location_button:
-                 mListener.openEventDetailLocation();
+                 mListener.openEventDetailLocation(mEvent);
                  break;
              case R.id.event_detail_uploadBtn:
                  showVideoUpload();
@@ -306,7 +308,7 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
      */
     public interface OnEventDetailInteractionListener {
         void onEventUserSelected(User u);
-        void openEventDetailLocation();
+        void openEventDetailLocation(Event e);
         void openUserSelector(Event e);
     }
 

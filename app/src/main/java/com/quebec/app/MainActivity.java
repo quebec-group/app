@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private User current_user;
 
     private BottomBar mBottomBar;
+    public static String EVENT_ITEM_KEY;
+
     /**
      * Change the current fragment in the main activity view.
      * @param frag
@@ -349,13 +351,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-
-
     @Override
-    public void openEventDetailLocation() {
+    public void openEventDetailLocation(Event e) {
         Intent intent = new Intent(this, EventDetailMapActivity.class);
+        intent.putExtra(EVENT_ITEM_KEY, e);
         startActivity(intent);
     }
+
+
 
     @Override
     public void openUserSelector(Event event) {

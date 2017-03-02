@@ -52,9 +52,12 @@ public class Event implements Parcelable {
         return sb.toString();
 
     }
+
     protected Event(Parcel in) {
         title = in.readString();
-        //videoURL = in.readString();
+        eventID = in.readInt();
+        location = in.readString();
+        time = in.readString();
     }
 
     public static final Creator<Event> CREATOR = new Creator<Event>() {
@@ -92,6 +95,9 @@ public class Event implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(title);
+        dest.writeInt(eventID);
+        dest.writeString(location);
+        dest.writeString(time);
     }
 
     public boolean getLikes() {
@@ -109,4 +115,6 @@ public class Event implements Parcelable {
     public void setLikes(boolean likes) {
         this.likes = likes;
     }
+
+    public String getLocation() { return location; }
 }

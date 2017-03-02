@@ -1,8 +1,11 @@
 package com.quebec.app;
 
+import android.content.Intent;
+import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -10,17 +13,33 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import static com.quebec.app.MainActivity.EVENT_ITEM_KEY;
+
 public class EventDetailMapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private Location mLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_detail_map);
+
+        Intent intent = this.getIntent();
+        Event event = intent.getParcelableExtra(EVENT_ITEM_KEY);
+
+        String locationString = event.getLocation();
+        String[] parts = locationString.split(",");
+
+        mLocation = new Location("");
+        if (parts.length == 2) {
+            mLocation.setLatitude(Double.parseDouble(parts[0]));
+            mLocation.setLongitude(Double.parseDouble(parts[1]));
+        }
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+
         mapFragment.getMapAsync(this);
     }
 
@@ -39,8 +58,16 @@ public class EventDetailMapActivity extends FragmentActivity implements OnMapRea
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        LatLng sydney = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
+        mMap.addMarker(new MarkerOptions().position(sydney));
+
+        CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(mLocation.getLatitude(),
+                mLocation.getLongitude()));
+
+        CameraUpdate zoom = CameraUpdateFactory.zoomTo(15);
+
+        mMap.moveCamera(center);
+        mMap.animateCamera(zoom);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 }

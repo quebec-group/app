@@ -64,6 +64,15 @@
             android:layout_weight="0.06"
             android:textAppearance="@style/TextAppearance.FontPath" />
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Location..."
+            android:ems="10"
+            android:id="@+id/event_upload_details_event_location"
+            android:layout_weight="0.06" />
+
         <ProgressBar
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
@@ -71,7 +80,7 @@
             android:id="@+id/event_video_upload_progress"
             android:layout_weight="0.05"
             android:max="20"
-            android:progress="10" />
+            android:progress="0" />
 
         <Space
             android:layout_width="match_parent"
