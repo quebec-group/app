@@ -65,9 +65,7 @@ public class RelatedUsersListFragment extends FriendsListFragment {
         /*
             Set the text for the button; depends on if the user follows you
          */
-        if(usersRelation.equals(UsersRelation.FOLLOWING)) {
-            button.setText("Unfollow");
-        } else {
+
             APIManager.getInstance().iFollow(user, new APICallback<Boolean>() {
                 @Override
                 public void onSuccess(Boolean responseBody) {
@@ -83,7 +81,7 @@ public class RelatedUsersListFragment extends FriendsListFragment {
 
                 }
             });
-        }
+        
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
