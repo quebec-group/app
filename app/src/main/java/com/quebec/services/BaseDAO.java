@@ -14,7 +14,7 @@ public class BaseDAO {
     }
 
     public JSONObject get_DAO_BODY() {
-        return _DAO_BODY;
+        return (_DAO_BODY == null) ? new JSONObject() : _DAO_BODY;
     }
 
     public void set_DAO_BODY(JSONObject _DAO_BODY) {

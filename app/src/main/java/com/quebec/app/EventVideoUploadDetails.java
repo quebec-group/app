@@ -2,9 +2,15 @@ package com.quebec.app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -17,20 +23,33 @@ import com.amazonaws.mobile.content.ContentProgressListener;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Places;
 import com.quebec.services.APICallback;
 import com.quebec.services.APIManager;
 
 import java.io.File;
 
 
-public class EventVideoUploadDetails extends AppCompatActivity implements View.OnClickListener {
+public class EventVideoUploadDetails extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
+
+    private GoogleApiClient mGoogleApiClient;
+    private LocationRequest mLocationRequest;
+
     private static String LOG_TAG = EventVideoUploadDetails.class.getSimpleName();
 
     static final String VIDEO_URI = "videoUri";
 
-    private String mVideoURI;
+    private String mVideoURI = "";
+    private String mLocation;
+
     private EditText eventTitleEditText;
+    private EditText eventLocationEditText;
+
     private Button saveButton;
     private String videoPath = "";
     /**
@@ -39,6 +58,10 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
      */
     private GoogleApiClient client;
     private File video;
+    private boolean mLocationPermissionGranted;
+    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 247;
+    private Location mLastKnownLocation;
+
 
     public static String getDataColumn(Context context, Uri uri, String selection,
                                        String[] selectionArgs) {
@@ -87,6 +110,8 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
         setContentView(R.layout.activity_event_upload_video_details);
 
         eventTitleEditText = (EditText) findViewById(R.id.event_upload_details_event_name);
+        eventLocationEditText = (EditText) findViewById(R.id.event_upload_details_event_location);
+
         saveButton = (Button) findViewById(R.id.event_upload_video_saveBtn);
 
         final ProgressBar progressBar = (ProgressBar) this.findViewById(R.id.event_video_upload_progress);
@@ -118,6 +143,18 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
         });
 
 
+        /* Setup the location handler to get the current user location. */
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this /* FragmentActivity */,
+                        this /* OnConnectionFailedListener */)
+                .addConnectionCallbacks(this)
+                .addApi(LocationServices.API)
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
+                .build();
+
+        mGoogleApiClient.connect();
+
         /* Added the event listener for the button click. */
         Button btn = (Button) this.findViewById(R.id.event_upload_video_saveBtn);
         btn.setOnClickListener(this);
@@ -132,12 +169,71 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
+    private void getDeviceLocation() {
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mLocationPermissionGranted = true;
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }
+
+        LocationRequest mLocationRequest = LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(10 * 1000)
+                .setFastestInterval(1 * 1000);
+
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                mLastKnownLocation = location;
+                performDeviceLocationGet();
+            }
+        });
+
+    }
+
+    private void performDeviceLocationGet() {
+
+        if (mLocationPermissionGranted) {
+            if (mLastKnownLocation != null) {
+                eventLocationEditText.setText(Double.toString(mLastKnownLocation.getLongitude()));
+                mLocation = Double.toString(mLastKnownLocation.getLatitude()) + "," + Double.toString(mLastKnownLocation.getLongitude());
+            } else {
+                // Create the LocationRequest object request
+
+
+                eventLocationEditText.setText("Location not found");
+                mLocation = "";
+            }
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[],
+                                           @NonNull int[] grantResults) {
+        mLocationPermissionGranted = false;
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mLocationPermissionGranted = true;
+                }
+            }
+        }
+        getDeviceLocation();
+    }
 
     @Override
     public void onClick(View v) {
         if (v.equals(saveButton)) {
             //TODO fill location
-            final String location = "TODO";
+            final String location = mLocation;
             final String videoPath = VideoUploadHandler.getFullS3Path(video);
 
             APIManager.getInstance().createEvent(
@@ -198,6 +294,28 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         AppIndex.AppIndexApi.end(client, getIndexApiAction());
         client.disconnect();
+    }
+
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        else {
+            getDeviceLocation();
+        }
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
     }
 }
 
