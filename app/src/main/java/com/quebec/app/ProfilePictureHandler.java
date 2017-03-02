@@ -88,7 +88,6 @@ public class ProfilePictureHandler {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
     }
 
     /**

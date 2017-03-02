@@ -66,6 +66,7 @@ public class FriendListAdapterItem extends ArrayAdapter<User>{
         TextView textViewItem = (TextView) convertView.findViewById(R.id.friendItemName);
         textViewItem.setText(user.getName());
 
+        /* Load the profile picture into the view. */
         final RoundedImageView friendItemImage = (RoundedImageView) convertView.findViewById(R.id.friendItemImage);
         
         user.getProfilePicture(new ContentProgressListener() {
@@ -84,7 +85,7 @@ public class FriendListAdapterItem extends ArrayAdapter<User>{
         final Button button = (Button) convertView.findViewById(R.id.followToggleButton);
 
         fragment.setupButton(button, position);
-
+        fragment.setupListItem(convertView, position);
         return convertView;
     }
 }
