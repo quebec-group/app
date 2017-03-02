@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import static com.quebec.app.R.mipmap.user;
+
 /**
  * Created by Andy on 25/02/2017.
  */
@@ -50,6 +52,12 @@ public class EventListFactory {
             final String title = currentEvent.getString("title");
             final String members = currentEvent.getString("members");
             final String time = currentEvent.getString("time");
+            final JSONObject creator = currentEvent.getJSONObject("creator");
+
+            User creatorUser = new User();
+            creatorUser.setEmail(creator.getString("email"));
+            creatorUser.setUserID(creator.getString("userID"));
+            creatorUser.setProfileID(creator.getString("profileID"));
 
             JSONArray jsonArray = new JSONArray(members);
             UserListFactory userListFactory = new UserListFactory();
@@ -60,6 +68,7 @@ public class EventListFactory {
             ArrayList<Video> videos = videoListFactory.videoListFactory(videoArray);
 
             Event event = new Event(title, eventID, eventLocation, time, videos, currentAttendees, likes, likesCount);
+            event.setCreator(creatorUser);
 
             eventsAttended.add(event);
         }

@@ -27,9 +27,7 @@ public class Video {
         this.videoID = videoID;
     }
 
-    public String getVideoPath() {
-        return videoPath;
-    }
+    public String getVideoPath() { return videoPath; }
 
     public void setVideoPath(String videoPath) {
         this.videoPath = videoPath;

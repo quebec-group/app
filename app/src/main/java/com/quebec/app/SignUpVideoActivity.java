@@ -23,9 +23,6 @@ public class SignUpVideoActivity extends AppCompatActivity {
 
     public static final String EVENT_VIDEO = "event_video";
 
-
-    private Event event;
-    private int uploadMode = 0;
     private ProgressBar progressBar;
     private TextView progressText;
     private Button takeButton;
@@ -40,6 +37,11 @@ public class SignUpVideoActivity extends AppCompatActivity {
         takeButton = (Button) findViewById(R.id.sign_up_takeVideo);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 
     /**
      * Launches the standard Android video interface for taking videos.
@@ -87,11 +89,8 @@ public class SignUpVideoActivity extends AppCompatActivity {
                                 }
                             });
 
-                    final Intent intent1 = new Intent(SignUpVideoActivity.this, MainActivity.class);
-                    intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent1.putExtra("videoUri", videoUri.toString());
-                    intent1.putExtra(EVENT_VIDEO, event);
-                    startActivity(intent1);
+                    final Intent intent = new Intent(SignUpVideoActivity.this, MainActivity.class);
+                    startActivity(intent);
                 }
 
                 @Override

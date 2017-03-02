@@ -588,7 +588,7 @@ public class APIManager implements API {
 
     @Override
     public void iFollow(final User user, final APICallback<Boolean> response) {
-        final APIEndpoint endpoint = new APIEndpoint("iFollow");
+        final APIEndpoint endpoint = new APIEndpoint("doIFollow");
         final APIRequest request = requestWithUserID(user.getUserID(), endpoint);
 
         boolService(request, response);

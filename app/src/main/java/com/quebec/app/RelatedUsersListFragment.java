@@ -62,26 +62,13 @@ public class RelatedUsersListFragment extends FriendsListFragment {
     @Override
     public void setupButton(final Button button, int positon) {
         final User user = getUsers().get(positon);
-        /*
-            Set the text for the button; depends on if the user follows you
-         */
-
-            APIManager.getInstance().iFollow(user, new APICallback<Boolean>() {
-                @Override
-                public void onSuccess(Boolean responseBody) {
-                    if(responseBody) {
-                        button.setText("Unfollow");
-                    } else {
-                        button.setText("Follow");
-                    }
-                }
-
-                @Override
-                public void onFailure(String message) {
-
-                }
-            });
-        
+      
+        if (user.doIFollow()) {
+            button.setText("Unfollow");
+        } else {
+            button.setText("Follow");
+        }
+      
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
