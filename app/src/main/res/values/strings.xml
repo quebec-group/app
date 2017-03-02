@@ -143,7 +143,7 @@
     <string name="signup_video_upload_title">Face training</string>
     <string name="signup_photo_confirm">Set photo as profile picture</string>
     <string name="signup_photo_description">Upload a profile picture. This will also be used for facial recognition training so use a clear photo,</string>
-    <string name="signup_video_description">Take a video of yourself from different angles and let the robots learn and recognize you face features</string>
+    <string name="signup_video_description">Take a video of yourself from different angles and let the robots learn and recognize you</string>
     <string name="sign_in_no_internet">No internet connection detected.</string>
     <string name="signup_password_hint">Password must contain a special character, capital letter and number.</string>
 
