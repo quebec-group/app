@@ -25,10 +25,9 @@ public class EventVideoUploadSelect extends AppCompatActivity {
 
         /* Receive an intent to detect whether this is a new event, or
            a new video on an existing event.
-         */
+        */
 
         Intent intent = getIntent();
-
         Bundle b = intent.getExtras();
 
         if (b != null) {
@@ -37,11 +36,12 @@ public class EventVideoUploadSelect extends AppCompatActivity {
             }
 
             if (b.containsKey(EVENT_VIDEO)) {
+
                 event = intent.getExtras().getParcelable(EVENT_VIDEO);
             }
         }
 
-        if (uploadMode ==0){
+        if (uploadMode == 0){
             TextView description = (TextView)(this.findViewById(R.id.editText2));
             description.setText("Uploading a video here will create a new event. If you want to add a video to an already existing event then please go back to EventsFeed and select the event you want to add the video to");
         }

@@ -23,6 +23,7 @@ import com.quebec.services.Video;
 
 import java.util.ArrayList;
 
+import static com.quebec.app.EventVideoUploadSelect.EVENT_VIDEO;
 import static com.quebec.app.EventVideoUploadSelect.EVENT_VIDEO_MODE;
 
 
@@ -252,6 +253,7 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
     private void showVideoUpload() {
         Intent intent = new Intent(this.getContext(), EventVideoUploadSelect.class);
         intent.putExtra(EVENT_VIDEO_MODE, 1);
+        intent.putExtra(EVENT_VIDEO, mEvent);
         startActivity(intent);
     }
 

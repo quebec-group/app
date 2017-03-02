@@ -2,6 +2,7 @@ package com.quebec.app;
 
 import android.content.ContentUris;
 import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -13,10 +14,7 @@ import com.quebec.services.AWSWrapper;
 
 import java.io.File;
 
-import static com.quebec.app.EventVideoUploadDetails.getDataColumn;
-import static com.quebec.app.EventVideoUploadDetails.isDownloadsDocument;
-import static com.quebec.app.EventVideoUploadDetails.isExternalStorageDocument;
-import static com.quebec.app.EventVideoUploadDetails.isMediaDocument;
+
 
 /**
  * Created by Andrew on 09/02/2017.
@@ -42,6 +40,41 @@ public class VideoUploadHandler {
 
     public static String getFullS3Path(File file) {
         return "protected/" + AWSWrapper.getCognitoID() + "/" + VIDEO_FOLDER_PREFIX + file.getName();
+    }
+
+    public static String getDataColumn(Context context, Uri uri, String selection,
+                                       String[] selectionArgs) {
+
+        Cursor cursor = null;
+        final String column = "_data";
+        final String[] projection = {
+                column
+        };
+
+        try {
+            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
+                    null);
+            if (cursor != null && cursor.moveToFirst()) {
+                final int column_index = cursor.getColumnIndexOrThrow(column);
+                return cursor.getString(column_index);
+            }
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        return null;
+    }
+
+    public static boolean isExternalStorageDocument(Uri uri) {
+        return "com.android.externalstorage.documents".equals(uri.getAuthority());
+    }
+
+    public static boolean isDownloadsDocument(Uri uri) {
+        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
+    }
+
+    public static boolean isMediaDocument(Uri uri) {
+        return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
 
     /**

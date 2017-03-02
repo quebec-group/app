@@ -10,12 +10,21 @@ import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
+import com.amazonaws.mobile.content.ContentItem;
+import com.amazonaws.mobile.content.ContentProgressListener;
+import com.quebec.services.API;
+import com.quebec.services.APICallback;
+import com.quebec.services.APIManager;
+
+import java.io.File;
+
 import static com.quebec.app.EventVideoUploadSelect.EVENT_VIDEO;
 import static com.quebec.app.EventVideoUploadSelect.EVENT_VIDEO_MODE;
 
 public class EventVideoUploadPreview extends AppCompatActivity implements View.OnClickListener {
 
-    static final String VIDEO_URI = "videoUri";
+    public static final String VIDEO_URI = "videoUri";
+    public static final String EVENT_OBJECT = "event_object";
     private VideoView mVideoView;
     private String videoString;
 
@@ -31,10 +40,14 @@ public class EventVideoUploadPreview extends AppCompatActivity implements View.O
             a new video on an existing event.
          */
 
+
         Intent intent = getIntent();
 
         uploadMode = intent.getIntExtra(EVENT_VIDEO_MODE, 0);
-        event = intent.getExtras().getParcelable(EVENT_VIDEO);
+
+        if (uploadMode == 1) {
+            event = intent.getExtras().getParcelable(EVENT_VIDEO);
+        }
 
         Button useVideoButton = (Button) this.findViewById(R.id.event_video_upload_preview_uploadBtn);
         Button reuploadVideoButton = (Button) this.findViewById(R.id.event_video_upload_preview_retakeBtn);
@@ -71,10 +84,12 @@ public class EventVideoUploadPreview extends AppCompatActivity implements View.O
         }
         else {
             /* Uploading to an existing event, therefore launch the add video to existing event activity. */
-            Intent intent1 = new Intent(this.getApplicationContext(), MainActivity.class);
-            intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            Intent intent1 = new Intent(this.getApplicationContext(), EventVideoAddToEvent.class);
+
+            intent1.putExtra("videoUri", videoString);
+            intent1.putExtra(EVENT_VIDEO, event);
+
             startActivity(intent1);
-            finish();
         }
     }
 

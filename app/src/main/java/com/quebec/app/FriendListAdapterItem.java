@@ -86,6 +86,8 @@ public class FriendListAdapterItem extends ArrayAdapter<User>{
         fragment.setupButton(button, position);
 
         return convertView;
+
+
     }
 }
 

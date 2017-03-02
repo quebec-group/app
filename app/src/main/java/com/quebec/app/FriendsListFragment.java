@@ -63,9 +63,7 @@ public abstract class FriendsListFragment extends Fragment implements AdapterVie
 
         // Setup the search field for the friends page.
         friendsListSearchBox = (EditText) v.findViewById(R.id.friendsListSearchBox);
-
         friendsListSearchBox.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
-
         friendsListSearchBox.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
