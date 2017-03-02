@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,7 +22,7 @@ import com.quebec.services.APIManager;
 import java.util.List;
 
 
-public class FriendsListFragment extends Fragment implements AdapterView.OnItemClickListener {
+public abstract class FriendsListFragment extends Fragment implements AdapterView.OnItemClickListener {
     private static String LOG_TAG = FriendsListFragment.class.getSimpleName();
 
     private FriendsListInteractionHandler mListener;
@@ -29,16 +30,12 @@ public class FriendsListFragment extends Fragment implements AdapterView.OnItemC
     private EditText friendsListSearchBox;
     private ListView listView;
 
-    private FriendListAdapterItem adapter;
+    protected FriendListAdapterItem adapter;
 
     public FriendsListFragment() {
         // Required empty public constructor
     }
 
-    public static FriendsListFragment newInstance() {
-        FriendsListFragment fragment = new FriendsListFragment();
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,25 +48,16 @@ public class FriendsListFragment extends Fragment implements AdapterView.OnItemC
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_friends_list, container, false);
 
-        adapter = new FriendListAdapterItem(getContext(), R.layout.adapter_friend_list_item);
+        adapter = new FriendListAdapterItem(this, R.layout.adapter_friend_list_item);
 
+        TextView titleView = (TextView) v.findViewById(R.id.friends_fragment_title);
+        titleView.setText(getTitle());
 
         listView = (ListView) v.findViewById(R.id.friendsList);
 
         listView.setAdapter(adapter);
 
-        APIManager.getInstance().following(new APICallback<List<User>>() {
-            @Override
-            public void onSuccess(List<User> users) {
-                setUsers(users);
-            }
-
-            @Override
-            public void onFailure(String message) {
-                Log.d(LOG_TAG, "Couldn't get followers: " + message);
-            }
-        });
-
+        setData();
 
         listView.setOnItemClickListener(this);
 
@@ -91,8 +79,13 @@ public class FriendsListFragment extends Fragment implements AdapterView.OnItemC
             }
         });
 
+
         return v;
     }
+
+    protected abstract String getTitle();
+
+    public abstract void setData();
 
     public void performSearch() {
         String request = friendsListSearchBox.getText().toString();
@@ -110,10 +103,14 @@ public class FriendsListFragment extends Fragment implements AdapterView.OnItemC
         });
     }
 
-    private void setUsers(List<User> users) {
+    protected void setUsers(List<User> users) {
         adapter.clear();
         adapter.addAll(users);
         adapter.notifyDataSetChanged();
+    }
+
+    protected List<User> getUsers() {
+        return adapter.data;
     }
 
     @Override
@@ -148,6 +145,7 @@ public class FriendsListFragment extends Fragment implements AdapterView.OnItemC
         mListener.onFriendSelected(u);
     }
 
+    public abstract void setupButton(Button button, int positon);
 
 
     public interface FriendsListInteractionHandler {

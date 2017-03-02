@@ -1,15 +1,11 @@
 package com.quebec.app;
 
-import android.app.Activity;
-
 import com.amazonaws.mobile.AWSMobileClient;
-import com.amazonaws.mobile.content.ContentItem;
 import com.amazonaws.mobile.content.ContentProgressListener;
 import com.amazonaws.mobileconnectors.cognito.CognitoSyncManager;
 import com.amazonaws.mobileconnectors.cognito.Dataset;
 
 import java.io.File;
-import java.io.IOException;
 
 /**
  * Created by Andrew on 09/02/2017.
@@ -23,7 +19,7 @@ public class ProfilePictureHandler {
     private Dataset dataset;
 
     public ProfilePictureHandler() {
-        uploader = new S3Handler();
+        uploader = S3Handler.getInstance();
 
         CognitoSyncManager client = AWSMobileClient.defaultMobileClient().getSyncManager();
         dataset = client.openOrCreateDataset("user_profile");

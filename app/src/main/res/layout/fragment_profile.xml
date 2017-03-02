@@ -118,14 +118,16 @@
                                 android:text="Events"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/textView2" />
+                                android:id="@+id/textView222" />
                         </LinearLayout>
 
                         <LinearLayout
                             android:orientation="vertical"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:clickable="true"
+                            android:id="@+id/followingLayout">
 
                             <TextView
                                 android:text="0"
@@ -138,14 +140,16 @@
                                 android:text="Following"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/textView2" />
+                                android:id="@+id/textView22" />
                         </LinearLayout>
 
                         <LinearLayout
                             android:orientation="vertical"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:clickable="true"
+                            android:id="@+id/followersLayout">
 
                             <TextView
                                 android:text="0"

@@ -173,6 +173,10 @@
     <string name="about_text" >Quebec Group Project\\nUtilise the power of face detection to see who\'s at your party!</string>
     <string name="empty_events_feed">Create your first event, or follow some users to see events.</string>
     <string name="profileFragmentTitle">Profile</string>
+    <string name="event_detail_join">Join</string>
+    <string name="event_detail_leave">LEAVE</string>
+    <string name="friends_list_activity_label">Friends list fragment</string>
+    <string name="search_by_name_or_email">Search by name or email</string>
 
 
 </resources>

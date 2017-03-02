@@ -22,7 +22,7 @@
             android:layout_weight="1" />
 
         <Button
-            android:layout_width="175dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/followToggleButton"
             android:layout_below="@+id/friendItemName"

@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.quebec.services.APICallback;
 import com.quebec.services.APIManager;
+import com.quebec.services.AWSWrapper;
 import com.quebec.services.Video;
 
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
     private int eventLikes;
 
     private OnEventDetailInteractionListener mListener;
+    private Button addRemoveMeButton;
 
     public EventDetailFragment() {
         // Required empty public constructor
@@ -108,6 +110,12 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
         Button eventUploadButton = (Button) mFragmentView.findViewById(R.id.event_detail_uploadBtn);
         eventUploadButton.setOnClickListener(this);
 
+        Button addUsersButton = (Button) mFragmentView.findViewById(R.id.event_detail_add_user);
+        addUsersButton.setOnClickListener(this);
+
+        addRemoveMeButton = (Button) mFragmentView.findViewById(R.id.event_detail_addRemoveMe);
+        addRemoveMeButton.setOnClickListener(this);
+
         /* If the event has been initialised, then insert the Event information onto the
            the page */
         if (mEvent != null) {
@@ -115,7 +123,7 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
             eventDetailDescription.setText("");
 
             eventLikes = mEvent.getLikesCount();
-            eventLikeButton.setText(mEvent.getLikesCount() + " likes");
+            eventLikeButton.setText(mEvent.getLikesCount() + "");
 
             // TODO: The like state is not working.
 
@@ -137,8 +145,10 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
         /* Add the videos to the view. */
         addVideosToView();
 
-       /* Add the users related to the event to the view. */
+        /* Add the users related to the event to the view. */
         addUsersToView();
+
+        updateAddRemoveButtonText(currentUserFromEvent() != null);
 
         return mFragmentView;
     }
@@ -178,7 +188,6 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
         EventUsersAdapterItem adapter = new EventUsersAdapterItem(this.getContext(), R.layout.adapter_grid_event_user, mEvent.getAttendees());
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(this);
-
     }
 
     @Override
@@ -229,6 +238,12 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
                  break;
              case R.id.event_detail_likes:
                  likeEventClick();
+                 break;
+             case R.id.event_detail_add_user:
+                 mListener.openUserSelector(mEvent);
+                 break;
+             case R.id.event_detail_addRemoveMe:
+                 addOrRemoveMeFromEventButtonClicked();
                  break;
          }
     }
@@ -281,7 +296,7 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
 
         }
 
-        eventLikeButton.setText(eventLikes + " likes");
+        eventLikeButton.setText(eventLikes + "");
         eventLikeState = !eventLikeState;
     }
 
@@ -292,5 +307,74 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
     public interface OnEventDetailInteractionListener {
         void onEventUserSelected(User u);
         void openEventDetailLocation();
+        void openUserSelector(Event e);
+    }
+
+    private User currentUserFromEvent() {
+        User me = null;
+        for (User user : mEvent.getAttendees()) {
+            if (user.getUserID().equals(AWSWrapper.getCognitoID())) {
+                me = user;
+                break;
+            }
+        }
+
+        return me;
+    }
+
+    private void updateAddRemoveButtonText(boolean currenlyAtEvent) {
+        if (currenlyAtEvent) {
+            addRemoveMeButton.setText(R.string.event_detail_leave);
+
+        } else {
+            addRemoveMeButton.setText(R.string.event_detail_join);
+        }
+    }
+
+    private void addOrRemoveMeFromEventButtonClicked() {
+        User me = currentUserFromEvent();
+
+        if (me != null) {
+            APIManager.getInstance().removeFromEvent(mEvent, new APICallback<String>() {
+                @Override
+                public void onSuccess(String responseBody) {
+                    Log.d(LOG_TAG, "Removed from event");
+                }
+
+                @Override
+                public void onFailure(String message) {
+                    Log.e(LOG_TAG, "Remove from event failed: " + message);
+                }
+            });
+
+            mEvent.getAttendees().remove(me);
+            updateAddRemoveButtonText(false);
+        } else {
+            APIManager.getInstance().getInfo(new APICallback<User>() {
+                @Override
+                public void onSuccess(User me) {
+                    APIManager.getInstance().addUserToEvent(mEvent, AWSWrapper.getCognitoID(), new APICallback<String>() {
+                        @Override
+                        public void onSuccess(String responseBody) {
+                            Log.d(LOG_TAG, "Added me to event");
+                        }
+
+                        @Override
+                        public void onFailure(String message) {
+                            Log.e(LOG_TAG, "Adding me to event failed: " + message);
+                        }
+                    });
+
+                    mEvent.getAttendees().add(me);
+                }
+
+                @Override
+                public void onFailure(String message) {
+
+                }
+            });
+            updateAddRemoveButtonText(true);
+        }
+
     }
 }
