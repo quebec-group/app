@@ -72,7 +72,7 @@
                 android:id="@+id/sign_up_video_upload_progressbar"
                 android:visibility="invisible"
                 android:max="20"
-                android:progress="10" />
+                android:progress="0" />
 
             <Button
                 android:id="@+id/sign_up_takeVideo"
