@@ -19,8 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textView"
-            android:textAppearance="@style/TextAppearance.FontPathHeading"
-            android:textSize="24sp" />
+            android:textAppearance="@style/TextAppearance.FontPathHeading" />
 
         <RelativeLayout
             android:layout_width="match_parent"

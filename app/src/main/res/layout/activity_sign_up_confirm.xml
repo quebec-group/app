@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:id="@+id/confirm_account_title"
-        android:textAppearance="@style/TextAppearance.FontPath"
+        android:textAppearance="@style/TextAppearance.FontPathHeading"
         style="@style/SmallHeaderText" />
 
     <Space
