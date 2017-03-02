@@ -2,12 +2,17 @@ package com.quebec.app;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.amazonaws.mobile.content.ContentItem;
+import com.amazonaws.mobile.content.ContentProgressListener;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +65,21 @@ public class FriendListAdapterItem extends ArrayAdapter<User>{
 
         TextView textViewItem = (TextView) convertView.findViewById(R.id.friendItemName);
         textViewItem.setText(user.getName());
+
+        final RoundedImageView friendItemImage = (RoundedImageView) convertView.findViewById(R.id.friendItemImage);
+        
+        user.getProfilePicture(new ContentProgressListener() {
+            @Override
+            public void onSuccess(ContentItem contentItem) {
+                friendItemImage.setImageURI(Uri.fromFile(contentItem.getFile()));
+            }
+
+            @Override
+            public void onProgressUpdate(String filePath, boolean isWaiting, long bytesCurrent, long bytesTotal) {}
+
+            @Override
+            public void onError(String filePath, Exception ex) {}
+        });
 
         final Button button = (Button) convertView.findViewById(R.id.followToggleButton);
 
