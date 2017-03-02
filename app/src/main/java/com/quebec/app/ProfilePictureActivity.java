@@ -286,7 +286,7 @@ public class ProfilePictureActivity extends AppCompatActivity {
             @Override
             public void onSuccess(ContentItem contentItem) {
                 Log.d(LOG_TAG, "Saved new profile picture");
-                saveProfileImage("protected/" + contentItem.getFilePath());
+                saveProfileImage(contentItem.getFilePath());
             }
 
             @Override
@@ -305,7 +305,7 @@ public class ProfilePictureActivity extends AppCompatActivity {
      * @param path
      */
     public void saveProfileImage(String path) {
-        APIManager.getInstance().setProfilePicture(path, new APICallback<String>() {
+        APIManager.getInstance().setProfilePicture(S3Handler.S3_PREFIX_PROTECTED + path, new APICallback<String>() {
             @Override
             public void onSuccess(String responseBody) {
                 showMainActivity();
