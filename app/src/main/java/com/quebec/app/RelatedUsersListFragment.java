@@ -57,7 +57,7 @@ public class RelatedUsersListFragment extends FriendsListFragment {
     public void setupButton(final Button button, int positon) {
         final User user = getUsers().get(positon);
 
-        if (user.followsMe()) {
+        if (user.doIFollow()) {
             button.setText("Unfollow");
         } else {
             button.setText("Follow");

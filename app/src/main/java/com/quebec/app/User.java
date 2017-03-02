@@ -15,7 +15,7 @@ public class User implements Parcelable {
     private String email;
     private String userID;
     private String profileID;
-    private boolean followsMe;
+    private boolean iFollow;
 
     public User(String name, String email, String userID, String profileID) {
         this.name = name;
@@ -83,12 +83,12 @@ public class User implements Parcelable {
         return userID;
     }
 
-    public boolean followsMe() {
-        return followsMe;
+    public boolean doIFollow() {
+        return iFollow;
     }
 
-    public void setFollowsMe(boolean followsMe) {
-        this.followsMe = followsMe;
+    public void setiFollow(boolean iFollow) {
+        this.iFollow = iFollow;
     }
 
     public void getProfilePicture(ContentProgressListener callback) {
