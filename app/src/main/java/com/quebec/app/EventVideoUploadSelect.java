@@ -37,7 +37,7 @@ public class EventVideoUploadSelect extends AppCompatActivity {
             }
 
             if (b.containsKey(EVENT_VIDEO)) {
-                event = intent.getExtras().getParcelable(EVENT_VIDEO);
+                event = intent.getParcelableExtra(EVENT_VIDEO);
             }
         }
 
