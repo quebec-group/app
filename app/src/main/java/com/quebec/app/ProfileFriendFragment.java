@@ -33,7 +33,7 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
 
     private View mFragmentView;
     private boolean following;
-    private Button follow;
+
 
 
     public ProfileFriendFragment() {
@@ -61,7 +61,7 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
     }
 
     public void getFollowStatus(final FollowStatusCallBack callback) {
-        APIManager.getInstance().followsMe(user, new APICallback<Boolean>() {
+        APIManager.getInstance().iFollow(user, new APICallback<Boolean>() {
             @Override
             public void onSuccess(Boolean responseBody) {
                 callback.onResponseReceived(true);
@@ -76,17 +76,7 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
     }
 
 
-    public void followButton(Boolean follows) {
-        if(follows) {
-            follow.setText("Unfollow");
-            following = true;
 
-        } else {
-            follow.setText("Follow");
-            following = false;
-        }
-        follow.setOnClickListener(this);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -100,17 +90,36 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
         // Update the profile picture on screen.
         RoundedImageView imageField = (RoundedImageView) mFragmentView.findViewById(R.id.profile_friend_picture_view);
 
-        follow = (Button) mFragmentView.findViewById(R.id.profile_friend_follow);
 
-        FollowStatusCallBack followStatusCallBack = new FollowStatusCallBack() {
+
+//        FollowStatusCallBack followStatusCallBack = new FollowStatusCallBack() {
+//            @Override
+//            public void onResponseReceived(Boolean follows) {
+//                followButton(follows);
+//            }
+//        };
+
+
+//        this.getFollowStatus(followStatusCallBack);
+        final Button follow = (Button) mFragmentView.findViewById(R.id.profile_friend_follow);
+        follow.setOnClickListener(this);
+        APIManager.getInstance().iFollow(user, new APICallback<Boolean>() {
             @Override
-            public void onResponseReceived(Boolean follows) {
-                followButton(follows);
+            public void onSuccess(Boolean responseBody) {
+                if(responseBody) {
+                    // I DO follow the user
+                    follow.setText("Unfollow");
+                } else {
+                    follow.setText("Follow");
+                }
+
             }
-        };
 
-        this.getFollowStatus(followStatusCallBack);
+            @Override
+            public void onFailure(String message) {
 
+            }
+        });
 
         /* Check if the user profile picture is set. */
         if (!(user.getProfileID()).equals("")) {
@@ -132,7 +141,7 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
 
         final ProgressDialog spinner = ProgressDialog.show(getContext(), "Loading", "Wait while loading...");
 
-        // TOOO
+
         APIManager.getInstance().getAttendedEvents(user.getUserID(), new APICallback<List<Event>>() {
             @Override
             public void onSuccess(final List<Event> events) {
@@ -183,12 +192,13 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.profile_friend_follow:
+                final Button follow = (Button) mFragmentView.findViewById(R.id.profile_friend_follow);
                 // Give user ability to follow/unfollow user dependent on current state
-                if(following) {
+                if(follow.getText() == "Unfollow") {
                     APIManager.getInstance().unfollow(user, new APICallback<String>() {
                         @Override
                         public void onSuccess(String responseBody) {
-                            followButton(false);
+                            follow.setText("Follow");
                             Log.d(LOG_TAG, "Unfollowed: " + user.getUserID());
                         }
 
@@ -201,7 +211,7 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
                     APIManager.getInstance().follow(user, new APICallback<String>() {
                         @Override
                         public void onSuccess(String responseBody) {
-                            followButton(true);
+                            follow.setText("Unfollow");
                             Log.d(LOG_TAG, "Followed: " + user.getUserID());
                         }
 
