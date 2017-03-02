@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         boolean fragmentPopped = getSupportFragmentManager().popBackStackImmediate(frag.getClass().getName(), 0);
 
         if (!fragmentPopped) {
-            transaction.setCustomAnimations(transition.enter, transition.exit, transition.popEnter, transition.popExit);
+            //transaction.setCustomAnimations(transition.enter, transition.exit, transition.popEnter, transition.popExit);
 
             transaction.replace(R.id.fragment_container, frag);
 
