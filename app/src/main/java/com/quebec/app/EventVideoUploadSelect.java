@@ -73,7 +73,6 @@ public class EventVideoUploadSelect extends AppCompatActivity {
         intent.setType("video/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent,"Select Video"), 1);
-
     }
 
     /**
