@@ -55,8 +55,13 @@ public class RelatedUsersListFragment extends FriendsListFragment {
 
     @Override
     public void setupButton(final Button button, int positon) {
-        button.setText("Unfollow");
         final User user = getUsers().get(positon);
+
+        if (user.followsMe()) {
+            button.setText("Unfollow");
+        } else {
+            button.setText("Follow");
+        }
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override

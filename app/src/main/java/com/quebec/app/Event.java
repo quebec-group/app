@@ -22,6 +22,7 @@ public class Event implements Parcelable {
     private boolean likes;
     private int likesCount;
     private ArrayList<User> attendees;
+    private User creator;
 
 
 
@@ -108,5 +109,13 @@ public class Event implements Parcelable {
 
     public void setLikes(boolean likes) {
         this.likes = likes;
+    }
+
+    public User getCreator() {
+        return creator;
+    }
+
+    public void setCreator(User creator) {
+        this.creator = creator;
     }
 }

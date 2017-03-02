@@ -1,7 +1,5 @@
 package com.quebec.services;
 
-import android.util.Log;
-
 import com.quebec.app.User;
 
 import org.json.JSONArray;
@@ -32,10 +30,12 @@ public class UserListFactory {
             final String name = currentUser.getString("name");
             final String email = currentUser.getString("email");
             final String userID = currentUser.getString("userID");
+            final boolean followsMe = currentUser.optBoolean("followsMe", false);
             user = new User(name);
             user.setEmail(email);
             user.setUserID(userID);
             user.setProfileID(profileID);
+            user.setFollowsMe(followsMe);
             friends.add(user);
         }
         return friends;
