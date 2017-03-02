@@ -84,4 +84,12 @@ public class User implements Parcelable {
             S3Handler.getInstance().getFile(getProfileID(), callback);
         }
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof User) {
+            return ((User) obj).getUserID().equals(getUserID());
+        }
+        return super.equals(obj);
+    }
 }

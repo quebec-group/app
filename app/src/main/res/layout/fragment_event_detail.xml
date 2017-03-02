@@ -6,109 +6,138 @@
     android:id="@+id/event_detail_view">
 
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:weightSum="1">
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="151dp">
-
-            <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/events_detail_videos_view" />
-        </LinearLayout>
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="1"
-            android:padding="@dimen/box_padding">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1.38">
-
-                <TextView
-                    android:text="TextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/eventDetailName"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginTop="19dp"
-                    android:id="@+id/eventDetailDescription"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:text="TextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/eventDetailName"
-                    android:textAppearance="@style/TextAppearance.FontPath"
-                    android:textSize="30sp"
-                    android:layout_weight="1"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentStart="true" />
-
-            </RelativeLayout>
+            android:weightSum="1">
 
             <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1.38">
+                android:layout_height="151dp">
 
-                <Button
-                    android:text="@string/event_detail_location_button_text"
-                    android:layout_width="wrap_content"
-                    android:id="@+id/event_detail_location_button"
-                    android:layout_alignBaseline="@+id/eventDetailName"
-                    android:layout_alignBottom="@+id/eventDetailName"
-                    android:layout_alignParentEnd="true"
-                    android:layout_height="50dp" />
-
-                <Button
-                    android:text="25 likes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/event_detail_likes"
-                    android:layout_below="@+id/event_detail_location_button"
-                    android:layout_alignStart="@+id/event_detail_location_button"
-                    android:drawableLeft="@drawable/ic_heart_empty" />
-
-                <Button
-                    android:text="@string/event_detail_uploadBtn_text"
+                <android.support.v7.widget.RecyclerView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/event_detail_uploadBtn"
-                    android:layout_alignTop="@+id/eventDetailDescription"
-                    android:layout_alignStart="@+id/event_detail_location_button"
-                    android:layout_weight="1" />
+                    android:layout_height="match_parent"
+                    android:id="@+id/events_detail_videos_view" />
             </LinearLayout>
 
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="1"
+                android:padding="@dimen/box_padding">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.38">
+
+                    <TextView
+                        android:text="TextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/eventDetailName"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="19dp"
+                        android:id="@+id/eventDetailDescription"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:text="TextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/eventDetailName"
+                        android:textAppearance="@style/TextAppearance.FontPath"
+                        android:textSize="30sp"
+                        android:layout_weight="1"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentStart="true" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3">
+
+                    <Button
+                        android:text="Add user"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:id="@+id/event_detail_add_user"
+                        android:layout_weight="1" />
+
+                    <Button
+                        android:text="25 likes"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:id="@+id/event_detail_likes"
+                        android:layout_below="@+id/event_detail_location_button"
+                        android:layout_alignStart="@+id/event_detail_location_button"
+                        android:drawableLeft="@drawable/ic_heart_empty"
+                        android:layout_weight="1" />
+
+                    <Button
+                        android:text="Remove me"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:id="@+id/event_detail_addRemoveMe"
+                        android:layout_weight="1"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2">
+
+                    <Button
+                        android:text="@string/event_detail_location_button_text"
+                        android:layout_width="0dp"
+                        android:id="@+id/event_detail_location_button"
+                        android:layout_alignBaseline="@+id/eventDetailName"
+                        android:layout_alignBottom="@+id/eventDetailName"
+                        android:layout_alignParentEnd="true"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1" />
+
+                    <Button
+                        android:text="@string/event_detail_uploadBtn_text"
+                        android:layout_width="0dp"
+                        android:layout_height="fill_parent"
+                        android:id="@+id/event_detail_uploadBtn"
+                        android:layout_alignTop="@+id/eventDetailDescription"
+                        android:layout_alignStart="@+id/event_detail_location_button"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <GridView
+                android:layout_width="match_parent"
+                android:layout_height="201dp"
+                android:id="@+id/eventUsers"
+                android:columnWidth="90dp"
+                android:numColumns="2"
+                android:verticalSpacing="10dp"
+                android:horizontalSpacing="10dp"
+                android:stretchMode="columnWidth"
+                android:gravity="center"
+                android:layout_below="@+id/eventMapView"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="11dp" />
+
         </LinearLayout>
-
-        <GridView
-            android:layout_width="match_parent"
-            android:layout_height="201dp"
-            android:id="@+id/eventUsers"
-            android:columnWidth="90dp"
-            android:numColumns="2"
-            android:verticalSpacing="10dp"
-            android:horizontalSpacing="10dp"
-            android:stretchMode="columnWidth"
-            android:gravity="center"
-            android:layout_below="@+id/eventMapView"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="11dp" />
-
-    </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>

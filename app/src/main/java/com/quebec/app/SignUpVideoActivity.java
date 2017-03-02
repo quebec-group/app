@@ -88,6 +88,7 @@ public class SignUpVideoActivity extends AppCompatActivity {
                             });
 
                     final Intent intent1 = new Intent(SignUpVideoActivity.this, MainActivity.class);
+                    intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent1.putExtra("videoUri", videoUri.toString());
                     intent1.putExtra(EVENT_VIDEO, event);
                     startActivity(intent1);

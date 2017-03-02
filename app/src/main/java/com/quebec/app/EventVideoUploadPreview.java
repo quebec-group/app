@@ -2,9 +2,8 @@ package com.quebec.app;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -73,7 +72,9 @@ public class EventVideoUploadPreview extends AppCompatActivity implements View.O
         else {
             /* Uploading to an existing event, therefore launch the add video to existing event activity. */
             Intent intent1 = new Intent(this.getApplicationContext(), MainActivity.class);
+            intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent1);
+            finish();
         }
     }
 
