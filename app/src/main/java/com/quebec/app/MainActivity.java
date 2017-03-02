@@ -119,11 +119,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         currentBottomBarItem = tabId;
     }
 
-    // }
+    private void checkUserFaceTrained() {
+        APIManager.getInstance().hasCompletedSignUp(new APICallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean responseBody) {
+                if (!responseBody) {
+                    // User has not completed the sign and hence must go to the signup.
+                    showFaceTrainingActivity();
+                }
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
+    }
+
+    /**
+     * Open the face training video page.
+     */
+    private void showFaceTrainingActivity() {
+        Intent intent = new Intent(this, SignUpVideoActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
         // Obtain a reference to the mobile client. It is created in the Application class,
         // but in case a custom Application class is not used, we initialize it here if necessary.
@@ -151,9 +176,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         Log.e(LOG_TAG, "Couldn't add user");
                     }
                 });
-
-
-        setContentView(R.layout.activity_main);
 
         if (findViewById(R.id.fragment_container) != null) {
 
@@ -190,6 +212,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         });
+    }
+
+    /**
+     * onStart for the video. Checks for whether the user has uploaded a video
+     * for facial training.
+     */
+    @Override
+    public void onStart() {
+        super.onStart();
+        checkUserFaceTrained();
     }
 
     /**
