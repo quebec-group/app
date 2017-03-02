@@ -294,9 +294,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.profile_menu_dropdown_about:
-                        mListener.openAboutPage();
-                        break;
                     case R.id.profile_menu_dropdown_logout:
                         logoutAccount();
                         break;
