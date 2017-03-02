@@ -87,7 +87,7 @@ public class EventVideoUploadSelect extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             Uri videoUri = intent.getData();
 
-            Intent intent1 = new Intent(this, EventVideoUploadPreview.class);
+            Intent intent1 = new Intent(this, EventVideoUploadDetails.class);
             intent1.putExtra("videoUri", videoUri.toString());
 
             /* Pass the video upload mode to the next activity. */
