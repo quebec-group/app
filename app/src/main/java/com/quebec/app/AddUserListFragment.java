@@ -2,6 +2,7 @@ package com.quebec.app;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 
 import com.quebec.services.APICallback;
@@ -79,5 +80,10 @@ public class AddUserListFragment extends FriendsListFragment {
                 adapter.notifyDataSetChanged();
             }
         });
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
     }
 }

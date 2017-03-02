@@ -57,6 +57,7 @@ public class EventListFactory {
             User creatorUser = new User();
             creatorUser.setEmail(creator.getString("email"));
             creatorUser.setUserID(creator.getString("userID"));
+            creatorUser.setName(creator.getString("name"));
             creatorUser.setProfileID(creator.getString("profileID"));
 
             JSONArray jsonArray = new JSONArray(members);

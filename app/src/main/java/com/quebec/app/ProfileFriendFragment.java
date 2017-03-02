@@ -33,6 +33,9 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
 
     private View mFragmentView;
     private boolean following;
+    private TextView followingCount;
+    private TextView followersCount;
+    private TextView eventsCount;
 
 
 
@@ -84,11 +87,11 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
         mFragmentView = inflater.inflate(R.layout.fragment_profile_friend, container, false);
 
         // Get the User's information and display on the page
-        TextView nameField = (TextView) mFragmentView.findViewById(R.id.profile_friend_name);
+        TextView nameField = (TextView) mFragmentView.findViewById(R.id.profileFragment_name);
         nameField.setText(user.getName());
 
         // Update the profile picture on screen.
-        RoundedImageView imageField = (RoundedImageView) mFragmentView.findViewById(R.id.profile_friend_picture_view);
+        RoundedImageView imageField = (RoundedImageView) mFragmentView.findViewById(R.id.profile_picture_view);
 
 
 
@@ -103,16 +106,24 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
 //        this.getFollowStatus(followStatusCallBack);
         final Button follow = (Button) mFragmentView.findViewById(R.id.profile_friend_follow);
         follow.setOnClickListener(this);
+
+        followingCount = (TextView) mFragmentView.findViewById(R.id.profileFollowingCount);
+        followersCount = (TextView) mFragmentView.findViewById(R.id.profileFollowersCount);
+        eventsCount = (TextView) mFragmentView.findViewById(R.id.profileEventsCount);
+        followersCount.setText("69");
+        followingCount.setText("69");
+        getStats();
         APIManager.getInstance().iFollow(user, new APICallback<Boolean>() {
             @Override
             public void onSuccess(Boolean responseBody) {
                 if(responseBody) {
-                    // I DO follow the user
                     follow.setText("Unfollow");
+                    user.setiFollow(true);
                 } else {
                     follow.setText("Follow");
+                    user.setiFollow(false);
                 }
-
+                Log.d("Event users adapater", user.getUserID() + " " + user.doIFollow());
             }
 
             @Override
@@ -131,7 +142,7 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
         // TODO: Replace stubs with actual Events
 
 
-        final RecyclerView mRecyclerView = (RecyclerView) mFragmentView.findViewById(R.id.profileFriendEventsRecycler);
+        final RecyclerView mRecyclerView = (RecyclerView) mFragmentView.findViewById(R.id.profileEventsFeedRecycler);
         boolean b = mRecyclerView.hasFixedSize();
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this.getContext());
@@ -147,6 +158,8 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
             public void onSuccess(final List<Event> events) {
 
                 spinner.dismiss();
+                final String count = events.size()+"";
+                eventsCount.setText(count);
 
                 EventListAdapterItem mAdapter = new EventListAdapterItem(events, context);
 
@@ -188,6 +201,36 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
         mListener = null;
     }
 
+    public void getStats() {
+        APIManager.getInstance().followersCount(user.getUserID(), new APICallback<Integer>() {
+            @Override
+            public void onSuccess(Integer responseBody) {
+                final String count = responseBody.toString();
+                followersCount.setText(count);
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
+
+        APIManager.getInstance().followingCount(user.getUserID(), new APICallback<Integer>() {
+            @Override
+            public void onSuccess(Integer responseBody) {
+                final String count = responseBody.toString();
+                followingCount.setText(count);
+            }
+
+            @Override
+            public void onFailure(String message) {
+
+            }
+        });
+
+
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -199,6 +242,7 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
                         @Override
                         public void onSuccess(String responseBody) {
                             follow.setText("Follow");
+                            getStats();
                             Log.d(LOG_TAG, "Unfollowed: " + user.getUserID());
                         }
 
@@ -212,6 +256,7 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
                         @Override
                         public void onSuccess(String responseBody) {
                             follow.setText("Unfollow");
+                            getStats();
                             Log.d(LOG_TAG, "Followed: " + user.getUserID());
                         }
 

@@ -30,6 +30,8 @@ public class EventListAdapterItem extends RecyclerView.Adapter<EventListAdapterI
             .OnClickListener {
 
         private TextView eventName;
+        private TextView likesCount;
+        private TextView eventCreator;
         private TextView eventLocation;
         private TextView eventDate;
 
@@ -38,7 +40,9 @@ public class EventListAdapterItem extends RecyclerView.Adapter<EventListAdapterI
             super(itemView);
             eventName = (TextView) itemView.findViewById(R.id.eventItemName);
             eventLocation = (TextView) itemView.findViewById(R.id.eventItemLocation);
-            eventDate = (TextView) itemView.findViewById(R.id.eventItemDate);
+            eventDate = (TextView) itemView.findViewById(R.id.eventTileDate);
+            eventCreator = (TextView) itemView.findViewById(R.id.eventTileCreator);
+            likesCount = (TextView) itemView.findViewById(R.id.eventTileLikeCount);
 
             eventItemTicker = (RecyclerView) itemView.findViewById(R.id.eventItemTicker);
 
@@ -73,6 +77,9 @@ public class EventListAdapterItem extends RecyclerView.Adapter<EventListAdapterI
     @Override
     public void onBindViewHolder(EventHolder holder, int position) {
         holder.eventName.setText(mDataset.get(position).getEventName());
+        holder.likesCount.setText(String.valueOf(mDataset.get(position).getLikesCount()));
+        holder.eventCreator.setText(String.valueOf(mDataset.get(position).getCreator().getName()));
+        holder.eventDate.setText(String.valueOf(mDataset.get(position).getTime()));
 
         EventUsersTickerAdapterItem adapter = new EventUsersTickerAdapterItem(mDataset.get(position).getAttendees());
 
@@ -115,5 +122,6 @@ public class EventListAdapterItem extends RecyclerView.Adapter<EventListAdapterI
     public interface EventItemClickInterface {
         void onItemClick(int position, View v);
     }
+
 }
 

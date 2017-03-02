@@ -3,15 +3,19 @@ package com.quebec.app;
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.amazonaws.mobile.content.ContentItem;
 import com.amazonaws.mobile.content.ContentProgressListener;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.quebec.services.APICallback;
+import com.quebec.services.APIManager;
 
 import java.util.List;
 
@@ -49,10 +53,13 @@ public class EventUsersAdapterItem extends ArrayAdapter {
             convertView = inflater.inflate(layoutResourceID, parent, false);
         }
 
-        User user = data.get(position);
+        final User user = data.get(position);
+
+
 
         TextView textViewUserName = (TextView) convertView.findViewById(R.id.event_user_name);
         textViewUserName.setText(user.getName());
+
 
         final RoundedImageView imageView = (RoundedImageView) convertView.findViewById(R.id.event_user_image);
 

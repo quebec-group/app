@@ -130,20 +130,11 @@ public abstract class FriendsListFragment extends Fragment implements AdapterVie
         mListener = null;
     }
 
-    /**
-     * Click event for the list elements
-     * @param adapterView
-     * @param view
-     * @param position
-     * @param id
-     */
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-        listView.setItemChecked(position, true);
-        User u = (User) listView.getItemAtPosition(position);
 
+    public void onUserItemClick(User u) {
         mListener.onFriendSelected(u);
     }
+
 
     public abstract void setupButton(Button button, int positon);
 

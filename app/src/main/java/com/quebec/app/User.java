@@ -97,6 +97,10 @@ public class User implements Parcelable {
         }
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof User) {
