@@ -16,8 +16,10 @@ import java.util.List;
  */
 
 public class AddUserListFragment extends FriendsListFragment {
+    public MainActivity mActivity;
     private static String LOG_TAG = AddUserListFragment.class.getSimpleName();
     private Event event;
+
 
     public AddUserListFragment() {}
 
@@ -27,9 +29,10 @@ public class AddUserListFragment extends FriendsListFragment {
     }
 
 
-    public static AddUserListFragment newInstance(Event event) {
+    public static AddUserListFragment newInstance(Event event, MainActivity activity) {
         AddUserListFragment fragment =  new AddUserListFragment();
         fragment.event = event;
+        fragment.mActivity = activity;
         return fragment;
     }
 
@@ -79,6 +82,20 @@ public class AddUserListFragment extends FriendsListFragment {
                 adapter.data.remove(user);
                 adapter.notifyDataSetChanged();
             }
+        });
+    }
+
+    @Override
+    public void setupListItem(View listItem, int position) {
+        final User user = getUsers().get(position);
+
+        listItem.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                mActivity.onUserSelected(user);
+            }
+
         });
     }
 

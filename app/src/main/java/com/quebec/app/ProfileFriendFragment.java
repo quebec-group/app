@@ -72,8 +72,6 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
                              Bundle savedInstanceState) {
         mFragmentView = inflater.inflate(R.layout.fragment_profile_friend, container, false);
 
-        // Get the User's information and display on the page
-
 
         // Update the profile picture on screen.
         profile_picture_view = (RoundedImageView) mFragmentView.findViewById(R.id.profile_picture_view);
@@ -84,11 +82,10 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
         followingCount = (TextView) mFragmentView.findViewById(R.id.profileFollowingCount);
         followersCount = (TextView) mFragmentView.findViewById(R.id.profileFollowersCount);
         eventsCount = (TextView) mFragmentView.findViewById(R.id.profileEventsCount);
-        followersCount.setText("69");
-        followingCount.setText("69");
-        profileUserName = (TextView) mFragmentView.findViewById(R.id.profileUserName);
-        profileUserName.setText(user.getName());
+
+
         getStats();
+
         APIManager.getInstance().iFollow(user, new APICallback<Boolean>() {
             @Override
             public void onSuccess(Boolean responseBody) {
@@ -99,7 +96,7 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
                     follow.setText("Follow");
                     user.setiFollow(false);
                 }
-                Log.d("Event users adapater", user.getUserID() + " " + user.doIFollow());
+                Log.d("Event users adapter", user.getUserID() + " " + user.doIFollow());
             }
 
             @Override

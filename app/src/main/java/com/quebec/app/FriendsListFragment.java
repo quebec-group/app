@@ -136,8 +136,8 @@ public abstract class FriendsListFragment extends Fragment implements AdapterVie
     }
 
 
-    public abstract void setupButton(Button button, int positon);
-
+    public abstract void setupButton(Button button, int position);
+    public abstract void setupListItem(View listItem, int position);
 
     public interface FriendsListInteractionHandler {
         // TODO: Update argument type and name
