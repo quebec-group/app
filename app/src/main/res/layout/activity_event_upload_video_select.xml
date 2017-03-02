@@ -48,27 +48,29 @@
             android:focusable="false"
             android:focusableInTouchMode="false" />
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/takeVideo"
+                android:text="@string/take_video_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:onClick="takeVideo"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/upload"
+                android:text="@string/choose_video_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:onClick="chooseVideo"
+                android:layout_weight="1" />
+        </LinearLayout>
+
     </LinearLayout>
-
-    <Button
-        android:id="@+id/upload"
-        android:text="@string/choose_video_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="42dp"
-        android:onClick="chooseVideo"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:id="@+id/takeVideo"
-        android:text="@string/take_video_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:onClick="takeVideo"
-        android:layout_marginEnd="39dp" />
 
 </RelativeLayout>
 
