@@ -24,9 +24,8 @@
             android:layout_marginLeft="@dimen/sign_in_text_margin"
             android:layout_marginRight="@dimen/sign_in_text_margin"
             android:inputType="textEmailAddress"
-            android:textAppearance="@style/TextAppearance.FontPath"
-            android:hint="@string/sign_in_email"
-            />
+            android:textAppearance="@android:style/TextAppearance.Material.Medium.Inverse"
+            android:hint="@string/sign_in_email" />
 
         <EditText
             android:id="@+id/signIn_editText_password"
@@ -36,7 +35,8 @@
             android:layout_marginRight="@dimen/sign_in_text_margin"
             android:inputType="textPassword"
             android:hint="@string/sign_in_password"
-            style="@style/TextAppearance.FontPath" />
+            style="@style/TextAppearance.FontPath"
+            android:textAppearance="@android:style/TextAppearance.Material.Medium.Inverse" />
 
         <Button
             android:text="@string/login_button"
