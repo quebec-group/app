@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.amazonaws.mobile.content.ContentItem;
+import com.amazonaws.mobile.content.ContentProgressListener;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.quebec.services.APICallback;
 import com.quebec.services.APIManager;
@@ -36,7 +38,7 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
     private TextView followingCount;
     private TextView followersCount;
     private TextView eventsCount;
-
+    private RoundedImageView profile_picture_view;
 
 
     public ProfileFriendFragment() {
@@ -91,7 +93,7 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
         nameField.setText(user.getName());
 
         // Update the profile picture on screen.
-        RoundedImageView imageField = (RoundedImageView) mFragmentView.findViewById(R.id.profile_picture_view);
+        profile_picture_view = (RoundedImageView) mFragmentView.findViewById(R.id.profile_picture_view);
 
 
 
@@ -132,12 +134,8 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
             }
         });
 
-        /* Check if the user profile picture is set. */
-        if (!(user.getProfileID()).equals("")) {
-            Uri imageUri = Uri.parse(user.getProfileID());
-            imageField.setImageURI(imageUri);
-        }
 
+        setProfilePicture();
         /* Initiate the events feed on the profile, by loading the data into the adapter view. */
         // TODO: Replace stubs with actual Events
 
@@ -183,7 +181,24 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
         return mFragmentView;
     }
 
+    private void setProfilePicture() {
+        user.getProfilePicture(new ContentProgressListener() {
+            @Override
+            public void onSuccess(ContentItem contentItem) {
+                profile_picture_view.setImageURI(Uri.fromFile(contentItem.getFile()));
+            }
 
+            @Override
+            public void onProgressUpdate(String filePath, boolean isWaiting, long bytesCurrent, long bytesTotal) {
+
+            }
+
+            @Override
+            public void onError(String filePath, Exception ex) {
+                Log.e(LOG_TAG, "Error getting " + filePath, ex);
+            }
+        });
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
