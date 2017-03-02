@@ -286,7 +286,7 @@ public class ProfilePictureActivity extends AppCompatActivity {
             @Override
             public void onSuccess(ContentItem contentItem) {
                 Log.d(LOG_TAG, "Saved new profile picture");
-                saveProfileImage(contentItem.getFilePath());
+                saveProfileImage("protected/" + contentItem.getFilePath());
             }
 
             @Override
