@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.amazonaws.mobile.content.ContentItem;
+import com.amazonaws.mobile.content.ContentProgressListener;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.quebec.services.APICallback;
 import com.quebec.services.APIManager;
@@ -36,7 +38,8 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
     private TextView followingCount;
     private TextView followersCount;
     private TextView eventsCount;
-
+    private TextView profileUserName;
+    private RoundedImageView profile_picture_view;
 
 
     public ProfileFriendFragment() {
@@ -63,44 +66,23 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
         }
     }
 
-    public void getFollowStatus(final FollowStatusCallBack callback) {
-        APIManager.getInstance().iFollow(user, new APICallback<Boolean>() {
-            @Override
-            public void onSuccess(Boolean responseBody) {
-                callback.onResponseReceived(true);
-            }
-
-            @Override
-            public void onFailure(String message) {
-                callback.onResponseReceived(false);
-                Log.d(LOG_TAG, "Failed to get following status");
-            }
-        });
-    }
-
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mFragmentView = inflater.inflate(R.layout.fragment_profile_friend, container, false);
 
-        // Get the User's information and display on the page
-        TextView nameField = (TextView) mFragmentView.findViewById(R.id.profileFragment_name);
-        nameField.setText(user.getName());
 
         // Update the profile picture on screen.
-        RoundedImageView imageField = (RoundedImageView) mFragmentView.findViewById(R.id.profile_picture_view);
+        profile_picture_view = (RoundedImageView) mFragmentView.findViewById(R.id.profile_picture_view);
 
-
-//        this.getFollowStatus(followStatusCallBack);
         final Button follow = (Button) mFragmentView.findViewById(R.id.profile_friend_follow);
         follow.setOnClickListener(this);
 
         followingCount = (TextView) mFragmentView.findViewById(R.id.profileFollowingCount);
         followersCount = (TextView) mFragmentView.findViewById(R.id.profileFollowersCount);
         eventsCount = (TextView) mFragmentView.findViewById(R.id.profileEventsCount);
+
 
         getStats();
 
@@ -123,12 +105,8 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
             }
         });
 
-        /* Check if the user profile picture is set. */
-        if (!(user.getProfileID()).equals("")) {
-            Uri imageUri = Uri.parse(user.getProfileID());
-            imageField.setImageURI(imageUri);
-        }
 
+        setProfilePicture();
         /* Initiate the events feed on the profile, by loading the data into the adapter view. */
         // TODO: Replace stubs with actual Events
 
@@ -174,7 +152,24 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
         return mFragmentView;
     }
 
+    private void setProfilePicture() {
+        user.getProfilePicture(new ContentProgressListener() {
+            @Override
+            public void onSuccess(ContentItem contentItem) {
+                profile_picture_view.setImageURI(Uri.fromFile(contentItem.getFile()));
+            }
 
+            @Override
+            public void onProgressUpdate(String filePath, boolean isWaiting, long bytesCurrent, long bytesTotal) {
+
+            }
+
+            @Override
+            public void onError(String filePath, Exception ex) {
+                Log.e(LOG_TAG, "Error getting " + filePath, ex);
+            }
+        });
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

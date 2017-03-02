@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amazonaws.mobile.content.ContentItem;
 import com.amazonaws.mobile.content.ContentProgressListener;
@@ -101,6 +102,7 @@ public class SignUpVideoActivity extends AppCompatActivity {
 
                 @Override
                 public void onError(String filePath, Exception ex) {
+                    Toast.makeText(getApplicationContext(), "Failed to upload your video!", Toast.LENGTH_LONG).show();
                     Log.e(LOG_TAG, "Failed to upload training video to s3");
                 }
             });
