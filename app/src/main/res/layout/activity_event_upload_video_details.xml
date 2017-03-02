@@ -66,15 +66,6 @@
             android:textAppearance="@style/TextAppearance.FontPath"
             android:textSize="20sp" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:text="Location..."
-            android:ems="10"
-            android:id="@+id/event_upload_details_event_location"
-            android:layout_weight="0.06" />
-
         <ProgressBar
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
