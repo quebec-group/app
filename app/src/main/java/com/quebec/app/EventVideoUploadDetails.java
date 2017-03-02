@@ -38,7 +38,6 @@ import java.io.File;
 public class EventVideoUploadDetails extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
     private GoogleApiClient mGoogleApiClient;
-    private LocationRequest mLocationRequest;
 
     private static String LOG_TAG = EventVideoUploadDetails.class.getSimpleName();
 
@@ -110,8 +109,6 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
         setContentView(R.layout.activity_event_upload_video_details);
 
         eventTitleEditText = (EditText) findViewById(R.id.event_upload_details_event_name);
-        eventLocationEditText = (EditText) findViewById(R.id.event_upload_details_event_location);
-
         saveButton = (Button) findViewById(R.id.event_upload_video_saveBtn);
 
         final ProgressBar progressBar = (ProgressBar) this.findViewById(R.id.event_video_upload_progress);
@@ -199,7 +196,6 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
 
         if (mLocationPermissionGranted) {
             if (mLastKnownLocation != null) {
-                eventLocationEditText.setText(Double.toString(mLastKnownLocation.getLongitude()));
                 mLocation = Double.toString(mLastKnownLocation.getLatitude()) + "," + Double.toString(mLastKnownLocation.getLongitude());
             } else {
                 // Create the LocationRequest object request
