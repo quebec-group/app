@@ -15,17 +15,23 @@ import java.util.List;
 
 public class RelatedUsersListFragment extends FriendsListFragment {
     private static String LOG_TAG = RelatedUsersListFragment.class.getSimpleName();
-    private boolean followsMe;
 
-    public static RelatedUsersListFragment newInstance(boolean followsMe) {
+    public enum UsersRelation {
+        FOLLOWING,
+        FOLLOWERS
+    }
+
+    private UsersRelation usersRelation;
+
+    public static RelatedUsersListFragment newInstance(UsersRelation usersRelation) {
         RelatedUsersListFragment fragment = new RelatedUsersListFragment();
-        fragment.followsMe = followsMe;
+        fragment.usersRelation = usersRelation;
         return fragment;
     }
 
     @Override
     protected String getTitle() {
-        if (followsMe) {
+        if (usersRelation.equals(UsersRelation.FOLLOWERS)) {
             return "Followers";
         } else {
             return "Following";
@@ -46,7 +52,7 @@ public class RelatedUsersListFragment extends FriendsListFragment {
             }
         };
 
-        if (followsMe) {
+        if (usersRelation.equals(UsersRelation.FOLLOWERS)) {
             APIManager.getInstance().followers(callback);
         } else {
             APIManager.getInstance().following(callback);
@@ -55,9 +61,29 @@ public class RelatedUsersListFragment extends FriendsListFragment {
 
     @Override
     public void setupButton(final Button button, int positon) {
-        button.setText("Unfollow");
         final User user = getUsers().get(positon);
+        /*
+            Set the text for the button; depends on if the user follows you
+         */
+        if(usersRelation.equals(UsersRelation.FOLLOWING)) {
+            button.setText("Unfollow");
+        } else {
+            APIManager.getInstance().iFollow(user, new APICallback<Boolean>() {
+                @Override
+                public void onSuccess(Boolean responseBody) {
+                    if(responseBody) {
+                        button.setText("Unfollow");
+                    } else {
+                        button.setText("Follow");
+                    }
+                }
 
+                @Override
+                public void onFailure(String message) {
+
+                }
+            });
+        }
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
