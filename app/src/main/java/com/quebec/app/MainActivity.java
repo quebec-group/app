@@ -311,12 +311,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void openFollowingList() {
-        setFragment(RelatedUsersListFragment.newInstance(false), new FragmentTransitionFromRight(), true);
+        RelatedUsersListFragment.UsersRelation usersRelation = RelatedUsersListFragment.UsersRelation.FOLLOWING;
+        setFragment(RelatedUsersListFragment.newInstance(usersRelation), new FragmentTransitionFromRight(), true);
     }
 
     @Override
     public void openFollowersList() {
-        setFragment(RelatedUsersListFragment.newInstance(true), new FragmentTransitionFromRight(), true);
+        RelatedUsersListFragment.UsersRelation usersRelation = RelatedUsersListFragment.UsersRelation.FOLLOWERS;
+        setFragment(RelatedUsersListFragment.newInstance(usersRelation), new FragmentTransitionFromRight(), true);
     }
 
     @Override

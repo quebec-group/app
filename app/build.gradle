@@ -54,6 +54,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-location:9.8.0'
     compile 'com.google.android.gms:play-services-maps:9.8.0'
     compile 'com.google.android.gms:play-services-gcm:9.8.0'
+    compile 'com.google.android.gms:play-services-plus:9.8.0'
     compile 'com.google.android.gms:play-services-appindexing:9.8.0'
     compile 'com.amazonaws:aws-android-sdk-cognito:2.3.8'
     compile 'com.amazonaws:aws-android-sdk-s3:2.3.8'
