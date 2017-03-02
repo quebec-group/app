@@ -50,5 +50,9 @@ public class EventDetailVideoDialog extends Dialog {
         videoView.setZOrderOnTop(true);
         videoView.start();
 
+        // Add video creator to the dialog box.
+        TextView description = (TextView)(this.findViewById(R.id.event_detail_video_popover_text));
+        description.setText("Uploaded by");
+
     }
 }
