@@ -38,6 +38,7 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
     private TextView followingCount;
     private TextView followersCount;
     private TextView eventsCount;
+    private TextView profileUserName;
     private RoundedImageView profile_picture_view;
 
 
@@ -65,23 +66,6 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
         }
     }
 
-    public void getFollowStatus(final FollowStatusCallBack callback) {
-        APIManager.getInstance().iFollow(user, new APICallback<Boolean>() {
-            @Override
-            public void onSuccess(Boolean responseBody) {
-                callback.onResponseReceived(true);
-            }
-
-            @Override
-            public void onFailure(String message) {
-                callback.onResponseReceived(false);
-                Log.d(LOG_TAG, "Failed to get following status");
-            }
-        });
-    }
-
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -89,23 +73,11 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
         mFragmentView = inflater.inflate(R.layout.fragment_profile_friend, container, false);
 
         // Get the User's information and display on the page
-        TextView nameField = (TextView) mFragmentView.findViewById(R.id.profileFragment_name);
-        nameField.setText(user.getName());
+
 
         // Update the profile picture on screen.
         profile_picture_view = (RoundedImageView) mFragmentView.findViewById(R.id.profile_picture_view);
 
-
-
-//        FollowStatusCallBack followStatusCallBack = new FollowStatusCallBack() {
-//            @Override
-//            public void onResponseReceived(Boolean follows) {
-//                followButton(follows);
-//            }
-//        };
-
-
-//        this.getFollowStatus(followStatusCallBack);
         final Button follow = (Button) mFragmentView.findViewById(R.id.profile_friend_follow);
         follow.setOnClickListener(this);
 
@@ -114,6 +86,8 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
         eventsCount = (TextView) mFragmentView.findViewById(R.id.profileEventsCount);
         followersCount.setText("69");
         followingCount.setText("69");
+        profileUserName = (TextView) mFragmentView.findViewById(R.id.profileUserName);
+        profileUserName.setText(user.getName());
         getStats();
         APIManager.getInstance().iFollow(user, new APICallback<Boolean>() {
             @Override
