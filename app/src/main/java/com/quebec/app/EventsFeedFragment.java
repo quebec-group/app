@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.quebec.services.APICallback;
 import com.quebec.services.APIManager;
@@ -46,7 +47,24 @@ public class EventsFeedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         View v = inflater.inflate(R.layout.fragment_events_feed, container, false);
+
+        Button dialogCreateEvent = (Button) v.findViewById(R.id.dialogCreateEvent);
+        Button dialogFollow = (Button) v.findViewById(R.id.dialogFollow);
+
+        dialogCreateEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onShowVideoUploadActivity();
+            }
+        });
+        dialogFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onShowFollowers();
+            }
+        });
 
         final CardView emptyEvents = (CardView) v.findViewById(R.id.empty_events_feed_message);
 
@@ -131,6 +149,8 @@ public class EventsFeedFragment extends Fragment {
      */
     public interface EventsFeedInteractionListener {
         void onEventSelected(Event e);
+        void onShowVideoUploadActivity();
+        void onShowFollowers();
     }
 
 

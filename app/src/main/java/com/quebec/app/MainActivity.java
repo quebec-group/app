@@ -20,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.amazonaws.mobile.AWSMobileClient;
 import com.amazonaws.mobile.user.IdentityManager;
@@ -36,7 +37,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import static com.quebec.app.EventVideoUploadSelect.EVENT_VIDEO_MODE;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener,
+public class MainActivity extends AppCompatActivity implements
         EventsFeedFragment.EventsFeedInteractionListener,
         EventDetailFragment.OnEventDetailInteractionListener,
         ProfileFragment.ProfileInteractionListener,
@@ -181,6 +182,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
 
+
         mBottomBar = (BottomBar) findViewById(R.id.bottomBar);
 
         /* Handle the reselection of a bottom bar tab. */
@@ -261,12 +263,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
-    @Override
-    public void onClick(final View view) {
 
-        // ... add any other button handling code here ...
-
-    }
 
     @Override
     protected void onPause() {
@@ -286,6 +283,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onEventSelected(Event e) {
         setFragment(EventDetailFragment.newInstance(e), new FragmentTransitionFromRight(), true);
+    }
+
+    @Override
+    public void onShowVideoUploadActivity() {
+        showVideoUploadActivity();
+    }
+
+    @Override
+    public void onShowFollowers() {
+        RelatedUsersListFragment.UsersRelation usersRelation = RelatedUsersListFragment.UsersRelation.FOLLOWING;
+        setFragment(RelatedUsersListFragment.newInstance(usersRelation, this), new FragmentTransitionFromRight(), true);
     }
 
     /* Profile page interactions. */
