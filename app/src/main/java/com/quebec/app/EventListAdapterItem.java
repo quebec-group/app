@@ -2,6 +2,7 @@ package com.quebec.app;
 
 import android.app.Activity;
 import android.content.Context;
+import java.text.SimpleDateFormat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,7 +12,10 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -79,7 +83,15 @@ public class EventListAdapterItem extends RecyclerView.Adapter<EventListAdapterI
         holder.eventName.setText(mDataset.get(position).getEventName());
         holder.likesCount.setText(String.valueOf(mDataset.get(position).getLikesCount()));
         holder.eventCreator.setText(String.valueOf(mDataset.get(position).getCreator().getName()));
-        holder.eventDate.setText(String.valueOf(mDataset.get(position).getTime()));
+        SimpleDateFormat format = new SimpleDateFormat("MMM dd, yyyy");
+        Date newDate = new Date();
+        try {
+            newDate = format.parse(String.valueOf(mDataset.get(position).getTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String date = format.format(newDate);
+        holder.eventDate.setText(date);
 
         EventUsersTickerAdapterItem adapter = new EventUsersTickerAdapterItem(mDataset.get(position).getAttendees());
 
