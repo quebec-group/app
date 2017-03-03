@@ -60,33 +60,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * @param transition
      */
     private void setFragment(Fragment frag, FragmentTransition transition, boolean addToBackStack) {
-
         currentFragmentTab = frag.getClass().getName();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        // TODO: Fix whatever is breaking this
-        boolean fragmentPopped = getSupportFragmentManager().popBackStackImmediate(frag.getClass().getName(), 0);
+        transaction.setCustomAnimations(transition.enter, transition.exit, transition.popEnter, transition.popExit);
 
-        if (!fragmentPopped) {
-            //transaction.setCustomAnimations(transition.enter, transition.exit, transition.popEnter, transition.popExit);
+        transaction.replace(R.id.fragment_container, frag);
 
-            transaction.replace(R.id.fragment_container, frag);
+        transaction.addToBackStack(frag.getClass().getName());
 
-            // Adds the current fragment to the back stack.
-            if (addToBackStack) {
-                transaction.addToBackStack(frag.getClass().getName());
-            }
-            else {
-                getSupportFragmentManager().popBackStack(null, getSupportFragmentManager().POP_BACK_STACK_INCLUSIVE);
-            }
+        transaction.commitAllowingStateLoss();
+        currentBottomBarItem = -1;
 
-            transaction.commit();
-            currentBottomBarItem = -1;
-
-            mFragment = frag;
-        }
-
+        mFragment = frag;
     }
     
     private int previousBottomBarItemIndex = 0;
@@ -194,7 +181,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
 
-
         mBottomBar = (BottomBar) findViewById(R.id.bottomBar);
 
         /* Handle the reselection of a bottom bar tab. */
@@ -207,14 +193,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         /* Handle the single selection of a bottom bar tab. */
         mBottomBar.setOnTabSelectListener(new OnTabSelectListener() {
-
             @Override
-            public void onTabSelected(@IdRes int tabId) {
+            public void onTabSelected(@IdRes final int tabId) {
                 setBottomBarFragment(tabId);
             }
 
         });
+
     }
+
 
     /**
      * onStart for the video. Checks for whether the user has uploaded a video
