@@ -336,7 +336,18 @@ public class MainActivity extends AppCompatActivity implements
     /** Events for the event detail page. **/
     @Override
     public void onEventUserSelected(User u) {
-        onUserSelected(u);
+
+        String us = sharedPreferences.getString("userID","");
+
+        Log.d(LOG_TAG, "u:" + u.getUserID() + "curr" +  AWSWrapper.getCognitoID());
+
+        if(u.getUserID().equals(AWSWrapper.getCognitoID())) {
+            setFragment(ProfileFragment.newInstance(), new FragmentTransitionFromRight(), true);
+            currentBottomBarItem  = R.id.menu_profile;
+        } else {
+            setFragment(ProfileFriendFragment.newInstance(u), new FragmentTransitionFromRight(), true);
+        }
+
     }
 
     @Override
