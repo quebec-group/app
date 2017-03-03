@@ -31,7 +31,7 @@
         
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="@dimen/box_padding">
 
@@ -89,15 +89,15 @@
                 android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:layout_width="334dp"
-                    android:layout_height="43dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="43dp"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_weight="1">
+                        android:layout_marginRight="20dp">
 
                         <TextView
                             android:text="Likes"
@@ -108,7 +108,7 @@
                             android:layout_alignParentStart="true" />
 
                         <TextView
-                            android:text="TextView"
+                            android:text="123"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/eventTileLikeCount"
@@ -119,14 +119,16 @@
 
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="43dp"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:layout_marginRight="20dp">
 
                         <TextView
                             android:text="Created by"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:id="@+id/textView17" />
 
                         <TextView
@@ -142,13 +144,13 @@
 
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="43dp"
-                        android:orientation="vertical"
-                        android:layout_weight="1">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
                         <TextView
                             android:text="Date"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
+                            android:gravity="right"
                             android:layout_height="wrap_content"
                             android:layout_alignParentTop="true"
                             android:layout_toEndOf="@+id/textView17"
@@ -159,7 +161,8 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/text"
                             android:layout_alignStart="@+id/text"
-                            android:id="@+id/eventTileDate" />
+                            android:id="@+id/eventTileDate"
+                            android:text="20/09/01" />
                     </LinearLayout>
                 </LinearLayout>
 

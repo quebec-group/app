@@ -4,18 +4,18 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+
 public class EventVideoUploadSelect extends AppCompatActivity {
 
     public static final int REQUEST_VIDEO_CAPTURE = 1;
-    public static final String EVENT_VIDEO = "event_video";
     public static final String EVENT_VIDEO_MODE = "event_video_mode";
+    public static final String EVENT_ID = "event_id";
 
-    private Event event;
+    private int eventId;
     private int uploadMode = 0;
 
     @Override
@@ -29,17 +29,9 @@ public class EventVideoUploadSelect extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        Bundle b = intent.getExtras();
+        uploadMode = intent.getIntExtra(EVENT_VIDEO_MODE, 0);
+        eventId = intent.getIntExtra(EVENT_ID, 0);
 
-        if (b != null) {
-            if (b.containsKey(EVENT_VIDEO_MODE)) {
-                uploadMode = intent.getIntExtra(EVENT_VIDEO_MODE, 0);
-            }
-
-            if (b.containsKey(EVENT_VIDEO)) {
-                event = intent.getExtras().getParcelable(EVENT_VIDEO);
-            }
-        }
 
         if (uploadMode ==0){
             TextView description = (TextView)(this.findViewById(R.id.editText2));
@@ -91,7 +83,7 @@ public class EventVideoUploadSelect extends AppCompatActivity {
 
             /* Pass the video upload mode to the next activity. */
             intent1.putExtra(EVENT_VIDEO_MODE, uploadMode);
-            intent1.putExtra(EVENT_VIDEO, event);
+            intent1.putExtra(EVENT_ID, eventId);
 
             startActivity(intent1);
 

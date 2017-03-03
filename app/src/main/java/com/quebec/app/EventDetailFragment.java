@@ -23,6 +23,7 @@ import com.quebec.services.Video;
 
 import java.util.ArrayList;
 
+import static com.quebec.app.EventVideoUploadSelect.EVENT_ID;
 import static com.quebec.app.EventVideoUploadSelect.EVENT_VIDEO_MODE;
 
 
@@ -46,7 +47,6 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
     private Button eventLikeButton;
 
     private boolean eventLikeState;
-    private int eventLikes;
 
     private OnEventDetailInteractionListener mListener;
     private Button addRemoveMeButton;
@@ -122,7 +122,6 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
             eventNameTextView.setText(mEvent.getEventName());
             eventDetailDescription.setText("");
 
-            eventLikes = mEvent.getLikesCount();
             eventLikeButton.setText(mEvent.getLikesCount() + "");
 
             if (mEvent.getLocation().equals(""))  {
@@ -252,6 +251,7 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
     private void showVideoUpload() {
         Intent intent = new Intent(this.getContext(), EventVideoUploadSelect.class);
         intent.putExtra(EVENT_VIDEO_MODE, 1);
+        intent.putExtra(EVENT_ID, mEvent.getEventID());
         startActivity(intent);
     }
 
@@ -262,7 +262,7 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
         if (!eventLikeState) {
             // Like an event
             eventLikeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_heart_filled, 0, 0, 0);
-            eventLikes = eventLikes + 1;
+            mEvent.setLikesCount(mEvent.getLikesCount() + 1);
             mEvent.setLikes(true);
 
             APIManager.getInstance().likeEvent(mEvent, new APICallback<String>() {
@@ -280,7 +280,7 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
         }
         else {
             eventLikeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_heart_empty, 0, 0, 0);
-            eventLikes = eventLikes - 1;
+            mEvent.setLikesCount(mEvent.getLikesCount() - 1);
             mEvent.setLikes(false);
 
             APIManager.getInstance().unlikeEvent(mEvent, new APICallback<String>() {
@@ -297,7 +297,7 @@ public class EventDetailFragment extends Fragment implements AdapterView.OnItemC
 
         }
 
-        eventLikeButton.setText(eventLikes + "");
+        eventLikeButton.setText(mEvent.getLikesCount() + "");
         eventLikeState = !eventLikeState;
     }
 
