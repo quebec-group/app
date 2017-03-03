@@ -1,5 +1,8 @@
 package com.quebec.services;
 
+import com.amazonaws.mobile.content.ContentProgressListener;
+import com.quebec.app.S3Handler;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,6 +38,10 @@ public class Video {
 
     public String getThumbnailPath() {
         return thumbnailPath;
+    }
+
+    public void getEventThumbnail(ContentProgressListener callback) {
+            S3Handler.getInstance().getFile(getThumbnailPath(), callback);
     }
 
     public void setThumbnailPath(String thumbnailPath) {

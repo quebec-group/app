@@ -2,14 +2,19 @@ package com.quebec.app;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.amazonaws.mobile.content.ContentItem;
+import com.amazonaws.mobile.content.ContentProgressListener;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.quebec.services.Video;
 
 import java.util.ArrayList;
@@ -51,6 +56,28 @@ public class EventDetailVideoAdapterItem extends RecyclerView.Adapter<EventDetai
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
+        Video video = videoData.get(position);
+
+        final ImageView image = (ImageView) viewHolder.itemView.findViewById(R.id.eventVideoImage);
+
+        video.getEventThumbnail(new ContentProgressListener() {
+            @Override
+            public void onSuccess(ContentItem contentItem) {
+                image.setImageURI(Uri.fromFile(contentItem.getFile()));
+
+            }
+
+            @Override
+            public void onProgressUpdate(String filePath, boolean isWaiting, long bytesCurrent, long bytesTotal) {
+
+            }
+
+            @Override
+            public void onError(String filePath, Exception ex) {
+
+            }
+        });
+
 
     }
 
