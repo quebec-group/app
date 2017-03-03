@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.amazonaws.mobile.content.ContentItem;
 import com.amazonaws.mobile.content.ContentProgressListener;
@@ -59,12 +60,15 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
      */
     private GoogleApiClient client;
     private File video;
+    private TextView locationTextView;
+
     private boolean mLocationPermissionGranted;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 247;
     private Location mLastKnownLocation;
 
     private int eventID;
     private int uploadMode;
+
 
 
     public static String getDataColumn(Context context, Uri uri, String selection,
@@ -115,6 +119,7 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
 
         eventTitleEditText = (EditText) findViewById(R.id.event_upload_details_event_name);
         saveButton = (Button) findViewById(R.id.event_upload_video_saveBtn);
+        locationTextView = (TextView) findViewById(R.id.locationTextView);
 
         final ProgressBar progressBar = (ProgressBar) this.findViewById(R.id.event_video_upload_progress);
 
@@ -179,7 +184,7 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
 
         saveButton.setOnClickListener(this);
 
-        Log.e("tag", mVideoURI);
+
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
@@ -233,10 +238,11 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
 
         if (mLocationPermissionGranted) {
             if (mLastKnownLocation != null) {
+                locationTextView.setText("Location: (" + mLastKnownLocation.getLatitude() + "," + mLastKnownLocation.getLongitude() + ")");
                 mLocation = Double.toString(mLastKnownLocation.getLatitude()) + "," + Double.toString(mLastKnownLocation.getLongitude());
             } else {
                 // Create the LocationRequest object request
-                eventLocationEditText.setText("Location not found");
+                locationTextView.setText("Location: (" + mLastKnownLocation.getLatitude() + "," + mLastKnownLocation.getLongitude() + ")");
                 mLocation = "";
             }
         }

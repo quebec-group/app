@@ -250,14 +250,15 @@ public class ProfilePictureActivity extends AppCompatActivity {
         } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
 
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
+
             if (resultCode == RESULT_OK) {
+
                 croppedImageUri = result.getUri();
                 signup_image_preview.setImageURI(croppedImageUri);
                 resultView.setVisibility(View.VISIBLE);
                 confirmButton.setEnabled(true);
                 confirmButton.setVisibility(View.VISIBLE);
-                //TODO remove this hack, only because confirm button doesn't appear on smaller phones
-                confirmPhoto();
+
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 errorText.setText(R.string.signup_photo_error_cropping);
@@ -285,7 +286,6 @@ public class ProfilePictureActivity extends AppCompatActivity {
         up.uploadProfilePicture(path, new ContentProgressListener() {
             @Override
             public void onSuccess(ContentItem contentItem) {
-                Log.d(LOG_TAG, "Saved new profile picture");
                 saveProfileImage(contentItem.getFilePath());
             }
 

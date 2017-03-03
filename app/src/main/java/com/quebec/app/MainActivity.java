@@ -210,7 +210,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onStart() {
         super.onStart();
-        // checkUserFaceTrained();
+        checkUserFaceTrained();
     }
 
     /**
