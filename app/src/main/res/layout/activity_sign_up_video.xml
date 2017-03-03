@@ -18,34 +18,24 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
 
-        <EditText
-            android:text="@string/signup_video_upload_title"
+        <TextView
+            android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:id="@+id/sign_up_video_upload_title"
-            android:textAppearance="@style/TextAppearance.FontPath"
-            style="@style/SmallHeaderText"
-            android:clickable="false"
-            android:cursorVisible="false"
-            android:focusable="false"
-            android:focusableInTouchMode="false"/>
+            android:layout_marginBottom="@dimen/box_padding"
+            android:text="@string/signup_video_upload_title"
+            android:textAppearance="@style/TextAppearance.FontPathHeading" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <EditText
-            android:text="@string/signup_video_description"
+        <TextView
+            android:id="@+id/textView7"
             android:layout_width="match_parent"
-            android:layout_height="122dp"
-            android:id="@+id/signup_video_description"
-            android:clickable="false"
-            android:cursorVisible="false"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:textAppearance="@style/TextAppearance.FontPath"
-            android:textSize="20sp" />
+            android:layout_height="wrap_content"
+            android:text="@string/signup_video_description"
+            android:textAppearance="@style/TextAppearance.FontPath" />
 
 
         <LinearLayout

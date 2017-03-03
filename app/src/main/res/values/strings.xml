@@ -178,6 +178,7 @@
     <string name="friends_list_activity_label">Friends list fragment</string>
     <string name="search_by_name_or_email">Search by name or email</string>
     <string name="event_detail_no_location">No location</string>
+    <string name="locationLoadingText">Loading location...</string>
 
 
 </resources>

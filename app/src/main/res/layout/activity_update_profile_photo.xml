@@ -28,10 +28,12 @@
             style="@style/SmallHeaderText" />
 
         <TextView
-            android:text="@string/signup_photo_description"
+            android:id="@+id/signup_photo_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/signup_photo_description" />
+            android:layout_marginBottom="@dimen/box_padding"
+            android:text="@string/signup_photo_description"
+            android:textAppearance="@style/TextAppearance.FontPath" />
 
         <LinearLayout
             android:orientation="horizontal"

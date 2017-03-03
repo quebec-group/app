@@ -75,6 +75,13 @@
             android:max="20"
             android:progress="0" />
 
+        <TextView
+            android:id="@+id/locationTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.06"
+            android:text="@string/locationLoadingText" />
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
