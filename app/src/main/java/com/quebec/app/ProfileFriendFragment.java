@@ -114,6 +114,7 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
                 if(responseBody) {
                     follow.setText("Unfollow");
                     user.setiFollow(true);
+                    
                 } else {
                     follow.setText("Follow");
                     user.setiFollow(false);
