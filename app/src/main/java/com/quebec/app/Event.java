@@ -136,4 +136,8 @@ public class Event implements Parcelable {
     public void setCreator(User creator) {
         this.creator = creator;
     }
+
+    public void setLikesCount(int likesCount) {
+        this.likesCount = likesCount;
+    }
 }

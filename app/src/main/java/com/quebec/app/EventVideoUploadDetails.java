@@ -34,6 +34,8 @@ import com.quebec.services.APIManager;
 
 import java.io.File;
 
+import static com.quebec.app.EventVideoUploadSelect.EVENT_ID;
+
 
 public class EventVideoUploadDetails extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
@@ -60,6 +62,9 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
     private boolean mLocationPermissionGranted;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 247;
     private Location mLastKnownLocation;
+
+    private int eventID;
+    private int uploadMode;
 
 
     public static String getDataColumn(Context context, Uri uri, String selection,
@@ -116,6 +121,15 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
         Intent intent = getIntent();
         mVideoURI = intent.getStringExtra(VIDEO_URI);
 
+        uploadMode = intent.getIntExtra(EventVideoUploadSelect.EVENT_VIDEO_MODE, 0);
+
+        if (uploadMode == 1) {
+            eventID = intent.getIntExtra(EVENT_ID, -1);
+            eventTitleEditText.setVisibility(View.INVISIBLE);
+            findViewById(R.id.event_upload_details_event_name_text).setVisibility(View.INVISIBLE);
+            saveButton.setVisibility(View.INVISIBLE);
+        }
+
         Uri u = Uri.parse(mVideoURI);
 
         VideoUploadHandler uploader = new VideoUploadHandler();
@@ -125,6 +139,10 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
             @Override
             public void onSuccess(ContentItem contentItem) {
                 saveButton.setEnabled(true);
+                saveButton.setAlpha(1.0f);
+                if (uploadMode == 1) {
+                    addVideoToEvent();
+                }
             }
 
             @Override
@@ -157,6 +175,7 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
         btn.setOnClickListener(this);
 
         saveButton.setEnabled(false);
+        saveButton.setAlpha(0.5f);
 
         saveButton.setOnClickListener(this);
 
@@ -164,6 +183,24 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
+
+    private void addVideoToEvent() {
+        final String videoPath = VideoUploadHandler.getFullS3Path(video);
+
+        APIManager.getInstance().addVideoToEvent(videoPath, eventID, new APICallback<String>() {
+            @Override
+            public void onSuccess(String responseBody) {
+                Log.d(LOG_TAG, "Added video to event");
+            }
+
+            @Override
+            public void onFailure(String message) {
+                Log.d(LOG_TAG, "Failed to add video to event: " + message);
+            }
+        });
+
+        goBackToMain();
     }
 
     private void getDeviceLocation() {
@@ -245,13 +282,15 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
                             Log.e(LOG_TAG, "Event creation failed");
                         }
                     });
-
-
-            Intent intent = new Intent(this.getApplicationContext(), MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            finish();
+            goBackToMain();
         }
+    }
+
+    private void goBackToMain() {
+        Intent intent = new Intent(this.getApplicationContext(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 
     /**

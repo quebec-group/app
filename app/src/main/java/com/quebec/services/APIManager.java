@@ -501,17 +501,17 @@ public class APIManager implements API {
     /**
      *
      * @param S3ID
-     * @param event
+     * @param eventID
      * @param response
      */
     @Override
-    public void addVideoToEvent(final String S3ID, final Event event, final APICallback<String> response) {
+    public void addVideoToEvent(final String S3ID, final int eventID, final APICallback<String> response) {
         final APIEndpoint endpoint = new APIEndpoint("addVideoToEvent");
         final APIRequest request = new APIRequest(endpoint);
 
         try {
             JSONObject requestBody = new JSONObject();
-            requestBody.put("eventID", event.getEventID());
+            requestBody.put("eventID", eventID);
             requestBody.put("S3ID", S3ID);
             request.setBody(requestBody.toString());
         } catch (JSONException e) {

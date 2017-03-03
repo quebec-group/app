@@ -13,8 +13,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import static com.quebec.app.R.mipmap.user;
-
 /**
  * Created by Andy on 25/02/2017.
  */
@@ -77,7 +75,7 @@ public class EventListFactory {
         Collections.sort(eventsAttended, new Comparator<Event>() {
             @Override
             public int compare(Event o1, Event o2) {
-                return o1.getTime().compareTo(o2.getTime());
+                return o2.getTime().compareTo(o1.getTime());
             }
         });
 
