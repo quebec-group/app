@@ -305,7 +305,7 @@ public class ProfilePictureActivity extends AppCompatActivity {
      * @param path
      */
     public void saveProfileImage(String path) {
-        APIManager.getInstance().setProfilePicture(path, new APICallback<String>() {
+        APIManager.getInstance().setProfilePicture(S3Handler.S3_PREFIX_PROTECTED + path, new APICallback<String>() {
             @Override
             public void onSuccess(String responseBody) {
                 showMainActivity();

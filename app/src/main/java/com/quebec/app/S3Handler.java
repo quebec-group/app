@@ -105,7 +105,9 @@ public class S3Handler {
                     throw new RuntimeException(ex);
                 }
 
-                userFileManager.getContent(path, callback);
+
+
+                userFileManager.getContent(path.replaceFirst(S3_PREFIX_PROTECTED, ""), callback);
             }
         }).start();
     }

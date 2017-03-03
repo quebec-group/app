@@ -59,6 +59,7 @@ public class EventDetailVideoAdapterItem extends RecyclerView.Adapter<EventDetai
         Video video = videoData.get(position);
 
         final ImageView image = (ImageView) viewHolder.itemView.findViewById(R.id.eventVideoImage);
+
         video.getEventThumbnail(new ContentProgressListener() {
             @Override
             public void onSuccess(ContentItem contentItem) {
@@ -76,6 +77,7 @@ public class EventDetailVideoAdapterItem extends RecyclerView.Adapter<EventDetai
 
             }
         });
+
 
     }
 
