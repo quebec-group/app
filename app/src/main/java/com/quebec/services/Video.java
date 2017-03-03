@@ -41,7 +41,11 @@ public class Video {
     }
 
     public void getEventThumbnail(ContentProgressListener callback) {
+        if (thumbnailPath.isEmpty()) {
+            callback.onError(thumbnailPath, new IllegalStateException("thumbnail empty"));
+        } else {
             S3Handler.getInstance().getFile(getThumbnailPath(), callback);
+        }
     }
 
     public void setThumbnailPath(String thumbnailPath) {
