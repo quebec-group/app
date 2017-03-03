@@ -48,8 +48,7 @@
             android:name=".auth.SplashActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -61,38 +60,32 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_sign_in"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustPan"
             />
         <activity
             android:name=".auth.ForgotPasswordActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_forgot_password"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustPan"  />
+            android:screenOrientation="portrait"  />
         <activity
             android:name=".auth.SignUpActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_sign_up"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustPan"  />
+            android:screenOrientation="portrait"  />
         <activity
             android:name=".SignUpVideoActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_sign_up_video"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustPan"  />
+            android:screenOrientation="portrait"  />
         <activity
             android:name=".auth.SignUpConfirmActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_sign_up_confirm"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustPan"  />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
             android:launchMode="singleInstance"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustPan"  />
+            android:screenOrientation="portrait" />
 
         <!-- BEGIN - APP CONTENT DELIVERY AND USER DATA STORAGE -->
 

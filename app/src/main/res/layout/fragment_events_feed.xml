@@ -58,18 +58,18 @@
     <android.support.v7.widget.CardView
         android:id="@+id/empty_events_feed_message"
         android:layout_width="fill_parent"
-        android:layout_gravity="center"
+        android:layout_height="wrap_content"
 
-        android:foreground="?android:attr/selectableItemBackground"
-        android:layout_marginLeft="@dimen/box_padding"
-        android:layout_marginRight="@dimen/box_padding"
-
-        card_view:cardCornerRadius="2dp"
-        card_view:cardElevation="20dp"
-        android:layout_height="150dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:visibility="gone">
+        android:layout_gravity="center"
+
+        android:layout_marginLeft="@dimen/box_padding"
+        android:layout_marginRight="@dimen/box_padding"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:visibility="gone"
+        card_view:cardCornerRadius="2dp"
+        card_view:cardElevation="20dp">
 
         <!--
         <ImageView
@@ -80,9 +80,9 @@
             android:scaleType="fitXY"/>
         -->
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:padding="@dimen/box_padding">
 
             <TextView
@@ -90,29 +90,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
+                android:layout_marginBottom="10dp"
                 android:text="@string/empty_events_feed"
+                android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.FontPath"
-                android:textSize="24sp"
-                android:textAlignment="center" />
+                android:textSize="24sp" />
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-                <TextView
+                <Button
+                    android:id="@+id/dialogCreateEvent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/eventItemLocation"
-                    android:layout_width="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:text="Create" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <Button
+                    android:id="@+id/dialogFollow"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/eventItemDate"
-                    android:layout_weight="1"/>
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="Follow" />
             </LinearLayout>
-
 
 
         </LinearLayout>

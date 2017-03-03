@@ -36,9 +36,6 @@ public class EventDetailVideoDialog extends Dialog {
 
         VideoView videoView = (VideoView) findViewById(R.id.event_detail_video_popover_video);
 
-        // Get and update the textview with data from the Video.
-        TextView text = (TextView) findViewById(R.id.event_detail_video_popover_text);
-
         MediaController mediaController = new MediaController(this.mActivity);
         mediaController.setAnchorView(videoView);
 
