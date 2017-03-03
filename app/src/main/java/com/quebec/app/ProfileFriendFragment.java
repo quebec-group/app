@@ -31,6 +31,7 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
 
     private static final String USER_KEY = "user_key";
     private OnFragmentInteractionListener mListener;
+    private ProfileFragment.ProfileInteractionListener mProfileListener;
     private static String LOG_TAG = ProfileFriendFragment.class.getSimpleName();
 
     private View mFragmentView;
@@ -40,6 +41,7 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
     private TextView eventsCount;
     private TextView profileUserName;
     private RoundedImageView profile_picture_view;
+
 
 
     public ProfileFriendFragment() {
@@ -83,8 +85,28 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
         followersCount = (TextView) mFragmentView.findViewById(R.id.profileFollowersCount);
         eventsCount = (TextView) mFragmentView.findViewById(R.id.profileEventsCount);
 
+        followingCount = (TextView) mFragmentView.findViewById(R.id.profileFollowingCount);
+        followersCount = (TextView) mFragmentView.findViewById(R.id.profileFollowersCount);
+        eventsCount = (TextView) mFragmentView.findViewById(R.id.profileEventsCount);
+
+        profileUserName = (TextView) mFragmentView.findViewById(R.id.profileUserName);
+        profileUserName.setText(user.getName());
 
         getStats();
+
+        mFragmentView.findViewById(R.id.followingLayout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mProfileListener.openFollowingList();
+            }
+        });
+
+        mFragmentView.findViewById(R.id.followersLayout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mProfileListener.openFollowersList();
+            }
+        });
 
         APIManager.getInstance().iFollow(user, new APICallback<Boolean>() {
             @Override
@@ -92,6 +114,7 @@ public class ProfileFriendFragment extends Fragment implements View.OnClickListe
                 if(responseBody) {
                     follow.setText("Unfollow");
                     user.setiFollow(true);
+                    
                 } else {
                     follow.setText("Follow");
                     user.setiFollow(false);
