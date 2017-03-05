@@ -1,9 +1,12 @@
 package com.quebec.app;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +23,7 @@ import com.quebec.services.APIManager;
 import java.io.File;
 
 public class SignUpVideoActivity extends AppCompatActivity {
+    private static final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
     private static String LOG_TAG = SignUpVideoActivity.class.getSimpleName();
 
     public static final String EVENT_VIDEO = "event_video";
@@ -49,9 +53,35 @@ public class SignUpVideoActivity extends AppCompatActivity {
      * @param view is the view from which the action was called.
      * */
     public void takeVideo(View view) {
+        takeVideoRun();
+    }
+
+    public void takeVideoRun() {
+        /* Ensure the permissions have been enabled. If not, launch the view to allow permissions to the application. */
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)  {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CAMERA);
+            return;
+        }
+
         Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         if (takeVideoIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takeVideoIntent, 0);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_CAMERA: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    takeVideoRun();
+                } else {
+                    // TODO: Handle permissions not provided, by showing an error message or similar.
+                }
+                return;
+            }
         }
     }
 
