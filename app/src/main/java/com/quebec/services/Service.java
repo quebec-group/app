@@ -13,6 +13,7 @@ import com.amazonaws.mobileconnectors.apigateway.ApiRequest;
 import com.amazonaws.mobileconnectors.apigateway.ApiResponse;
 import com.amazonaws.util.IOUtils;
 import com.amazonaws.util.StringUtils;
+import com.quebec.app.Monitor;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,6 +35,8 @@ public class Service extends AsyncTask<Void, Integer, APIResponse> {
 
 
     public Service(APIRequest apiRequest, ServiceCallBack serviceCallBack) {
+        Monitor.getInstance().apiCall(apiRequest.getApiEndpoint().getPath());
+
         this.apiRequest = apiRequest;
         this.callBack = serviceCallBack;
         apiConfiguration = CloudLogicAPIFactory.getAPIs()[0];
