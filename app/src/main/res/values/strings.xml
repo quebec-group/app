@@ -179,6 +179,8 @@
     <string name="search_by_name_or_email">Search by name or email</string>
     <string name="event_detail_no_location">No location</string>
     <string name="locationLoadingText">Loading location...</string>
+    <string name="permissionsCameraTitle">Must grant permissions</string>
+    <string name="permissionsCameraText"><![CDATA[Go to Settings->Apps to grant camera permissions to the application.]]></string>
 
 
 </resources>

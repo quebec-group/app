@@ -6,123 +6,137 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:textAppearance="@style/TextAppearance.FontPath"
-        android:id="@+id/linearLayout"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="87dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">
-
-        <EditText
-            android:id="@+id/signIn_editText_email"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/sign_in_text_margin"
-            android:layout_marginRight="@dimen/sign_in_text_margin"
-            android:inputType="textEmailAddress"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium.Inverse"
-            android:hint="@string/sign_in_email" />
-
-        <EditText
-            android:id="@+id/signIn_editText_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/sign_in_text_margin"
-            android:layout_marginRight="@dimen/sign_in_text_margin"
-            android:inputType="textPassword"
-            android:hint="@string/sign_in_password"
-            style="@style/TextAppearance.FontPath"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium.Inverse" />
-
-        <Button
-            android:text="@string/login_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/signIn_imageButton_login"
-            android:textAppearance="@style/TextAppearance.FontPath"
-            style="@style/Widget.AppCompat.Button" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
-            android:layout_marginTop="10dp">
+            android:orientation="vertical"
+            android:layout_weight="1">
 
             <TextView
-                android:id="@+id/signIn_textView_CreateNewAccount"
-                android:layout_height="wrap_content"
+                android:id="@+id/textView4"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignStart="@+id/linearLayout"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="68dp"
                 android:layout_weight="1"
-                android:text="@string/sign_in_new_account"
-                android:textAppearance="?android:textAppearanceSmall"
-                android:gravity="left"
-                android:layout_marginLeft="@dimen/sign_in_text_margin"
-                />
+                android:gravity="center"
+                android:text="@string/signin_title"
+                android:textAppearance="@style/TextAppearance.FontPathHeading"
+                android:textSize="36sp" />
 
-            <TextView
-                android:id="@+id/signIn_textView_Verify"
-                android:layout_height="wrap_content"
-                android:layout_width="50dp"
-                android:text="Verify"
-                android:textAppearance="?android:textAppearanceSmall"
-                android:gravity="left"
-                android:layout_marginLeft="@dimen/sign_in_text_margin" />
-
-            <TextView
-                android:id="@+id/signIn_textView_ForgotPassword"
-                android:layout_height="wrap_content"
+            <Button
+                android:id="@+id/fb_login_button"
+                style="@style/com_facebook_button"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView4"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/box_padding"
                 android:layout_weight="1"
-                android:text="@string/sign_in_forgot_password"
-                android:textAppearance="?android:textAppearanceSmall"
-                android:gravity="right"
-                android:layout_marginRight="@dimen/sign_in_text_margin"
-                />
+                android:text="@string/facebook_login" />
 
+            <TextView
+                android:id="@+id/signin_error"
+                style="@style/ErrorMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/linearLayout"
+                android:layout_marginBottom="52dp"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:textAlignment="textStart" />
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/box_padding"
+            android:layout_marginLeft="@dimen/box_padding"
+            android:layout_marginRight="@dimen/box_padding"
+            android:layout_weight="1.31"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:textAppearance="@style/TextAppearance.FontPath">
+
+            <EditText
+                android:id="@+id/signIn_editText_email"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/sign_in_text_margin"
+                android:layout_marginRight="@dimen/sign_in_text_margin"
+                android:hint="@string/sign_in_email"
+                android:inputType="textEmailAddress"
+                android:textAppearance="@android:style/TextAppearance.Material.Medium.Inverse" />
+
+            <EditText
+                android:id="@+id/signIn_editText_password"
+                style="@style/TextAppearance.FontPath"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/sign_in_text_margin"
+                android:layout_marginRight="@dimen/sign_in_text_margin"
+                android:hint="@string/sign_in_password"
+                android:inputType="textPassword"
+                android:textAppearance="@android:style/TextAppearance.Material.Medium.Inverse" />
+
+            <Button
+                android:id="@+id/signIn_imageButton_login"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/login_button"
+                android:textAppearance="@style/TextAppearance.FontPath" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/signIn_textView_CreateNewAccount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/sign_in_text_margin"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="@string/sign_in_new_account"
+                    android:textAppearance="?android:textAppearanceSmall" />
+
+                <TextView
+                    android:id="@+id/signIn_textView_Verify"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/sign_in_text_margin"
+                    android:gravity="left"
+                    android:text="Verify"
+                    android:textAppearance="?android:textAppearanceSmall" />
+
+                <TextView
+                    android:id="@+id/signIn_textView_ForgotPassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/sign_in_text_margin"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="@string/sign_in_forgot_password"
+                    android:textAppearance="?android:textAppearanceSmall" />
+
+            </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/signin_error"
-        android:layout_weight="1"
-        style="@style/ErrorMessage"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/linearLayout"
-        android:layout_marginBottom="52dp"
-        android:textAlignment="textStart"
-        android:gravity="center_horizontal" />
-
-    <TextView
-        android:text="@string/signin_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView4"
-        android:textAppearance="@style/TextAppearance.FontPath"
-        android:textSize="36sp"
-        android:textAlignment="center"
-        android:textStyle="normal|bold"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="17dp"
-        android:gravity="center"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:text="@string/facebook_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/fb_login_button"
-        style="@style/com_facebook_button"
-        android:layout_below="@+id/textView4"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"/>
 
 </RelativeLayout>
