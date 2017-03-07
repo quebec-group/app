@@ -72,6 +72,8 @@ public class S3Handler {
      * Uploads a file to the S3 storage bucket.
      */
     public void uploadFile(final File file, final String filePath, final ContentProgressListener callback) {
+        Monitor.getInstance().s3Call("Uploading file ");
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -93,7 +95,7 @@ public class S3Handler {
      */
     public void getFile(final String path, final ContentProgressListener callback) {
 
-
+        Monitor.getInstance().s3Call("Getting file ");
         new Thread(new Runnable() {
             @Override
             public void run() {
