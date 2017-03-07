@@ -42,11 +42,11 @@ public class EventVideoUploadSelect extends AppCompatActivity {
 
         if (uploadMode ==0){
             TextView description = (TextView)(this.findViewById(R.id.editText2));
-            description.setText("Uploading a video here will create a new event. If you want to add a video to an already existing event then please go back to EventsFeed and select the event you want to add the video to");
+            description.setText("Upload a video to create a new event and automatically tag people in the video.");
         }
         else{
             TextView description = (TextView)(this.findViewById(R.id.editText2));
-            description.setText("This will add a video to this event. If you want to add a video for a new event, go to EventsFeed and press the Upload Button");
+            description.setText("This will add a video to the event, and tag any previously unrecognised guests of the event.");
         }
     }
 
