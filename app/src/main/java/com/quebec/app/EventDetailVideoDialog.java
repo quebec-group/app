@@ -4,8 +4,11 @@ package com.quebec.app;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.MediaController;
@@ -38,18 +41,50 @@ public class EventDetailVideoDialog extends Dialog {
 
         setContentView(R.layout.event_detail_video_popover_dialog);
 
-        VideoView videoView = (VideoView) findViewById(R.id.event_detail_video_popover_video);
+        final VideoView videoView = (VideoView) findViewById(R.id.event_detail_video_popover_video);
 
         MediaController mediaController = new MediaController(this.mActivity);
         mediaController.setAnchorView(videoView);
+        mediaController.setMediaPlayer(videoView);
 
         // Add the video to the dialog box.
         Uri video = Uri.parse(S3Handler.getInstance().getVideoURL(mVideo.getVideoPath()));
         videoView.setMediaController(mediaController);
+
+        videoView.requestFocus();
         videoView.setVideoURI(video);
         videoView.setZOrderOnTop(true);
-        videoView.start();
 
+        videoView.start();
+        mediaController.show();
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        this.mActivity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+        final int windowHeight = displayMetrics.heightPixels;
+        final int windowWidth = displayMetrics.widthPixels;
+
+        final EventDetailVideoDialog window = this;
+        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                videoView.start();
+
+
+
+                mp.setLooping(true);
+
+
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(window.getWindow().getAttributes());
+
+                //This makes the dialog take up the full width
+                lp.height = (int) (mp.getVideoHeight());
+
+                window.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+
+            }
+        });
 
     }
 }

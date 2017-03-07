@@ -67,11 +67,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Intent intent = getActivity().getIntent();
-
-        // TODO: complete the refresh of the view when the profile picture is updated.
-        // String message = intent.getStringExtra(.EXTRA_MESSAGE);
-
         super.onCreate(savedInstanceState);
     }
 
@@ -87,16 +82,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
                     @Override
                     public void handleIdentityID(String identityId) {
                         if (identityManager.isUserSignedIn()) {
-                            // TODO: handle overflow of a username - could be done with a scrolling textview
                             userNameTextView.setText(identityManager.getUserName());
                             userNameTextView.setSelected(true);
                         }
                     }
 
                     @Override
-                    public void handleError(Exception exception) {
-                        // TODO: user could not be found - do we retry or log the user out?
-                    }
+                    public void handleError(Exception exception) {}
 
                 });
 
@@ -116,9 +108,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
             public void onProgressUpdate(String filePath, boolean isWaiting, long bytesCurrent, long bytesTotal) {}
 
             @Override
-            public void onError(String filePath, Exception ex) {
-                // TODO profile picture could not be loaded and hence show the placeholder image.
-            }
+            public void onError(String filePath, Exception ex) {}
         });
 
     }
@@ -131,12 +121,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
 
         mFragmentView = inflater.inflate(R.layout.fragment_profile, container, false);
 
-
         userNameTextView = (TextView) mFragmentView.findViewById(R.id.profileFragment_name);
         profile_picture_view = (RoundedImageView) mFragmentView.findViewById(R.id.profile_picture_view);
 
         /* Text views for the profile header. */
-        TextView eventsCount = (TextView)  mFragmentView.findViewById(R.id.profileEventsCount);
         followingCount = (TextView) mFragmentView.findViewById(R.id.profileFollowingCount);
         followersCount = (TextView) mFragmentView.findViewById(R.id.profileFollowersCount);
         eventsCount = (TextView) mFragmentView.findViewById(R.id.profileEventsCount);
@@ -145,7 +133,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
         /* Declare the onclick event handlers for the buttons. */
         dropdown_button = (View) mFragmentView.findViewById(R.id.profile_dropdown_button);
 
-        dropdown_button.setOnClickListener(this);
+        /* Sets the event listeners for the dropdown button. */
         dropdown_button.setOnClickListener(this);
 
         identityManager = AWSMobileClient.defaultMobileClient()
@@ -226,6 +214,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
         return mFragmentView;
     }
 
+    /**
+     * Show the profile picture on the page.
+     */
     private void setProfilePicture() {
         mUser.getProfilePicture(new ContentProgressListener() {
             @Override
@@ -245,6 +236,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
         });
     }
 
+
+    /**
+     * Gets the statistics for the user.
+     */
     public void getStats() {
         APIManager.getInstance().followersCount(mUser.getUserID(), new APICallback<Integer>() {
             @Override
@@ -253,9 +248,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
             }
 
             @Override
-            public void onFailure(String message) {
-
-            }
+            public void onFailure(String message) {}
         });
 
         APIManager.getInstance().followingCount(mUser.getUserID(), new APICallback<Integer>() {
@@ -265,9 +258,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
             }
 
             @Override
-            public void onFailure(String message) {
-
-            }
+            public void onFailure(String message) {}
         });
     }
 
@@ -312,9 +303,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener  {
 
         popup.show();
 
-
     }
 
+    /**
+     * Open the video training update page.
+     */
     private void openVideoTraining() {
         Intent intent = new Intent(this.getContext(), SignUpVideoActivity.class);
         startActivity(intent);

@@ -55,6 +55,7 @@ public class EventListAdapterItem extends RecyclerView.Adapter<EventListAdapterI
 
         @Override
         public void onClick(View v) {
+
             myClickListener.onItemClick(getAdapterPosition(), v);
         }
     }

@@ -1,5 +1,7 @@
 package com.quebec.app;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -69,6 +71,24 @@ public class SignUpVideoActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Show a dialog box for if permissions have not been granted.
+     * @param title
+     * @param text
+     */
+    public void showDialogBox(String title, String text) {
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle(title);
+        alertDialog.setMessage(text);
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
@@ -78,7 +98,7 @@ public class SignUpVideoActivity extends AppCompatActivity {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     takeVideoRun();
                 } else {
-                    // TODO: Handle permissions not provided, by showing an error message or similar.
+                    showDialogBox(getString(R.string.permissionsCameraTitle), getString(R.string.permissionsCameraText));
                 }
                 return;
             }
