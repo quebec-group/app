@@ -76,7 +76,8 @@ public class EventsFeedFragment extends Fragment {
 
         final Context context = this.getContext();
 
-        final ProgressDialog spinner = new ProgressDialog(this.getContext());
+        final ProgressDialog spinner = ProgressDialog.show(getContext(), "Loading", "Wait while loading...");
+
         spinner.show();
 
         APIManager.getInstance().getEvents(new APICallback<List<Event>>() {
