@@ -85,12 +85,8 @@ public class EventListAdapterItem extends RecyclerView.Adapter<EventListAdapterI
         holder.likesCount.setText(String.valueOf(mDataset.get(position).getLikesCount()));
         holder.eventCreator.setText(String.valueOf(mDataset.get(position).getCreator().getName()));
         SimpleDateFormat format = new SimpleDateFormat("MMM dd, yyyy");
-        Date newDate = new Date();
-        try {
-            newDate = format.parse(String.valueOf(mDataset.get(position).getTime()));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        Date newDate = new Date(Long.parseLong(mDataset.get(position).getTime()));
+
         String date = format.format(newDate);
         holder.eventDate.setText(date);
 

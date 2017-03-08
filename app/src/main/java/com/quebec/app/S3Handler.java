@@ -95,7 +95,6 @@ public class S3Handler {
      */
     public void getFile(final String path, final ContentProgressListener callback) {
 
-        Monitor.getInstance().s3Call("Getting file ");
         new Thread(new Runnable() {
             @Override
             public void run() {
