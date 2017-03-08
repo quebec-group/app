@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amazonaws.mobile.content.ContentItem;
 import com.amazonaws.mobile.content.ContentProgressListener;
@@ -30,15 +31,19 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Places;
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.quebec.services.APICallback;
 import com.quebec.services.APIManager;
 
 import java.io.File;
+import java.util.List;
 
 import static com.quebec.app.EventVideoUploadSelect.EVENT_ID;
 
 
-public class EventVideoUploadDetails extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
+public class EventVideoUploadDetails extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks,  Validator.ValidationListener  {
 
     private GoogleApiClient mGoogleApiClient;
 
@@ -46,14 +51,15 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
 
     static final String VIDEO_URI = "videoUri";
 
+    private Validator val;
+
     private String mVideoURI = "";
     private String mLocation = "";
 
-    private EditText eventTitleEditText;
-    private EditText eventLocationEditText;
+    @NotEmpty
+    public EditText eventTitleEditText;
 
     private Button saveButton;
-    private String videoPath = "";
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -116,6 +122,9 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_upload_video_details);
+
+        val = new Validator(this);
+        val.setValidationListener(this);
 
         eventTitleEditText = (EditText) findViewById(R.id.event_upload_details_event_name);
         saveButton = (Button) findViewById(R.id.event_upload_video_saveBtn);
@@ -191,21 +200,28 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
     }
 
     private void addVideoToEvent() {
+
+        final String location = mLocation;
         final String videoPath = VideoUploadHandler.getFullS3Path(video);
 
-        APIManager.getInstance().addVideoToEvent(videoPath, eventID, new APICallback<String>() {
-            @Override
-            public void onSuccess(String responseBody) {
-                Log.d(LOG_TAG, "Added video to event");
-            }
+        APIManager.getInstance().createEvent(
+                eventTitleEditText.getText().toString(),
+                location,
+                videoPath,
+                new APICallback<String>() {
+                    @Override
+                    public void onSuccess(String responseBody) {
+                        Log.d(LOG_TAG, "Event created");
+                    }
 
-            @Override
-            public void onFailure(String message) {
-                Log.d(LOG_TAG, "Failed to add video to event: " + message);
-            }
-        });
+                    @Override
+                    public void onFailure(String message) {
+                        Log.e(LOG_TAG, "Event creation failed");
+                    }
+                });
 
         goBackToMain();
+
     }
 
     private void getDeviceLocation() {
@@ -269,26 +285,7 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.event_upload_video_saveBtn) {
-
-            final String location = mLocation;
-            final String videoPath = VideoUploadHandler.getFullS3Path(video);
-
-            APIManager.getInstance().createEvent(
-                    eventTitleEditText.getText().toString(),
-                    location,
-                    videoPath,
-                    new APICallback<String>() {
-                        @Override
-                        public void onSuccess(String responseBody) {
-                            Log.d(LOG_TAG, "Event created");
-                        }
-
-                        @Override
-                        public void onFailure(String message) {
-                            Log.e(LOG_TAG, "Event creation failed");
-                        }
-                    });
-            goBackToMain();
+            val.validate();
         }
     }
 
@@ -355,6 +352,26 @@ public class EventVideoUploadDetails extends AppCompatActivity implements View.O
     @Override
     public void onConnectionSuspended(int i) {
 
+    }
+
+    @Override
+    public void onValidationSucceeded() {
+        addVideoToEvent();
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors) {
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(this);
+
+            // Display error messages
+            if (view instanceof EditText) {
+                ((EditText) view).setError(message);
+            } else {
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }
 

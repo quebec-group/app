@@ -3,12 +3,13 @@
 
 <resources>
 
-    <color name="colorPrimary">#a9a9a9</color>
+    <color name="colorPrimary">#000000</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorPrimaryDark">#000000</color>
 
     <color name="colorDarkGrey">#404040</color>
 
+    <!--
     <color name="top_bar_background">#969696</color>
     <color name="splash_text">#a4a4a4</color>
     <color name="splash_background">#FFFFFF</color>
@@ -21,6 +22,6 @@
     <color name="dark_content_text">#333333</color>
     <color name="sign_in_separator_color">#DDDDDD</color>
     <color name="instructions_list_border_color">#FFDDDDDD</color>
-
+    -->
 
 </resources>

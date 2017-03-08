@@ -122,7 +122,7 @@ public class SignUpActivity extends Activity implements Validator.ValidationList
             View view = error.getView();
             String message = error.getCollatedErrorMessage(this);
 
-            // Display error messages ;)
+            // Display error messages
             if (view instanceof EditText) {
                 ((EditText) view).setError(message);
             } else {

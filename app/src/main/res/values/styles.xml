@@ -16,7 +16,6 @@
         <item name="android:paddingTop">0dp</item>
         <item name="android:paddingRight">2dp</item>
         <item name="android:paddingBottom">0dp</item>
-        <item name="android:background">@android:color/holo_blue_bright</item>
     </style>
 
     <!-- Backward-compatible version of ?android:attr/buttonBarButtonStyle -->
@@ -70,7 +69,8 @@
 
         <item name="android:colorBackground">@color/bb_darkBackgroundColor</item>
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:textColorSecondaryInverse">@android:color/secondary_text_light_nodisable</item>
+        <item name="android:textColorSecondaryInverse">@color/bb_darkBackgroundColor</item>
+
         <item name="android:textColorPrimaryInverse">@color/common_google_signin_btn_text_dark_disabled</item>
 
         <item name="android:buttonStyle">@style/DarkButtonDefault</item>
