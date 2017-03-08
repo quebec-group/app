@@ -72,12 +72,12 @@
             android:visibility="invisible">
 
             <ImageView
-                app:srcCompat="@color/bb_darkBackgroundColor"
                 android:id="@+id/signup_image_preview"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_alignParentBottom="true"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                app:srcCompat="@color/bb_darkBackgroundColor" />
 
             <Button
                 android:text="@string/signup_photo_confirm"

@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.amazonaws.mobile.content.ContentItem;
 import com.amazonaws.mobile.content.ContentProgressListener;
+import com.mobsandgeeks.saripaar.Validator;
 import com.quebec.services.APICallback;
 import com.quebec.services.APIManager;
 import com.theartofdev.edmodo.cropper.CropImage;
